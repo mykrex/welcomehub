@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WelcomeHub
+WlcomeHub es un aplicación web que centraliza el onboarding y la capacitación de los empleados de Neoris que además integra un asistente virtual inteligente para resolver dudas y sugerir contenidos.
 
-## Getting Started
+## Misión
+Diseñar y desarrollar soluciones tecnológicas que impulsen el crecimiento y rendimiento de nuestros clientes, haciendo uso de herramientas avanzadas como la inteligencia artificial,  que les permita optimizar sus procesos. Comprometiéndonos como aliados estratégicos en su transformación digital.
 
-First, run the development server:
+## Visión
+Ser referente en transformación digital, conectando ideas e impulsando el futuro generando soluciones innovadoras que agreguen valor estratégico para nuestros clientes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Valores
+- Integridad
+- Innovación
+- Responsabilidad
+- Respeto
+- Honestidad
+- Confidencialidad
+- Adaptabilidad
+- Mejora Continua
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Preview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![](/repository_assets/Login.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![](/repository_assets/Dashboard.png)
 
-## Learn More
+![](/repository_assets/Courses.png)
 
-To learn more about Next.js, take a look at the following resources:
+![](/repository_assets/CourseProgress.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![](/repository_assets/NeoBot.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Wiki
+Para más información sobre la web y nuestro equipo, visita nuestra [Wiki](https://github.com/mykrex/welcomehub/wiki)
