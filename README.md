@@ -17,7 +17,7 @@ Ser referente en transformación digital, conectando ideas e impulsando el futur
 - Adaptabilidad
 - Mejora Continua
 
-## Uso
+## :point_right: Uso
 Antes de ejecutar el proyecto de forma local asegurese de correr lo siguiente:`npm install` en la terminal para instalar los modulos necesarios.
 
 ## Preview
