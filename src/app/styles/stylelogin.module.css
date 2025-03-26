@@ -9,7 +9,7 @@ body {
 }
 
 /* Container for the login form */
-.login-container {
+.loginContainer {
     width: 100%;
     max-width: 400px;
     margin: 50px auto;
@@ -17,18 +17,26 @@ body {
     background-color: rgba(138, 133, 133, 0.30);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     border-radius: 24px;
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(100px);
+}
+
+/* Login.module.css */
+.title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: rgb(255, 255, 255);
 }
 
 /* Form elements */
-.login-container h2 {
+.loginContainer h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #ffffff;
 }
 
-.login-container input[type="text"],
-.login-container input[type="password"] {
+.loginContainer input[type="text"],
+.loginContainer input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -36,7 +44,7 @@ body {
     border-radius: 4px;
 }
 
-.login-container button {
+.loginContainer button {
     width: 100%;
     padding: 10px;
     background-color: #007BFF;
@@ -47,12 +55,12 @@ body {
     cursor: pointer;
 }
 
-.login-container button:hover {
+.loginContainer button:hover {
     background-color: #0056b3;
 }
 
 /* Additional styles */
-.login-container .forgot-password {
+.loginContainer .forgot-password {
     text-align: right;
     display: block;
     margin-top: 10px;
@@ -60,6 +68,6 @@ body {
     text-decoration: none;
 }
 
-.login-container .forgot-password:hover {
+.loginContainer .forgot-password:hover {
     text-decoration: underline;
 }

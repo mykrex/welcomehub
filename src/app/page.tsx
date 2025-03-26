@@ -1,5 +1,5 @@
 'use client';
-import stylelogin from 'style/stylelogin.module.css';
+import stylelogin from './styles/stylelogin.module.css';
 import { useState } from 'react';
 import { useUser } from '../app/context/UserContext'
 import { useRouter } from 'next/navigation';
@@ -49,9 +49,9 @@ export default function Home() {
           <div>
 
           </div>
-          <div className="login-countainer">
-              <h2 className="text-2xl font-semibold mb-4">Inicia sesión</h2>
-              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          <div className={stylelogin.loginContainer}>
+          <h2 className={stylelogin.title}>Inicia sesión</h2>
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <form onSubmit={handleSubmit} className="space-y-4 w-full">
                   <div>
                       <label className="block text-sm font-medium">Correo Electrónico</label>
