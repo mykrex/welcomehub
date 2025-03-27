@@ -12,23 +12,21 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
-  const validatePassword = (password: string) => {
-      const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-      return regex.test(password);
-  };
+
+  const emailPattern = /^[^\s@]+@neoris\.mx$/
+  const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
   const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       setError('');
 
-      if (!email.includes('@')) {
+      if (!emailPattern.test(email)) {
           setError('Invalid email address');
           return;
       }
       
-      if (!validatePassword(password)) {
-          setError('Password must be at least 8 characters, include one capital letter, and one special character');
+      if (!passwordPattern.test(password)) {
+          setError('Password must be at least 8 characters, include one capital letter, one special character and one digit');
           return;
       }
 
