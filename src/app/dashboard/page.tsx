@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from "react";
-import { getChatbotResponse } from "../huggingface";
+import { getChatbotResponse } from "../chatgpt";
 
 export default function Home() {
   useEffect(() => {
