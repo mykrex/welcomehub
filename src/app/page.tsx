@@ -31,7 +31,7 @@ export default function Home() {
       }
 
       setUser({ email });
-      router.push('/MiPerfil'); // Redirect to dashboard after login
+      router.push('/dashboard'); // Redirect to dashboard after login
   };
 
   return (
