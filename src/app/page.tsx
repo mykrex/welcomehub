@@ -35,8 +35,8 @@ export default function Home() {
   };
 
   return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-          <div className="text-center absolute top-8 text-4xl font-bold">
+      <div className="flex flex-col justify-center items-center h-screen text-white bg-[url(/bg_login.png)]">
+          <div className="flexjustify-center items-center mb-8">
               <Image
                 src="/welcomehub.png"
                 alt="Logo"
@@ -44,10 +44,8 @@ export default function Home() {
                 height={10}
               />
           </div>
-          <div>
-
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg shadow-md w-96 text-white flex flex-col items-center">
+          
+          <div className="bg-gray-700/85 p-4 rounded-lg shadow-md w-96 text-white flex flex-col items-center">
               <h2 className="text-2xl font-semibold mb-4">Inicia sesión</h2>
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <form onSubmit={handleSubmit} className="space-y-4 w-full">
