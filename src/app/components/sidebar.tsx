@@ -12,7 +12,7 @@ const Sidebar = () => {
         <button className="w-full h-16 flex items-center gap-4 px-6 rounded-xl bg-gradient-to-r from-[#448AFF] to-[#1565C0] shadow-md backdrop-blur-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
+            width="24"s
             height="24"
             viewBox="0 0 20 20"
             fill="none"
@@ -26,7 +26,7 @@ const Sidebar = () => {
         </button>
       </div>
 
-      {/* Cursos Button */}
+      {/* Cursos Buttonssssss */}
       <div className="w-full flex items-center gap-4 px-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
