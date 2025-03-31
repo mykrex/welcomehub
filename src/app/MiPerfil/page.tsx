@@ -89,7 +89,7 @@ export default function MiPerfil() {
                         {/*} Equipo */}
                         <section className="p-2 border-b border-gray-500 mt-4 space-y-2">
                             <Titulo title="Mi Equipo"/>
-                            <p className="text-gray-300 mb-2">Financiamiento PMI's</p>
+                            <p className="text-gray-300 mb-2">Financiamiento PMI´s</p>
                             <div className="grid [grid-template-columns:1fr_2fr_3fr] gap-y-2">
                                 {team.map((miembro, i) => (
                                     <Fragment key={i}>

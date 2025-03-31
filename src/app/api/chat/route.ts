@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     const answer = chatResponse.choices[0].message.content;
 
     return NextResponse.json({ response: answer });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error con la API de OpenAI:", error); // 👈 esta línea
     return NextResponse.json(
       { error: "Hubo un error al procesar tu solicitud." },

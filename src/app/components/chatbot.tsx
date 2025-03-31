@@ -22,8 +22,8 @@ export default function Chatbot() {
 
       const data = await res.json();
       setResponse(data.response);
-    } catch (error) {
-      setResponse("Error obteniendo respuesta.");
+    } catch (error: unknown) {
+      setResponse("Error obteniendo respuesta: "+ String(error));
     } finally {
       setLoading(false);
     }
