@@ -1,0 +1,648 @@
+/* CSS - VerCursos */
+/* Font Manrope*/
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap");
+
+/* Background */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  background-color: #000F14 ;
+}
+
+.ver-cursos-main {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: #000f14;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+/* Componente -> MENU */
+/* Container */
+.sidebar-container {
+  width: 200px;
+  height: 100%;
+  padding: 10px 10px 20px 10px; /*Padding arriba era 30 */
+  background: #001f29;
+  overflow: hidden;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Logo section */
+.logo-container {
+  width: 155px;
+  height: 45px;
+  position: relative;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Menu list */
+.menu-list {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+/* Menu item */
+.menu-item {
+  align-self: stretch;
+  height: 60px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Icon styles */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+.inactive-icon {
+  color: #9daaa6;
+}
+.active-icon {
+  color: #f3f2f2;
+}
+
+/* Label styles */
+.label {
+  font-size: 20px;
+  font-family: "Manrope";
+  font-weight: 400;
+  word-wrap: break-word;
+  color: white;
+}
+
+.label.inactive {
+  color: #9daaa6;
+}
+
+.menu-item.active {
+  background: #0b88d5;
+}
+
+.menu-item.active .label {
+  color: white;
+}
+
+/* CONTENT */
+.page-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+/* Navbar */
+.navbar {
+  align-self: stretch;
+  width: 100%;
+  max-width: none;
+  padding: 20px 15px 20px 30px;
+  background: #001f29;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-title {
+  color: white;
+  font-size: 24px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+}
+
+.navbar-right {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-status-bar {
+  width: 500px;
+  height: 40px;
+  padding: 10px;
+  background: #ebfaff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-icons {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.icon-placeholder {
+  width: 30px;
+  height: 30px;
+  color: #9daaa6;
+}
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 64.5px;
+}
+
+/* -------------- MAIN CONTENT -------------- */
+
+/* Outer container to center and stretch the progress card */
+.progress-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Actual progress card */
+.progress-card {
+  flex: 1;
+  max-width: none;
+  background: #141414;
+  padding: 20px 30px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header section */
+.progress-header {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.progress-label {
+  color: #999999;
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+}
+
+.progress-percent {
+  color: #34c759;
+  font-size: 40px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+}
+
+.progress-completed-text {
+  color: #34c759;
+  font-size: 30px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+}
+
+/* Progress bar line + circles */
+.progress-line-wrapper {
+  position: relative;
+  width: 100%;
+  height:60px;
+}
+
+.progress-line-bg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: #C7C7CC;
+  border-radius: 5px;
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.progress-line-fill {
+  height: 20px;
+  background: #34C759;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.progress-circles {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-family: "Manrope", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.circle.completed {
+  background: #34c759;
+  color: white;
+}
+
+.circle.remaining {
+  background: #c7c7cc;
+  color: #636364;
+}
+
+/* Legend below the progress */
+.progress-legend {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+}
+
+.legend-dot.green {
+  background: #34c759;
+}
+
+.legend-dot.gray {
+  background: #d4cece;
+}
+
+.legend-text {
+  color: white;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+}
+
+
+
+.main-content {
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* NEW inner wrapper handles layout and gap */
+.main-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height:2000px;
+}
+
+/*Atencion, mi puntaje y tiempo*/
+.course-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.course-card {
+  width: 100%;
+  padding: 20px 30px;
+  background: #141414;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.course-main {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.course-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.course-title {
+  color: white;
+  font-size: 30px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 500;
+}
+
+.course-description {
+  width: 708px;
+  color: #999999;
+  font-size: 18px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 300;
+}
+
+.course-meta {
+  width: 754px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+}
+
+.instructor-info {
+  width: 347px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.instructor-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 9999px;
+}
+
+.instructor-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.instructor-label,
+.instructor-name {
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  word-wrap: break-word;
+}
+
+.instructor-label {
+  font-weight: 700;
+  color: white;
+}
+
+.instructor-name {
+  font-weight: 400;
+  color: white;
+}
+
+.course-duration {
+  height: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.duration-label,
+.duration-time {
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  word-wrap: break-word;
+}
+
+.duration-label {
+  font-weight: 700;
+  color: white;
+}
+
+.duration-time {
+  font-weight: 400;
+  color: white;
+}
+
+.course-image {
+  height: 205px;
+  border-radius: 15px;
+}
+
+.learning-title {
+  color: white;
+  font-size: 20px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 500;
+}
+
+.learning-points {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+}
+
+.point-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.point {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bullet {
+  width: 30px;
+  height: 30px;
+  background: #06D6A0;
+}
+
+.text {
+  color: #999999;
+  font-size: 16px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 300;
+}
+
+.course-stats {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.score-card,
+.time-card {
+  width: 354px;
+  padding: 20px 30px;
+  background: #141414;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-title,
+.time-title {
+  color: #8A8A8A;
+  font-size: 20px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 400;
+  text-align: center;
+}
+
+.score-value,
+.time-value {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  justify-content: center;
+}
+
+.score-number,
+.time-number {
+  font-size: 70px;
+  font-weight: 600;
+  font-family: 'SF Pro Display', sans-serif;
+  color: #FF735C;
+}
+
+.score-percent,
+.time-unit {
+  font-size: 20px;
+  font-weight: 400;
+  color: #FF735C;
+}
+
+.score-bar {
+  width: 70px;
+  height: 68.85px;
+  background: #FF735C;
+}
+
+.time-icon {
+  width: 70px;
+  height: 70px;
+  position: relative;
+}
+
+.clock-face {
+  width: 58.33px;
+  height: 58.33px;
+  position: absolute;
+  top: 5.83px;
+  left: 5.83px;
+  background: #F57C00;
+}
+
+.clock-hand {
+  width: 11.67px;
+  height: 23.33px;
+  position: absolute;
+  top: 21.15px;
+  left: 32.81px;
+  background: white;
+}
+
+.score-info,
+.time-info {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.score-highlight,
+.time-highlight {
+  font-size: 15px;
+  font-weight: 300;
+  text-decoration: underline;
+  color: #FF735C;
+}
+
+.score-high,
+.time-high {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FF735C;
+}
+
+.score-comparison,
+.time-comparison {
+  font-size: 15px;
+  font-weight: 300;
+  color: #8A8A8A;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  padding: 20px;
+  gap: 15px;
+}
+
+.sidebar-container {
+  flex-shrink: 0;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  gap: 12px; 
+}
+
+.navbar {
+  flex-shrink: 0;
+}
