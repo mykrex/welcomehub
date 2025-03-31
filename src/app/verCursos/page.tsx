@@ -3,6 +3,8 @@ import React from "react";
 import "./verCursos.css";
 import logo24 from "./whLogo24.png";
 import profilePicture from "./profilePicture.png";
+import fotoProfe from "./fotoProfe.png";
+import fotoCurso from "./fotoCurso.png";
 
 //ICONS
 import DashboardIcon from "./icons/DashboardIcon";
@@ -89,8 +91,6 @@ export default function VerCursos() {
         {/*MAIN CONTENT*/}
         <div className="main-content">
           <div className="main-inner">
-
-
             {/*Progress bar*/}
             <div className="progress-container">
               <div className="progress-card">
@@ -132,12 +132,11 @@ export default function VerCursos() {
               {/* END OF PROGRESS CARD */}
             </div>
 
-
-            {/*COURSE CARD*/}
+            {/*COURSE CARD -> Descripcion de Curso*/}
             <div className="course-page">
               <div className="course-card">
-                <div className="course-main">
-                  <div className="course-info">
+                <div className="course-info">
+                  <div className="course-content">
                     <div className="course-title">
                       Atencion al Cliente y Ventas
                     </div>
@@ -152,7 +151,8 @@ export default function VerCursos() {
                     <div className="course-meta">
                       <div className="instructor-info">
                         <img
-                          src="https://placehold.co/50x50"
+                          src={fotoProfe.src}
+                          alt="Instructor"
                           className="instructor-avatar"
                         />
                         <div className="instructor-text">
@@ -172,7 +172,8 @@ export default function VerCursos() {
                   </div>
                   <img
                     className="course-image"
-                    src="https://placehold.co/195x205"
+                    src={fotoCurso.src}
+                    alt="Curso"
                   />
                 </div>
 
@@ -208,10 +209,17 @@ export default function VerCursos() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          {/* END OF MAIN CONTENT RIGHT */}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-
-
-
+{
+  /*}
               <div className="course-stats">
                 <div className="score-card">
                   <div className="score-title">Mi Puntaje</div>
@@ -247,11 +255,5 @@ export default function VerCursos() {
                 </div>
               </div>
             </div>{" "}
-            {/* END OF COURSE PAGE */}
-          </div>
-          {/* END OF MAIN CONTENT RIGHT */}
-        </div>
-      </div>
-    </div>
-  );
+            */
 }

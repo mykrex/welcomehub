@@ -195,7 +195,7 @@ body,
 .progress-card {
   flex: 1;
   max-width: none;
-  background: #141414;
+  background: #042C45;
   padding: 20px 30px;
   border-radius: 15px;
   display: flex;
@@ -335,6 +335,7 @@ body,
   margin: 0;
   overflow-y: auto;
   padding-right: 10px;
+  
 }
 
 /* NEW inner wrapper handles layout and gap */
@@ -356,13 +357,13 @@ body,
 }
 
 .course-card {
-  width: 100%;
-  padding: 20px 30px;
-  background: #141414;
+  background: #042C45;
   border-radius: 15px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
+  overflow: hidden;
 }
 
 .course-main {
@@ -370,18 +371,19 @@ body,
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 30px;
 }
 
 .course-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
 }
 
 .course-title {
   color: white;
   font-size: 30px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
 }
 
@@ -389,8 +391,10 @@ body,
   width: 708px;
   color: #999999;
   font-size: 18px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 300;
+  flex: 1;
+  min-width: 0;
 }
 
 .course-meta {
@@ -398,7 +402,7 @@ body,
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
 }
 
 .instructor-info {
@@ -462,14 +466,18 @@ body,
 }
 
 .course-image {
-  height: 205px;
+  max-width: 220px;
+  width: 100%;
+  height: auto;
   border-radius: 15px;
+  object-fit: cover;
+  flex-shrink: 0; 
 }
 
 .learning-title {
   color: white;
   font-size: 20px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
 }
 
@@ -501,7 +509,7 @@ body,
 .text {
   color: #999999;
   font-size: 16px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 300;
 }
 
@@ -516,7 +524,7 @@ body,
 .time-card {
   width: 354px;
   padding: 20px 30px;
-  background: #141414;
+  background: #042C45;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -527,7 +535,7 @@ body,
 .time-title {
   color: #8A8A8A;
   font-size: 20px;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 400;
   text-align: center;
 }
@@ -544,7 +552,7 @@ body,
 .time-number {
   font-size: 70px;
   font-weight: 600;
-  font-family: 'SF Pro Display', sans-serif;
+  font-family: 'Manrope', sans-serif;
   color: #FF735C;
 }
 
@@ -628,6 +636,7 @@ html, body, #root {
   overflow: hidden;
   padding: 20px;
   gap: 15px;
+  
 }
 
 .sidebar-container {
@@ -644,5 +653,32 @@ html, body, #root {
 }
 
 .navbar {
+  flex-shrink: 0;
+}
+
+
+.course-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.course-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.course-image {
+  width: 220px;
+  max-width: 220px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
   flex-shrink: 0;
 }
