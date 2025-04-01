@@ -33,6 +33,7 @@ export default function Chatbot() {
       const botMessage: Message = { sender: "bot", text: data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
+      console.error("Error:", error);
       const errorMwssage: Message = { sender: "bot", text: "Error al obtener la respuesta" };
       setMessages((prev) => [...prev, errorMwssage]);
     } finally {
