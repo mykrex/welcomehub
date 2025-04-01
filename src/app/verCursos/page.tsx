@@ -7,6 +7,7 @@ import fotoProfe from "./fotoProfe.png";
 import fotoCurso from "./fotoCurso.png";
 
 //ICONS
+import WelcomeHubLogo from "./icons/WelcomeHubLogo";
 import DashboardIcon from "./icons/DashboardIcon";
 import CursosIcon from "./icons/CursosIcon";
 import RetosIcon from "./icons/RetosIcon";
@@ -15,6 +16,7 @@ import NeorisIcon from "./icons/NeorisIcon";
 import SearchIcon from "./icons/SearchIcon";
 import NotificationIcon from "./icons/NotificationIcon";
 import SettingsIcon from "./icons/SettingsIcon";
+import CheckmarkIcon from "./icons/CheckmarkIcon";
 
 export default function VerCursos() {
   return (
@@ -24,7 +26,7 @@ export default function VerCursos() {
         <div className="sidebar-container">
           {/*Logo WelcomeHub*/}
           <div className="logo-container">
-            <img src={logo24.src} alt="Logo" className="logo-image" />
+            <WelcomeHubLogo className="logo-image"/>
           </div>
 
           <div className="menu-list">
@@ -148,6 +150,7 @@ export default function VerCursos() {
                       estrategias de persuasión para mejorar la experiencia del
                       cliente y alcanzar mejores resultados comerciales.
                     </div>
+
                     <div className="course-meta">
                       <div className="instructor-info">
                         <img
@@ -181,13 +184,13 @@ export default function VerCursos() {
                 <div className="learning-points">
                   <div className="point-column">
                     <div className="point">
-                      <div className="bullet" />
+                      <CheckmarkIcon className="bullet" />
                       <div className="text">
                         Desarrollar habilidades de comunicación efectiva
                       </div>
                     </div>
                     <div className="point">
-                      <div className="bullet" />
+                      <CheckmarkIcon className="bullet" />
                       <div className="text">
                         Aplicar técnicas de ventas estratégicas
                       </div>
@@ -195,13 +198,13 @@ export default function VerCursos() {
                   </div>
                   <div className="point-column">
                     <div className="point">
-                      <div className="bullet" />
+                      <CheckmarkIcon className="bullet" />
                       <div className="text">
                         Manejar objeciones y resolver problemas con clientes
                       </div>
                     </div>
                     <div className="point">
-                      <div className="bullet" />
+                      <CheckmarkIcon className="bullet" />
                       <div className="text">
                         Comprender la psicología del consumidor
                       </div>

@@ -28,9 +28,9 @@ body,
 /* Componente -> MENU */
 /* Container */
 .sidebar-container {
-  width: 200px;
-  height: 100%;
-  padding: 10px 10px 20px 10px; /*Padding arriba era 30 */
+  width: 160px; /* Era 200px */
+  height: 100%; 
+  padding: 10px 10px 10px 10px; /*Padding arriba era 30 */
   background: #001f29;
   overflow: hidden;
   border-radius: 15px;
@@ -43,8 +43,8 @@ body,
 
 /* Logo section */
 .logo-container {
-  width: 155px;
-  height: 45px;
+  width: 120px;
+  height: 35px;
   position: relative;
 }
 
@@ -62,15 +62,15 @@ body,
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
+  width: 140px;
 }
 
 /* Menu item */
 .menu-item {
   align-self: stretch;
-  height: 60px;
-  padding: 10px 20px;
+  height: 100%;
+  padding: 10px 15px;
   border-radius: 12px;
-  backdrop-filter: blur(2px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -79,8 +79,8 @@ body,
 
 /* Icon styles */
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 100%;
 }
 .inactive-icon {
   color: #9daaa6;
@@ -91,7 +91,7 @@ body,
 
 /* Label styles */
 .label {
-  font-size: 20px;
+  font-size: 16px;
   font-family: "Manrope";
   font-weight: 400;
   word-wrap: break-word;
@@ -125,18 +125,18 @@ body,
   align-self: stretch;
   width: 100%;
   max-width: none;
-  padding: 20px 15px 20px 30px;
+  padding: 10px 15px 10px 30px; /*top, right, bottom, left */
   background: #001f29;
   border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: auto;
 }
 
 .navbar-title {
   color: white;
-  font-size: 24px;
+  font-size: 20px;
   font-family: "Manrope", sans-serif;
   font-weight: 800;
 }
@@ -151,7 +151,7 @@ body,
 
 .navbar-status-bar {
   width: 500px;
-  height: 40px;
+  height: 30px;
   padding: 10px;
   background: #ebfaff;
   border-radius: 10px;
@@ -164,17 +164,17 @@ body,
   height: 50px;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
 }
 
 .icon-placeholder {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   color: #9daaa6;
 }
 .profile-pic {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 64.5px;
 }
 
@@ -398,18 +398,18 @@ body,
 }
 
 .course-meta {
-  width: 754px;
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
+  /*justify-content: space-between;*/
+  align-items: flex-start;
+  gap: 120px;
 }
 
 .instructor-info {
-  width: 347px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
+  flex-shrink: 0; 
 }
 
 .instructor-avatar {
@@ -442,10 +442,11 @@ body,
 }
 
 .course-duration {
-  height: 8px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-content: flex-start;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .duration-label,
@@ -503,7 +504,6 @@ body,
 .bullet {
   width: 30px;
   height: 30px;
-  background: #06D6A0;
 }
 
 .text {
