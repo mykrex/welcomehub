@@ -19,5 +19,5 @@ export async function getChatbotResponse(message: string): Promise<string> {
       console.error("Error en ChatGPT API:", String(err));
     }
     return "Hubo un error al procesar tu solicitud.";
-  }
+  }
 }
