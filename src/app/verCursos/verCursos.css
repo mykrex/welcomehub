@@ -135,11 +135,39 @@ body,
 }
 
 .navbar-title {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.navbar-title-main {
   color: white;
   font-size: 20px;
   font-family: "Manrope", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
+  text-decoration: underline;
+  word-wrap: break-word;
 }
+
+.navbar-title-arrow {
+  color: #C7C7CC;
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.navbar-title-sub {
+  color: #C7C7CC;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
 
 .navbar-right {
   flex: 1 1 0;
@@ -179,125 +207,94 @@ body,
 }
 
 /* -------------- MAIN CONTENT -------------- */
-
-/* Outer container to center and stretch the progress card */
+/* Progress bar */
 .progress-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  display: flex;
+  height: 100%;
+  padding: 20px 30px;
+  background: #042C45;
+  border-radius: 15px;
+  display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* Actual progress card */
-.progress-card {
-  flex: 1;
-  max-width: none;
-  background: #042C45;
-  padding: 20px 30px;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Header section */
-.progress-header {
-  display: flex;
-  flex-direction: column;
   gap: 5px;
 }
 
-.progress-label {
-  color: #999999;
-  font-size: 20px;
-  font-family: "Manrope", sans-serif;
+.progress-header {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-title {
+  color: #EBFAFF;
+  font-size: 28px;
+  font-family: 'Manrope', sans-serif;
   font-weight: 400;
 }
 
 .progress-percent {
-  color: #34c759;
-  font-size: 40px;
-  font-family: "Manrope", sans-serif;
+  color: #4DAA57;
+  font-size: 24px;
+  font-family: 'Manrope', sans-serif;
   font-weight: 500;
 }
 
-.progress-completed-text {
-  color: #34c759;
-  font-size: 30px;
-  font-family: "Manrope", sans-serif;
-  font-weight: 400;
+.progress-steps-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* Progress bar line + circles */
-.progress-line-wrapper {
-  position: relative;
-  width: 100%;
-  height:60px;
-}
 
-.progress-line-bg {
+.progress-steps {
   position: absolute;
   top: 50%;
   left: 0;
   right: 0;
-  height: 20px;
-  background: #C7C7CC;
-  border-radius: 5px;
-  z-index: 0;
   transform: translateY(-50%);
-}
-
-.progress-line-fill {
-  height: 20px;
-  background: #34C759;
-  border-radius: 5px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  z-index: 1;
-  transform: translateY(-50%);
-}
-
-.progress-circles {
+  z-index: 2;
   display: flex;
   justify-content: space-between;
-  position: relative;
-  z-index: 2;
-  width: 100%;
-}
-
-.circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  font-family: "Manrope", sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+
+.step {
+  width: 50px;
+  height: 50px;
+  padding: 12px 22px;
+  border-radius: 30px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.circle.completed {
-  background: #34c759;
-  color: white;
+.step.completed {
+  background: #4DAA57;
+  color: #053C5E;
+  font-size: 25px;
 }
 
-.circle.remaining {
-  background: #c7c7cc;
-  color: #636364;
+.step.remaining {
+  background: #C7C7CC;
+  color: #053C5E;
+  font-size: 20px;
 }
 
-/* Legend below the progress */
 .progress-legend {
+  align-self: stretch;
+  padding-top: 10px;
   display: flex;
   justify-content: center;
   gap: 50px;
-  margin-top: 10px;
 }
 
 .legend-item {
@@ -306,26 +303,302 @@ body,
   gap: 10px;
 }
 
-.legend-dot {
-  width: 20px;
-  height: 20px;
+.dot {
+  width: 25px;
+  height: 25px;
   border-radius: 9999px;
 }
 
-.legend-dot.green {
-  background: #34c759;
+.dot.green {
+  background: #4DAA57;
 }
 
-.legend-dot.gray {
-  background: #d4cece;
+.dot.gray {
+  background: #D4CECE;
 }
 
-.legend-text {
+.legend-label {
   color: white;
-  font-size: 18px;
-  font-family: "Manrope", sans-serif;
+  font-size: 20px;
+  font-family: 'Manrope', sans-serif;
   font-weight: 300;
 }
+
+.progress-bar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.bar-total,
+.bar-completed {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 15px;
+  border-radius: 5px;
+}
+
+.bar-total {
+  width: 100%;
+  background: #C7C7CC;
+  z-index: 0;
+}
+
+.bar-completed {
+  background: #4DAA57;
+  z-index: 1;
+}
+
+.progress-tracker-wrapper {
+  position: relative;
+  width: 100%;
+  height: 60px; /* Enough height for circles and bar */
+}
+
+.progress-bottom {
+  display: flex;
+  flex-direction: column; /* stack tracker and legend vertically */
+  gap: 5px;
+  width: 100%;
+}
+
+/*--------------ROW 1 ----------------*/
+
+.course-row {
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: inline-flex;
+}
+
+.course-description-card {
+  width: 934.5px;
+  padding: 20px 30px;
+  background: #042C45;
+  border-radius: 15px;
+  outline: 5px solid #042C45;
+  outline-offset: -5px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.course-title {
+  color: #EBFAFF;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
+
+.course-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meta-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.meta-label {
+  color: #C2F0FF;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
+
+.meta-value {
+  color: #C2F0FF;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 400;
+}
+
+.course-paragraph {
+  color: #9DAAA6;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  text-align: justify;
+}
+
+.learning-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.learning-title {
+  color: #EBFAFF;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+}
+
+.learning-columns {
+  display: flex;
+  gap: 50px;
+}
+
+.learning-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.learning-point {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.large-box {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #0B88D5;
+}
+
+.small-box {
+  width: 8.89px;
+  height: 8.89px;
+  border: 3px solid #0B88D5;
+}
+
+.learning-text {
+  color: #8BCFF9;
+  font-size: 16px;
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 300;
+}
+
+.course-stats {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.score-card,
+.time-card {
+  padding: 20px;
+  background: #042C45;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-title {
+  color: #EBFAFF;
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  width: 100%;
+}
+
+.score-value {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.score-main {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.score-number {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: "Manrope", sans-serif;
+  color: #51B6F6;
+}
+
+.score-percent,
+.time-unit {
+  font-size: 15px;
+  font-weight: 400;
+  color: #51B6F6;
+}
+
+.score-bar {
+  width: 46px;
+  height: 45px;
+  background: #51B6F6;
+}
+
+.time-icon {
+  width: 45px;
+  height: 45px;
+  position: relative;
+}
+
+.clock-face {
+  width: 37.29px;
+  height: 37.29px;
+  position: absolute;
+  top: 4.66px;
+  left: 3.86px;
+  background: #8BCFF9;
+}
+
+.clock-hand {
+  width: 7.5px;
+  height: 15px;
+  position: absolute;
+  top: 14.34px;
+  left: 21.21px;
+  background: #042C45;
+}
+
+.score-info {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+}
+
+.highlight {
+  color: #51B6F6;
+  font-weight: 700;
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+.highlight-bold {
+  color: #51B6F6;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.normal {
+  color: #9DAAA6;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -344,283 +617,6 @@ body,
   flex-direction: column;
   gap: 20px;
   min-height:2000px;
-}
-
-/*Atencion, mi puntaje y tiempo*/
-.course-page {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
-}
-
-.course-card {
-  background: #042C45;
-  border-radius: 15px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  overflow: hidden;
-}
-
-.course-main {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-}
-
-.course-info {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.course-title {
-  color: white;
-  font-size: 30px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-}
-
-.course-description {
-  width: 708px;
-  color: #999999;
-  font-size: 18px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 300;
-  flex: 1;
-  min-width: 0;
-}
-
-.course-meta {
-  width: 100%;
-  display: flex;
-  /*justify-content: space-between;*/
-  align-items: flex-start;
-  gap: 120px;
-}
-
-.instructor-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0; 
-}
-
-.instructor-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 9999px;
-}
-
-.instructor-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.instructor-label,
-.instructor-name {
-  font-size: 16px;
-  font-family: 'Inter', sans-serif;
-  word-wrap: break-word;
-}
-
-.instructor-label {
-  font-weight: 700;
-  color: white;
-}
-
-.instructor-name {
-  font-weight: 400;
-  color: white;
-}
-
-.course-duration {
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.duration-label,
-.duration-time {
-  font-size: 16px;
-  font-family: 'Inter', sans-serif;
-  word-wrap: break-word;
-}
-
-.duration-label {
-  font-weight: 700;
-  color: white;
-}
-
-.duration-time {
-  font-weight: 400;
-  color: white;
-}
-
-.course-image {
-  max-width: 220px;
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-  object-fit: cover;
-  flex-shrink: 0; 
-}
-
-.learning-title {
-  color: white;
-  font-size: 20px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 500;
-}
-
-.learning-points {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 50px;
-}
-
-.point-column {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.point {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.bullet {
-  width: 30px;
-  height: 30px;
-}
-
-.text {
-  color: #999999;
-  font-size: 16px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 300;
-}
-
-.course-stats {
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.score-card,
-.time-card {
-  width: 354px;
-  padding: 20px 30px;
-  background: #042C45;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.score-title,
-.time-title {
-  color: #8A8A8A;
-  font-size: 20px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 400;
-  text-align: center;
-}
-
-.score-value,
-.time-value {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  justify-content: center;
-}
-
-.score-number,
-.time-number {
-  font-size: 70px;
-  font-weight: 600;
-  font-family: 'Manrope', sans-serif;
-  color: #FF735C;
-}
-
-.score-percent,
-.time-unit {
-  font-size: 20px;
-  font-weight: 400;
-  color: #FF735C;
-}
-
-.score-bar {
-  width: 70px;
-  height: 68.85px;
-  background: #FF735C;
-}
-
-.time-icon {
-  width: 70px;
-  height: 70px;
-  position: relative;
-}
-
-.clock-face {
-  width: 58.33px;
-  height: 58.33px;
-  position: absolute;
-  top: 5.83px;
-  left: 5.83px;
-  background: #F57C00;
-}
-
-.clock-hand {
-  width: 11.67px;
-  height: 23.33px;
-  position: absolute;
-  top: 21.15px;
-  left: 32.81px;
-  background: white;
-}
-
-.score-info,
-.time-info {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  text-align: center;
-}
-
-.score-highlight,
-.time-highlight {
-  font-size: 15px;
-  font-weight: 300;
-  text-decoration: underline;
-  color: #FF735C;
-}
-
-.score-high,
-.time-high {
-  font-size: 15px;
-  font-weight: 700;
-  color: #FF735C;
-}
-
-.score-comparison,
-.time-comparison {
-  font-size: 15px;
-  font-weight: 300;
-  color: #8A8A8A;
 }
 
 html, body, #root {
