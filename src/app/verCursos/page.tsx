@@ -1,10 +1,8 @@
 //Pagina de ver cursos - MARUCA
 import React from "react";
 import "./verCursos.css";
-import logo24 from "./whLogo24.png";
 import profilePicture from "./profilePicture.png";
-import fotoProfe from "./fotoProfe.png";
-import fotoCurso from "./fotoCurso.png";
+
 
 //ICONS
 import WelcomeHubLogo from "./icons/WelcomeHubLogo";
@@ -16,7 +14,9 @@ import NeorisIcon from "./icons/NeorisIcon";
 import SearchIcon from "./icons/SearchIcon";
 import NotificationIcon from "./icons/NotificationIcon";
 import SettingsIcon from "./icons/SettingsIcon";
-import CheckmarkIcon from "./icons/CheckmarkIcon";
+import BullseyeIcon from "./icons/BullseyeIcon";
+import ArrowIcon from "./icons/ArrowIcon";
+import ClockIcon from "./icons/ClockIcon";
 
 export default function VerCursos() {
   return (
@@ -157,37 +157,44 @@ export default function VerCursos() {
 
                 <div className="learning-section">
                   <div className="learning-title">Puntos de Aprendizaje</div>
-                  
+
                   <div className="learning-columns">
-                    
                     <div className="learning-column">
                       <div className="learning-point">
-                        <div className="large-box" />
-                        <div className="small-box" />
+                        <div className="bullet-container">
+                          <div className="large-circle" />
+                          <div className="small-circle" />
+                        </div>
                         <div className="learning-text">
                           Desarrollar habilidades de comunicación efectiva
                         </div>
                       </div>
                       <div className="learning-point">
-                        <div className="large-box" />
-                        <div className="small-box" />
+                        <div className="bullet-container">
+                          <div className="large-circle" />
+                          <div className="small-circle" />
+                        </div>
                         <div className="learning-text">
                           Aplicar técnicas de ventas estratégicas
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="learning-column">
                       <div className="learning-point">
-                        <div className="large-box" />
-                        <div className="small-box" />
+                        <div className="bullet-container">
+                          <div className="large-circle" />
+                          <div className="small-circle" />
+                        </div>
                         <div className="learning-text">
                           Manejar objeciones y resolver problemas con clientes
                         </div>
                       </div>
                       <div className="learning-point">
-                        <div className="large-box" />
-                        <div className="small-box" />
+                        <div className="bullet-container">
+                          <div className="large-circle" />
+                          <div className="small-circle" />
+                        </div>
                         <div className="learning-text">
                           Comprender la psicología del consumidor
                         </div>
@@ -200,14 +207,17 @@ export default function VerCursos() {
               <div className="course-stats">
                 <div className="score-card">
                   <div className="card-title">Puntaje Promedio</div>
+
                   <div className="score-value">
                     <div className="score-main">
                       <div className="score-number">92</div>
                       <div className="score-percent">%</div>
                     </div>
-                    <div className="score-bar" />
+                    <BullseyeIcon className="stat-icon" />
                   </div>
+
                   <div className="score-info">
+                    <ArrowIcon className="arrow-icon arrow-up" />
                     <span className="highlight">13.7%</span>
                     <span className="normal">mas</span>
                     <span className="highlight-bold">alto</span>
@@ -222,12 +232,10 @@ export default function VerCursos() {
                       <div className="time-number">45</div>
                       <div className="time-unit">min/dia</div>
                     </div>
-                    <div className="time-icon">
-                      <div className="clock-face" />
-                      <div className="clock-hand" />
-                    </div>
+                    <ClockIcon className="stat-icon" />
                   </div>
                   <div className="score-info">
+                    <ArrowIcon className="arrow-icon arrow-down" />
                     <span className="highlight">5.6%</span>
                     <span className="normal">mas</span>
                     <span className="highlight-bold">bajo</span>
@@ -237,85 +245,62 @@ export default function VerCursos() {
               </div>
             </div>
 
-            {/*COURSE CARD -> Descripcion de Curso
-            <div className="course-page">
-              <div className="course-card">
-                <div className="course-info">
-                  <div className="course-content">
-                    <div className="course-title">
-                      Atencion al Cliente y Ventas
-                    </div>
-                    <div className="course-description">
-                      Este curso proporciona las habilidades esenciales para
-                      interactuar de manera efectiva con los clientes, brindando
-                      un servicio de calidad y potenciando las ventas. Incluye
-                      técnicas de comunicación, resolución de problemas y
-                      estrategias de persuasión para mejorar la experiencia del
-                      cliente y alcanzar mejores resultados comerciales.
-                    </div>
+            {/* LISTA DE MODULOS */}
+            <div className="modules-wrapper">
+              <div className="modules-header">Modulos</div>
 
-                    <div className="course-meta">
-                      <div className="instructor-info">
-                        <img
-                          src={fotoProfe.src}
-                          alt="Instructor"
-                          className="instructor-avatar"
-                        />
-                        <div className="instructor-text">
-                          <span className="instructor-label">Instructor: </span>
-                          <span className="instructor-name">
-                            David Hernandez Sanchez
-                          </span>
-                        </div>
-                      </div>
-                      <div className="course-duration">
-                        <span className="duration-label">
-                          Tiempo estimado de finalización:{" "}
-                        </span>
-                        <span className="duration-time">3 horas</span>
-                      </div>
+              <div className="module-card">
+                <div className="module-summary">
+                  <div className="module-title">
+                    <div className="module-status-circle green" />
+                    <div className="module-name">
+                      <span className="module-name-number">Modulo 1:</span>
+                      <span className="module-name-text">
+                        Fundamentos de la Atención al Cliente
+                      </span>
                     </div>
                   </div>
-                  <img
-                    className="course-image"
-                    src={fotoCurso.src}
-                    alt="Curso"
-                  />
+
+                  <div className="module-meta">
+                    <div className="module-progress completed">
+                      <div className="module-progress-number">4/4</div>
+                      <div className="module-progress-label">Completado</div>
+                    </div>
+                    <div className="module-arrow" />
+                  </div>
                 </div>
 
-                <div className="learning-title">Lo que aprenderás</div>
-                <div className="learning-points">
-                  <div className="point-column">
-                    <div className="point">
-                      <CheckmarkIcon className="bullet" />
-                      <div className="text">
-                        Desarrollar habilidades de comunicación efectiva
-                      </div>
+                <div className="module-content">
+                  <div className="module-description">
+                    <div className="description-title">
+                      Descripcion de Modulo
                     </div>
-                    <div className="point">
-                      <CheckmarkIcon className="bullet" />
-                      <div className="text">
-                        Aplicar técnicas de ventas estratégicas
-                      </div>
+                    <div className="description-text">
+                      Este módulo introduce los principios clave de la atención
+                      al cliente, destacando la importancia de la comunicación
+                      efectiva y la empatía en la experiencia del consumidor.
                     </div>
                   </div>
-                  <div className="point-column">
-                    <div className="point">
-                      <CheckmarkIcon className="bullet" />
-                      <div className="text">
-                        Manejar objeciones y resolver problemas con clientes
+
+                  <div className="module-subsections">
+                    <div className="subsections-title">Subsecciones</div>
+                    {/* Repeat .subsection-item for each item */}
+                    <div className="subsection-item">
+                      <div className="subsection-left">
+                        <div className="subsection-index">1</div>
+                        <div className="subsection-text">
+                          Importancia de la atención al cliente en las ventas
+                        </div>
+                      </div>
+                      <div className="subsection-status completed">
+                        Completado
                       </div>
                     </div>
-                    <div className="point">
-                      <CheckmarkIcon className="bullet" />
-                      <div className="text">
-                        Comprender la psicología del consumidor
-                      </div>
-                    </div>
+                    {/* Repeat as needed */}
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
           {/* END OF MAIN CONTENT RIGHT */}
         </div>
@@ -324,42 +309,3 @@ export default function VerCursos() {
   );
 }
 
-{
-  /*}
-              <div className="course-stats">
-                <div className="score-card">
-                  <div className="score-title">Mi Puntaje</div>
-                  <div className="score-value">
-                    <span className="score-number">92</span>
-                    <span className="score-percent">%</span>
-                    <div className="score-bar" />
-                  </div>
-                  <div className="score-info">
-                    <span className="score-highlight">13.7%</span>
-                    <span className="score-comparison"> mas </span>
-                    <span className="score-high">alto</span>
-                    <span className="score-comparison"> que el promedio!</span>
-                  </div>
-                </div>
-
-                <div className="time-card">
-                  <div className="time-title">Mi Tiempo Promedio</div>
-                  <div className="time-value">
-                    <span className="time-number">45</span>
-                    <span className="time-unit">min</span>
-                    <div className="time-icon">
-                      <div className="clock-face" />
-                      <div className="clock-hand" />
-                    </div>
-                  </div>
-                  <div className="time-info">
-                    <span className="time-highlight">6.7%</span>
-                    <span className="time-comparison"> mas </span>
-                    <span className="time-high">alto</span>
-                    <span className="time-comparison"> que el promedio</span>
-                  </div>
-                </div>
-              </div>
-            </div>{" "}
-            */
-}
