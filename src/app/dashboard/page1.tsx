@@ -8,15 +8,15 @@ const Dashboard = () => {
         <div className="text-2xl font-bold mb-8">welcome<span className="text-blue-500">Hub</span></div>
         <nav>
           <a href="#" className="flex items-center space-x-2 p-3 bg-blue-600 rounded-lg">
-            <span>📊</span>
+            <span></span>
             <span>Dashboard</span>
           </a>
           <a href="#" className="flex items-center space-x-2 p-3 mt-3 hover:bg-gray-700 rounded-lg">
-            <span>📚</span>
+            <span></span>
             <span>Cursos</span>
           </a>
           <a href="#" className="flex items-center space-x-2 p-3 mt-3 hover:bg-gray-700 rounded-lg">
-            <span>🤖</span>
+            <span></span>
             <span>NeoBot</span>
           </a>
         </nav>
