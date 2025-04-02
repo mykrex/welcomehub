@@ -25,7 +25,7 @@ export default function OlvideContrasena(){
                     />
                 </div>
                 <button onClick={handleNext} className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition">
-                    Volver a Inicio de Sesión
+                    Volver a Inicio de Sesión#
                 </button>
                 <ProgresoRecuperacion pasoActual={paso}/>
             </div>
