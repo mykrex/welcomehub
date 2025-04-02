@@ -1,17 +1,13 @@
 //Pagina de ver cursos - MARUCA
+'use client';
+
 import React from "react";
 import "./verCursos.css";
-import profilePicture from "./profilePicture.png";
 import Image from "next/image";
-
+import profilePicture from "./profilePicture.png";
+import SidebarMenu from "@/app/components/SidebarMenu";
 
 //ICONS
-import WelcomeHubLogo from "./icons/WelcomeHubLogo";
-import DashboardIcon from "./icons/DashboardIcon";
-import CursosIcon from "./icons/CursosIcon";
-import RetosIcon from "./icons/RetosIcon";
-import BorisIcon from "./icons/BorisIcon";
-import NeorisIcon from "./icons/NeorisIcon";
 import SearchIcon from "./icons/SearchIcon";
 import NotificationIcon from "./icons/NotificationIcon";
 import SettingsIcon from "./icons/SettingsIcon";
@@ -22,40 +18,41 @@ import ClockIcon from "./icons/ClockIcon";
 export default function VerCursos() {
   return (
     <div className="app-container">
+      {/* SIDEBAR 
       <div className="sidebar-container">
-        {/* SIDEBAR */}
+        {/* SIDEBAR 
         <div className="sidebar-container">
-          {/*Logo WelcomeHub*/}
+          {/*Logo WelcomeHub*
           <div className="logo-container">
             <WelcomeHubLogo className="logo-image" />
           </div>
 
           <div className="menu-list">
-            {/*Dashboard button*/}
+            {/*Dashboard button
             <div className="menu-item">
               <DashboardIcon className="icon inactive-icon" />
               <div className="label inactive">Dashboard</div>
             </div>
 
-            {/*Cursos button*/}
+            {/*Cursos button
             <div className="menu-item active">
               <CursosIcon className="icon active-icon" />
               <div className="label ">Cursos</div>
             </div>
 
-            {/*Boris button*/}
+            {/*Boris button
             <div className="menu-item">
               <BorisIcon className="icon inactive-icon" />
               <div className="label inactive">Boris IA</div>
             </div>
 
-            {/*Retos button*/}
+            {/*Retos button
             <div className="menu-item">
               <RetosIcon className="icon inactive-icon" />
               <div className="label inactive">Retos</div>
             </div>
 
-            {/*Neoris button*/}
+            {/*Neoris button
             <div className="menu-item">
               <NeorisIcon className="icon inactive-icon" />
               <div className="label inactive">Neoris</div>
@@ -63,6 +60,9 @@ export default function VerCursos() {
           </div>
         </div>
       </div>
+      */}
+
+      <SidebarMenu />
 
       {/* CONTENT RIGHT */}
       <div className="page-wrapper">
@@ -309,4 +309,3 @@ export default function VerCursos() {
     </div>
   );
 }
-
