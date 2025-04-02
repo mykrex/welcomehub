@@ -56,7 +56,7 @@ export default function Chatbot() {
 
       {open && (
         <div className="bg-white shadow-lg rounded-lg w-80 border mt-2 flex flex-col max-h-[500px]">
-          <h2 className="text-lg font-bold p-4 border-b">Chatbot</h2>
+          <h2 className="text-lg font-bold p-4 border-b">Compi</h2>
           <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
             {messages.map((message, index) => (
               <div
