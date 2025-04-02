@@ -72,9 +72,16 @@ export default function Home() {
                 <div className="text-sm text-green-400 mt-2">3 de 5 módulos completados</div>
               </div>
               <div className="flex flex-col items-center">
-                <div className="w-24 h-24 bg-gray-600 rounded-lg mb-2"></div>
-                <button className="px-4 py-3 rounded-lg text-white" style={{ background: 'linear-gradient(90deg, #81A9EB 0%, #3E9ADE 100%)' }}>
-                  Ir a Global Campus
+                <img
+                  src="/repository_assets/imagencurso.png"
+                  alt=" "
+                  className="w-10 h-10 rounded-lg mb-2 object-cover"
+                />
+                <button
+                  className="px-6 py-4 rounded-lg text-white text-lg font-bold"
+                  style={{ background: 'linear-gradient(90deg, #81A9EB 0%, #3E9ADE 100%)' }}
+                >
+                  Ir a Curso
                 </button>
               </div>
             </div>
@@ -114,7 +121,7 @@ export default function Home() {
           </div>
           <div className="mt-4 space-y-4">
             {cursos.map((curso, index) => (
-              <div key={index} className="bg-[#333] p-5 rounded-[15px] border-b-4 border-green-500 flex justify-between items-center">
+              <div key={index} className="bg-[#333] p-5 rounded-[15px] border-b-4 flex justify-between items-center" style={{ borderColor: getColor(curso.estado) }}>
                 <div>
                   <h3 className="text-white text-[20px]">{curso.nombre}</h3>
                   <p className="text-[#D9D9D9] text-[12px] font-light">{curso.abierto}</p>
