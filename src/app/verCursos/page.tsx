@@ -3,14 +3,10 @@
 
 import React from "react";
 import "./verCursos.css";
-import Image from "next/image";
-import profilePicture from "./profilePicture.png";
 import SidebarMenu from "@/app/components/SidebarMenu";
+import NavBarMenu from "@/app/components/NavBarMenu";
 
 //ICONS
-import SearchIcon from "./icons/SearchIcon";
-import NotificationIcon from "./icons/NotificationIcon";
-import SettingsIcon from "./icons/SettingsIcon";
 import BullseyeIcon from "./icons/BullseyeIcon";
 import ArrowIcon from "./icons/ArrowIcon";
 import ClockIcon from "./icons/ClockIcon";
@@ -18,80 +14,14 @@ import ClockIcon from "./icons/ClockIcon";
 export default function VerCursos() {
   return (
     <div className="app-container">
-      {/* SIDEBAR 
-      <div className="sidebar-container">
-        {/* SIDEBAR 
-        <div className="sidebar-container">
-          {/*Logo WelcomeHub*
-          <div className="logo-container">
-            <WelcomeHubLogo className="logo-image" />
-          </div>
-
-          <div className="menu-list">
-            {/*Dashboard button
-            <div className="menu-item">
-              <DashboardIcon className="icon inactive-icon" />
-              <div className="label inactive">Dashboard</div>
-            </div>
-
-            {/*Cursos button
-            <div className="menu-item active">
-              <CursosIcon className="icon active-icon" />
-              <div className="label ">Cursos</div>
-            </div>
-
-            {/*Boris button
-            <div className="menu-item">
-              <BorisIcon className="icon inactive-icon" />
-              <div className="label inactive">Boris IA</div>
-            </div>
-
-            {/*Retos button
-            <div className="menu-item">
-              <RetosIcon className="icon inactive-icon" />
-              <div className="label inactive">Retos</div>
-            </div>
-
-            {/*Neoris button
-            <div className="menu-item">
-              <NeorisIcon className="icon inactive-icon" />
-              <div className="label inactive">Neoris</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      */}
 
       <SidebarMenu />
 
       {/* CONTENT RIGHT */}
       <div className="page-wrapper">
-        {/*NAVBAR*/}
-        <div className="navbar">
-          {/*Left*/}
-          <div className="navbar-title">
-            <div className="navbar-title-main">Mis Cursos</div>
-            <div className="navbar-title-arrow">→</div>
-            <div className="navbar-title-sub">Atencion a Clientes y Ventas</div>
-          </div>
+        
+        <NavBarMenu />
 
-          {/*Right*/}
-          <div className="navbar-right">
-            <div className="navbar-status-bar">
-              <SearchIcon className="icon-placeholder" />
-            </div>
-
-            <div className="navbar-icons">
-              <SettingsIcon className="icon-placeholder" />
-              <NotificationIcon className="icon-placeholder" />
-              <Image
-                src={profilePicture.src}
-                alt="Profile"
-                className="profile-pic"
-              />
-            </div>
-          </div>
-        </div>
 
         {/*MAIN CONTENT*/}
         <div className="main-content">
@@ -309,3 +239,81 @@ export default function VerCursos() {
     </div>
   );
 }
+
+
+      {/* SIDEBAR 
+      <div className="sidebar-container">
+        {/* SIDEBAR 
+        <div className="sidebar-container">
+          {/*Logo WelcomeHub*
+          <div className="logo-container">
+            <WelcomeHubLogo className="logo-image" />
+          </div>
+
+          <div className="menu-list">
+            {/*Dashboard button
+            <div className="menu-item">
+              <DashboardIcon className="icon inactive-icon" />
+              <div className="label inactive">Dashboard</div>
+            </div>
+
+            {/*Cursos button
+            <div className="menu-item active">
+              <CursosIcon className="icon active-icon" />
+              <div className="label ">Cursos</div>
+            </div>
+
+            {/*Boris button
+            <div className="menu-item">
+              <BorisIcon className="icon inactive-icon" />
+              <div className="label inactive">Boris IA</div>
+            </div>
+
+            {/*Retos button
+            <div className="menu-item">
+              <RetosIcon className="icon inactive-icon" />
+              <div className="label inactive">Retos</div>
+            </div>
+
+            {/*Neoris button
+            <div className="menu-item">
+              <NeorisIcon className="icon inactive-icon" />
+              <div className="label inactive">Neoris</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      */}
+
+
+
+
+      {/*NAVBAR
+      <div className="navbar">
+      {/*Left
+      <div className="navbar-title">
+        <div className="navbar-title-main">Mis Cursos</div>
+        <div className="navbar-title-arrow">→</div>
+        <div className="navbar-title-sub">Atencion a Clientes y Ventas</div>
+      </div>
+
+      {/*Right
+      <div className="navbar-right">
+        <div className="navbar-status-bar">
+          <SearchIcon className="icon-placeholder" />
+        </div>
+
+        <div className="navbar-icons">
+          <SettingsIcon className="icon-placeholder" />
+          <NotificationIcon className="icon-placeholder" />
+          <Image
+            src={profilePicture.src}
+            alt="Profile"
+            width={40}
+            height={40}
+            className="profile-pic"
+          />
+        </div>
+      </div>
+    </div>
+      */}
