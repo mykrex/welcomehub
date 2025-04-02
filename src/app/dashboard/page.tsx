@@ -196,7 +196,7 @@ export default function Dashboard() {
                         %
                       </span>
                     </div>
-                    <Clock className="w-20 h-20 text-[#00C853]" />
+                    <Target className="w-20 h-20 text-[#00C853]" />
                   </div>
 
                   {/* Comparison Text */}
