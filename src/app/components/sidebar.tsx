@@ -1,7 +1,10 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
+  const router = useRouter();
+
   return (
     <Card className="w-72 h-screen flex flex-col items-center gap-6 p-6 bg-[#141414] rounded-2xl">
       {/* Logo */}
@@ -9,7 +12,10 @@ const Sidebar = () => {
 
       {/* Dashboard Button */}
       <div className="w-full">
-        <button className="w-full h-16 flex items-center gap-4 px-6 rounded-xl bg-gradient-to-r from-[#448AFF] to-[#1565C0] shadow-md backdrop-blur-md">
+        <button 
+          className="w-full h-16 flex items-center gap-4 px-6 rounded-xl bg-gradient-to-r from-[#448AFF] to-[#1565C0] shadow-md backdrop-blur-md"
+          onClick={() => router.push("/dashboard")}
+          >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -27,7 +33,10 @@ const Sidebar = () => {
       </div>
 
       {/* Cursos Buttonssssss */}
-      <div className="w-full flex items-center gap-4 px-6">
+      <div 
+      className="w-full flex items-center gap-4 px-6"
+      onClick={() => router.push("/cursos")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -44,7 +53,9 @@ const Sidebar = () => {
       </div>
 
       {/* NeoBot Button */}
-      <div className="w-full flex items-center gap-4 px-6">
+      <div className="w-full flex items-center gap-4 px-6"
+      onClick={() => router.push("/neobot")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
