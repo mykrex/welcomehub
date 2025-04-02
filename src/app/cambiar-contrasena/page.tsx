@@ -67,7 +67,7 @@ export default function CambiarContrasena() {
             </div>
             <div className="mt-4">
                 <Link href="/" className="text-white hover:text-gray-400 underline">
-                    Regresar a Inicio de Sesión#
+                    Regresar a Inicio de Sesión
                 </Link>
             </div>
         </div>

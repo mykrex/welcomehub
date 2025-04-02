@@ -42,7 +42,7 @@ export default function MiPerfil() {
                 </header>
 
                 <main className="container mx-auto px-4 py-6">
-                    <h1 className="text-white text-semibold text-2xl">Mi perfil#</h1>
+                    <h1 className="text-white text-semibold text-2xl">Mi perfil</h1>
                     <div className="space-y-6 p-4 rounded-xl text-white" style={{backgroundColor: "#141414"}}>
                         {/* Informacion Basica */}
                         <section className="grid gap-2 p-2 border-b border-gray-500">

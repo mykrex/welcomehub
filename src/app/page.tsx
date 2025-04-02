@@ -32,7 +32,7 @@ export default function Home() {
       }
 
       setUser({ email });
-      router.push('/mi-perfil'); // Redirect to dashboard after login
+      router.push('/dashboard'); // Redirect to dashboard after login
   };
 
   return (
@@ -74,7 +74,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-end">
                     <Link href="/olvide-contrasena" className="text-blue-500 hover:text-blue-600 underline">
-                        Olvidé mi contraseña#
+                        Olvidé mi contraseña
                     </Link>
                   </div>
                   <button type="submit" className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition">Ingresar</button>
