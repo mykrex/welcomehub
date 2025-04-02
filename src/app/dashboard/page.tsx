@@ -74,7 +74,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col items-center">
               <Image
-                  src="/repository_assets/imagencurso.png"
+                  src="/imagencurso.png"
                   alt=""
                   width={40}
                   height={40}
