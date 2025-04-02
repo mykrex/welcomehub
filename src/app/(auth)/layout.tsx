@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { UserProvider } from "../context/UserContext";
-import Chatbot from "../components/chatbot";
 
 export const metadata: Metadata = {
   title: "Welcome Hub",
