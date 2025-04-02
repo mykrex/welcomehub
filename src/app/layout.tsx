@@ -4,6 +4,7 @@ import "./globals.css";
 import { UserProvider } from "../app/context/UserContext";
 import Chatbot from "./components/chatbot";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
