@@ -1,5 +1,6 @@
 'use client';
 import { Clock, Target } from "lucide-react";
+import Image from "next/image";
 
 const cursos = [
   { nombre: "Atencion al cliente y ventas", estado: "En Proceso", abierto: "Abierto hoy" },
@@ -72,10 +73,12 @@ export default function Home() {
                 <div className="text-sm text-green-400 mt-2">3 de 5 módulos completados</div>
               </div>
               <div className="flex flex-col items-center">
-                <img
+              <Image
                   src="/repository_assets/imagencurso.png"
-                  alt=" "
-                  className="w-10 h-10 rounded-lg mb-2 object-cover"
+                  alt=""
+                  width={40}
+                  height={40}
+                  className="rounded-lg mb-2 object-cover"
                 />
                 <button
                   className="px-6 py-4 rounded-lg text-white text-lg font-bold"
