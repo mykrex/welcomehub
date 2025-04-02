@@ -51,7 +51,7 @@ export default function OlvideContrasena(){
             </div>
             <div className="flex justify-end">
                 <Link href="/" className="text-white hover:text-gray-400 underline">
-                    Volver a Inicio de Sesión
+                    Volver a Inicio de Sesión#
                 </Link>
             </div>
         </div>
