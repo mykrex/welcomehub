@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import WelcomeHubLogo from '../verCursos/icons/WelcomeHubLogo';
 import DashboardIcon from '../verCursos/icons/DashboardIcon';
 import CursosIcon from '../verCursos/icons/CursosIcon';
@@ -10,20 +9,20 @@ import RetosIcon from '../verCursos/icons/RetosIcon';
 import NeorisIcon from '../verCursos/icons/NeorisIcon';
 
 const SidebarMenu = () => {
-  const [activeItem, setActiveItem] = useState('Cursos');
   const router = useRouter();
+  const pathname = usePathname();
 
   const menuItems = [
     { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
     { label: 'Cursos', icon: CursosIcon, path: '/cursos' },
     { label: 'Boris IA', icon: BorisIcon },
     { label: 'Retos', icon: RetosIcon },
-    { label: 'Neoris', icon: NeorisIcon }
+    { label: 'Neoris', icon: NeorisIcon },
   ];
 
-  const handleClick = (label: string, path?: string) => {
-    setActiveItem(label);
-    if (path) router.push(path);
+  const getIsActive = (path?: string) => {
+    if (!path) return false;
+    return pathname.startsWith(path);
   };
 
   return (
@@ -33,16 +32,19 @@ const SidebarMenu = () => {
       </div>
 
       <div className="menu-list">
-        {menuItems.map(({ label, icon: Icon, path }) => (
-          <div
-            key={label}
-            className={`menu-item ${activeItem === label ? 'active' : ''}`}
-            onClick={() => handleClick(label, path)}
-          >
-            <Icon className={`icon ${activeItem === label ? 'active-icon' : 'inactive-icon'}`} />
-            <div className={`label ${activeItem === label ? '' : 'inactive'}`}>{label}</div>
-          </div>
-        ))}
+        {menuItems.map(({ label, icon: Icon, path }) => {
+          const isActive = getIsActive(path);
+          return (
+            <div
+              key={label}
+              className={`menu-item ${isActive ? 'active' : ''}`}
+              onClick={() => path && router.push(path)}
+            >
+              <Icon className={`icon ${isActive ? 'active-icon' : 'inactive-icon'}`} />
+              <div className={`label ${isActive ? '' : 'inactive'}`}>{label}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
