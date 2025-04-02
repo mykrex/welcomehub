@@ -3,6 +3,7 @@
 
 import React from "react";
 import "./verCursos.css";
+import Image from "next/image";
 import profilePicture from "./profilePicture.png";
 import SidebarMenu from "@/app/components/SidebarMenu";
 
