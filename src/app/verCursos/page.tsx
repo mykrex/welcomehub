@@ -89,7 +89,7 @@ export default function VerCursos() {
             <div className="navbar-icons">
               <SettingsIcon className="icon-placeholder" />
               <NotificationIcon className="icon-placeholder" />
-              <img
+              <Image
                 src={profilePicture.src}
                 alt="Profile"
                 className="profile-pic"

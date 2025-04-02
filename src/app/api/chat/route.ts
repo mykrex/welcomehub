@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
-//console.log("API KEY:", process.env.OPENAI_API_KEY);
+//console.log("API K  EY:", process.env.OPENAI_API_KEY);
 
 
 const openai = new OpenAI({
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     const answer = chatResponse.choices[0].message.content;
 
     return NextResponse.json({ response: answer });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error con la API de OpenAI:", error); // 👈 esta línea
     return NextResponse.json(
       { error: "Hubo un error al procesar tu solicitud." },
