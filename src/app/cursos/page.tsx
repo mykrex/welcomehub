@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, User, Bell, Search } from "lucide-react";
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 interface Curso {
   titulo: string;
@@ -10,33 +11,32 @@ interface Curso {
   tareasTotales: number;
   tareasCompletadas: number;
   imagen: string;
-  colorBorde: string;
 }
 
 const cursosAsignados: Curso[] = [ 
-  { titulo: "Estrategias de Venta Avanzadas", descripcion: "Domina técnicas de persuasión y negociación para cerrar más ventas. Aprende a identificar necesidades y ofrecer soluciones efectivas.", tareasTotales: 6, tareasCompletadas: 3, imagen: "/imagen1.jpg", colorBorde: "#FF5733" },
-  { titulo: "Gestión del Tiempo y Productividad", descripcion: "Aprende a organizar tus tareas diarias de manera eficiente. Reduce el estrés y aumenta tu rendimiento con estrategias probadas.", tareasTotales: 5, tareasCompletadas: 2, imagen: "/imagen2.jpg", colorBorde: "#33FF57" },
-  { titulo: "Liderazgo en la Nueva Era", descripcion: "Desarrolla habilidades para liderar equipos en entornos cambiantes. Fomenta la innovación y la motivación en tu equipo.", tareasTotales: 8, tareasCompletadas: 4, imagen: "/imagen3.jpg", colorBorde: "#3357FF" },
-  { titulo: "Trabajo en Equipo y Resolución de Conflictos", descripcion: "Aprende estrategias para mejorar la comunicación y el desempeño del equipo. Domina técnicas para manejar conflictos de manera efectiva.", tareasTotales: 6, tareasCompletadas: 5, imagen: "/imagen4.jpg", colorBorde: "#FF33A1" },
-  { titulo: "Estrategias de Negociación", descripcion: "Descubre cómo cerrar acuerdos beneficiosos para ambas partes. Aprende a manejar objeciones y a crear relaciones comerciales sólidas.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen5.jpg", colorBorde: "#FFA500" },
-  { titulo: "Inteligencia Emocional en el Trabajo", descripcion: "Potencia tus habilidades interpersonales y de liderazgo mediante la inteligencia emocional. Aprende a manejar el estrés y mejorar tu desempeño.", tareasTotales: 7, tareasCompletadas: 4, imagen: "/imagen6.jpg", colorBorde: "#FFD700" },
+  { titulo: "Estrategias de Venta Avanzadas", descripcion: "Domina técnicas de persuasión y negociación para cerrar más ventas. Aprende a identificar necesidades y ofrecer soluciones efectivas.", tareasTotales: 6, tareasCompletadas: 3, imagen: "/imagen1.jpg" },
+  { titulo: "Gestión del Tiempo y Productividad", descripcion: "Aprende a organizar tus tareas diarias de manera eficiente. Reduce el estrés y aumenta tu rendimiento con estrategias probadas.", tareasTotales: 5, tareasCompletadas: 2, imagen: "/imagen2.jpg" },
+  { titulo: "Liderazgo en la Nueva Era", descripcion: "Desarrolla habilidades para liderar equipos en entornos cambiantes. Fomenta la innovación y la motivación en tu equipo.", tareasTotales: 8, tareasCompletadas: 4, imagen: "/imagen3.jpg" },
+  { titulo: "Trabajo en Equipo y Resolución de Conflictos", descripcion: "Aprende estrategias para mejorar la comunicación y el desempeño del equipo. Domina técnicas para manejar conflictos de manera efectiva.", tareasTotales: 6, tareasCompletadas: 5, imagen: "/imagen4.jpg" },
+  { titulo: "Estrategias de Negociación", descripcion: "Descubre cómo cerrar acuerdos beneficiosos para ambas partes. Aprende a manejar objeciones y a crear relaciones comerciales sólidas.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen5.jpg"},
+  { titulo: "Inteligencia Emocional en el Trabajo", descripcion: "Potencia tus habilidades interpersonales y de liderazgo mediante la inteligencia emocional. Aprende a manejar el estrés y mejorar tu desempeño.", tareasTotales: 7, tareasCompletadas: 4, imagen: "/imagen6.jpg" },
 ];
 
 const cursosOpcionales: Curso[] = [
-  { titulo: "Dominando Excel desde Cero", descripcion: "Aprende desde lo básico hasta funciones avanzadas de Excel. Mejora tu productividad y precisión en el manejo de datos.", tareasTotales: 5, tareasCompletadas: 1, imagen: "/imagen7.jpg", colorBorde: "#8A2BE2" },
-  { titulo: "Fundamentos de Programación en Python", descripcion: "Descubre los principios básicos de programación con Python. Aprende a escribir código eficiente y estructurado.", tareasTotales: 6, tareasCompletadas: 3, imagen: "/imagen8.jpg", colorBorde: "#DC143C" },
-  { titulo: "Marketing Digital y Redes Sociales", descripcion: "Desarrolla estrategias de marketing efectivas en plataformas digitales. Aprende sobre publicidad pagada, SEO y engagement.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen9.jpg", colorBorde: "#32CD32" },
+  { titulo: "Dominando Excel desde Cero", descripcion: "Aprende desde lo básico hasta funciones avanzadas de Excel. Mejora tu productividad y precisión en el manejo de datos.", tareasTotales: 5, tareasCompletadas: 1, imagen: "/imagen7.jpg" },
+  { titulo: "Fundamentos de Programación en Python", descripcion: "Descubre los principios básicos de programación con Python. Aprende a escribir código eficiente y estructurado.", tareasTotales: 6, tareasCompletadas: 3, imagen: "/imagen8.jpg" },
+  { titulo: "Marketing Digital y Redes Sociales", descripcion: "Desarrolla estrategias de marketing efectivas en plataformas digitales. Aprende sobre publicidad pagada, SEO y engagement.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen9.jpg" },
 ];
 
 const cursosRecomendados: Curso[] = [
-  { titulo: "Gestión de Proyectos Ágiles", descripcion: "Aprende metodologías ágiles como Scrum y Kanban para gestionar proyectos de manera eficiente. Optimiza tiempos y mejora la entrega de resultados.", tareasTotales: 6, tareasCompletadas: 2, imagen: "/imagen10.jpg", colorBorde: "#008080" },
-  { titulo: "Ventas y Atención al Cliente", descripcion: "Domina las mejores prácticas para atender clientes y cerrar ventas. Mejora la experiencia del cliente y fideliza compradores.", tareasTotales: 5, tareasCompletadas: 3, imagen: "/imagen11.jpg", colorBorde: "#A52A2A" },
-  { titulo: "Comunicación Persuasiva y Asertiva", descripcion: "Mejora tu capacidad de expresión verbal y escrita. Aprende a comunicarte de forma clara y convincente en cualquier situación.", tareasTotales: 4, tareasCompletadas: 3, imagen: "/imagen12.jpg", colorBorde: "#4682B4" },
-  { titulo: "Análisis de Datos para Negocios", descripcion: "Domina herramientas de análisis de datos para tomar decisiones estratégicas. Aprende a interpretar métricas y optimizar procesos.", tareasTotales: 8, tareasCompletadas: 6, imagen: "/imagen13.jpg", colorBorde: "#32CD32" },
-  { titulo: "Estrategias de Branding Empresarial", descripcion: "Descubre cómo posicionar tu marca en el mercado. Aprende sobre identidad visual, storytelling y marketing emocional.", tareasTotales: 6, tareasCompletadas: 4, imagen: "/imagen14.jpg", colorBorde: "#FF4500" },
-  { titulo: "Introducción a la Inteligencia Artificial", descripcion: "Comprende los conceptos básicos de la IA y sus aplicaciones en diferentes industrias. Aprende sobre machine learning y automatización.", tareasTotales: 5, tareasCompletadas: 2, imagen: "/imagen15.jpg", colorBorde: "#6A5ACD" },
-  { titulo: "Contabilidad y Finanzas para No Financieros", descripcion: "Adquiere conocimientos clave sobre finanzas y contabilidad. Aprende a gestionar presupuestos y tomar decisiones económicas informadas.", tareasTotales: 7, tareasCompletadas: 5, imagen: "/imagen16.jpg", colorBorde: "#B22222" },
-  { titulo: "Desarrollo Personal y Motivación", descripcion: "Descubre cómo establecer metas y mantenerte motivado para alcanzarlas. Mejora tu mentalidad y hábitos diarios para el éxito.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen17.jpg", colorBorde: "#20B2AA" },
+  { titulo: "Gestión de Proyectos Ágiles", descripcion: "Aprende metodologías ágiles como Scrum y Kanban para gestionar proyectos de manera eficiente. Optimiza tiempos y mejora la entrega de resultados.", tareasTotales: 6, tareasCompletadas: 2, imagen: "/imagen10.jpg" },
+  { titulo: "Ventas y Atención al Cliente", descripcion: "Domina las mejores prácticas para atender clientes y cerrar ventas. Mejora la experiencia del cliente y fideliza compradores.", tareasTotales: 5, tareasCompletadas: 3, imagen: "/imagen11.jpg" },
+  { titulo: "Comunicación Persuasiva y Asertiva", descripcion: "Mejora tu capacidad de expresión verbal y escrita. Aprende a comunicarte de forma clara y convincente en cualquier situación.", tareasTotales: 4, tareasCompletadas: 3, imagen: "/imagen12.jpg" },
+  { titulo: "Análisis de Datos para Negocios", descripcion: "Domina herramientas de análisis de datos para tomar decisiones estratégicas. Aprende a interpretar métricas y optimizar procesos.", tareasTotales: 8, tareasCompletadas: 6, imagen: "/imagen13.jpg" },
+  { titulo: "Estrategias de Branding Empresarial", descripcion: "Descubre cómo posicionar tu marca en el mercado. Aprende sobre identidad visual, storytelling y marketing emocional.", tareasTotales: 6, tareasCompletadas: 4, imagen: "/imagen14.jpg" },
+  { titulo: "Introducción a la Inteligencia Artificial", descripcion: "Comprende los conceptos básicos de la IA y sus aplicaciones en diferentes industrias. Aprende sobre machine learning y automatización.", tareasTotales: 5, tareasCompletadas: 2, imagen: "/imagen15.jpg" },
+  { titulo: "Contabilidad y Finanzas para No Financieros", descripcion: "Adquiere conocimientos clave sobre finanzas y contabilidad. Aprende a gestionar presupuestos y tomar decisiones económicas informadas.", tareasTotales: 7, tareasCompletadas: 5, imagen: "/imagen16.jpg" },
+  { titulo: "Desarrollo Personal y Motivación", descripcion: "Descubre cómo establecer metas y mantenerte motivado para alcanzarlas. Mejora tu mentalidad y hábitos diarios para el éxito.", tareasTotales: 4, tareasCompletadas: 2, imagen: "/imagen17.jpg" },
 ];
 
 
@@ -64,7 +64,7 @@ export default function CursosDashboard() {
           if (!curso) return null;
   
           return ( 
-            <div key={curso.titulo} className="w-[500px] h-52 border-4 rounded-2xl flex items-center cursor-pointer" style={{ borderColor: curso.colorBorde, backgroundColor: "#141414" }} onClick={() => router.push(`/curso/${encodeURIComponent(curso.titulo)}`)}>
+            <div key={curso.titulo} className="w-[500px] h-52 border-4 rounded-2xl flex items-center cursor-pointer" style={{ borderColor: '#06D6A0', backgroundColor: "#141414" }} onClick={() => router.push(`/curso/${encodeURIComponent(curso.titulo)}`)}>
               <div className="flex-1 p-3">
                 <div style={{color: 'white', fontSize: 20, fontWeight: '500'}}>{curso.titulo}</div>
                 <div style={{width: '100%', color: '#999999', fontSize: 12, fontWeight: '300'}}>{curso.descripcion}</div>
@@ -86,7 +86,13 @@ export default function CursosDashboard() {
                   ))}
                 </div>
               </div>
-              <img src={curso.imagen} alt={curso.titulo} className="w-50 h-50 object-cover rounded-xl ml-auto" />
+              <Image 
+                  src={curso.imagen} 
+                  alt={curso.titulo} 
+                  width={50}
+                  height={50}
+                  className="object-cover rounded-xl ml-auto" 
+              />
             </div>
           );
         })}
@@ -149,7 +155,7 @@ export default function CursosDashboard() {
           <div key={titulo} className="bg-[#141414] p-4 rounded-lg w-full mt-8">
             <h3 className="text-[#999999]" style={{ fontSize: '16px' }}>{titulo}</h3>
             {renderizarCursos(lista, indice)}
-            <div className="flex items-center justify-between mt-4 relative">
+            <div className="flex items-center justify-between mt-4">
               <button className="p-2 bg-[#141414] rounded-full" onClick={() => mover(setIndice, lista, -1)}>
                 <ChevronLeft />
               </button>

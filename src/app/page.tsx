@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useUser } from '../app/context/UserContext'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from "next/link";
 
 export default function Home() {
   const { setUser } = useUser();
@@ -31,7 +32,7 @@ export default function Home() {
       }
 
       setUser({ email });
-      router.push('/dashboard'); // Redirect to dashboard after login
+      router.push('/mi-perfil'); // Redirect to dashboard after login
   };
 
   return (
@@ -49,7 +50,7 @@ export default function Home() {
               <h2 className="text-2xl font-semibold mb-4">Inicia sesión</h2>
               {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
               <form onSubmit={handleSubmit} className="space-y-4 w-full">
-                  <div>
+                  <div className="flex flex-col gap-2">
                       <label className="block text-sm font-medium">Correo Electrónico</label>
                       <input 
                           type="email" 
@@ -60,7 +61,7 @@ export default function Home() {
                           required
                       />
                   </div>
-                  <div>
+                  <div className="flex flex-col gap-2">
                       <label className="block text-sm font-medium">Contraseña</label>
                       <input 
                           type="password" 
@@ -71,7 +72,12 @@ export default function Home() {
                           required
                       />
                   </div>
-                  <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Ingresar</button>
+                  <div className="flex justify-end">
+                    <Link href="/olvide-contrasena" className="text-blue-500 hover:text-blue-600 underline">
+                        Olvidé mi contraseña
+                    </Link>
+                  </div>
+                  <button type="submit" className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition">Ingresar</button>
               </form>
           </div>
       </div>

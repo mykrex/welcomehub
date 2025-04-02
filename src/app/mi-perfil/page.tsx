@@ -60,7 +60,7 @@ export default function MiPerfil() {
                                 <span className="font-normal text-gray-400 ml-2">09/25/1987</span>
                             </p>
                             <p className="text-white font-semibold w-fit">
-                                Rol:
+                                Puesto:
                                 <span className="font-normal text-gray-400 ml-2">Analista Financiero</span>
                             </p>
                             <p className="text-white font-semibold w-fit">
