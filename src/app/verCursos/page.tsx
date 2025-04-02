@@ -8,12 +8,6 @@ import profilePicture from "./profilePicture.png";
 import SidebarMenu from "@/app/components/SidebarMenu";
 
 //ICONS
-import WelcomeHubLogo from "./icons/WelcomeHubLogo";
-import DashboardIcon from "./icons/DashboardIcon";
-import CursosIcon from "./icons/CursosIcon";
-import RetosIcon from "./icons/RetosIcon";
-import BorisIcon from "./icons/BorisIcon";
-import NeorisIcon from "./icons/NeorisIcon";
 import SearchIcon from "./icons/SearchIcon";
 import NotificationIcon from "./icons/NotificationIcon";
 import SettingsIcon from "./icons/SettingsIcon";
