@@ -1,6 +1,7 @@
 import Titulo from "../components/perfilTitulos";
 import VerPassword from "../components/verPassword";
 import Navbar from "../components/navbar";
+import Sidebar from "../components/sidebar";
 import { Fragment } from "react";
 
 const team = [
@@ -31,9 +32,8 @@ export default function MiPerfil() {
     return (
 
         <div className="flex h-screen gap-6" style={{backgroundColor: "#6D6D6D"}}>
-            <div className="w-64 h-full bg-gray-800 rounded-xl p-4 text-white" style={{backgroundColor: "#141414"}}>
-                {/* Aqui va el side bar */}
-                <h1 className="text-xl font-semibold"> SIDE BAR</h1>
+            <div>
+                <Sidebar/>
             </div>
 
             <div className="flex-1 overflow-auto">
