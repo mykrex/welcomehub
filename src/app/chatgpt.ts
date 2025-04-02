@@ -1,4 +1,3 @@
-// src/app/chatgpt.ts
 export async function getChatbotResponse(message: string): Promise<string> {
   try {
     const res = await fetch("/api/chat", {

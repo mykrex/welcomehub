@@ -1,10 +1,7 @@
-// src/app/api/chat/route.ts (for Next.js 13/14 app directory)
-
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 
 //console.log("API K  EY:", process.env.OPENAI_API_KEY);
-
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -31,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ response: answer });
   } catch (error: unknown) {
-    console.error("Error con la API de OpenAI:", error); // 👈 esta línea
+    console.error("Error con la API de OpenAI:", error); 
     return NextResponse.json(
       { error: "Hubo un error al procesar tu solicitud." },
       { status: 500 }
