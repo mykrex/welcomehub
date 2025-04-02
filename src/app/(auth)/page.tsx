@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '../app/context/UserContext'
+import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from "next/link";

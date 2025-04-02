@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
+// /src/app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "../app/context/UserContext";
-import Chatbot from "./components/chatbot";
+import { UserProvider } from "./context/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,24 +13,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Welcome Hub",
-  description: "Generado por el equipo de Welcome Hub",
-  viewport: 'width=device-width, initial-scale=1.0', 
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <UserProvider>
-          <Chatbot />
           {children} 
         </UserProvider>
       </body>
