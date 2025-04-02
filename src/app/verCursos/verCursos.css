@@ -741,17 +741,18 @@ body,
 /* === MODULE CONTENT === */
 
 .module-content {
-  width: 100%;
+  width: 98%;
   padding: 0 15px;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 0px;
+  background-color: #08639B;
 }
 
 .module-description {
-  background: #08639B;
   padding: 10px 30px;
   border-radius: 0 0 15px 15px;
   display: flex;
@@ -774,7 +775,10 @@ body,
 .module-subsections {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
+  padding: 10px 30px;
+  width: 100%;
 }
 
 .subsections-title {
@@ -791,6 +795,7 @@ body,
   background: #9DAAA6;
   padding: 10px;
   border-radius: 15px;
+  width: 100%;
 }
 
 .subsection-left {
@@ -934,4 +939,32 @@ html, body, #root {
   object-fit: contain;
   border-radius: 15px;
   flex-shrink: 0;
+}
+
+.menu-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.menu-item {
+  cursor: pointer;
+}
+
+.active-icon {
+  /* styles for active icon */
+  filter: none;
+}
+
+.inactive-icon {
+  opacity: 0.5;
+}
+
+.label.inactive {
+  color: #999999;
+}
+
+.label {
+  color: white;
+  font-weight: 600;
 }
