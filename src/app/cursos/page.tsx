@@ -136,7 +136,7 @@ export default function CursosDashboard() {
       className="flex items-center"
     >
       <div className="bg-teal-600 text-white w-60 h-12 flex flex-col items-left justify-center rounded-l-full pl-4">
-        <span className="text-[#333333] text-sm">Sigue aprendiendo#</span>
+        <span className="text-[#333333] text-sm">Sigue aprendiendo</span>
         <span className="text-white text-medium font-bold">Entrar a Global Campus</span>
       </div>
       <div className="bg-white text-gray-900 w-30 h-12 flex flex-col items-left justify-center rounded-r-full pl-2">
