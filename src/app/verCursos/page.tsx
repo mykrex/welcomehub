@@ -3,8 +3,8 @@
 
 import React from "react";
 import "./verCursos.css";
-import SidebarMenu from "@/app/components/SidebarMenu";
-import NavBarMenu from "@/app/components/NavBarMenu";
+import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
+import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 
 //ICONS
 import BullseyeIcon from "./icons/BullseyeIcon";

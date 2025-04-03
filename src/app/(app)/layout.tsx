@@ -1,26 +1,18 @@
-import type { Metadata } from "next";
-import { UserProvider } from "../context/UserContext";
-import Chatbot from "../components/chatbot";
+import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
+import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
+import "@/app/components/(layout)/layout.css";
 
-export const metadata: Metadata = {
-  title: "Welcome Hub",
-  description: "Generado por el equipo de Welcome Hub",
-};
 
-export const viewport = {
-  width: "device-width",
-  initialScale: 1.0,
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (  
-    <UserProvider>
-      <Chatbot />
-      {children} 
-    </UserProvider>
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="app-container">
+      <SidebarMenu />
+      <div className="page-wrapper">
+        <NavBarMenu />
+        <div className="main-content">
+          {children}
+          </div>
+      </div>
+    </div>
   );
 }

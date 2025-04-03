@@ -1,6 +1,6 @@
-import Titulo from "../../components/perfilTitulos";
-import VerPassword from "../../components/verPassword";
-import Navbar from "../../components/navbar";
+import Titulo from "../../../components/perfilTitulos";
+import VerPassword from "../../../components/verPassword";
+import Navbar from "../../../components/navbar";
 import { Fragment } from "react";
 
 const team = [
