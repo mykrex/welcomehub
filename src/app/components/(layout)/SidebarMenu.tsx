@@ -2,6 +2,7 @@
 
 //* Navegation
 import { usePathname, useRouter } from 'next/navigation';
+import "@/app/components/(layout)/layout.css";
 
 //* Icons/Images
 import WelcomeHubLogo from '../../verCursos/icons/WelcomeHubLogo'; //! Cambiar a WelcomeHubLogoSmall

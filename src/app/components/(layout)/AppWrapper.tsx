@@ -3,7 +3,9 @@
 import { useUser } from "../../context/UserContext";
 import SidebarMenu from "./SidebarMenu";
 import NavBarMenu from "./NavBarMenu";
-import "@/app/globals.css"; // Asegúrate de que la ruta sea correcta
+import "@/app/components/(layout)/layout.css";
+ // Asegúrate de que la ruta sea correcta
+
 
 const AppWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user } = useUser();

@@ -29,7 +29,7 @@ export default function VerCursos() {
             {/* MI PROGRESO */}
             <div className="progress-container">
               <div className="progress-header">
-                <div className="progress-title">Mi Progreso</div>
+                <div className="progress-title">Mi Progreso del Curso</div>
                 <div className="progress-percent">68% completado</div>
               </div>
               <div className="progress-bottom">

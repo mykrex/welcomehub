@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import "@/app/components/(layout)/layout.css";
 
 import SearchIcon from '../../verCursos/icons/SearchIcon';
 import SettingsIcon from '../../verCursos/icons/SettingsIcon';

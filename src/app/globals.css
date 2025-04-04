@@ -1,7 +1,14 @@
-@import "tailwindcss";
+/** GLOBAL STYLES -> Applied across the whole website*/
+
+/** Import font Manrope */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+/** Tailwind and Plugin Imports */
+@import "tailwindcss"; 
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
   --color-background: var(--background);
@@ -118,5 +125,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Manrope', sans-serif;
   }
 }
