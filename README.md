@@ -22,7 +22,7 @@ Antes de ejecutar el proyecto de forma local asegurese de correr lo siguiente:`n
 
 ## Preview
 
-![](/repository_assets/Login.png)
+![](/repository_assets/Login2.png)
 
 ![](/repository_assets/Dashboard.png)
 
