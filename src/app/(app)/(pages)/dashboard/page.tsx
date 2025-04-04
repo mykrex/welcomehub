@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import "@/app/verCursos/verCursos.css";
 
-import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
-import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
+//import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
+//import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 
 const cursos = [
   {

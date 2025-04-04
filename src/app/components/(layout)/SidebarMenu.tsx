@@ -11,7 +11,7 @@ import CursosIcon from '../../verCursos/icons/CursosIcon';
 import BorisIcon from '../../verCursos/icons/BorisIcon';
 import RetosIcon from '../../verCursos/icons/RetosIcon';
 import NeorisIcon from '../../verCursos/icons/NeorisIcon';
-import path from 'path';
+//import path from 'path';
 
 const SidebarMenu = () => {
   const router = useRouter();

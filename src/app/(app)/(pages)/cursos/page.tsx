@@ -4,8 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
-import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
+//import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
+//import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 import "@/app/verCursos/verCursos.css";
 
 interface Curso {
