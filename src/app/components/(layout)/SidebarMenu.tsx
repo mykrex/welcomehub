@@ -1,23 +1,29 @@
 'use client';
 
+//* Navegation
 import { usePathname, useRouter } from 'next/navigation';
-import WelcomeHubLogo from '../verCursos/icons/WelcomeHubLogo';
-import DashboardIcon from '../verCursos/icons/DashboardIcon';
-import CursosIcon from '../verCursos/icons/CursosIcon';
-import BorisIcon from '../verCursos/icons/BorisIcon';
-import RetosIcon from '../verCursos/icons/RetosIcon';
-import NeorisIcon from '../verCursos/icons/NeorisIcon';
+import "@/app/components/(layout)/layout.css";
+
+//* Icons/Images
+import WelcomeHubLogo from '../../verCursos/icons/WelcomeHubLogo'; //! Cambiar a WelcomeHubLogoSmall
+import DashboardIcon from '../../verCursos/icons/DashboardIcon';
+import CursosIcon from '../../verCursos/icons/CursosIcon';
+import BorisIcon from '../../verCursos/icons/BorisIcon';
+import RetosIcon from '../../verCursos/icons/RetosIcon';
+import NeorisIcon from '../../verCursos/icons/NeorisIcon';
+//import path from 'path';
 
 const SidebarMenu = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  //* Menu items configuration
   const menuItems = [
     { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
     { label: 'Cursos', icon: CursosIcon, path: '/cursos' },
-    { label: 'Boris IA', icon: BorisIcon },
-    { label: 'Retos', icon: RetosIcon },
-    { label: 'Neoris', icon: NeorisIcon },
+    { label: 'Boris IA', icon: BorisIcon, path: '/compi' }, //! CAMBIAR TODO A COMPI, NO BORIS
+    { label: 'Retos', icon: RetosIcon, path: '/retos' },
+    { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
   ];
 
   const getIsActive = (path?: string) => {

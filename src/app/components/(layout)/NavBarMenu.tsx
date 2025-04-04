@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import "@/app/components/(layout)/layout.css";
 
-import SearchIcon from '../verCursos/icons/SearchIcon';
-import SettingsIcon from '../verCursos/icons/SettingsIcon';
-import NotificationIcon from '../verCursos/icons/NotificationIcon';
-import profilePicture from '../verCursos/profilePicture.png'; // adjust path if needed
+import SearchIcon from '../../verCursos/icons/SearchIcon';
+import SettingsIcon from '../../verCursos/icons/SettingsIcon';
+import NotificationIcon from '../../verCursos/icons/NotificationIcon';
+import profilePicture from "@/app/verCursos/profilePicture.png"; // adjust path if needed
 
 const pathToTitleMap: { [key: string]: string } = {
   '/dashboard': 'Dashboard',

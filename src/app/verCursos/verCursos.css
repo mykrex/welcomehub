@@ -1,9 +1,9 @@
 /* CSS - VerCursos */
 /* Font Manrope*/
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap");
-
+/*! QUITAR */
 /* Background */
-html,
+html, /*! QUITAR */
 body,
 #root {
   height: 100%;
@@ -12,7 +12,7 @@ body,
   background-color: #000F14 ;
 }
 
-.ver-cursos-main {
+.ver-cursos-main { 
   width: 100%;
   height: 100%;
   padding: 20px;
@@ -27,7 +27,7 @@ body,
 
 /* Componente -> MENU */
 /* Container */
-.sidebar-container {
+.sidebar-container { /*! QUITAR */
   width: 160px; /* Era 200px */
   height: 100%; 
   padding: 10px 10px 10px 10px; /*Padding arriba era 30 */
@@ -42,20 +42,20 @@ body,
 }
 
 /* Logo section */
-.logo-container {
+.logo-container { /*! QUITAR */
   width: 120px;
   height: 35px;
   position: relative;
 }
 
-.logo-image {
+.logo-image { /*! QUITAR */
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
 /* Menu list */
-.menu-list {
+.menu-list { /*! QUITAR */
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@ body,
 }
 
 /* Menu item */
-.menu-item {
+.menu-item { /*! QUITAR */
   align-self: stretch;
   height: 100%;
   padding: 10px 15px;
@@ -78,19 +78,19 @@ body,
 }
 
 /* Icon styles */
-.icon {
+.icon { /*! QUITAR */
   width: 15px;
   height: 100%;
 }
-.inactive-icon {
+.inactive-icon { /*! QUITAR */
   color: #9daaa6;
 }
-.active-icon {
+.active-icon { /*! QUITAR */
   color: #f3f2f2;
 }
 
 /* Label styles */
-.label {
+.label { /*! QUITAR */
   font-size: 16px;
   font-family: "Manrope";
   font-weight: 400;
@@ -98,15 +98,15 @@ body,
   color: white;
 }
 
-.label.inactive {
+.label.inactive { /*! QUITAR */
   color: #9daaa6;
 }
 
-.menu-item.active {
+.menu-item.active { /*! QUITAR */
   background: #0b88d5;
 }
 
-.menu-item.active .label {
+.menu-item.active .label { /*! QUITAR */
   color: white;
 }
 
@@ -121,7 +121,7 @@ body,
 }
 
 /* Navbar */
-.navbar {
+.navbar { /*! QUITAR */
   align-self: stretch;
   width: 100%;
   max-width: none;
@@ -134,7 +134,7 @@ body,
   gap: auto;
 }
 
-.navbar-title {
+.navbar-title { /*! QUITAR */
   width: 100%;
   height: 100%;
   display: inline-flex;
@@ -143,7 +143,7 @@ body,
   gap: 5px;
 }
 
-.navbar-title-main {
+.navbar-title-main { /*! QUITAR */
   color: white;
   font-size: 20px;
   font-family: "Manrope", sans-serif;
@@ -152,7 +152,7 @@ body,
   word-wrap: break-word;
 }
 
-.navbar-title-arrow {
+.navbar-title-arrow { 
   color: #C7C7CC;
   font-size: 20px;
   font-family: "Manrope", sans-serif;
@@ -169,7 +169,7 @@ body,
 }
 
 
-.navbar-right {
+.navbar-right { /*! QUITAR */
   flex: 1 1 0;
   display: flex;
   justify-content: flex-end;
@@ -177,7 +177,7 @@ body,
   gap: 20px;
 }
 
-.navbar-status-bar {
+.navbar-status-bar { /*! QUITAR */
   width: 500px;
   height: 30px;
   padding: 10px;
@@ -188,19 +188,19 @@ body,
   gap: 10px;
 }
 
-.navbar-icons {
+.navbar-icons {  /*! QUITAR */
   height: 50px;
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.icon-placeholder {
+.icon-placeholder {  /*! QUITAR */
   width: 25px;
   height: 25px;
   color: #9daaa6;
 }
-.profile-pic {
+.profile-pic { 
   width: 40px;
   height: 40px;
   border-radius: 64.5px;
@@ -864,7 +864,7 @@ body,
 
 
 
-.main-content {
+.main-content { /*! QUITAR */
   width: 100%;
   flex: 1;
   margin: 0;
@@ -888,7 +888,7 @@ html, body, #root {
   overflow: hidden;
 }
 
-.app-container {
+.app-container { /*! QUITAR */
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -901,7 +901,7 @@ html, body, #root {
   flex-shrink: 0;
 }
 
-.page-wrapper {
+.page-wrapper { /*! QUITAR */
   display: flex;
   flex-direction: column;
   flex: 1;
