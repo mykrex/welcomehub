@@ -1,5 +1,5 @@
 # WelcomeHub
-WelcomeHub es un aplicación web que centraliza el onboarding y la capacitación de los empleados de Neoris que además integra un asistente virtual inteligente para resolver dudas y sugerir contenidos.
+WelcomeHub es un aplicación web que centraliza el onboarding y la capacitación de los empleados de nuestro Socio Formador que además integra un asistente virtual inteligente para resolver dudas y sugerir contenidos.
 
 ## Misión
 Diseñar y desarrollar soluciones tecnológicas que impulsen el crecimiento y rendimiento de nuestros clientes, haciendo uso de herramientas avanzadas como la inteligencia artificial,  que les permita optimizar sus procesos. Comprometiéndonos como aliados estratégicos en su transformación digital.
