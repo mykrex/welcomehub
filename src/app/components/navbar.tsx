@@ -1,5 +1,6 @@
 import React from 'react';
-import { Search, Bell } from 'lucide-react';
+import { Search } from 'lucide-react';
+import NotificationButton from './components/NotificationButton';
 
 const Navbar = () => {
   return (
@@ -14,10 +15,8 @@ const Navbar = () => {
         />
       </div>
 
-      {/* Bell Icon */}
-      <div className="flex justify-center items-center">
-        <Bell width={27} height={30} className="text-[#8A8A8A]" />
-      </div>
+      {/* Componente de Notificaciones */}
+      <NotificationButton />
 
       {/* Profile Icon */}
       <div
