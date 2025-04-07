@@ -1,7 +1,9 @@
 'use client';
 
 //import { Message } from "openai/resources/beta/threads/messages.mjs";
+import { supabase } from "@/lib/supabase";
 import { useState, useRef, useEffect } from "react";
+
 
 type Message = { sender: "user" | "bot"; text: string };
 
@@ -13,9 +15,24 @@ export default function Chatbot() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (data?.user?.email) {
+        setUserEmail(data.user.email);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
+    if (!userEmail) {
+      alert("Por favor, inicia sesión para enviar un mensaje.");
+      return;
+    }
 
     const userMessage: Message = { sender: "user", text: prompt };
     setMessages((prev) => [...prev, userMessage]);
@@ -26,7 +43,7 @@ export default function Chatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+       body: JSON.stringify({ prompt, id_usuario: userEmail }),
       });
 
       const data = await res.json();

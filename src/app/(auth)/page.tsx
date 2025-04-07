@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
+import { supabase } from "@/lib/supabase";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -22,14 +23,19 @@ export default function Home() {
       setError('');
 
       if (!emailPattern.test(email)) {
-          setError('Invalid email address');
+          setError('Correo electrónico inválido. Debe ser de neoris.mx');
           return;
       }
       
       if (!passwordPattern.test(password)) {
-          setError('Password must be at least 8 characters, include one capital letter, one special character and one digit');
+          setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
           return;
       }
+
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
       setUser({ email });
       router.push('/dashboard'); // Redirect to dashboard after login
