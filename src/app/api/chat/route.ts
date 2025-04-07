@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { supabase } from "@/lib/supabase";
-import { time } from "console";
+//import { time } from "console";
 
 //console.log("API K  EY:", process.env.OPENAI_API_KEY);
 

@@ -18,27 +18,33 @@ export default function Home() {
   const emailPattern = /^[^\s@]+@neoris\.mx$/
   const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-  const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      setError('');
+  const handleSubmit = async (e: React.FormEvent) => {
 
-      if (!emailPattern.test(email)) {
-          setError('Correo electrónico inválido. Debe ser de neoris.mx');
-          return;
-      }
-      
-      if (!passwordPattern.test(password)) {
-          setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
-          return;
-      }
+        e.preventDefault();
+        setError('');
 
-      const { data, error: loginError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+        if (!emailPattern.test(email)) {
+            setError('Correo electrónico inválido. Debe ser de neoris.mx');
+            return;
+        }
+        
+        if (!passwordPattern.test(password)) {
+            setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
+            return;
+        }
 
-      setUser({ email });
-      router.push('/dashboard'); // Redirect to dashboard after login
+        const { data, error: loginError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (loginError) {
+            setError('Error al iniciar sesión. Verifica tus credenciales.');
+            return;
+        }
+
+        setUser({ email: data.user.email ?? '' });
+        router.push('/dashboard'); // Redirect to dashboard after login
   };
 
   return (
