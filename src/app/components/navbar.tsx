@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search } from 'lucide-react';
-import NotificationButton from './components/NotificationButton';
+import NotificationButton from './NotificationButton';
 
 const Navbar = () => {
   return (
@@ -16,7 +16,7 @@ const Navbar = () => {
       </div>
 
       {/* Componente de Notificaciones */}
-      <NotificationButton />
+      <NotificationButton onClick={() => console.log('Notification button clicked')} />
 
       {/* Profile Icon */}
       <div
