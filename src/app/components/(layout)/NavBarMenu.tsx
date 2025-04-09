@@ -13,7 +13,7 @@ import profilePicture from "@/app/verCursos/profilePicture.png"; // adjust path 
 const pathToTitleMap: { [key: string]: string } = {
   '/dashboard': 'Dashboard',
   '/cursos': 'Mis Cursos',
-  '/mi-perfil': 'Mi Perfil',
+  '/mi_perfil': 'Mi Perfil',
   '/verCursos': 'Atención a Clientes y Ventas',
 };
 
@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className="navbar-icons">
           <SettingsIcon className="icon-placeholder" />
           <NotificationIcon className="icon-placeholder" />
-          <Link href="/mi-perfil">
+          <Link href="/mi_perfil">
             <Image
               src={profilePicture.src}
               alt="Profile"
