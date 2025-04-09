@@ -4,6 +4,7 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import ProgresoRecuperacion from "../components/progresoRecuperacion";
+import { supabase } from '@/lib/supabaseClient'
 
 export default function OlvideContrasena(){
     const [email, setEmail] = useState('');
@@ -13,16 +14,37 @@ export default function OlvideContrasena(){
     
     const emailPattern = /^[^\s@]+@neoris\.mx$/
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
-  
+
         if (!emailPattern.test(email)) {
             setError('Correo inválido.');
             return;
         }
-  
-        router.push('/recuperar-contrasena');
+
+        try{
+            const { data, error: queryError } = await supabase
+            .from('usuario')
+            .select('estado')
+            .eq('email', email)
+            .single();
+
+            if (queryError || !data) {
+                console.log("Query error:", queryError);
+                console.log("Data:", data);
+                console.error("Error al consultar la tabla 'usuario':", queryError);
+                setError('Usuario no encontrado. Verifica tus credenciales.');
+                return;
+            }
+          
+            localStorage.setItem('correo_recuperacion', email);
+          
+            router.push('/cambiar-contrasena');
+        } catch(err){
+            console.error("Error al iniciar sesión:", err);
+            setError('Hubo un problema al iniciar sesion.');
+        }
     };
 
     return(
