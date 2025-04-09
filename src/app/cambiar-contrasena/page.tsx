@@ -1,20 +1,31 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ProgresoRecuperacion from "../components/progresoRecuperacion";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function CambiarContrasena() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
     const paso = 3;
     const router = useRouter();
 
     const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-    const handleSubmit = (e: React.FormEvent) => {
+    useEffect(() => {
+        const correoGuardado = localStorage.getItem('correo_recuperacion');
+        if (!correoGuardado) {
+            router.push('/');
+        } else {
+            setEmail(correoGuardado);
+        }
+    }, [router]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
@@ -27,9 +38,25 @@ export default function CambiarContrasena() {
             setError('Las contraseñas no coinciden.');
             return;
         }
+        
+        try{
+            const { error } = await supabase
+                .from('usuario')
+                .update({ contrasena: password, estado: true })
+                .eq('email', email);
 
-        alert('Contraseña actualizada exitosamente.');
-        router.push("/restablecimiento-exitoso");
+            if (error) {
+                setError('Error al actualizar la contraseña.');
+                return;
+            }
+
+            localStorage.removeItem('correo_recuperacion');
+            alert('Contraseña actualizada exitosamente.');
+            router.push("/restablecimiento-exitoso");
+        }catch(err){
+            console.error("Excepción inesperada:", err);
+            setError('Ocurrió un error inesperado. Intenta de nuevo.');
+        }
     };
 
     return (
