@@ -1,21 +1,61 @@
 'use client';
 
-//import { Message } from "openai/resources/beta/threads/messages.mjs";
+import { useUser } from "../context/UserContext";
+import { supabase } from "@/lib/supabase";
 import { useState, useRef, useEffect } from "react";
 
 type Message = { sender: "user" | "bot"; text: string };
 
 export default function Chatbot() {
+  const { user } = useUser();
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  //const [messages, setMessages] = useState<{sender: "user" | "bot"; text: string}[]>([]);
-  //const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+
+  useEffect(() => {
+    console.log("Usuario desde el contexto:", user);
+  }, [user]);
+
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+
+      if (!user?.email) return;
+      
+
+      const { data, error } = await supabase
+        .from("usuario")
+        .select("id_usuario")
+        .eq("email", user.email)
+        .single();
+
+      if (error || !data) {
+        console.error("Error al obtener el ID del usuario", error?.message);
+        return;
+      }
+      if (data){
+        setUserId(data.id_usuario);
+        console.log("ID de usuario:", data.id_usuario);
+      }
+      
+    
+      
+    };
+    fetchUserId();
+  }, [user?.email]);
 
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
+
+    console.log("userId:", userId, "user:", user);
+    if (!userId) {
+      alert("Por favor, inicia sesión para enviar un mensaje.");
+      return;
+    }
 
     const userMessage: Message = { sender: "user", text: prompt };
     setMessages((prev) => [...prev, userMessage]);
@@ -26,14 +66,14 @@ export default function Chatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+       body: JSON.stringify({ prompt, id_usuario: userId }),
       });
 
       const data = await res.json();
       const botMessage: Message = { sender: "bot", text: data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error al obtener la respuesta", error);
       const errorMessage: Message = { sender: "bot", text: "Error al obtener la respuesta" };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
