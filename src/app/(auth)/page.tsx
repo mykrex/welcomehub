@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter();
   
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [contrasena, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const emailPattern = /^[^\s@]+@neoris\.mx$/
@@ -28,23 +28,38 @@ export default function Home() {
             return;
         }
         
-        if (!passwordPattern.test(password)) {
+        if (!passwordPattern.test(contrasena)) {
             setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
             return;
         }
 
-        const { data, error: loginError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        //consulta de la tabla "usuario" 
+        try{
+            const { data, error: queryError } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('email', email)
+            .single();
 
-        if (loginError) {
-            setError('Error al iniciar sesión. Verifica tus credenciales.');
-            return;
+            if (queryError || !data) {
+                console.log("Query error:", queryError);
+                console.log("Data:", data);
+                console.error("Error al consultar la tabla 'usuario':", queryError);
+                setError('Usuario no encontrado. Verifica tus credenciales.');
+                return;
+            }
+
+            if(data.contrasena !== contrasena) {
+                setError('    incorrecta. Verifica tus credenciales.');
+                return;
+            }
+
+            setUser({ email: data.email});
+            router.push('/dashboard'); // Redirect to dashboard after login
+        } catch(err){
+            console.error("Error al iniciar sesión:", err);
+            setError('Hubo un problema al iniciar sesion.');
         }
-
-        setUser({ email: data.user.email ?? '' });
-        router.push('/dashboard'); // Redirect to dashboard after login
   };
 
   return (
@@ -77,7 +92,7 @@ export default function Home() {
                       <label className="block text-sm font-medium">Contraseña</label>
                       <input 
                           type="password" 
-                          value={password} 
+                          value={contrasena} 
                           onChange={(e) => setPassword(e.target.value)} 
                           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="contraseña"

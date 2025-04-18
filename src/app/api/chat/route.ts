@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { supabase } from "@/lib/supabase";
-//import { time } from "console";
+import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 
-//console.log("API K  EY:", process.env.OPENAI_API_KEY);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -30,25 +29,22 @@ export async function POST(req: NextRequest) {
         console.error("Error al traer el historial de mensajes:", historyError.message);
       }
 
-      const messages = [
+      const messages: ChatCompletionMessageParam[] = [
         {
           role: "system",
           content: "Eres un asistente útil y amigable para nuevos empleados que están haciendo onboarding.",
         },
         ...(history?.reverse().flatMap((item)=> [
-          {role: "user", content: item.id_usuario},
-          {role: "assistant", content: item.output_bot},
+          {role: "user" as const, content: item.id_usuario},
+          {role: "assistant" as const, content: item.output_bot},
         ]) ?? []),
-        { role: "user", content: prompt },
+        { role: "user" as const, content: prompt },
       ];
 
     // llamada a openAI
     const chatResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: "Eres un asistente útil y amigable para nuevos empleados que están haciendo onboarding." },
-        { role: "user", content: prompt },
-      ],
+      messages,
     });
 
     const answer = chatResponse.choices[0].message.content;
@@ -56,6 +52,7 @@ export async function POST(req: NextRequest) {
     // Guardar la conversación en la base de datos
     const { error: dbError } = await supabase.from("mensajes").insert([
       {
+        id_usuario,
         input_usuario: prompt,
         output_bot: answer,
         timestamp: new Date().toISOString(),
