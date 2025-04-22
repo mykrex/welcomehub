@@ -129,4 +129,16 @@
   }
 }
 
-
+@keyframes scrollInfinite {
+  0% {
+    transform: translateY(300%);
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-300%);
+    opacity: 0;
+  }
+}

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
+import { supabase } from "@/lib/supabase";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -11,28 +12,54 @@ export default function Home() {
   const router = useRouter();
   
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [contrasena, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const emailPattern = /^[^\s@]+@neoris\.mx$/
   const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
-  const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      setError('');
+  const handleSubmit = async (e: React.FormEvent) => {
 
-      if (!emailPattern.test(email)) {
-          setError('Invalid email address');
-          return;
-      }
-      
-      if (!passwordPattern.test(password)) {
-          setError('Password must be at least 8 characters, include one capital letter, one special character and one digit');
-          return;
-      }
+        e.preventDefault();
+        setError('');
 
-      setUser({ email });
-      router.push('/dashboard'); // Redirect to dashboard after login
+        if (!emailPattern.test(email)) {
+            setError('Correo electrónico inválido. Debe ser de neoris.mx');
+            return;
+        }
+        
+        if (!passwordPattern.test(contrasena)) {
+            setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
+            return;
+        }
+
+        //consulta de la tabla "usuario" 
+        try{
+            const { data, error: queryError } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('email', email)
+            .single();
+
+            if (queryError || !data) {
+                console.log("Query error:", queryError);
+                console.log("Data:", data);
+                console.error("Error al consultar la tabla 'usuario':", queryError);
+                setError('Usuario no encontrado. Verifica tus credenciales.');
+                return;
+            }
+
+            if(data.contrasena !== contrasena) {
+                setError('    incorrecta. Verifica tus credenciales.');
+                return;
+            }
+
+            setUser({ email: data.email});
+            router.push('/dashboard'); // Redirect to dashboard after login
+        } catch(err){
+            console.error("Error al iniciar sesión:", err);
+            setError('Hubo un problema al iniciar sesion.');
+        }
   };
 
   return (
@@ -65,7 +92,7 @@ export default function Home() {
                       <label className="block text-sm font-medium">Contraseña</label>
                       <input 
                           type="password" 
-                          value={password} 
+                          value={contrasena} 
                           onChange={(e) => setPassword(e.target.value)} 
                           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="contraseña"
@@ -74,7 +101,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-end">
                     <Link href="/olvide-contrasena" className="text-blue-500 hover:text-blue-600 underline">
-                        Olvidé mi contraseña
+                    ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                   <button type="submit" className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition">Ingresar</button>
