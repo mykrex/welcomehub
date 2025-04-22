@@ -3,6 +3,7 @@
 import { useUser } from "../context/UserContext";
 import { supabase } from "@/lib/supabase";
 import { useState, useRef, useEffect } from "react";
+import CompiIcon from "./CompiIcon";
 
 type Message = { sender: "user" | "bot"; text: string };
 
@@ -84,14 +85,14 @@ export default function Chatbot() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
-
-  return (
+  
+    return (
     <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
-      <button
-        className="p-2 bg-blue-500 text-white rounded-full shadow-lg"
+      <button //*Diseño del botón de chat
+        className="p-2 rounded-full shadow-lg"
         onClick={() => setOpen(!open)}
       >
-        💬
+        <CompiIcon className="w-12 h-12" />
       </button>
 
       {open && (
