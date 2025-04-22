@@ -1,0 +1,103 @@
+.snapItem {
+  flex-shrink: 0;
+  width: 32rem;  
+}
+
+.cursoCard {
+  border: 4px solid #06D6A0;
+  background-color: #141414;
+  min-width: 300px;
+
+  border-radius: 1rem; 
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: auto;
+}
+
+.outliness{
+  flex: 1;
+  padding: 0.75rem;     /* p-3 equivale a 12px = 0.75rem */
+  display: flex;
+  flex-direction: column;
+}
+
+.coursetitle{
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.description{
+  color: #999;
+  font-size: 14px;
+}
+
+.textofmodulescompleted{
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;        /* gap-1 = 4px */
+  margin-top: 0.5rem;  /* mt-2 = 8px */
+  font-size: 0.75rem;  /* text-xs */
+  color: #06D6A0;
+}
+
+.textofmodulescompleted2{
+  color: #999;
+}
+
+
+.lengthofmodulestotal{
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  width: 15rem; /* w-60 = 240px */
+}
+
+.progressbar {
+  flex: 1;
+  height: 0.25rem;   /* h-1 = 4px (0.25rem) */
+  border-radius: 9999px; /* rounded-full */
+}
+
+.completed {
+  background-color: #06D6A0; /* bg-[#06D6A0] */
+}
+
+.incomplete {
+  background-color: #6b7280; /* bg-gray-500 */
+}
+
+.imageofcourses{
+  object-fit: cover;       /* object-cover */
+  border-radius: 0.75rem;  /* rounded-xl */
+  margin-left: auto;       /* ml-auto */
+  height: 12.5rem;         /* h-50 = 200px */
+  width: 12.5rem;          /* w-50 = 200px */
+}
+
+.blackrectangle{
+  background-color: #141414;  /* bg-[#141414] */
+  padding: 1rem;              /* p-4 = 16px */
+  border-radius: 0.5rem;      /* rounded-lg */
+  width: 100%;                /* w-full */
+  margin-top: 2rem;           /* mt-8 = 32px */
+}
+
+.sectiontitle{
+  color: #999999;           /* text-[#999999] */
+  font-size: 1.125rem;      /* text-lg = 18px */
+  font-weight: 600;         /* font-semibold */
+  margin-bottom: 0.5rem;    /* mb-2 = 8px */
+}
+
+.scrollArea {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  scrollbar-color: #999 transparent; 
+  -webkit-overflow-scrolling: touch; /* suavidad en iOS */
+}
+
