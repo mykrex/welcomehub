@@ -8,7 +8,7 @@ import "@/app/components/(layout)/layout.css";
 import WelcomeHubLogo from '../../verCursos/icons/WelcomeHubLogo'; //! Cambiar a WelcomeHubLogoSmall
 import DashboardIcon from '../../verCursos/icons/DashboardIcon';
 import CursosIcon from '../../verCursos/icons/CursosIcon';
-import BorisIcon from '../../verCursos/icons/BorisIcon';
+import CompiIcon from '../../verCursos/icons/CompiButtonIcon';
 import RetosIcon from '../../verCursos/icons/RetosIcon';
 import NeorisIcon from '../../verCursos/icons/NeorisIcon';
 //import path from 'path';
@@ -21,7 +21,7 @@ const SidebarMenu = () => {
   const menuItems = [
     { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
     { label: 'Cursos', icon: CursosIcon, path: '/cursos' },
-    { label: 'Boris IA', icon: BorisIcon, path: '/compi' }, //! CAMBIAR TODO A COMPI, NO BORIS
+    { label: 'Compi', icon: CompiIcon, path: '/compi' }, 
     { label: 'Retos', icon: RetosIcon, path: '/retos' },
     { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
   ];
