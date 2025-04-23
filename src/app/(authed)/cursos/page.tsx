@@ -2,13 +2,13 @@
 import React,{useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import {getCursos, Courses} from "@/app/(app)/(pages)/cursos/fakeapi";
+import {getCursos, Courses} from "@/app/(authed)/cursos/fakeapi";
 
 //import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
 //import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 import "@/app/verCursos/verCursos.css";
 
-import "@/app/(app)/(pages)/cursos/cursos.css";
+import "@/app/(authed)/cursos/cursos.css";
 
 export default function CoursesDashboard() {
   const router = useRouter();
