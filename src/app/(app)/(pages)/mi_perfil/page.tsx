@@ -49,7 +49,7 @@ export default function MiPerfil() {
             }
         };
         fetchData();
-    }, [user]);
+    }, []);
 
     return (
             <div className="flex-1 overflow-auto">
