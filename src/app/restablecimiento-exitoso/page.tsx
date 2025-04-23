@@ -9,7 +9,7 @@ export default function OlvideContrasena(){
     const router = useRouter();
 
     const handleNext = () => {
-        router.push("/login");
+        router.push("/");
     };
 
     return(

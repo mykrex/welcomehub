@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { UserProvider } from "../context/UserContext";
 
 export const metadata: Metadata = {
-  title: "WelcomeHub",
-  description: "Generado por el equipo de WelcomeHub",
+  title: "Welcome Hub",
+  description: "Generado por el equipo de Welcome Hub",
 };
 
 export const viewport = {
@@ -15,5 +16,9 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>
+  return (
+    <UserProvider>
+      {children} 
+    </UserProvider>
+  );
 }
