@@ -4,7 +4,7 @@ import {useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import ProgresoRecuperacion from "../components/progresoRecuperacion";
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabaseClient'
 
 export default function OlvideContrasena(){
     const [email, setEmail] = useState('');

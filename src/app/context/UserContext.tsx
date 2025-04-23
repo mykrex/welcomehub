@@ -8,7 +8,6 @@ interface UserContextType{
 
 interface User{
     email: string;
-    rol: string;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

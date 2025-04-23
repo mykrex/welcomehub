@@ -27,7 +27,7 @@ const SidebarMenu = () => {
   ];
 
   const getIsActive = (path?: string) => {
-    if (!path || !pathname) return false;
+    if (!path) return false;
     return pathname.startsWith(path);
   };
 
