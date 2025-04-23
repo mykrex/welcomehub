@@ -1,11 +1,11 @@
 'use client'
 
-import Titulo from "../../../components/perfilTitulos";
-import VerPassword from "../../../components/verPassword";
+import Titulo from "../../components/perfilTitulos";
+import VerPassword from "../../components/verPassword";
 import { useState, useEffect, Fragment } from "react";
-import {getBasicInfo } from "../../../api/perfil/informacionBasica";
-import {getContact} from "../../../api/perfil/contact";
-import {getTeam} from "../../../api/perfil/team";
+import {getTeam} from "../../api/perfil/team";
+import { useUser } from "../../context/UserContext";
+import { useRouter } from "next/navigation"
 
 interface Info {
     nombre: string;
@@ -27,30 +27,72 @@ interface TeamMember {
     correo: string;
 }
 
+const getUserProfile = async (email: string) => {
+    const response = await fetch(`/api/users/me?email=${email}`);
+    const result = await response.json();
+  
+    if (!response.ok) {
+      throw new Error(result.error || "Error al obtener perfil");
+    }
+  
+    return result.perfil;
+};
+
 export default function MiPerfil() {
     const [info, setInfo] = useState<Info | null>(null);
     const [contact, setContact] = useState<Contact | null>(null);
     const [team, setTeam] = useState<TeamMember[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { user, setUser } = useUser();
+    const router = useRouter();
 
     // Get data when the components is loading
+    console.log("Usuario actual:", user);
+
     useEffect(() => {
+        console.log("usuario actual:", user?.email);
+        if (!user?.email) return;
+        
+        console.log("useEffect con user:", user);
         const fetchData = async () => {
             try {
-                const infoResponse = await getBasicInfo();
-                setInfo(infoResponse);
+                setLoading(true);
 
-                const contactResponse = await getContact();
-                setContact(contactResponse);
+                const perfil = await getUserProfile(user.email);
+
+                setInfo({
+                  nombre: perfil.nombres,
+                  apellido: perfil.apellidos,
+                  fechaNacimiento: perfil.fecha_nacimiento,
+                  puesto: perfil.puesto,
+                  fechaIngreso: perfil.en_neoris_desde,
+                });
+            
+                setContact({
+                  correo: perfil.email,
+                  telefono: perfil.telefono,
+                  password: perfil.contrasena,
+                });
 
                 const teamResponse = await getTeam();
                 setTeam(teamResponse);
             } catch(error) {
                 console.log("Error obteniendo los datos: ", error);
+            } finally {
+                setLoading(false)
             }
         };
         fetchData();
-    }, []);
+    }, [user]);
 
+    if (loading) {
+        return (
+          <div className="flex items-center justify-center h-screen text-white">
+            <p className="text-lg animate-pulse">Cargando perfil...</p>
+          </div>
+        );
+      }
+      
     return (
             <div className="flex-1 overflow-auto">
                 <main className="container mx-auto px-4 py-6">
@@ -138,6 +180,15 @@ export default function MiPerfil() {
                                     </Fragment>
                                 ))}
                             </div>
+                        </section>
+
+                        <section className="flex justify-center">
+                            <button onClick={() => { 
+                                setUser(null);
+                                localStorage.removeItem("user");
+                                router.push('/') }} className="mt-8 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                            Cerrar sesión
+                            </button>
                         </section>
                     </div>
                 </main>

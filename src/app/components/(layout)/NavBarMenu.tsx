@@ -15,11 +15,13 @@ const pathToTitleMap: { [key: string]: string } = {
   '/cursos': 'Mis Cursos',
   '/mi_perfil': 'Mi Perfil',
   '/verCursos': 'Atención a Clientes y Ventas',
+  '/retos': 'Mis Retos',
+  '/compi': 'Compi',
 };
 
 const Navbar = () => {
   const pathname = usePathname();
-  const title = pathToTitleMap[pathname] || 'WelcomeHub';
+  const title = pathname ? pathToTitleMap[pathname] || 'WelcomeHub' : 'WelcomeHub';
 
   return (
     <div className="navbar">

@@ -1,18 +1,17 @@
 'use client';
 
-import { useUser } from "../context/UserContext";
+import { useUser } from "@/app/context/UserContext";
 import { supabase } from "@/lib/supabase";
 import { useState, useRef, useEffect } from "react";
-import CompiIcon from "./CompiIcon";
 
 type Message = { sender: "user" | "bot"; text: string };
 
-export default function Chatbot() {
+export default function Compi() {
   const { user } = useUser();
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
@@ -85,19 +84,16 @@ export default function Chatbot() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
-  
-    return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
-      <button //*Diseño del botón de chat
-        className="p-2 rounded-full shadow-lg"
-        onClick={() => setOpen(!open)}
-      >
-        <CompiIcon className="w-12 h-12" />
-      </button>
 
-      {open && (
-        <div className="bg-white shadow-lg rounded-lg w-80 border mt-2 flex flex-col max-h-[500px]">
-          <h2 className="text-lg font-bold p-4 border-b">Compi</h2>
+    return (
+      <div className="flex flex-col h-full w-full rounded-[15px] bg-[#042C45] overflow-hidden text-white">
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <div className="flex justify-between items-center p-4 border-b border-gray-700 shadow text-white">
+            <h2 className="text-lg font-bold">Compi</h2>
+          </div>
+    
+          {/* Messages */}
           <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
             {messages.map((message, index) => (
               <div
@@ -107,10 +103,10 @@ export default function Chatbot() {
                 }`}
               >
                 <div
-                  className={`px-3 py-2 rounded-lg text-sm max-w[75%] ${
+                  className={`px-3 py-2 rounded-lg text-sm max-w-[75%] ${
                     message.sender === "user"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-black"
+                      ? "bg-blue-600 text-white"
+                      : "bg-white text-black"
                   }`}
                 >
                   {message.text}
@@ -119,9 +115,11 @@ export default function Chatbot() {
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <div className="border-t p-2">
+    
+          {/* Input */}
+          <div className="border-t border-gray-700 p-4">
             <textarea
-              className="w-full border p-2 rounded text-sm resize-none"
+              className="w-full border border-gray-300 p-2 rounded text-sm resize-none"
               rows={2}
               placeholder="Hola, ¿cómo puedo ayudarte?"
               value={prompt}
@@ -134,7 +132,7 @@ export default function Chatbot() {
               }}
             />
             <button
-              className="mt-2 w-full bg-blue-500 text-white py-2 rounded text-sm"
+              className="mt-2 w-full bg-blue-600 text-white py-2 rounded text-sm"
               onClick={sendPrompt}
               disabled={loading}
             >
@@ -142,7 +140,6 @@ export default function Chatbot() {
             </button>
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );    
 }
