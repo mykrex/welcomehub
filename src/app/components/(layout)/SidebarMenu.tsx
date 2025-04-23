@@ -11,6 +11,7 @@ import CursosIcon from '../../verCursos/icons/CursosIcon';
 import BorisIcon from '../../verCursos/icons/BorisIcon';
 import RetosIcon from '../../verCursos/icons/RetosIcon';
 import NeorisIcon from '../../verCursos/icons/NeorisIcon';
+import ClockIcon from '../../verCursos/icons/ClockIcon';
 //import path from 'path';
 
 const SidebarMenu = () => {
@@ -24,6 +25,7 @@ const SidebarMenu = () => {
     { label: 'Boris IA', icon: BorisIcon, path: '/compi' }, //! CAMBIAR TODO A COMPI, NO BORIS
     { label: 'Retos', icon: RetosIcon, path: '/retos' },
     { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
+    { label: 'Time Card', icon: ClockIcon, path: '/timecard' }, 
   ];
 
   const getIsActive = (path?: string) => {
