@@ -1,0 +1,220 @@
+.app-container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    gap: 15px;
+  }
+
+
+/* ============= container ============= */
+.retos-container {
+    width: 100%;
+    padding: 20px 30px;
+    background: #042c45;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* ============= header ============= */
+  .retos-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .retos-title {
+    color: #ebfaff;
+    font: 600 28px/1 'Manrope', sans-serif;
+  }
+  .retos-date {
+    color: #8bcff9;
+    font: 600 28px/1 'Manrope', sans-serif;
+  }
+  
+  /* ============= table layout ============= */
+  .retos-table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .retos-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 12px 10px;
+  }
+  .retos-row--header {
+    background: #8bcff9;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: 2px solid #0b88d5;
+  }
+  .retos-row--even { background: #053c5e; }
+  .retos-row--odd  {
+    background: #053c5e;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  /* ============= column widths ============= */
+  .retos-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .retos-cell--status      { width:  80px; }
+  .retos-cell--type        { width: 150px; }
+  .retos-cell--points      { width: 120px; text-align: center; }
+  .retos-cell--description { width: 440px; }
+  .retos-cell--assigned    { width: 180px; }
+  .retos-cell--progress    { width: 180px; padding: 0 20px; justify-content: space-between; }
+  
+  /* header fonts */
+  .retos-row--header .retos-cell {
+    color: #064a74;
+    font: 700 18px/1 'Manrope', sans-serif;
+  }
+  
+  /* ============= icons & helpers ============= */
+  .status-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .status-icon--complete { background: #4daa57; }
+  .status-icon--pending  { border: 1px solid #9daaa6; }
+  
+  .streak, .points-streak { color: #f4b942; font-weight: 700; }
+  .challenge, .points-challenge { color: #db504a; font-weight: 700; }
+  
+  .desc           { color: #ebfaff; font: 500 16px/1 'Manrope', sans-serif; }
+  .assigned-name  { color: #8bcff9; font: 600 16px/1 'Manrope', sans-serif; }
+  .progress-text  { color: #9daaa6; font: 600 16px/1 'Manrope', sans-serif; }
+  
+  /* progress bar */
+  .progress-bar {
+    position: relative;
+    width: 120px;
+    height: 35px;
+  }
+  .progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 0;
+    width: 100%;
+    height: 13px;
+    background: #f3f2f2;
+  }
+  .progress-thumb {
+    position: absolute;
+    left: 80px;         /* tweak to match 63 % */
+    top: 3px;
+    width: 15px;
+    height: 28px;
+    border-radius: 2px;
+    outline: 3px solid #f3f2f2;
+    outline-offset: -1.5px;
+  }
+  
+  /* dotted progress (streak row) */
+  .progress-dots { display: flex; gap: 4px; }
+  .dot {
+    width: 12px;
+    height: 12px;
+    background: #4daa57;
+    border-radius: 50%;
+  }
+  
+  /* fallback :empty dot */
+  .dot--empty { background: #9daaa6; }
+
+
+  /* ============= TEAM RANKING ============= */
+.team-ranking {
+    width: 100%;
+    padding: 20px 30px;
+    background: #042c45;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* header */
+  .team-ranking__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .team-ranking__title { color: #ebfaff; font: 600 28px/1 'Manrope', sans-serif; }
+  .team-ranking__date  { color: #8bcff9; font: 600 28px/1 'Manrope', sans-serif; }
+  
+  /* podium */
+  .podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px;
+  }
+  .podium-card {
+    width: 133px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .podium-card.gold   { background: #0b88d5; border-radius: 10px; padding: 7px 25px; height: 398px; }
+  .podium-card.silver,
+  .podium-card.bronze { align-self: stretch; }
+  .podium-avatar { width: 126px; height: 126px; border-radius: 50%; background: #51b6f6; }
+  .podium-img    { width: 130px; height: 126px; border-radius: 50%; object-fit: cover; }
+  .podium-name   { width: 100%; text-align: center; color: #053c5e; font: 500 14px 'Manrope', sans-serif; }
+  
+  .points-card {
+    width: 100%; padding: 7px 25px; border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 60px;
+  }
+  .points-card.silver { background: #0c94e9; }
+  .points-card.bronze { background: #51b6f6; }
+  
+  .podium-rank   { color: #4c5754; font: 700 16px 'Poppins', sans-serif; }
+  .points        { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .points-value  { color: #053c5e; font: 700 35px 'Poppins', sans-serif; }
+  .points-label  { color: #053c5e; font: 700 16px 'Manrope',  sans-serif; }
+  .gold-big      { font-size: 35px; color: #053c5e; }
+  
+  /* ranking list */
+  .ranking-list {
+    list-style: none; padding: 0; margin: 0;
+    width: 650px; max-width: 100%;
+    background: #c2f0ff; border-radius: 10px;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+  }
+  .ranking-row {
+    display: flex; align-items: center; gap: 20px;
+    padding: 8px 0;
+    border-bottom: 1px solid #51b6f6;
+  }
+  .ranking-row:last-child { border-bottom: none; }
+  .ranking-points { color: #0b88d5; font: 700 20px 'Poppins', sans-serif; width: 80px; text-align: right; }
+  .ranking-name   { color: #064a74; font: 400 20px 'Poppins', sans-serif; flex: 1; }
+  .ranking-rank   { color: #064a74; font: 400 20px 'Poppins', sans-serif; width: 40px; text-align: center; }
+  
+  /* list footer */
+  .ranking-footer {
+    display: flex; gap: 20px; font: 700 15px 'Poppins', sans-serif; color: #064a74;
+    margin-top: 4px;
+  }
+  .footer-label:nth-child(1) { width: 80px; text-align: right; }
+  .footer-label:nth-child(2) { flex: 1; }
+  .footer-label:nth-child(3) { width: 40px; text-align: center; }
+  
+  .retos-page {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* spacing between retos and ranking */
+    padding: 20px;
+  }
+  
