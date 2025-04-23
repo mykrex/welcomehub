@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
+import { supabase } from "@/lib/supabase";
 import Image from 'next/image';
 import Link from "next/link";
 
@@ -33,23 +34,29 @@ export default function Home() {
         }
 
         //consulta de la tabla "usuario" 
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password: contrasena }),
-            });
+        try{
+            const { data, error: queryError } = await supabase
+            .from('usuario')
+            .select('*')
+            .eq('email', email)
+            .single();
 
-            const result = await response.json();
-
-            if (!response.ok) {
-                setError(result.error || 'Error al iniciar sesión');
+            if (queryError || !data) {
+                console.log("Query error:", queryError);
+                console.log("Data:", data);
+                console.error("Error al consultar la tabla 'usuario':", queryError);
+                setError('Usuario no encontrado. Verifica tus credenciales.');
                 return;
             }
 
-            setUser({ email: result.user.email, rol: result.user.rol });
+            if(data.contrasena !== contrasena) {
+                setError('    incorrecta. Verifica tus credenciales.');
+                return;
+            }
+
+            setUser({ email: data.email});
             router.push('/dashboard'); // Redirect to dashboard after login
-        } catch (err) {
+        } catch(err){
             console.error("Error al iniciar sesión:", err);
             setError('Hubo un problema al iniciar sesion.');
         }
