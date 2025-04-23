@@ -21,7 +21,7 @@ const pathToTitleMap: { [key: string]: string } = {
 
 const Navbar = () => {
   const pathname = usePathname();
-  const title = pathToTitleMap[pathname] || 'WelcomeHub';
+  const title = pathname ? pathToTitleMap[pathname] || 'WelcomeHub' : 'WelcomeHub';
 
   return (
     <div className="navbar">
