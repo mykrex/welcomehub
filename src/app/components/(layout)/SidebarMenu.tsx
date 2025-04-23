@@ -11,6 +11,7 @@ import CursosIcon from '../../verCursos/icons/CursosIcon';
 import CompiIcon from '../../verCursos/icons/CompiButtonIcon';
 import RetosIcon from '../../verCursos/icons/RetosIcon';
 import NeorisIcon from '../../verCursos/icons/NeorisIcon';
+import ClockIcon from '../../verCursos/icons/ClockIcon';
 //import path from 'path';
 
 const SidebarMenu = () => {
@@ -24,10 +25,11 @@ const SidebarMenu = () => {
     { label: 'Compi', icon: CompiIcon, path: '/compi' }, 
     { label: 'Retos', icon: RetosIcon, path: '/retos' },
     { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
+    { label: 'Time Card', icon: ClockIcon, path: '/timecard' }, 
   ];
 
   const getIsActive = (path?: string) => {
-    if (!path) return false;
+    if (!path || !pathname) return false;
     return pathname.startsWith(path);
   };
 
