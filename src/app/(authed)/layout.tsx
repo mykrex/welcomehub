@@ -1,9 +1,6 @@
 import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
 import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 import "@/app/components/(layout)/layout.css";
-
-//* Librerias para el chatbot
-//import type { Metadata } from "next";
 import Chatbot from "@/app/components/chatbot";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -13,9 +10,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <SidebarMenu />
       <div className="page-wrapper">
         <NavBarMenu />
-        <div className="main-content">
-          {children}
-          </div>
+        <div className="main-content">{children}</div>
       </div>
     </div>
   );
