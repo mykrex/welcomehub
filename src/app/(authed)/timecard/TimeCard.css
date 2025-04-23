@@ -1,0 +1,271 @@
+/*Background*/
+.timecard-container {
+    color: white;
+    font-family: sans-serif;
+}
+
+.timecard-box {
+    background-color: #102c45;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+/*Period*/
+.weekendpayment {
+    font-size: 25px;
+    font-weight: normal;
+    text-align: center;
+
+}
+
+/*Header*/
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Buttons of changing period*/
+.nav-btn {
+    background-color: #51B6F6;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/*Part of the calendar*/
+.calendar-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.calendar-box {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+/*Superior part of the calendar*/
+.calendar-top {
+    background-color: #e7f6fc;
+    font-size: 10px;
+    color: black;
+}
+
+/*Day in big*/
+.calendar-day {
+    font-size: 40px;
+    font-weight: bold;
+    background-color: #e7f6fc;
+    color: black;
+}
+
+/*Month Part*/
+.calendar-bottom {
+    background-color: #e53935;
+    color: black;
+    font-weight: bold;
+    padding: 4px 0;
+    font-size: 13px;
+}
+
+/*Separation of the calendar and status*/
+.calendar-container {
+    align-items: center;
+    gap: 20px;
+}
+/*Status*/
+.status {
+    font-size: 18px;
+}
+
+.status p {
+    margin: 4px 0;
+    font-weight: normal;
+}
+
+/*Dates of the right part*/
+.dates {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    gap: 8px;
+}
+
+.date-item {
+    background-color: #064A74;
+    color: white;
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-size: 15px;
+    min-width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Table*/
+.hours-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Info of table*/
+.hours-table thead {
+    background-color: #2E3640;
+}
+
+.hours-table th {
+    padding: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+/*Rows of table*/
+.hours-table tbody tr:nth-child(odd) {
+    background-color: #AEBBB7;
+}
+
+.hours-table tbody tr:nth-child(even) {
+    background-color: #9DAAA6;
+}
+
+.hours-table td {
+    padding: 8px;
+    text-align: center;
+    color: #2E3640;
+}
+
+/* Number of the table*/
+.hours-table input[type="number"] {
+    width: 60px;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+/* The + of See more*/
+.hours-table input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background-color: #064A74;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    border: none;
+}
+
+.hours-table input[type="checkbox"]::before {
+    content: '+';
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*The bottom of buttons*/
+.buttons-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.button-group {
+    display: flex;
+    flex: 1;
+    gap: 10px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 6px 0;
+    border-radius: 24px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.button-group .red {
+    background-color: #d9534f;
+}
+
+.button-group .gray {
+    background-color: #9DAAA6;
+}
+
+.button-group .blue {
+    background-color: #0275d8;
+}
+
+/* Feedback al hacer clic (puedes personalizar colores si quieres) */
+.button-group button:active {
+    filter: brightness(0.85);
+}
+
+.custom-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: white;
+    font-weight: normal;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-checkbox input {
+    opacity: 0;
+    cursor: pointer;
+}
+
+/*Button not selected*/
+.custom-checkbox .checkmark {
+    height: 18px;
+    width: 18px;
+    border: 2px solid white;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    background-color: transparent;
+    transition: background-color 0.15s;
+}
+
+/*Visual effect of the buttons*/
+.custom-checkbox input:active+.checkmark {
+    background-color: #ccc;
+    filter: brightness(0.85);
+}
+
+/*Selected button*/
+.custom-checkbox input:checked+.checkmark {
+    background-color: white;
+}
+
+/*✔️*/
+.custom-checkbox input:checked+.checkmark::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0px;
+    width: 5px;
+    height: 10px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
