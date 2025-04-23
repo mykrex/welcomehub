@@ -3,7 +3,6 @@
 import Titulo from "../../components/perfilTitulos";
 import VerPassword from "../../components/verPassword";
 import { useState, useEffect, Fragment } from "react";
-import {getTeam} from "../../api/perfil/team";
 import { useUser } from "../../context/UserContext";
 import { useRouter } from "next/navigation"
 
@@ -25,7 +24,16 @@ interface TeamMember {
     rol: string;
     nombre: string;
     correo: string;
+    isAdmin: boolean;
 }
+
+interface RawMiembro {
+    nombres: string;
+    apellidos: string;
+    email: string;
+    rol: string;
+  }
+  
 
 const getUserProfile = async (email: string) => {
     const response = await fetch(`/api/users/me?email=${email}`);
@@ -38,22 +46,28 @@ const getUserProfile = async (email: string) => {
     return result.perfil;
 };
 
+const getTeam = async (email: string) => {
+    const res = await fetch(`/api/equipo?email=${email}`);
+    const data = await res.json();
+  
+    if (!res.ok) throw new Error(data.error || "Error al obtener equipo");
+  
+    return data;
+};  
+
 export default function MiPerfil() {
     const [info, setInfo] = useState<Info | null>(null);
     const [contact, setContact] = useState<Contact | null>(null);
     const [team, setTeam] = useState<TeamMember[]>([]);
+    const [teamName, setTeamName] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const { user, setUser } = useUser();
     const router = useRouter();
 
     // Get data when the components is loading
-    console.log("Usuario actual:", user);
-
     useEffect(() => {
-        console.log("usuario actual:", user?.email);
         if (!user?.email) return;
         
-        console.log("useEffect con user:", user);
         const fetchData = async () => {
             try {
                 setLoading(true);
@@ -74,8 +88,20 @@ export default function MiPerfil() {
                   password: perfil.contrasena,
                 });
 
-                const teamResponse = await getTeam();
-                setTeam(teamResponse);
+                const teamResponse = await getTeam(user.email);
+
+                setTeamName(teamResponse.equipo);
+
+                setTeam(
+                    teamResponse.miembros
+                    .map((m: RawMiembro) => ({
+                      nombre: `${m.nombres} ${m.apellidos}`,
+                      correo: m.email,
+                      rol: m.rol,
+                      isAdmin: m.email === teamResponse.administrador,
+                    }))
+                    .sort((a: TeamMember, b: TeamMember) => (a.isAdmin ? -1 : b.isAdmin ? 1 : 0))
+                );
             } catch(error) {
                 console.log("Error obteniendo los datos: ", error);
             } finally {
@@ -155,13 +181,13 @@ export default function MiPerfil() {
                         {/*} Equipo */}
                         <section className="p-2 border-b border-gray-500 mt-4 space-y-2">
                             <Titulo title="Mi Equipo"/>
-                            <p className="text-gray-300 mb-2">Financiamiento PMI´s</p>
+                            <p className="text-gray-300 mb-2">{teamName || "Equipo sin nombre"}</p>
                             <div className="grid [grid-template-columns:1fr_2fr_3fr] gap-y-2">
                                 {team.map((miembro, i) => (
                                     <Fragment key={i}>
                                         <p>
                                             <span className="font-semibold">Rol: </span>
-                                            <span className={miembro.rol === "Administrador" ? "text-teal-400 font-semibold" : ""}>
+                                            <span className={miembro.isAdmin ? "text-teal-400 font-semibold" : ""}>
                                               {miembro.rol}
                                             </span>
                                         </p>
@@ -187,7 +213,7 @@ export default function MiPerfil() {
                                 setUser(null);
                                 localStorage.removeItem("user");
                                 router.push('/') }} className="mt-8 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
-                            Cerrar sesión
+                                    Cerrar sesión
                             </button>
                         </section>
                     </div>
