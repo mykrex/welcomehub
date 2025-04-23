@@ -17,6 +17,7 @@ const pathToTitleMap: { [key: string]: string } = {
   '/verCursos': 'Atención a Clientes y Ventas',
   '/retos': 'Mis Retos',
   '/compi': 'Compi',
+  '/neoris': 'Sobre Neoris',
 };
 
 const Navbar = () => {
