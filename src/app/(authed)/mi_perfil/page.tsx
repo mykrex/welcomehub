@@ -83,7 +83,7 @@ export default function MiPerfil() {
             }
         };
         fetchData();
-    }, [user?.email]);
+    }, [user]);
 
     if (loading) {
         return (
