@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import "@/app/(app)/(pages)/timecard/TimeCard.css";
+import "@/app/(authed)/timecard/TimeCard.css";
 import './TimeCard.css';
 
 interface dayweek {
