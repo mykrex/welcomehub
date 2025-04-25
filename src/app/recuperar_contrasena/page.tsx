@@ -34,7 +34,7 @@ export default function OlvideContrasena(){
         e.preventDefault();
         const codigoCompleto = codigo.join("");
         if (codigoCompleto.length === 4) {
-            router.push("/cambiar-contrasena");
+            router.push("/cambiar_contrasena");
         } else {
             alert("Por favor, ingrese el código completo.");
         }

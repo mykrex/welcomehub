@@ -23,12 +23,12 @@ export default function Home() {
         setError('');
 
         if (!emailPattern.test(email)) {
-            setError('Correo electrónico inválido. Debe ser de neoris.mx');
+            setError('Correo o contraseña inválidos');
             return;
         }
         
         if (!passwordPattern.test(contrasena)) {
-            setError('La contraseña debe tener entre 8 y 20 caracteres, al menos una letra mayúscula, un número y un símbolo especial.');
+            setError('Correo o contraseña inválidos');
             return;
         }
 
@@ -93,7 +93,7 @@ export default function Home() {
                       />
                   </div>
                   <div className="flex justify-end">
-                    <Link href="/olvide-contrasena" className="text-blue-500 hover:text-blue-600 underline">
+                    <Link href="/olvide_contrasena" className="text-blue-500 hover:text-blue-600 underline">
                     ¿Olvidaste tu contraseña?
                     </Link>
                   </div>

@@ -40,7 +40,7 @@ export default function OlvideContrasena(){
           
             localStorage.setItem('correo_recuperacion', email);
           
-            router.push('/cambiar-contrasena');
+            router.push('/cambiar_contrasena');
         } catch(err){
             console.error("Error al iniciar sesión:", err);
             setError('Hubo un problema al iniciar sesion.');
