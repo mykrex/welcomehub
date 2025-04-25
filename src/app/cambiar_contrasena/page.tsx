@@ -52,7 +52,7 @@ export default function CambiarContrasena() {
 
             localStorage.removeItem('correo_recuperacion');
             alert('Contraseña actualizada exitosamente.');
-            router.push("/restablecimiento-exitoso");
+            router.push("/restablecimiento_exitoso");
         }catch(err){
             console.error("Excepción inesperada:", err);
             setError('Ocurrió un error inesperado. Intenta de nuevo.');

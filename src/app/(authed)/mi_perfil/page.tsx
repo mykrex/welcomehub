@@ -21,7 +21,7 @@ interface Contact {
 }
 
 interface TeamMember {
-    rol: string;
+    puesto: string;
     nombre: string;
     correo: string;
     isAdmin: boolean;
@@ -31,7 +31,7 @@ interface RawMiembro {
     nombres: string;
     apellidos: string;
     email: string;
-    rol: string;
+    puesto: string;
   }
   
 
@@ -47,13 +47,15 @@ const getUserProfile = async (email: string) => {
 };
 
 const getTeam = async (email: string) => {
-    const res = await fetch(`/api/equipo?email=${email}`);
-    const data = await res.json();
+    const response = await fetch(`/api/team/info?email=${email}`);
+    const result = await response.json();
   
-    if (!res.ok) throw new Error(data.error || "Error al obtener equipo");
+    if (!response.ok) {
+      throw new Error(result.error || "Error al obtener equipo");
+    }
   
-    return data;
-};  
+    return result;
+  };   
 
 export default function MiPerfil() {
     const [info, setInfo] = useState<Info | null>(null);
@@ -88,20 +90,21 @@ export default function MiPerfil() {
                   password: perfil.contrasena,
                 });
 
-                const teamResponse = await getTeam(user.email);
+                const teamData = await getTeam(user.email);
 
-                setTeamName(teamResponse.equipo);
-
+                setTeamName(teamData.equipo);
+                            
                 setTeam(
-                    teamResponse.miembros
+                  teamData.miembros
                     .map((m: RawMiembro) => ({
                       nombre: `${m.nombres} ${m.apellidos}`,
                       correo: m.email,
-                      rol: m.rol,
-                      isAdmin: m.email === teamResponse.administrador,
+                      puesto: m.puesto,
+                      isAdmin: m.email === teamData.administrador,
                     }))
                     .sort((a: TeamMember, b: TeamMember) => (a.isAdmin ? -1 : b.isAdmin ? 1 : 0))
                 );
+
             } catch(error) {
                 console.log("Error obteniendo los datos: ", error);
             } finally {
@@ -110,6 +113,10 @@ export default function MiPerfil() {
         };
         fetchData();
     }, [user]);
+
+    const handleChangePassword = () => {
+        router.push("/olvide_contrasena");
+    };
 
     if (loading) {
         return (
@@ -170,7 +177,7 @@ export default function MiPerfil() {
                                 </p>
                                 <div className="flex flex-row">
                                     <VerPassword password={contact.password}/>
-                                    <button className="text-sm text-white font-semibold text-center p-1 rounded-full bg-[#079A74] hover:text-[#006349] hover:bg-[#42796A]">Cambiar contraseña</button>
+                                    <button onClick={handleChangePassword} className="text-sm text-white font-semibold text-center p-1 rounded-full bg-[#079A74] hover:text-[#006349] hover:bg-[#42796A]">Cambiar contraseña</button>
                                 </div>
                             </section>
                             </>
@@ -186,15 +193,15 @@ export default function MiPerfil() {
                                 {team.map((miembro, i) => (
                                     <Fragment key={i}>
                                         <p>
-                                            <span className="font-semibold">Rol: </span>
-                                            <span className={miembro.isAdmin ? "text-teal-400 font-semibold" : ""}>
-                                              {miembro.rol}
+                                            <span className="font-semibold">Puesto: </span>
+                                            <span className={miembro.isAdmin ? "text-teal-400 font-semibold" : "text-gray-400 font-normal"}>
+                                                {miembro.puesto}
                                             </span>
                                         </p>
-                                
+                                        
                                         <p>
                                           <span className="font-semibold">Nombre: </span>
-                                          {miembro.nombre}
+                                          <span className="text-gray-400 font-normal">{miembro.nombre}</span>
                                         </p>
                                 
                                         <p>
