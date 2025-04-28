@@ -4,7 +4,7 @@ import TrophyIcon from "./trophyIcon";
 import Image from "next/image";
 import SecondPlaceMedal from "./SecondPlaceMedal";
 import ThirdPlaceMedal from "./ThirdPlaceMedal";
-
+{/* Pull request  */}
 const rankingData = [
   {
     name: "Rafael Pereira",
