@@ -3,13 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import {
   saveWeekData,
-  loadWeekData,
   saveSubmittedWeeks,
-  loadSubmittedWeeks,
   saveApprovedWeeks,
-  loadApprovedWeeks,
   saveDeliveryDates,
-  loadDeliveryDates
 } from '@/app/(authed)/timecard/timecard';
 
 import '@/app/(authed)/timecard/TimeCard.css';
