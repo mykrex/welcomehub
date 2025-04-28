@@ -14,6 +14,7 @@ body,
 }
 
 
+
 /* App container -> Es lo que contiene toda la pagina*/
 .app-container {
   display: flex;
@@ -23,14 +24,15 @@ body,
   gap: 15px;
 }
 
-/* Page wrapper VERTICAL -> Es lo que contiene el sidebar y el main content*/
+/* Page wrapper VERTICAL -> Es lo que contiene el search bar y el main content*/
 .page-wrapper {
   display: flex;
   flex-direction: column;
   flex: 1;
   height: 100%;
-  overflow: hidden;
   gap: 12px; 
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Main Contnent SCROLABLE -> Todo lo que no es el nav ni el menu: el contenido principal*/
@@ -39,8 +41,10 @@ body,
   flex: 1;
   margin: 0;
   overflow-y: auto;
-  padding-right: 10px;
+  padding-right: 5px;
 }
+
+
 
 /** ------------------------------- SIDEBAR MENU -------------------------------  */
 
@@ -214,3 +218,21 @@ body,
   border-radius: 64.5px;
 }
 
+/* SCROLLBAR */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #001f29;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #9DAAA6;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #677975;
+}

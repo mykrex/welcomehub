@@ -1,10 +1,3 @@
-.app-container {
-    display: flex;
-    height: 100vh;
-    padding: 20px;
-    gap: 15px;
-  }
-
 
 /* ============= container ============= */
 .retos-container {
@@ -20,16 +13,20 @@
   /* ============= header ============= */
   .retos-header {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
   }
   .retos-title {
     color: #ebfaff;
     font: 600 28px/1 'Manrope', sans-serif;
   }
+  .retos-subtitle {
+    color: #ebfaff;
+    font: 500 24px/1 'Manrope', sans-serif;
+  }
   .retos-date {
     color: #8bcff9;
-    font: 600 28px/1 'Manrope', sans-serif;
+    font: 500 24px/1 'Manrope', sans-serif;
   }
   
   /* ============= table layout ============= */
@@ -62,15 +59,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
   }
-  .retos-cell--status      { width:  80px; }
-  .retos-cell--type        { width: 150px; }
-  .retos-cell--points      { width: 120px; text-align: center; }
-  .retos-cell--description { width: 440px; }
-  .retos-cell--assigned    { width: 180px; }
-  .retos-cell--progress    { width: 180px; padding: 0 20px; justify-content: space-between; }
-  
+  .retos-cell--status      { flex: 1; }
+  .retos-cell--type        { flex: 2; }
+  .retos-cell--points      { flex: 1; text-align: center;}
+  .retos-cell--description { flex: 4; }
+  .retos-cell--assigned    { flex: 2; }
+  .retos-cell--progress    { flex: 2;}
+
   /* header fonts */
   .retos-row--header .retos-cell {
     color: #064a74;
@@ -87,39 +83,22 @@
   
   .streak, .points-streak { color: #f4b942; font-weight: 700; }
   .challenge, .points-challenge { color: #db504a; font-weight: 700; }
+  .target, .points-target { color: #0B88D5; font-weight: 700; }
+
   
   .desc           { color: #ebfaff; font: 500 16px/1 'Manrope', sans-serif; }
   .assigned-name  { color: #8bcff9; font: 600 16px/1 'Manrope', sans-serif; }
   .progress-text  { color: #9daaa6; font: 600 16px/1 'Manrope', sans-serif; }
   
-  /* progress bar */
-  .progress-bar {
-    position: relative;
-    width: 120px;
-    height: 35px;
-  }
-  .progress-bar::before {
-    content: '';
-    position: absolute;
-    top: 17px;
-    left: 0;
-    width: 100%;
-    height: 13px;
-    background: #f3f2f2;
-  }
-  .progress-thumb {
-    position: absolute;
-    left: 80px;         /* tweak to match 63 % */
-    top: 3px;
-    width: 15px;
-    height: 28px;
-    border-radius: 2px;
-    outline: 3px solid #f3f2f2;
-    outline-offset: -1.5px;
-  }
+  /*Welcome Hub Logo*/
+
   
   /* dotted progress (streak row) */
-  .progress-dots { display: flex; gap: 4px; }
+  .dot-group{
+    display: flex;
+    gap: 10px;
+  }
+
   .dot {
     width: 12px;
     height: 12px;
@@ -214,7 +193,6 @@
   .retos-page {
     display: flex;
     flex-direction: column;
-    gap: 40px; /* spacing between retos and ranking */
-    padding: 20px;
+    gap: 20px; /* spacing between retos and ranking */
   }
   
