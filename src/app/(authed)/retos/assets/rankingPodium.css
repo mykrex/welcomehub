@@ -1,0 +1,261 @@
+.ranking-container {
+  width: 100%;
+  height: 100%;
+  padding: 20px 30px;
+  background: #042c45;
+  border-radius: 15px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.ranking-header {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.ranking-title {
+  color: #ebfaff;
+  font-size: 28px;
+  font-family: "Manrope";
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.ranking-subtitle {
+  color: #8bcff9;
+  font-size: 28px;
+  font-family: "Manrope";
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.ranking-content {
+  align-self: stretch;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.podium-container {
+  width: 496px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 30px;
+}
+
+.podium-item {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.profile-picture {
+  width: 130px;
+  height: 126px;
+  border-radius: 9999px;
+}
+
+.profile-name-container {
+  width: 132.88px;
+  height: 26.58px;
+  padding: 4px 10px;
+  background: #0b88d5;
+  border-radius: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  position: absolute;
+  bottom: -10px;
+}
+
+/* Only override background color */
+.profile-name-container--first {
+  background-color: #0b88d5;
+}
+
+.profile-name-container--second {
+  background-color: #0c94e9;
+}
+
+.profile-name-container--third {
+  background-color: #51b6f6;
+}
+
+.profile-name {
+  width: 100%;
+  text-align: center;
+  color: #053c5e;
+  font-size: 15px;
+  font-family: "Manrope";
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.points-card {
+  align-self: stretch;
+  height: 550px;
+  padding: 30px 25px;
+  background: #0b88d5;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.points-card--second {
+  background: #0c94e9;
+  height: 450px;
+}
+.points-card--third {
+  background: #51b6f6;
+  height: 350px;
+}
+
+.points-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.points-number {
+  width: 81px;
+  height: 37px;
+  text-align: center;
+  color: #053c5e;
+  font-size: 35px;
+  font-family: "Manrope";
+  font-weight: 1000;
+  word-wrap: break-word;
+}
+
+.points-label {
+  width: 57px;
+  height: 21px;
+  text-align: center;
+  color: #053c5e;
+  font-size: 16px;
+  font-family: "Manrope";
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.ranking-table {
+  width: 700px;
+  height: 100%;
+  padding: 20px 30px;
+  background: #c2f0ff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ranking-table-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.ranking-header-item {
+    color: #064A74;
+    font-size: 20px;
+    font-family: 'Manrope';
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.ranking-divider {
+  width: 628px;
+  height: 0;
+  outline: 1px solid #51b6f6;
+  outline-offset: -0.5px;
+}
+
+.ranking-table-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ranking-points {
+  color: #0b88d5;
+  font-size: 20px;
+  font-family: "Manrope";
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.ranking-name {
+  color: #064a74;
+  font-size: 20px;
+  font-family: "Manrope";
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.ranking-rank {
+  color: #064a74;
+  font-size: 20px;
+  font-family: "Manrope";
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.circle {
+  border-radius: 9999px;
+}
+
+.circle.blue {
+  width: 50px;
+  height: 50px;
+  background: #0c94e9;
+}
+
+.circle.red {
+  width: 47.62px;
+  height: 47.62px;
+  background: #f62717;
+}
+
+.profile-picture-small {
+  width: 61px;
+  height: 61px;
+  border-radius: 9999px;
+}
+
+.ranking-row {
+    width: 625px;
+    display: flex;
+    flex-direction: row; /* 👈 horizontal layout */
+    justify-content: space-between; /* optional: spreads items */
+    align-items: center; /* 👈 vertical centering */
+    padding: 10px 0; /* optional: some vertical space inside each row */
+    border-bottom: 1px solid #51B6F6; /* optional: row separator if you want */
+  }
