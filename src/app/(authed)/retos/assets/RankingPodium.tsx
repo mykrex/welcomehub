@@ -4,8 +4,6 @@ import TrophyIcon from "./trophyIcon";
 import Image from "next/image";
 import SecondPlaceMedal from "./SecondPlaceMedal";
 import ThirdPlaceMedal from "./ThirdPlaceMedal";
-import profilePicture from "@/app/verCursos/profilePicture.png"; // adjust path if needed
-
 
 const rankingData = [
   {
@@ -145,26 +143,24 @@ export default function RankingPodium() {
 
           <div className="ranking-divider" />
 
-
           <div className="ranking-table-body">
             {rankingData.map((user, index) => (
               <div key={index} className="ranking-row">
                 <div className="ranking-rank">{user.rank}</div>
-                <img
+                <Image
                   className="profile-picture-small"
                   src={user.image}
                   alt={`Profile of ${user.name}`}
+                  width={61}
+                  height={61}
                 />
                 <div className="ranking-name">{user.name}</div>
-                
-                
+
                 <div className="ranking-points">{user.points}</div>
               </div>
             ))}
           </div>
-          
         </div>
-
       </div>
     </div>
   );
