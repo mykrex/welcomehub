@@ -6,7 +6,6 @@ import {
   Users,
   HeartHandshake,
   Target,
-  CalendarCheck,
 } from "lucide-react";
 
 export default function AboutNeoris() {
