@@ -1,6 +1,13 @@
 "use client";
 
-import { Briefcase, Globe, Users, HeartHandshake, Target } from "lucide-react";
+import {
+  Briefcase,
+  Globe,
+  Users,
+  HeartHandshake,
+  Target,
+  CalendarCheck,
+} from "lucide-react";
 
 export default function AboutNeoris() {
   return (
@@ -11,8 +18,8 @@ export default function AboutNeoris() {
           ¿Quiénes Somos en NEORIS?
         </h1>
         <p className="text-gray-400 text-lg">
-          Somos una aceleradora digital global que ayuda a las empresas a reinventarse 
-          mediante soluciones tecnológicas innovadoras. Combinamos experiencia en la industria 
+          Somos una aceleradora digital global que ayuda a las empresas a reinventarse
+          mediante soluciones tecnológicas innovadoras. Combinamos experiencia en la industria
           con pensamiento disruptivo para generar impacto real.
         </p>
       </div>
@@ -59,6 +66,43 @@ export default function AboutNeoris() {
           <p className="text-gray-400 text-center">
             Nos guiamos por la integridad, el compromiso, la colaboración y la pasión por entregar resultados excepcionales.
           </p>
+        </div>
+      </div>
+
+      {/* Línea del Tiempo NEORIS */}
+      <div className="pt-10">
+        <h2 className="text-[32px] font-bold text-[#448AFF] text-center mb-12">Línea del Tiempo NEORIS</h2>
+        <div className="relative border-l-4 border-[#448AFF] ml-6 space-y-12">
+          {[
+            {
+              year: "2000 – Fundación",
+              color: "#448AFF",
+              text: "Nace NEORIS como iniciativa de CEMEX, integrando varias empresas de tecnología en Latinoamérica y Europa."
+            },
+            {
+              year: "2010 – Expansión Global",
+              color: "#06D6A0",
+              text: "Consolida presencia en Estados Unidos, Europa y América Latina, desarrollando más de 1,000 proyectos de transformación digital."
+            },
+            {
+              year: "2022 – Alianza Estratégica",
+              color: "#F57C00",
+              text: "Advent International adquiere el 65% de la compañía para potenciar su crecimiento global. CEMEX mantiene el 35%."
+            },
+            {
+              year: "2023 – Expansión en EE.UU.",
+              color: "#FFD166",
+              text: "Adquisición de ForeFront, importante socio de Salesforce, para fortalecer su presencia en el mercado estadounidense."
+            }
+          ].map((event, index) => (
+            <div key={index} className="relative">
+              <div className="absolute -left-[42px] top-1 w-5 h-5 rounded-full border-4" style={{ backgroundColor: event.color, borderColor: '#042C45' }} />
+              <div className="ml-4">
+                <h4 className="text-white text-[18px] font-bold mb-1">{event.year}</h4>
+                <p className="text-gray-400 text-sm">{event.text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
