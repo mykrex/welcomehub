@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Modal from './Modal';
+//It what we need to save all this page.
 import {
   saveWeekData,
   saveSubmittedWeeks,
   saveApprovedWeeks,
   saveDeliveryDates,
-} from '@/app/(authed)/timecard/timecard';
+} from '@/app/api/timecard/timecard';
 
 import '@/app/(authed)/timecard/TimeCard.css';
 import './TimeCard.css';
@@ -25,13 +27,11 @@ interface DayOfWeek {
 
 type CoursesPerDay = { [iso: string]: Course[] };
 
-// Build the week starting from Sunday
 const getWeekFromBaseDate = (base: Date): DayOfWeek[] => {
   const start = new Date(base);
   start.setDate(base.getDate() - base.getDay());
   const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const week: DayOfWeek[] = [];
-
   for (let i = 0; i < 7; i++) {
     const date = new Date(start);
     date.setDate(start.getDate() + i);
@@ -53,46 +53,49 @@ const TimeCard = () => {
   const [expanded, setExpanded] = useState<{ [index: number]: boolean }>({});
   const [editing, setEditing] = useState<{ [iso: string]: number | null }>({});
   const [draftCourse, setDraftCourse] = useState<{ [iso: string]: Course }>({});
-  const [isDirty, setIsDirty] = useState(false); // Mark changes
+  const [isDirty, setIsDirty] = useState(false);
 
-  useEffect(() => {
-    const saved = localStorage.getItem('savedCourses');
-    const submitted = localStorage.getItem('submittedWeeks');
-    const approved = localStorage.getItem('approvedWeeks');
-    const delivery = localStorage.getItem('deliveryDates');
 
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      setSavedCourses(parsed);
-      setTempCourses(parsed); // Load all saved weeks
-    }
-    if (submitted) setSubmittedWeeks(new Set<string>(JSON.parse(submitted)));
-    if (approved) setApprovedWeeks(JSON.parse(approved));
-    if (delivery) setDeliveryDates(JSON.parse(delivery));
-  }, []);
+  const [modal, setModal] = useState<null | {
+    title: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    onConfirm: () => void;
+    onCancel?: () => void;
+  }>(null);
 
+  // Obtiene los días de la semana (Domingo a Sábado) a partir de una fecha base
   useEffect(() => {
     setWeek(getWeekFromBaseDate(startDate));
   }, [startDate]);
 
   const weekKey = week.map(d => d.iso).join(',');
-
+  
+  // Obtiene los cursos para un día específico según su clave ISO 
   const getCoursesForDay = (iso: string): Course[] => {
     return tempCourses[weekKey]?.[iso] || [];
   };
 
+  // Inicia la edición de un curso específico, guardando el índice y contenido temporal
   const startEdit = (iso: string, index: number, course: Course) => {
     setEditing(prev => ({ ...prev, [iso]: index }));
     setDraftCourse(prev => ({ ...prev, [iso]: { ...course } }));
   };
 
+  // Confirma la edición del curso y actualiza el estado
   const confirmEdit = (iso: string, index: number) => {
     const updated = draftCourse[iso];
     if (!updated || updated.title.trim() === '') {
-      alert("Debes escribir el nombre del curso antes de aceptar. O presiona cancelar.");
+      //Todos los setModal son para poner los cuadros de advertencia que viene en su tsx y hasta abajo.
+      setModal({
+        title: 'Error',
+        message: 'Debes escribir el nombre del curso antes de aceptar. O presiona cancelar.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
-
+    //Actualiza el curso editado en el día correspondiente dentro del estado temporal
     setTempCourses(prev => {
       const dayCourses = prev[weekKey]?.[iso] || [];
       const newCourses = [...dayCourses];
@@ -108,7 +111,7 @@ const TimeCard = () => {
     setEditing(prev => ({ ...prev, [iso]: null }));
     setIsDirty(true);
   };
-
+  // Cancela la edición. Si el último curso estaba vacío, se elimina del arreglo
   const cancelEdit = (iso: string) => {
     const dayCourses = tempCourses[weekKey]?.[iso] || [];
     if (dayCourses.length > 0) {
@@ -125,9 +128,9 @@ const TimeCard = () => {
       }
     }
     setEditing(prev => ({ ...prev, [iso]: null }));
-    setIsDirty(false); // Cancel edit = no changes
+    setIsDirty(false);
   };
-
+  //Elimina el curso especifico seleccionado.
   const deleteCourse = (iso: string, index: number) => {
     setTempCourses(prev => {
       const dayCourses = prev[weekKey]?.[iso] || [];
@@ -143,6 +146,7 @@ const TimeCard = () => {
     setIsDirty(true);
   };
 
+  // Añade un nuevo curso vacío en el respectivo dia y va a modo edición
   const addCourse = (iso: string) => {
     if (editing[iso] !== null && editing[iso] !== undefined) return;
     setTempCourses(prev => {
@@ -166,14 +170,24 @@ const TimeCard = () => {
     return acc + courses.reduce((sum, c) => sum + c.hours, 0);
   }, 0);
 
+  // Cambia la semana visualizada, ademas de asegurarse si se puede debido a que esta guardado o no.
   const changeWeek = (days: number) => {
     if (isDirty) {
-      alert("Tienes cambios sin guardar. Guarda tu semana antes de cambiar de periodo.");
+      setModal({
+        title: 'Advertencia',
+        message: 'Tienes cambios sin guardar. Guarda tu semana antes de cambiar de periodo.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
+    //Ademas de que no puedes cambiar la semana en modo edición tampoco.
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes cambiar de semana mientras estás editando.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes cambiar de semana mientras estás editando.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
     const newDate = new Date(startDate);
@@ -182,50 +196,99 @@ const TimeCard = () => {
     setExpanded({});
   };
 
+  // Expande o contrae la vista detallada de un día; si está en edición, cancela
   const toggleExpand = (index: number) => {
-    setExpanded(prev => ({ ...prev, [index]: !prev[index] }));
+    const iso = week[index]?.iso;
+    const isEditingThisDay = editing[iso] !== null && editing[iso] !== undefined;
+    if (isEditingThisDay) {
+      cancelEdit(iso);
+    }
+    setExpanded(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
   };
 
+  //Copia todos los datos de la semana pasada
   const copyLastWeek = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes copiar la semana pasada mientras editas.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes copiar la semana pasada mientras editas.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
-    if (!confirm('¿Deseas duplicar los cursos de la semana pasada? Esto borrará lo que haya en la semana actual.')) return;
+    //Aqui pregunta y ejecuta si lo haras
+    setModal({
+      title: 'Confirmar',
+      message: '¿Deseas duplicar los cursos de la semana pasada? Esto borrará lo que haya en la semana actual y se quedara guardado.',
+      confirmText: 'Sí',
+      cancelText: 'No',
+      onConfirm: () => {
+        const prevWeekDate = new Date(startDate);
+        prevWeekDate.setDate(startDate.getDate() - 7);
+        const prevWeek = getWeekFromBaseDate(prevWeekDate);
+        const prevKey = prevWeek.map(d => d.iso).join(',');
+        const prevCourses = savedCourses[prevKey];
 
-    const prevWeekDate = new Date(startDate);
-    prevWeekDate.setDate(startDate.getDate() - 7);
-    const prevWeek = getWeekFromBaseDate(prevWeekDate);
-    const prevKey = prevWeek.map(d => d.iso).join(',');
-    const prevCourses = savedCourses[prevKey];
+        const newWeekCourses: CoursesPerDay = {};
+        week.forEach(day => {
+          const match = prevWeek.find(d => d.name === day.name);
+          if (match && prevCourses?.[match.iso]) {
+            newWeekCourses[day.iso] = prevCourses[match.iso];
+          }
+        });
 
-    const newWeekCourses: CoursesPerDay = {};
-    week.forEach(day => {
-      const match = prevWeek.find(d => d.name === day.name);
-      if (match && prevCourses?.[match.iso]) {
-        newWeekCourses[day.iso] = prevCourses[match.iso];
-      }
+        const updated = { ...tempCourses, [weekKey]: newWeekCourses };
+        setTempCourses(updated);
+        setSavedCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
+        saveWeekData({ ...savedCourses, [weekKey]: newWeekCourses });
+        setIsDirty(false);
+        setModal(null);
+      },
+      onCancel: () => setModal(null)
     });
-
-    setTempCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
-    setIsDirty(true);
   };
 
+  // Elimina todos los cursos de la semana actual y guarda automáticamente
   const deleteAll = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes eliminar mientras editas.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes eliminar mientras editas.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
-    setTempCourses(prev => ({ ...prev, [weekKey]: {} }));
-    setIsDirty(true);
-  };
 
+    setModal({
+      title: 'Confirmar',
+      message: '¿Estás seguro de que quieres eliminar todo? Esto se guardara automaticamente.',
+      confirmText: 'Sí',
+      cancelText: 'No',
+      onConfirm: () => {
+        const updated = { ...tempCourses, [weekKey]: {} };
+        setTempCourses(updated);
+        setSavedCourses(prev => ({ ...prev, [weekKey]: {} }));
+        saveWeekData({ ...savedCourses, [weekKey]: {} });
+        setIsDirty(false);
+        setModal(null);
+      },
+      onCancel: () => setModal(null)
+    });
+  };
+  //Guarda el contenido de la semana actual en el estado y lo persiste con la API
   const saveWeek = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes guardar mientras editas.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes guardar mientras editas.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
 
@@ -239,20 +302,34 @@ const TimeCard = () => {
     saveApprovedWeeks(approvedWeeks);
     saveDeliveryDates(deliveryDates);
     setIsDirty(false);
-    alert('Semana guardada');
+
+    setModal({
+      title: 'Guardado',
+      message: 'Semana guardada correctamente.',
+      onConfirm: () => setModal(null)
+    });
   };
 
+  //Envia la semana y validando si la información fue guardada y sin ediciones pendientes
   const sendWeek = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes enviar mientras editas.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes enviar mientras editas.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
 
     const saved = savedCourses[weekKey];
     const temp = tempCourses[weekKey];
     if (!saved || JSON.stringify(saved) !== JSON.stringify(temp)) {
-      alert('Debes guardar antes de enviar.');
+      setModal({
+        title: 'Advertencia',
+        message: 'Debes guardar antes de enviar.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
 
@@ -268,13 +345,21 @@ const TimeCard = () => {
       return updated;
     });
 
-    alert('Semana enviada correctamente');
+    setModal({
+      title: 'Enviado',
+      message: 'Semana enviada correctamente.',
+      onConfirm: () => setModal(null)
+    });
   };
-
+  // Asigna o quita la aprobación de una semana ya enviada
   const toggleApproval = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
-      alert("No puedes aprobar mientras editas.");
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes aprobar mientras editas.',
+        onConfirm: () => setModal(null)
+      });
       return;
     }
 
@@ -287,7 +372,7 @@ const TimeCard = () => {
         updated[weekKey] = null;
       } else {
         const date = new Date();
-        date.setDate(date.getDate() + 5);
+        date.setDate(date.getDate());
         updated[weekKey] = date.toLocaleDateString('es-MX');
       }
       saveApprovedWeeks(updated);
@@ -315,7 +400,7 @@ const TimeCard = () => {
           <button className="nav-btn" onClick={() => changeWeek(7)}>Siguiente Periodo ›</button>
         </div>
 
-        {/* CALENDAR / STATUS */}
+        {/* CALENDARIO Y ESTATUS */}
         <div className="calendar-container">
           <div className="calendar-box">
             <div className="calendar-top">Hoy:</div>
@@ -344,8 +429,7 @@ const TimeCard = () => {
             </div>
           </div>
         </div>
-
-        {/* TABLA */}
+        {/* TABLA DE HORAS */}
         <table className="hours-table">
           <thead>
             <tr>
@@ -359,64 +443,86 @@ const TimeCard = () => {
             {week.map((dia, index) => {
               const cursos = getCoursesForDay(dia.iso);
               const horasTotales = cursos.reduce((sum, c) => sum + c.hours, 0);
+              const isExpanded = expanded[index];
 
               return (
                 <React.Fragment key={index}>
                   <tr>
-                    <td><input type="checkbox" onClick={() => toggleExpand(index)} /></td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={!!isExpanded}
+                        onChange={() => toggleExpand(index)}
+                      />
+                    </td>
                     <td>{dia.name}</td>
                     <td>{dia.format}</td>
                     <td>{horasTotales}</td>
                   </tr>
 
-                  {expanded[index] && (
+                  {isExpanded && (
                     <tr>
-                      <td></td>
-                      <td colSpan={3}>
-                        <div style={{ padding: '10px' }}>
+                      <td colSpan={4} className="expand-td">
+                        <div className="expand-content">
                           {cursos.length > 0 ? (
                             cursos.map((curso, i) => (
                               editing[dia.iso] === i ? (
-                                <div key={i} style={{ marginBottom: '14px' }}>
+                                <div key={i} className="edit-row">
                                   <input
-                                    style={{ backgroundColor: 'white', marginRight: '10px' }}
+                                    className="course-input title-input"
+                                    placeholder="Nombre de Curso"
                                     value={draftCourse[dia.iso]?.title || ''}
-                                    onChange={e => setDraftCourse(prev => ({ ...prev, [dia.iso]: { ...prev[dia.iso], title: e.target.value } }))}
+                                    onChange={e =>
+                                      setDraftCourse(prev => ({
+                                        ...prev,
+                                        [dia.iso]: { ...prev[dia.iso], title: e.target.value }
+                                      }))
+                                    }
                                   />
                                   <input
                                     type="number"
                                     min="0"
                                     step="0.1"
-                                    style={{ backgroundColor: 'white', width: '60px' }}
+                                    className="course-input number-input"
                                     value={draftCourse[dia.iso]?.hours ?? ''}
                                     onChange={e => {
-                                      const value = parseFloat(e.target.value);
-                                      const rounded = Math.floor(value * 10) / 10; // Truncar a 1 decimal
+                                      let value = parseFloat(e.target.value);
+                                      if (isNaN(value) || value < 0) value = 0;
+                                      const rounded = Math.floor(value * 10) / 10;
                                       setDraftCourse(prev => ({
                                         ...prev,
                                         [dia.iso]: { ...prev[dia.iso], hours: rounded }
                                       }));
                                     }}
                                   />
-
-                                  <button onClick={() => confirmEdit(dia.iso, i)}>✅</button>
-                                  <button onClick={() => cancelEdit(dia.iso)}>❌</button>
+                                  <button className="action-button" onClick={() => confirmEdit(dia.iso, i)}>Aceptar</button>
+                                  <button className="action-button" onClick={() => cancelEdit(dia.iso)}>Cancelar</button>
                                 </div>
                               ) : (
-                                <div key={i} style={{ marginBottom: '14px' }}>
-                                  <strong>{curso.title}</strong> — {curso.hours} horas
-                                  <button onClick={() => startEdit(dia.iso, i, curso)}>✏️</button>
-                                  <button onClick={() => deleteCourse(dia.iso, i)}>🗑️</button>
+
+
+
+                                <div key={i} className="course-entry">
+                                  <div className="course-info">
+                                    <strong>{curso.title}</strong> — {curso.hours} horas
+                                  </div>
+                                  <div>
+                                    <button className="action-button-blue" onClick={() => startEdit(dia.iso, i, curso)}>Editar</button>
+                                    <button className="action-button-red" onClick={() => deleteCourse(dia.iso, i)}>Borrar</button>
+                                  </div>
                                 </div>
+
                               )
                             ))
                           ) : (
                             <div>No hay cursos hechos este día.</div>
                           )}
-                          {/* BOTÓN AÑADIR */}
-                          {editing[dia.iso] === null || editing[dia.iso] === undefined ? (
-                            <button onClick={() => addCourse(dia.iso)}>+ Añadir Curso</button>
-                          ) : null}
+
+                          {(editing[dia.iso] === null || editing[dia.iso] === undefined) && (
+                            <button className="btn-anadir" onClick={() => addCourse(dia.iso)}>
+                              + Añadir Curso
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -427,7 +533,7 @@ const TimeCard = () => {
           </tbody>
         </table>
 
-        {/* BOTONES ABAJO */}
+        {/* BOTONES INFERIORES */}
         <div className="buttons-bar">
           <button className="link-button" onClick={copyLastWeek}>
             Copiar la Semana Pasada
@@ -443,11 +549,22 @@ const TimeCard = () => {
             <button className="blue" onClick={sendWeek}>Enviar</button>
           </div>
         </div>
-
       </div>
+
+      {/*The modal is for make the possible warnings*/}
+      {modal && (
+        <Modal
+          title={modal.title}
+          message={modal.message}
+          confirmText={modal.confirmText}
+          cancelText={modal.cancelText}
+          onConfirm={modal.onConfirm}
+          onCancel={modal.onCancel}
+        />
+      )}
     </div>
   );
-
 };
 
 export default TimeCard;
+
