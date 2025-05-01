@@ -142,10 +142,6 @@ export default function MiPerfil() {
         router.push("/olvide_contrasena");
     };
 
-    const handleEditPhoto = () => {
-        alert("Trabajando en la funcionalidad de subir imagen");
-    };
-
     if (loading) {
         return (
           <div className="flex items-center justify-center h-screen text-white">
@@ -180,7 +176,7 @@ export default function MiPerfil() {
                             </p>
                         </div>
                         <div className="relative w-[180px] h-[180px]">
-                            <FotoPerfil userId={user?.id_usuario!} />
+                             {user?.id_usuario && <FotoPerfil userId={user.id_usuario} />}
                         </div>
                     </section>
                         

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 import Link from 'next/link';
 

@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const userId = user.id;
 
   //  Verifica si ya existe en tu tabla personalizada
-  const { data: existe, error: errorCheck } = await supabase
+  const { data: existe } = await supabase
     .from("usuario")
     .select("id_usuario")
     .eq("id_usuario", userId)
