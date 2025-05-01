@@ -10,6 +10,9 @@ jobs:
   lint:
 
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://fake.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: fake-anon-key
 
     strategy:
       matrix:
