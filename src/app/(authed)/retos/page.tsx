@@ -6,11 +6,13 @@ import "@/app/components/(layout)/layout.css";
 //* Assets
 import CheckmarkIcon from "./assets/checkmarkIcon";
 import RankingPodium from './assets/RankingPodium';
+import UserStats from "./assets/UserStats";
 
 export default function Retos() {
   return (
     <div className="main-content">
       <div className="retos-page">
+        <UserStats />
         <div className="retos-container">
           {/* ───────── header ───────── */}
           <div className="retos-header">

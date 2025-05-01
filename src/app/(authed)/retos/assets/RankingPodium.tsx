@@ -4,13 +4,18 @@ import TrophyIcon from "./trophyIcon";
 import Image from "next/image";
 import SecondPlaceMedal from "./SecondPlaceMedal";
 import ThirdPlaceMedal from "./ThirdPlaceMedal";
-{/* Pull request  */}
+
+
+//* FAKE API
+import {useState, useEffect, Fragment} from "react";
+import {getUsers} from "../../api/users/users";
+
 const rankingData = [
   {
     name: "Rafael Pereira",
     points: 902,
     rank: 4,
-    image: "/Avatars/avatar (3).jpg",
+    image: "/Avatars/avatar (4).jpg",
   },
   {
     name: "Gabriel David Cruz Martinez",
