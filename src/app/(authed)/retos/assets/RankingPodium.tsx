@@ -7,8 +7,10 @@ import ThirdPlaceMedal from "./ThirdPlaceMedal";
 
 
 //* FAKE API
+{/*}
 import {useState, useEffect, Fragment} from "react";
 import {getUsers} from "../../api/users/users";
+*/}
 
 const rankingData = [
   {
