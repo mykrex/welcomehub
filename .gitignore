@@ -42,3 +42,11 @@ next-env.d.ts
 
 # scripts locales no deben incluirse
 src/scripts/
+scripts/
+*.sql
+*.backup.sql
+
+# Ignorar backups de migraciones ya que son pg_dump
+supabase/backups/
+supabase/migrations/*_backup.sql
+supabase/migrations/*_data_only.sql
