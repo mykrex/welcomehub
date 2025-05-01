@@ -4,16 +4,27 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") return res.status(405).end("Method not allowed");
 
-  const email = req.query.email as string;
+  const token = req.headers.authorization?.replace("Bearer ", "");
 
-  if (!email) {
-    return res.status(400).json({ error: "Email es requerido" });
+  if (!token) {
+    return res.status(400).json({ error: "Token no proporcionado" });
   }
+
+  const { data: userData, error: authError } = await supabase.auth.getUser(token);
+
+  console.log("userData:", userData);
+  console.log("authError:", authError);
+
+  if (authError || !userData?.user) {
+    return res.status(401).json({ error: "No autorizado" });
+  }
+
+  const userId = userData.user.id;
 
   const { data, error } = await supabase
     .from("usuario")
-    .select(
-      `
+    .select(`
+      id_usuario,
       nombres,
       apellidos,
       email,
@@ -22,9 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       en_neoris_desde,
       fecha_nacimiento,
       contrasena
-    `
-    )
-    .eq("email", email)
+    `)
+    .eq("id_usuario", userId)
     .single();
 
   if (error || !data) {

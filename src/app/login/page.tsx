@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Home() {
   const { setUser } = useUser();
@@ -18,42 +19,38 @@ export default function Home() {
   const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
 
   const handleSubmit = async (e: React.FormEvent) => {
-
-        e.preventDefault();
-        setError('');
-
-        if (!emailPattern.test(email)) {
-            setError('Correo o contraseña inválidos');
-            return;
-        }
-        
-        if (!passwordPattern.test(contrasena)) {
-            setError('Correo o contraseña inválidos');
-            return;
-        }
-
-        //consulta de la tabla "usuario" 
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password: contrasena }),
-            });
-
-            const result = await response.json();
-
-            if (!response.ok) {
-                setError(result.error || 'Error al iniciar sesión');
-                return;
-            }
-
-            setUser({ email: result.user.email, rol: result.user.rol });
-            router.push('/dashboard'); // Redirect to dashboard after login
-        } catch (err) {
-            console.error("Error al iniciar sesión:", err);
-            setError('Hubo un problema al iniciar sesion.');
-        }
+    e.preventDefault();
+    setError('');
+  
+    if (!emailPattern.test(email) || !passwordPattern.test(contrasena)) {
+      setError('Correo o contraseña inválidos');
+      return;
+    }
+  
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: contrasena }),
+      });
+  
+      const result = await response.json();
+  
+      if (!response.ok) {
+        setError(result.error || 'Error al iniciar sesión');
+        return;
+      }
+  
+      // Guardar el usuario y redirigir
+      setUser(result.user);
+      router.push('/dashboard');
+  
+    } catch (err) {
+      console.error('Error de red:', err);
+      setError('Hubo un problema al conectar con el servidor.');
+    }
   };
+  
 
   return (
       <div className="flex flex-col justify-center items-center h-screen text-white bg-[url(/bg_login.png)]">
@@ -94,7 +91,7 @@ export default function Home() {
                   </div>
                   <div className="flex justify-end">
                     <Link href="/olvide_contrasena" className="text-blue-500 hover:text-blue-600 underline">
-                    ¿Olvidaste tu contraseña?
+                        ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                   <button type="submit" className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition">Ingresar</button>

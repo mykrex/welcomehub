@@ -1,2 +1,5 @@
-src/scripts/
 supabase/.temp/
+src/scripts/
+scripts/
+*.sql
+*.backup.sql
