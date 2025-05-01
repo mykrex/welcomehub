@@ -42,3 +42,6 @@ next-env.d.ts
 
 # scripts locales no deben incluirse
 src/scripts/
+scripts/
+*.sql
+*.backup.sql

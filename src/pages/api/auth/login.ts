@@ -10,20 +10,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Email y contraseña requeridos' })
   }
 
-  // Consulta tu tabla personalizada
-  const { data, error } = await supabase
-    .from('usuario')
-    .select('*')
-    .eq('email', email)
-    .single();
+  const { data, error } = await supabase.auth.signInWithPassword ({
+    email,
+    password,
+  });
 
-  if (error || !data) {
-    return res.status(401).json({ error: 'Usuario no encontrado' })
+  if (error || !data.session || !data.user) {
+    return res.status(401).json({ error: 'Credenciales incorrectas' })
   }
 
-  if (data.contrasena !== password) {
-    return res.status(401).json({ error: 'Contraseña incorrecta' })
-  }
+  const { user, session } = data;
 
-  return res.status(200).json({ user: { email: data.email, rol: data.rol } })
+  return res.status(200).json({ 
+    access_token: session.access_token,
+    user: { 
+      id_usuario: user.id,
+      email: user.email, 
+      rol: user.user_metadata?.rol || 'empleado',
+    },
+  });
 }
