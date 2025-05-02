@@ -14,5 +14,9 @@ module.exports = {
   },
   transformIgnorePatterns: ['/node_modules/'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  moduleDirectories: ['node_modules', '<rootDir>']
+  moduleDirectories: ['node_modules', '<rootDir>'],
+  testMatch: [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[tj]s?(x)"
+  ]
 };
