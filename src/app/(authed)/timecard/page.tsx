@@ -10,7 +10,7 @@ import {
   saveDeliveryDates,
 } from '@/app/api/timecard/timecard';
 
-import '@/app/(authed)/timecard/TimeCard.css';
+//import '@/app/(authed)/timecard/TimeCard.css';
 import './TimeCard.css';
 
 interface Course {
@@ -169,17 +169,13 @@ const TimeCard = () => {
     const courses = getCoursesForDay(day.iso);
     return acc + courses.reduce((sum, c) => sum + c.hours, 0);
   }, 0);
-
+  const isWeekClean = (): boolean => {
+    const noEditing = Object.values(editing).every(index => index === null);
+    return noEditing && !isDirty;
+  };
+  
   // Cambia la semana visualizada, ademas de asegurarse si se puede debido a que esta guardado o no.
   const changeWeek = (days: number) => {
-    if (isDirty) {
-      setModal({
-        title: 'Advertencia',
-        message: 'Tienes cambios sin guardar. Guarda tu semana antes de cambiar de periodo.',
-        onConfirm: () => setModal(null)
-      });
-      return;
-    }
     //Ademas de que no puedes cambiar la semana en modo edición tampoco.
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
@@ -190,6 +186,15 @@ const TimeCard = () => {
       });
       return;
     }
+    if (!isWeekClean()) {
+      setModal({
+        title: 'Advertencia',
+        message: 'Antes de cambiar de semana, debes cancelar todas las ediciones y guardar los cambios.',
+        onConfirm: () => setModal(null)
+      });
+      return;
+    }
+
     const newDate = new Date(startDate);
     newDate.setDate(startDate.getDate() + days);
     setStartDate(newDate);
