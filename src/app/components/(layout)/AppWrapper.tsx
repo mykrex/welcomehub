@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from "../../context/UserContext";
+import { useUser } from "../../../context/UserContext";
 import SidebarMenu from "./SidebarMenu";
 import NavBarMenu from "./NavBarMenu";
 import "@/app/components/(layout)/layout.css";

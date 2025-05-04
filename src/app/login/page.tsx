@@ -1,17 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useUser } from '../context/UserContext'
+import { useUser } from '@/context/UserContext'
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { supabase } from '@/lib/supabase'; //NUEVO
 
 export default function Home() {
   const { setUser } = useUser();
   const router = useRouter();
   
   const [email, setEmail] = useState('');
-  const [contrasena, setPassword] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const emailPattern = /^[^\s@]+@neoris\.mx$/
@@ -21,7 +22,7 @@ export default function Home() {
     e.preventDefault();
     setError('');
   
-    if (!emailPattern.test(email) || !passwordPattern.test(contrasena)) {
+    if (!emailPattern.test(email) || !passwordPattern.test(password)) {
       setError('Correo o contraseña inválidos');
       return;
     }
@@ -30,7 +31,7 @@ export default function Home() {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password: contrasena }),
+        body: JSON.stringify({ email, password: password }),
       });
   
       const result = await response.json();
@@ -39,6 +40,11 @@ export default function Home() {
         setError(result.error || 'Error al iniciar sesión');
         return;
       }
+      
+      await supabase.auth.setSession({ // NUEVO TODO ESTE BLOQUE
+        access_token: result.access_token,
+        refresh_token: result.refresh_token,
+      });
   
       // Guardar el usuario y redirigir
       setUser(result.user);
@@ -81,7 +87,7 @@ export default function Home() {
                       <label className="block text-sm font-medium">Contraseña</label>
                       <input 
                           type="password" 
-                          value={contrasena} 
+                          value={password} 
                           onChange={(e) => setPassword(e.target.value)} 
                           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                           placeholder="contraseña"
@@ -89,7 +95,7 @@ export default function Home() {
                       />
                   </div>
                   <div className="flex justify-end">
-                    <Link href="/olvide_contrasena" className="text-blue-500 hover:text-blue-600 underline">
+                    <Link href="/olvide_password" className="text-blue-500 hover:text-blue-600 underline">
                         ¿Olvidaste tu contraseña?
                     </Link>
                   </div>

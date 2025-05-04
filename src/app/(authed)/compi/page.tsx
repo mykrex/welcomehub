@@ -1,6 +1,6 @@
 'use client';
 
-import { useChat } from "@/app/context/ChatContext";
+import { useChat } from "@/context/ChatContext";
 
 export default function ChatPage() {
   const { messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef } = useChat();

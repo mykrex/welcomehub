@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, Fragment } from "react";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "../../../context/UserContext";
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase";
 import FotoPerfil from "../../components/fotoPerfil";
@@ -22,7 +22,7 @@ interface Contact {
      telefono: string;
      password: string;
 }
-
+/**
 interface TeamMember {
      puesto: string;
      nombre: string;
@@ -35,36 +35,22 @@ interface RawMiembro {
      apellidos: string;
      email: string;
      puesto: string;
-}
+}*/
   
-
 const getUserProfile = async () => {
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-    if (sessionError || !sessionData?.session?.access_token) {
-      console.error("No se pudo obtener el token de sesión", sessionError);
-      throw new Error("No se pudo obtener el token de sesión");
-    }
-  
-    const token = sessionData.session.access_token;
-    console.log("🔐 Token obtenido:", token);
-  
-    const response = await fetch("/api/users/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await fetch('/api/users/me', {
+        credentials: 'include',
     });
-  
     const result = await response.json();
-    console.log("Respuesta de /api/users/me:", result);
+  
+    console.log("📦 Respuesta de /api/users/me:", result);
   
     if (!response.ok) {
-      console.error("Error desde /api/users/me:", result.error);
+      console.error("❌ Error desde /api/users/me:", result.error);
       throw new Error(result.error || "Error al obtener perfil");
     }
   
-    return result.perfil;
+    return result;
 };
 
 const getTeam = async (email: string) => {
@@ -81,7 +67,7 @@ const getTeam = async (email: string) => {
 export default function MiPerfil() {
     const [info, setInfo] = useState<Info | null>(null);
     const [contact, setContact] = useState<Contact | null>(null);
-    const [team, setTeam] = useState<TeamMember[]>([]);
+    /**const [team, setTeam] = useState<TeamMember[]>([]);*/
     const [teamName, setTeamName] = useState<string>("");
     const [loading, setLoading] = useState(true);
     const { user, setUser } = useUser();
@@ -118,7 +104,7 @@ export default function MiPerfil() {
 
                 setTeamName(teamData.equipo);
                             
-                setTeam(
+                /**setTeam(
                   teamData.miembros
                     .map((m: RawMiembro) => ({
                          nombre: `${m.nombres} ${m.apellidos}`,
@@ -127,7 +113,7 @@ export default function MiPerfil() {
                          isAdmin: m.email === teamData.administrador,
                     }))
                     .sort((a: TeamMember, b: TeamMember) => (a.isAdmin ? -1 : b.isAdmin ? 1 : 0))
-                );
+                );*/
 
             } catch(error) {
                 console.log("Error obteniendo los datos: ", error);
@@ -202,7 +188,7 @@ export default function MiPerfil() {
                         <Titulo title="Mi Equipo"/>
                         <p className="text-gray-300 mb-2">{teamName || "Equipo sin nombre"}</p>
                         <div className="grid [grid-template-columns:1fr_2fr_3fr] gap-y-2">
-                            {team.map((miembro, i) => (
+                            {/** {team.map((miembro, i) => (
                                 <Fragment key={i}>
                                     <p>
                                         <span className="font-semibold">Puesto: </span>
@@ -223,15 +209,19 @@ export default function MiPerfil() {
                                       </a>
                                     </p>
                                 </Fragment>
-                            ))}
+                            ))}*/ }
                         </div>
                     </section>
 
                     <section className="flex justify-center">
-                        <button onClick={() => { 
-                            setUser(null);
-                            localStorage.removeItem("user");
-                            router.push('/') }} className="mt-8 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded">
+                        <button 
+                            onClick={async () => {
+                                await supabase.auth.signOut();
+                                setUser(null);
+                                localStorage.removeItem("user");
+                                router.push('/');
+                              }}
+                        className="mt-8 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded">
                                 Cerrar sesión
                         </button>
                     </section>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { useChat } from "@/app/context/ChatContext";
+import { useChat } from "@/context/ChatContext";
 import CompiIcon from "./CompiIcon";
 
 export default function Chatbot() {
