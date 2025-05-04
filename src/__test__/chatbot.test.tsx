@@ -1,4 +1,4 @@
-{/*import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Chatbot from "../app/components/chatbot";
 import { ChatProvider } from "@/context/ChatContext";
@@ -51,5 +51,3 @@ describe("Chatbot Component", () => {
     expect(screen.queryByText("Compi")).not.toBeInTheDocument();
   });
 });
-
-*/}

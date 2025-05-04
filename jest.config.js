@@ -2,21 +2,15 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFiles: ['<rootDir>/jest.env-setup.js'],
+  setupFiles: ['<rootDir>/jest.env-setup.js'], // 👈 este se carga primero
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^.+\\.(png|jpg|jpeg|gif|svg)$': 'jest-transform-stub' // para imagenes
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
-  transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
-  },
-  transformIgnorePatterns: ['/node_modules/'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
-  moduleDirectories: ['node_modules', '<rootDir>'],
-  testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)",
-    "**/?(*.)+(spec|test).[tj]s?(x)"
-  ]
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest'
+  },
+  moduleDirectories: ['node_modules', '<rootDir>']
 };
