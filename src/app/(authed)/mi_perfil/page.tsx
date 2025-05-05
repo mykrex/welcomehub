@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase";
 import FotoPerfil from "../../components/fotoPerfil";
 import Titulo from "../../components/perfilTitulos";
-import VerPassword from "../../components/verPassword";
 
 interface Info {
      id_usuario: string;
@@ -181,21 +180,19 @@ export default function MiPerfil() {
                     </section>
                         
                     {/** Contact */}
-                    { contact && (
-                        <section className="grid gap-2 p-2 border-b border-gray-500">
-                            <Titulo title="Contacto"/>
-                            <p className="text-white font-semibold w-fit">
-                                Correo electrónico: <span className="font-normal text-gray-400 ml-2">{contact.correo}</span>
-                            </p>
-                            <p className="text-white font-semibold w-fit">
-                                Teléfono: <span className="font-normal text-gray-400 ml-2">{contact.telefono}</span>
-                            </p>
-                            <div className="flex flex-row">
-                                <VerPassword password={contact.password}/>
-                                <button onClick={handleChangePassword} className="text-sm text-white font-semibold text-center p-1 rounded-full bg-cyan-600 hover:bg-cyan-700">Cambiar contraseña</button>
-                            </div>
-                        </section>
-                    )}
+                    <section className="grid gap-2 p-2 border-b border-gray-500">
+                        <Titulo title="Contacto"/>
+                        <p className="text-white font-semibold w-fit">
+                            Correo electrónico: <span className="font-normal text-gray-400 ml-2">{contact?.correo}</span>
+                        </p>
+                        <p className="text-white font-semibold w-fit">
+                            Teléfono: <span className="font-normal text-gray-400 ml-2">{contact?.telefono}</span>
+                        </p>
+                        <div className="flex flex-row">
+                            {/**<VerPassword password={contact?.password}/>  Esta  funcion se debe quitar por seguridad*/}
+                            <button onClick={handleChangePassword} className="text-sm text-white font-semibold text-center p-1 rounded-full bg-cyan-600 hover:bg-cyan-700">Cambiar contraseña</button>
+                        </div>
+                    </section>
 
                     {/** Team */}
                     <section className="p-2 border-b border-gray-500 mt-4 space-y-2">

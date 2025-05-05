@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test dotenv -e .env.local -- jest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
@@ -36,6 +36,7 @@
     "@types/react-dom": "^19",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
     "identity-obj-proxy": "^3.0.0",
