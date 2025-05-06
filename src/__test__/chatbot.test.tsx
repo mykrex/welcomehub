@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Chatbot from "../app/components/chatbot";
 import { ChatProvider } from "@/app/context/ChatContext";
-import { UserProvider } from "@/app/context/UserContext"; // Ajusta ruta si es necesario
+import { UserProvider } from "@/app/context/UserContext"; 
 
 function renderWithContext() {
   return render(
