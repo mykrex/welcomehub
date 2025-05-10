@@ -4,7 +4,7 @@ import Image from "next/image";
 import "@/app/components/(layout)/layout.css";
 
 //* Assets
-import CheckmarkIcon from "./assets/checkmarkIcon";
+import CheckmarkIcon from "./assets/icons/checkmarkIcon";
 import RankingPodium from './assets/RankingPodium';
 import UserStats from "./assets/UserStats";
 

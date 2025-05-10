@@ -54,40 +54,42 @@
     border-radius: 25px;
   }
   
-  .stats-card.points {
+  .stats-card.puntos {
     outline: 2px #EBA10E solid;
     outline-offset: -2px;
+    color: #EBA10E;
   }
   
   .stats-card.podiums {
     outline: 2px #DB504A solid;
     outline-offset: -2px;
+    color: #DB504A;
   }
   
   .stats-card.streak {
     outline: 2px #DF8328 solid;
     outline-offset: -2px;
+    color: #DF8328;
   }
   
   .stats-card.challenges {
     outline: 2px #4DAA57 solid;
     outline-offset: -2px;
+    color: #4DAA57;
   }
   
-  .points-icon {
-    width: 50px;
-    height: 50px;
-    background: #F4B942;
-  }
-  
-  .podiums-icon-wrapper,
-  .streak-icon-wrapper,
-  .challenges-icon-wrapper {
+
+
+  .icon-wrapper {
     position: relative;
     width: 60px;
     height: 60px;
     overflow: hidden;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
   }
+  
   
   .podiums-shape1 {
     position: absolute;
