@@ -35,15 +35,16 @@
 }
 
 .ranking-content {
-  align-self: stretch;
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  display: flex;              /* ya era inline-flex, ahora flex (inline no es necesario) */
+  width: 100%;                /* para que ocupe todo el ancho disponible */
+  align-items: flex-end;      /* como ya tenías */
+  gap: 20px;                  /* opcional, sustituye el justify-content:space-between */
 }
 
+
 .podium-container {
-  width: 496px;
-  display: flex;
+  flex: 1 1 0;   /* 1 parte de las 3 partes totales */
+  display: flex; /* conservar el layout interno */
   justify-content: center;
   align-items: flex-end;
   gap: 30px;
@@ -161,18 +162,18 @@
 }
 
 .ranking-table {
-  width: 700px;
-  height: 100%;
+  flex: 2 1 0;
   padding: 20px 30px;
   background: #c2f0ff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  display: inline-flex;
+  border-radius: 15px;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
 }
+
+
 
 .ranking-table-header {
     width: 100%;
@@ -190,13 +191,13 @@
 }
 
 .ranking-divider {
-  width: 628px;
-  height: 0;
+  width: 100%;
   outline: 1px solid #51b6f6;
   outline-offset: -0.5px;
 }
 
 .ranking-table-body {
+  width: 100%; /* para que ocupe todo el ancho disponible */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -251,7 +252,7 @@
 }
 
 .ranking-row {
-    width: 625px;
+    width: 100%;
     display: flex;
     flex-direction: row; /* 👈 horizontal layout */
     justify-content: space-between; /* optional: spreads items */
