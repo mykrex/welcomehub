@@ -3,7 +3,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { useUser } from "../../context/UserContext";
 import { useRouter } from "next/navigation"
-import { supabase } from "@/lib/supabase";
 import FotoPerfil from "../../components/fotoPerfil";
 import Titulo from "../../components/perfilTitulos";
 
@@ -19,7 +18,6 @@ interface Info {
 interface Contact {
      correo: string;
      telefono: string;
-     password: string;
 }
 
 interface TeamMember {
@@ -37,8 +35,8 @@ interface RawMiembro {
 }
   
 
-const getUserProfile = async () => {
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+/*const getUserProfile = async () => {
+    //const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
 
     if (sessionError || !sessionData?.session?.access_token) {
       console.error("No se pudo obtener el token de sesión", sessionError);
@@ -64,19 +62,39 @@ const getUserProfile = async () => {
     }
   
     return result.perfil;
+};*/
+
+const getUserProfile = async () => {
+    const response = await fetch("/api/users/me", {
+      method: "GET",
+      credentials: "include", // Necesario para enviar cookies HttpOnly
+    });
+  
+    const result = await response.json();
+    console.log("Respuesta de /api/users/me:", result);
+  
+    if (!response.ok) {
+      console.error("Error desde /api/users/me:", result.error);
+      throw new Error(result.error || "Error al obtener perfil");
+    }
+  
+    return result;
 };
 
-const getTeam = async (email: string) => {
-     const response = await fetch(`/api/team/info?email=${email}`);
-     const result = await response.json();
+const getTeam = async () => {
+    const response = await fetch("/api/team/info", {
+        credentials: "include", //se envíe la cookie
+    });
   
-     if (!response.ok) {
-       throw new Error(result.error || "Error al obtener equipo");
-     }
+    const result = await response.json();
   
-     return result;
-  };   
-
+    if (!response.ok) {
+      throw new Error(result.error || "Error al obtener equipo");
+    }
+  
+    return result;
+};
+  
 export default function MiPerfil() {
     const [info, setInfo] = useState<Info | null>(null);
     const [contact, setContact] = useState<Contact | null>(null);
@@ -109,11 +127,12 @@ export default function MiPerfil() {
             
                 setContact({
                      correo: perfil.email,
-                     telefono: perfil.telefono,
-                     password: perfil.contrasena,
+                     telefono: perfil.telefono
                 });
 
-                const teamData = await getTeam(user.email);
+                const teamData = await getTeam();
+
+                console.log("Miembros del equipo:", teamData.miembros);
 
                 setTeamName(teamData.equipo);
                             
@@ -225,12 +244,25 @@ export default function MiPerfil() {
                     </section>
 
                     <section className="flex justify-center">
-                        <button onClick={() => { 
-                            setUser(null);
-                            localStorage.removeItem("user");
-                            router.push('/') }} className="mt-8 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded">
-                                Cerrar sesión
-                        </button>
+                    <button
+                    onClick={async () => {
+                        try {
+                          await fetch('/api/auth/logout', {
+                            method: 'POST', // puedes dejarlo GET si así lo configuraste, pero POST es más limpio
+                            credentials: 'include',
+                          });
+                    
+                          setUser(null);
+                          router.push('/login'); // o donde quieras llevar al usuario tras cerrar sesión
+                        } catch (error) {
+                          console.error('Error al cerrar sesión:', error);
+                        }
+                    }}
+                    className="mt-8 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded"
+                    >
+                        Cerrar sesión
+                    </button>
+
                     </section>
                 </div>
             </main>

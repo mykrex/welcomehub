@@ -1,8 +1,8 @@
 "use client";
 
 import { useUser } from "../context/UserContext";
-import { supabase } from "@/lib/supabase";
-import React, { createContext, useContext, useState, useRef, useEffect } from "react";
+/*import { supabase } from "@/lib/supabase";*/
+import React, { createContext, useContext, useState, useRef } from "react";
 
 type Message = { sender: "user" | "bot"; text: string };
 
@@ -23,28 +23,31 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { user } = useUser(); // You already have this context
-  const [userId, setUserId] = useState<string | null>(null);
+  const { user } = useUser();
+  /*const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user?.email) return;
+    if (!user?.id_usuario) return;
 
     const fetchUserId = async () => {
       const { data, error} = await supabase
         .from("usuario")
         .select("id_usuario")
-        .eq("email", user.email)
-        .single();
+        .eq("id_usuario", user.id_usuario) // Como se cambio a JWT con SSR y se modificsron las RLS, lo cambie a id_usuario en lugar de email
+        .maybeSingle();
 
       if (data) setUserId(data.id_usuario);
-      else console.error("Error al obtener ID", error);
+      else console.error("Error al obtener id_usuario ", error);
     };
 
     fetchUserId();
-  }, [user?.email]);
+  }, [user]);*/
 
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
+
+    const userId = user?.id_usuario;
+
     if (!userId) {
       alert("Por favor, inicia sesión para enviar un mensaje.");
       return;
