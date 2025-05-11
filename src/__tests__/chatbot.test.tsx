@@ -1,8 +1,9 @@
-{/*import { render, screen, fireEvent } from "@testing-library/react";
+
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Chatbot from "../app/components/chatbot";
 import { ChatProvider } from "@/app/context/ChatContext";
-import { UserProvider } from "@/app/context/UserContext"; 
+import { UserProvider } from "@/app/context/UserContext"; // Ajusta ruta si es necesario
 
 function renderWithContext() {
   return render(
@@ -51,5 +52,3 @@ describe("Chatbot Component", () => {
     expect(screen.queryByText("Compi")).not.toBeInTheDocument();
   });
 });
-
-*/}
