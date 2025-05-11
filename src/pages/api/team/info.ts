@@ -4,14 +4,21 @@ import { supabase } from "@/lib/supabase";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") return res.status(405).end("Method not allowed");
 
-  const email = req.query.email as string;
-  if (!email) return res.status(400).json({ error: "Email requerido" });
+  const token = req.cookies['sb-access-token'];
+  if (!token) return res.status(401).json({ error: "No autorizado" });
 
-  // Obtener el id_equipo del usuario
+  const { data: userData, error: authError } = await supabase.auth.getUser(token);
+  if (authError || !userData?.user) {
+    return res.status(401).json({ error: "No autorizado" });
+  }
+
+  const userId = userData.user.id;
+
+  // Obtener al usuario para su id_equipo y email
   const { data: usuario, error: userError } = await supabase
     .from("usuario")
-    .select("id_equipo")
-    .eq("email", email)
+    .select("id_equipo, email")
+    .eq("id_usuario", userId)
     .maybeSingle();
 
   if (userError || !usuario?.id_equipo) {
@@ -19,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const id_equipo = usuario.id_equipo;
-  
+
   // Obtener datos del equipo
   const { data: equipo, error: equipoError } = await supabase
     .from("equipo_trabajo")
@@ -31,24 +38,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(404).json({ error: "Equipo no encontrado" });
   }
 
-  // Obtener el email del administrador
-  const { data: adminUser, error: adminError } = await supabase
-    .from("administrador_usuario")
-    .select("id_administrador")
-    .eq("id_administrador", equipo.id_administrador)
-    .maybeSingle();
-
-  if (adminError || !adminUser) {
-    return res.status(404).json({ error: "Administrador no encontrado" });
-  }
-
-  const { data: adminEmailData, error: emailError } = await supabase
+  // Obtener email del administrador (sin importar si el usuario actual lo es o no)
+  const { data: adminUsuario, error: adminError } = await supabase
     .from("usuario")
     .select("email")
-    .eq("id_usuario", adminUser.id_administrador)
+    .eq("id_usuario", equipo.id_administrador)
     .maybeSingle();
 
-  if (emailError || !adminEmailData) {
+  if (adminError || !adminUsuario?.email) {
     return res.status(404).json({ error: "Correo del administrador no encontrado" });
   }
 
@@ -64,7 +61,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   return res.status(200).json({
     equipo: equipo.nombre,
-    administrador: adminEmailData.email,
+    administrador: adminUsuario.email,
     miembros,
   });
 }

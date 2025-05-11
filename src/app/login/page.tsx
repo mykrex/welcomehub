@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -27,28 +28,36 @@ export default function Home() {
     }
   
     try {
-      const response = await fetch('/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password: contrasena }),
       });
-  
-      const result = await response.json();
-  
-      if (!response.ok) {
-        setError(result.error || 'Error al iniciar sesión');
-        return;
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.error || 'Error al iniciar sesión');
       }
-  
-      // Guardar el usuario y redirigir
+
+      await supabase.auth.setSession({
+        access_token: result.access_token,
+        refresh_token: result.refresh_token,
+      });
+
       setUser(result.user);
       router.push('/dashboard');
-  
-    } catch (err) {
-      console.error('Error de red:', err);
-      setError('Hubo un problema al conectar con el servidor.');
+
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Error de red o login:', err);
+        setError(err.message || 'Error al conectar con el servidor.');
+      } else {
+        console.error('Error desconocido:', err);
+        setError('Ocurrió un error inesperado.');
+      }
     }
-  };
+  }
   
 
   return (
