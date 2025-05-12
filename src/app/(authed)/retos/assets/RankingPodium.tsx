@@ -1,9 +1,9 @@
 import React from "react";
 import "./rankingPodium.css";
-import TrophyIcon from "./trophyIcon";
+import TrophyIcon from "./icons/trophyIcon";
 import Image from "next/image";
-import SecondPlaceMedal from "./SecondPlaceMedal";
-import ThirdPlaceMedal from "./ThirdPlaceMedal";
+import SecondPlaceMedal from "./icons/SecondPlaceMedal";
+import ThirdPlaceMedal from "./icons/ThirdPlaceMedal";
 
 
 //* FAKE API
