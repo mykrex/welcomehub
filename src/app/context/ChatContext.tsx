@@ -1,8 +1,14 @@
 "use client";
 
 import { useUser } from "../context/UserContext";
-/*import { supabase } from "@/lib/supabase";*/
-import React, { createContext, useContext, useState, useRef } from "react";
+import { supabase } from "@/lib/supabase";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 
 type Message = { sender: "user" | "bot"; text: string };
 
@@ -22,33 +28,48 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   const { user } = useUser();
-  /*const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!user?.id_usuario) return;
+    const fetchUserData = async () => {
+      if (!user?.email) return;
 
-    const fetchUserId = async () => {
-      const { data, error} = await supabase
+      //debugging
+      console.log("Email recibido en ChatContext:", user.email);
+
+      const { data, error } = await supabase
         .from("usuario")
-        .select("id_usuario")
-        .eq("id_usuario", user.id_usuario) // Como se cambio a JWT con SSR y se modificsron las RLS, lo cambie a id_usuario en lugar de email
+        .select("nombres")
+        .eq("email", user.email)
         .maybeSingle();
 
-      if (data) setUserId(data.id_usuario);
-      else console.error("Error al obtener id_usuario ", error);
+      if (error) {
+        console.error("Error al obtener datos del usuario:", error.message || error);
+        return;
+      }
+
+      if (!data) {
+        console.warn("No se encontró un usuario con ese correo.");
+        return;
+      }
+
+      setUserName(data.nombres);
+      setMessages([
+        {
+          sender: "bot",
+          text: `Hola ${data.nombres}, ¿en qué puedo ayudarte hoy?`,
+        },
+      ]);
     };
 
-    fetchUserId();
-  }, [user]);*/
+    fetchUserData();
+  }, [user?.email]);
 
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
 
-    const userId = user?.id_usuario;
-
-    if (!userId) {
+    if (!user?.id_usuario) {
       alert("Por favor, inicia sesión para enviar un mensaje.");
       return;
     }
@@ -62,7 +83,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, id_usuario: userId }),
+        body: JSON.stringify({ prompt, id_usuario: user.id_usuario }),
       });
 
       const data = await res.json();
@@ -71,7 +92,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error) {
       setMessages((prev) => [
         ...prev,
-        { sender: "bot", text: "Error al obtener la respuesta", error },
+        { sender: "bot", text: "Error al obtener la respuesta" },
       ]);
     } finally {
       setLoading(false);
@@ -80,7 +101,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ChatContext.Provider
-      value={{ messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef }}
+      value={{
+        messages,
+        prompt,
+        setPrompt,
+        sendPrompt,
+        loading,
+        messagesEndRef,
+      }}
     >
       {children}
     </ChatContext.Provider>
@@ -89,6 +117,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useChat = () => {
   const context = useContext(ChatContext);
-  if (!context) throw new Error("useChat must be used within ChatProvider");
+  if (!context)
+    throw new Error("useChat must be used within ChatProvider");
   return context;
 };

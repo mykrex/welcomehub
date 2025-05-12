@@ -28,7 +28,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const fetchUser = async () => {
       try {
         const res = await fetch('/api/users/me', {
-          credentials: 'include', // 🔥 Necesario para enviar las cookies JWT
+          credentials: 'include', // para enviar las cookies JWT
         });
         if (!res.ok) throw new Error();
         const perfil = await res.json();
