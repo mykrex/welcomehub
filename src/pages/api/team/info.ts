@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { supabase } from "@/lib/supabase";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") return res.status(405).end("Method not allowed");
@@ -7,7 +7,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const token = req.cookies['sb-access-token'];
   if (!token) return res.status(401).json({ error: "No autorizado" });
 
-  const { data: userData, error: authError } = await supabase.auth.getUser(token);
+  const { data: userData, error: authError } = await supabaseServer.auth.getUser(token);
   if (authError || !userData?.user) {
     return res.status(401).json({ error: "No autorizado" });
   }
@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const userId = userData.user.id;
 
   // Obtener al usuario para su id_equipo y email
-  const { data: usuario, error: userError } = await supabase
+  const { data: usuario, error: userError } = await supabaseServer
     .from("usuario")
     .select("id_equipo, email")
     .eq("id_usuario", userId)
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const id_equipo = usuario.id_equipo;
 
   // Obtener datos del equipo
-  const { data: equipo, error: equipoError } = await supabase
+  const { data: equipo, error: equipoError } = await supabaseServer
     .from("equipo_trabajo")
     .select("nombre, id_administrador")
     .eq("id_equipo", id_equipo)
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Obtener email del administrador (sin importar si el usuario actual lo es o no)
-  const { data: adminUsuario, error: adminError } = await supabase
+  const { data: adminUsuario, error: adminError } = await supabaseServer
     .from("usuario")
     .select("email")
     .eq("id_usuario", equipo.id_administrador)
@@ -50,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Obtener miembros del equipo
-  const { data: miembros, error: miembrosError } = await supabase
+  const { data: miembros, error: miembrosError } = await supabaseServer
     .from("usuario")
     .select("nombres, apellidos, email, puesto")
     .eq("id_equipo", id_equipo);

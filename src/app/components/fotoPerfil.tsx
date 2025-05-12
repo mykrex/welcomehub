@@ -10,18 +10,36 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const ruta = `${userId}/profile.png`;
 
   const fetchFotoPerfil = useCallback(async () => {
-    const { data } = await supabase.storage.from('avatars').download(ruta);
-    if (data) {
-      const url = URL.createObjectURL(data);
+
+    // Primer intento: descarga directa (requiere sesión activa)
+    const { data: directData, error: directError } = await supabase.storage.from('avatars').download(ruta);
+
+    if (!directError && directData) {
+      const url = URL.createObjectURL(directData);
       setImageUrl(url);
+      console.log("Imagen descargada directamente.");
+      return;
+    }
+
+    console.warn("Falló descarga directa:", directError?.message);
+
+    // Segundo intento: generar una signed URL (válida por 60 segundos)
+    const { data: signedData, error: signedError } = await supabase.storage
+      .from('avatars')
+      .createSignedUrl(ruta, 60);
+
+    if (!signedError && signedData?.signedUrl) {
+      setImageUrl(signedData.signedUrl);
+      console.log("Imagen cargada usando signed URL.");
     } else {
+      console.error("No se pudo cargar la imagen:", signedError?.message);
       setImageUrl(null);
     }
   }, [ruta]);
 
   useEffect(() => {
-    fetchFotoPerfil();
-  }, [fetchFotoPerfil]);
+    fetchFotoPerfil()
+  }, [fetchFotoPerfil])
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -29,9 +47,18 @@ export default function FotoPerfil({ userId }: { userId: string }) {
 
     setLoading(true);
 
-    await supabase.storage.from('avatars').upload(ruta, file, {
+    console.log((await supabase.auth.getUser()).data)
+
+    const { error } = await supabase.storage.from('avatars').upload(ruta, file, {
       upsert: true,
     });
+
+    if (error) {
+      console.error('Error al subir imagen:', error.message);
+      alert("Error al subir la imagen. Verifica tus permisos.");
+      setLoading(false);
+      return;
+    }
 
     await fetchFotoPerfil();
     setLoading(false);
@@ -40,8 +67,14 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const handleDelete = async () => {
     setLoading(true);
 
-    await supabase.storage.from('avatars').remove([ruta]);
-    setImageUrl(null);
+    const { error } = await supabase.storage.from('avatars').remove([ruta]);
+    if (error) {
+      console.error('Error al eliminar imagen:', error.message);
+      alert("Error al eliminar la imagen. Verifica tus permisos.");
+    } else {
+      setImageUrl(null);
+    }
+
     setLoading(false);
   };
 
