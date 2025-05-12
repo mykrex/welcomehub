@@ -1,4 +1,4 @@
-// File: components/Badge.tsx
+// components/Badge.tsx
 'use client';
 import React, { useId } from 'react';
 import styles from './Badge.module.css';
@@ -8,14 +8,14 @@ interface BadgeProps {
 }
 
 export default function Badge({ variant }: BadgeProps) {
-  // Generate a unique suffix for SVG IDs
+  // Generate a unique suffix for this instance
   const uid = useId().replace(/:/g, '_');
   const filterId   = `badge-drop-shadow-${uid}`;
   const gradientId = `badge-gradient-${uid}`;
   const clipFId    = `star-clip-front-${uid}`;
   const clipBId    = `star-clip-back-${uid}`;
 
-  // Build the CSS module class list
+  // Build the CSS-module class list
   const cls = [styles.icon, variant ? styles[variant] : ''].join(' ');
 
   return (
@@ -78,12 +78,13 @@ export default function Badge({ variant }: BadgeProps) {
         <clipPath id={clipFId}>
           <path d="M24.4959 20.8834C24.7071 20.4737 25.2929 20.4737 25.5041 20.8834L26.8456 23.4863C26.8997 23.5911 26.985 23.6765 27.0899 23.7305L29.6927 25.0721C30.1024 25.2833 30.1024 25.8691 29.6927 26.0802L27.0899 27.4218C26.985 27.4758 26.8997 27.5612 26.8456 27.666L25.5041 30.2689C25.2929 30.6786 24.7071 30.6786 24.4959 30.2689L23.1544 27.666C23.1003 27.5612 23.015 27.4758 22.9101 27.4218L20.3073 26.0802C19.8976 25.8691 19.8976 25.2833 20.3073 25.0721L22.9101 23.7305C23.015 23.6765 23.1003 23.5911 23.1544 23.4863L24.4959 20.8834Z" />
         </clipPath>
+
         <clipPath id={clipBId}>
           <path d="M24.4959 20.8834C24.7071 20.4737 25.2929 20.4737 25.5041 20.8834L26.8456 23.4863C26.8997 23.5911 26.985 23.6765 27.0899 23.7305L29.6927 25.0721C30.1024 25.2833 30.1024 25.8691 29.6927 26.0802L27.0899 27.4218C26.985 27.4758 26.8997 27.5612 26.8456 27.666L25.5041 30.2689C25.2929 30.6786 24.7071 30.6786 24.4959 30.2689L23.1544 27.666C23.1003 27.5612 23.015 27.4758 22.9101 27.4218L20.3073 26.0802C19.8976 25.8691 19.8976 25.2833 20.3073 25.0721L22.9101 23.7305C23.015 23.6765 23.1003 23.5911 23.1544 23.4863L24.4959 20.8834Z" />
         </clipPath>
       </defs>
 
-      {/* Main shield shape with gradient fill + stroke */}
+      {/* Main badge shape */}
       <g filter={`url(#${filterId})`}>
         <path
           d="M29.3301 49.399C26.6506 50.9686 23.3494 50.9686 20.6699 49.399L6.83013 41.2922C4.15064 39.7227 2.5 36.822 2.5 33.683V17.4694C2.5 14.3303 4.15063 11.4297 6.83013 9.86012L20.6699 1.75333C23.3494 0.183786 26.6506 0.183786 29.3301 1.75333L43.1699 9.86012C45.8494 11.4297 47.5 14.3303 47.5 17.4694V33.683C47.5 36.822 45.8494 39.7227 43.1699 41.2922L29.3301 49.399Z"
@@ -96,26 +97,21 @@ export default function Badge({ variant }: BadgeProps) {
         />
       </g>
 
-      {/* Front star gradient overlay */}
+      {/* Front star overlay */}
       <g clipPath={`url(#${clipFId})`}>
         <g transform="translate(25 25.5762) scale(0.005)">
           <foreignObject x="-1200" y="-1200" width="2400" height="2400">
-            <div
-              xmlns="http://www.w3.org/1999/xhtml"
-              className={styles.conic}
-            />
+            {/* No xmlns attribute here */}
+            <div className={styles.conic} />
           </foreignObject>
         </g>
       </g>
 
-      {/* Back star subtle gradient overlay */}
+      {/* Back star overlay */}
       <g clipPath={`url(#${clipBId})`}>
         <g transform="translate(25 25.5762) scale(-0.005 0.005)">
           <foreignObject x="-1200" y="-1200" width="2400" height="2400">
-            <div
-              xmlns="http://www.w3.org/1999/xhtml"
-              className={`${styles.conic} ${styles.secondary}`}
-            />
+            <div className={`${styles.conic} ${styles.secondary}`} />
           </foreignObject>
         </g>
       </g>
