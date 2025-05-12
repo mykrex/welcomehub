@@ -43,7 +43,7 @@
 
 
 .podium-container {
-  flex: 1 1 0;   /* 1 parte de las 3 partes totales */
+  flex: 2 1 0;   /* 1 parte de las 3 partes totales */
   display: flex; /* conservar el layout interno */
   justify-content: center;
   align-items: flex-end;
@@ -162,7 +162,7 @@
 }
 
 .ranking-table {
-  flex: 2 1 0;
+  flex: 3 1 0;
   padding: 20px 30px;
   background: #c2f0ff;
   border-radius: 15px;

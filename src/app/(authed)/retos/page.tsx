@@ -5,8 +5,11 @@ import "@/app/components/(layout)/layout.css";
 
 //* Assets
 import CheckmarkIcon from "./assets/icons/checkmarkIcon";
+
+//* Components */
 import RankingPodium from './assets/RankingPodium';
 import UserStats from "./assets/UserStats";
+import Logros from "./assets/Logros";
 
 export default function Retos() {
   return (
@@ -112,6 +115,9 @@ export default function Retos() {
 
         {/* ───────── ranking ───────── */}
         <RankingPodium />
+
+        {/* ───────── logros ───────── */}
+        <Logros />
       </div>
     </div>
   );
