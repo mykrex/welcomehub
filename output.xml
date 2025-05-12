@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.10.12 on linux)" generated="2025-05-04T23:46:25.317149" rpa="false" schemaversion="5">
+<suite id="s1" name="Src" source="/home/ihp/Desktop/welcomehub/src">
+<suite id="s1-s1" name="App" source="/home/ihp/Desktop/welcomehub/src/app">
+<suite id="s1-s1-s1" name="(Authed)" source="/home/ihp/Desktop/welcomehub/src/app/(authed)">
+<suite id="s1-s1-s1-s1" name="Dashboard" source="/home/ihp/Desktop/welcomehub/src/app/(authed)/dashboard">
+<suite id="s1-s1-s1-s1-s1" name="Dashboard" source="/home/ihp/Desktop/welcomehub/src/app/(authed)/dashboard/dashboard.robot">
+<test id="s1-s1-s1-s1-s1-t1" name="Load Dashboard Page And Verify Title" line="9">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-04T23:46:25.601551" level="INFO">Opening browser 'Chrome' to base url 'http://localhost:3000/dashboard'.</msg>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-04T23:46:25.601095" elapsed="3.196112"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-04T23:46:28.797767" elapsed="0.165370"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="SeleniumLibrary">
+<msg time="2025-05-04T23:46:34.438112" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-05-04T23:46:34.438539" level="FAIL">Text 'Mis Cursos' did not appear in 5 seconds.</msg>
+<arg>Mis Cursos</arg>
+<doc>Waits until ``text`` appears on the current page.</doc>
+<status status="FAIL" start="2025-05-04T23:46:28.963558" elapsed="5.476072">Text 'Mis Cursos' did not appear in 5 seconds.</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-05-04T23:46:34.440540" elapsed="0.087208"/>
+</kw>
+<status status="FAIL" start="2025-05-04T23:46:25.599370" elapsed="8.928824">Text 'Mis Cursos' did not appear in 5 seconds.</status>
+</test>
+<status status="FAIL" start="2025-05-04T23:46:25.363171" elapsed="9.167692"/>
+</suite>
+<status status="FAIL" start="2025-05-04T23:46:25.361160" elapsed="9.172493"/>
+</suite>
+<suite id="s1-s1-s1-s2" name="Neoris" source="/home/ihp/Desktop/welcomehub/src/app/(authed)/neoris">
+<suite id="s1-s1-s1-s2-s1" name="Neoris" source="/home/ihp/Desktop/welcomehub/src/app/(authed)/neoris/neoris.robot">
+<test id="s1-s1-s1-s2-s1-t1" name="Verificar Encabezado En Página NEORIS" line="8">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-05-04T23:46:34.550459" level="INFO">Opening browser 'chrome' to base url 'http://localhost:3000/about'.</msg>
+<arg>http://localhost:3000/about</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-05-04T23:46:34.549803" elapsed="3.502966"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-05-04T23:46:38.053526" elapsed="0.204546"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<msg time="2025-05-04T23:46:43.592210" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-6.png"&gt;&lt;img src="selenium-screenshot-6.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-05-04T23:46:43.592516" level="FAIL">Element '//h1[contains(text(), "¿Quiénes Somos en NEORIS?")]' did not appear in 5 seconds.</msg>
+<arg>//h1[contains(text(), "¿Quiénes Somos en NEORIS?")]</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="FAIL" start="2025-05-04T23:46:38.261335" elapsed="5.331520">Element '//h1[contains(text(), "¿Quiénes Somos en NEORIS?")]' did not appear in 5 seconds.</status>
+</kw>
+<kw name="Close Browser" owner="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-05-04T23:46:43.593998" elapsed="0.074143"/>
+</kw>
+<status status="FAIL" start="2025-05-04T23:46:34.548487" elapsed="9.120381">Element '//h1[contains(text(), "¿Quiénes Somos en NEORIS?")]' did not appear in 5 seconds.</status>
+</test>
+<status status="FAIL" start="2025-05-04T23:46:34.539176" elapsed="9.133135"/>
+</suite>
+<status status="FAIL" start="2025-05-04T23:46:34.535485" elapsed="9.155120"/>
+</suite>
+<status status="FAIL" start="2025-05-04T23:46:25.359166" elapsed="18.337032"/>
+</suite>
+<status status="FAIL" start="2025-05-04T23:46:25.357784" elapsed="18.347238"/>
+</suite>
+<status status="FAIL" start="2025-05-04T23:46:25.318689" elapsed="18.393978"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Src" id="s1" pass="0" fail="2" skip="0">Src</stat>
+<stat name="App" id="s1-s1" pass="0" fail="2" skip="0">Src.App</stat>
+<stat name="(Authed)" id="s1-s1-s1" pass="0" fail="2" skip="0">Src.App.(Authed)</stat>
+<stat name="Dashboard" id="s1-s1-s1-s1" pass="0" fail="1" skip="0">Src.App.(Authed).Dashboard</stat>
+<stat name="Dashboard" id="s1-s1-s1-s1-s1" pass="0" fail="1" skip="0">Src.App.(Authed).Dashboard.Dashboard</stat>
+<stat name="Neoris" id="s1-s1-s1-s2" pass="0" fail="1" skip="0">Src.App.(Authed).Neoris</stat>
+<stat name="Neoris" id="s1-s1-s1-s2-s1" pass="0" fail="1" skip="0">Src.App.(Authed).Neoris.Neoris</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
