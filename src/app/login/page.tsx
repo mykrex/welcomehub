@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+//import { supabase } from '@/lib/supabase'; // Descomentar para trabajar en LOCAL
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -40,10 +40,11 @@ export default function Home() {
         throw new Error(result.error || 'Error al iniciar sesión');
       }
 
-      await supabase.auth.setSession({
+      /** Descomentar esta linea para trabajar en LOCAL */
+      /**await supabase.auth.setSession({
         access_token: result.access_token,
         refresh_token: result.refresh_token,
-      });
+      });*/
 
       setUser(result.user);
       router.push('/dashboard');
