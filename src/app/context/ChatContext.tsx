@@ -36,7 +36,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       if (!user?.email) return;
 
       //debugging
-      console.log("Email recibido en ChatContext:", user.email);
+      //console.log("Email recibido en ChatContext:", user.email);
 
       const { data, error } = await supabase
         .from("usuario")

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     }
 
     //debugging
-    console.log("ID de usuario recibido:", id_usuario);
+    //console.log("ID de usuario recibido:", id_usuario);
 
     const { data: allUsers } = await supabase
       .from("usuario")
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     // debugging
-    console.log("Resultado de búsqueda del usuario:", userInfo);
+    //console.log("Resultado de búsqueda del usuario:", userInfo);
 
     if (userError) {
       console.error("Error al consultar el nombre del usuario:", userError.message || userError);

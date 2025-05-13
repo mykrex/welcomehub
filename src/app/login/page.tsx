@@ -36,7 +36,7 @@ export default function Home() {
 
       const result = await res.json();
       // debugging
-      console.log("Resultado del login:", result);
+      //console.log("Resultado del login:", result);
 
       if (!res.ok) {
         throw new Error(result.error || 'Error al iniciar sesión');
