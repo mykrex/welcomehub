@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     //debugging
     console.log("ID de usuario recibido:", id_usuario);
 
-    const { data: allUsers, error: allUsersError } = await supabase
+    const { data: allUsers } = await supabase
       .from("usuario")
       .select("id_usuario, nombres");
 

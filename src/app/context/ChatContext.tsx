@@ -29,7 +29,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
-  const [userName, setUserName] = useState<string | null>(null);
+  //const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,7 +54,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      setUserName(data.nombres);
+      //setUserName(data.nombres);
       setMessages([
         {
           sender: "bot",
@@ -90,6 +90,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       const botMessage: Message = { sender: "bot", text: data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
       setMessages((prev) => [
         ...prev,
         { sender: "bot", text: "Error al obtener la respuesta" },
