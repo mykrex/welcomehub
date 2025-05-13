@@ -6,16 +6,28 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const ruta = `${userId}/profile.png`;
 
   const fetchFotoPerfil = useCallback(async () => {
-    const { data } = await supabase.storage.from('avatars').download(ruta);
+    // descarga directa (requiere sesión)
+    const { data } = await supabase
+      .storage
+      .from('avatars')
+      .download(ruta);
+
     if (data) {
-      const url = URL.createObjectURL(data);
-      setImageUrl(url);
-    } else {
-      setImageUrl(null);
+      setImageUrl(URL.createObjectURL(data));
+      return;
+    }
+
+    // signed URL para producción
+    const { data: signedData } = await supabase
+      .storage
+      .from('avatars')
+      .createSignedUrl(ruta, 60);
+
+    if (signedData?.signedUrl) {
+      setImageUrl(`${signedData.signedUrl}?v=${Date.now()}`); // bust cache
     }
   }, [ruta]);
 
@@ -23,23 +35,38 @@ export default function FotoPerfil({ userId }: { userId: string }) {
     fetchFotoPerfil();
   }, [fetchFotoPerfil]);
 
-  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-
     setLoading(true);
 
-    await supabase.storage.from('avatars').upload(ruta, file, {
-      upsert: true,
-    });
+    // Borrar versión anterior
+    await supabase.storage.from('avatars').remove([ruta]);
 
+    // Subir forzando el cacheControl=0
+    const { error: uploadError } = await supabase
+      .storage
+      .from('avatars')
+      .upload(ruta, file, {
+        upsert: true,
+        contentType: file.type,
+        cacheControl: '0',       // evita cualquier cacheo en el CDN
+      });
+
+    if (uploadError) {
+      console.error('Error al subir:', uploadError.message);
+      alert('No pude subir tu foto. Revisa permisos.');
+      setLoading(false);
+      return;
+    }
+
+    // Recargar ahora la imagen en pantalla
     await fetchFotoPerfil();
     setLoading(false);
   };
 
   const handleDelete = async () => {
     setLoading(true);
-
     await supabase.storage.from('avatars').remove([ruta]);
     setImageUrl(null);
     setLoading(false);
@@ -48,6 +75,8 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   return (
     <div className="flex flex-col items-center space-y-2">
       <Image
+        key={imageUrl}
+        unoptimized
         src={imageUrl || '/placeholder_profile.png'}
         alt="Foto de perfil"
         width={180}
@@ -66,15 +95,15 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       <div className="flex gap-2">
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
           disabled={loading}
+          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
         >
           {loading ? 'Subiendo...' : 'Editar'}
         </button>
         <button
           onClick={handleDelete}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
           disabled={loading}
+          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
         >
           {loading ? 'Eliminando...' : 'Eliminar'}
         </button>

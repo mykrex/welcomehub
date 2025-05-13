@@ -1,0 +1,103 @@
+.logros-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 20px 30px;
+  background: #042c45;
+  overflow: hidden;
+  border-radius: 15px;
+  gap: 10px;
+}
+
+.logros-header-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logros-title {
+  color: #ebfaff;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.logros-cards-wrapper {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 15px;
+  align-self: stretch;
+  flex-direction: column;
+}
+
+.logro-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px 20px;
+  overflow: hidden;
+  border-radius: 25px;
+  outline: 2px #9daaa6 solid;
+  outline-offset: -2px;
+  width: 100%;
+}
+
+.logro-icon-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.logro-text {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 1 1 0;
+}
+
+.logro-name {
+  color: white;
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.logro-desc {
+  color: #8bcff9;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
+}
+
+.logro-date-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.logro-date-label {
+  color: white;
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.logro-date-value {
+  color: #8bcff9;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
+}
+
