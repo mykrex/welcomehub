@@ -64,6 +64,36 @@ export async function POST(req: NextRequest) {
       console.warn("No se encontró ningún puesto para el usuario con ID:", id_usuario);
     }
 
+    //Obtener Equipo del usuario mediante el id_usuario
+    const { data: userEquipoInfo, error: equipoIdError } = await supabase
+  .from("usuario")
+  .select("id_equipo")
+  .eq("id_usuario", id_usuario)
+  .single();
+
+const idEquipo = userEquipoInfo?.id_equipo;
+// debugging
+if (equipoIdError) {
+  console.error("Error al obtener el ID del equipo:", equipoIdError.message);
+}
+
+let nombreEquipo = "equipo desconocido";
+
+if (idEquipo) {
+  const { data: equipoInfo, error: equipoInfoError } = await supabase
+    .from("equipo")
+    .select("nombre")
+    .eq("id_equipo", idEquipo)
+    .single();
+  // debugging
+  if (equipoInfoError) {
+    console.error("Error al obtener el nombre del equipo:", equipoInfoError.message);
+  } else {
+    nombreEquipo = equipoInfo?.nombre ?? nombreEquipo;
+  }
+}
+    
+
     const userRole = userPosition?.puesto ?? "usuario";
 
     //  Traer historial reciente
@@ -92,6 +122,9 @@ export async function POST(req: NextRequest) {
                 Si te preguntan algo como "¿cuál es mi rol?", "¿qué rol tengo?", o "¿sabes cuál es mi rol?", debes responder: "Tu rol es ${userRole}".
 
                 Siempre responde de forma amigable y clara.
+
+                El usuario pertenece al equipo ${nombreEquipo}.
+                Si te preguntan algo como "¿a qué equipo pertenezco?", "¿cuál es mi equipo?", o "¿sabes a qué equipo pertenezco?", debes responder: "Tu equipo es ${nombreEquipo}".
                 `,
       },
       ...(history?.reverse().flatMap((item) => [
