@@ -19,11 +19,12 @@ export async function POST(req: NextRequest) {
     //debugging
     //console.log("ID de usuario recibido:", id_usuario);
 
-    const { data: allUsers } = await supabase
-      .from("usuario")
-      .select("id_usuario, nombres");
+    // const { data: allUsers } = await supabase
+    //   .from("usuario")
+    //   .select("id_usuario, nombres");
 
-    console.log("Todos los usuarios en la tabla:", allUsers);
+    // debugging
+    //console.log("Todos los usuarios en la tabla:", allUsers);
 
 
     //  Obtener el nombre del usuario
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     // debugging
-    //console.log("Resultado de búsqueda del usuario:", userInfo);
+    console.log("Resultado de búsqueda del usuario:", userInfo);
 
     if (userError) {
       console.error("Error al consultar el nombre del usuario:", userError.message || userError);
@@ -45,6 +46,25 @@ export async function POST(req: NextRequest) {
     }
 
     const userName = userInfo?.nombres ?? "usuario";
+
+    // Obtener el puesto del usuario
+    const { data: userPosition, error: positionError } = await supabase
+      .from("usuario")
+      .select("puesto")
+      .eq("id_usuario", id_usuario)
+      .single();
+
+    // debugging
+    console.log("Resultado de búsqueda del puesto:", userPosition);
+
+    if (positionError) {
+      console.error("Error al consultar el puesto del usuario:", positionError.message || positionError);
+    }
+    if (!userPosition) {
+      console.warn("No se encontró ningún puesto para el usuario con ID:", id_usuario);
+    }
+
+    const userRole = userPosition?.puesto ?? "usuario";
 
     //  Traer historial reciente
     const { data: history, error: historyError } = await supabase
@@ -66,6 +86,10 @@ export async function POST(req: NextRequest) {
 
                 El nombre del usuario que te está hablando es ${userName}. 
                 Si te preguntan algo como "¿cómo me llamo?", "¿quién soy?", o "¿sabes mi nombre?", debes responder: "Tu nombre es ${userName}".
+
+                El puesto del usuario es ${userRole}.
+                Si te preguntan algo como "¿cuál es mi puesto?", "¿qué puesto tengo?", o "¿sabes cuál es mi puesto?", debes responder: "Tu puesto es ${userRole}".
+                Si te preguntan algo como "¿cuál es mi rol?", "¿qué rol tengo?", o "¿sabes cuál es mi rol?", debes responder: "Tu rol es ${userRole}".
 
                 Siempre responde de forma amigable y clara.
                 `,
