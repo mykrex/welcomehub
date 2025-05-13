@@ -40,6 +40,9 @@ export default function FotoPerfil({ userId }: { userId: string }) {
     if (!file) return;
     setLoading(true);
 
+    const { data: sessionData } = await supabase.auth.getSession();
+    const accessToken = sessionData?.session?.access_token;
+
     // Borrar versión anterior
     await supabase.storage.from('avatars').remove([ruta]);
 
@@ -51,6 +54,9 @@ export default function FotoPerfil({ userId }: { userId: string }) {
         upsert: true,
         contentType: file.type,
         cacheControl: '0',       // evita cualquier cacheo en el CDN
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
       });
 
     if (uploadError) {
