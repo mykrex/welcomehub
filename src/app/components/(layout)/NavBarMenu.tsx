@@ -17,7 +17,8 @@ const pathToTitleMap: { [key: string]: string } = {
   '/verCursos': 'Atención a Clientes y Ventas',
   '/retos': 'Mis Retos',
   '/compi': 'Compi',
-  '/timecard': 'Timecard'
+  '/timecard': 'Timecard',
+  '/miequipo': 'Mi Equipo'
 };
 
 const Navbar = () => {
