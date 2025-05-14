@@ -1,0 +1,149 @@
+.admin-container {
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    max-width: auto ;
+    background-color: #f9f9f9;
+    color: black;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .employee-count {
+    font-weight: bold;
+  }
+  
+  .employee-table {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .employee-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    color: black;
+  }
+  
+  .employee-card.selected {
+    background-color: #e0f7fa;
+  }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .employee-details {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffef99; /* color crema suave para mejor contraste */
+    border: 3px solid #222; /* borde negro más grueso */
+    border-radius: 10px;
+    color: black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .course-stats ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  .course-stats li {
+    margin: 5px 0;
+  }
+  
+  .employee-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    
+  }
+  
+  .section-divider {
+    margin: 25px 0 15px;
+    border: none;
+    border-top: 2px solid black;
+    
+  }
+  
+  .bar-chart-wrapper {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    position: relative;
+    height: 200px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+  
+  }
+  
+  .y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding-right: 10px;
+    font-size: 12px;
+    color: black;
+  }
+  
+  .y-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 100%;
+  }
+  
+  .y-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .bar-chart {
+    display: flex;
+    flex-grow: 1;
+    align-items: flex-end;
+    justify-content: space-around;
+  }
+  
+  .bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 30px;
+  }
+  
+  .bar-value {
+    font-size: 12px;
+    margin-bottom: 4px;
+    color: #000;
+  }
+  
+  .bar {
+    width: 100%;
+    background-color: #4caf50;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+    min-height: 2px;
+  }
