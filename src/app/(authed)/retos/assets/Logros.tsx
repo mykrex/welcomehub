@@ -42,7 +42,7 @@ export default function Logros() {
         {userLogros.map((logro) => (
           <div className="logro-card" key={logro.id_badge}>
             <div className="logro-icon-wrapper">
-              <Badge variant={logro.icono} />
+            <Badge variant={["gold", "red"].includes(logro.icono ?? "") ? logro.icono as "gold" | "red" : undefined} />
             </div>
             <div className="logro-text">
               <div className="logro-name">{logro.nombre}</div>
