@@ -1,80 +1,79 @@
+/* updated rankingPodium.css */
+
 .ranking-container {
   width: 100%;
   height: 100%;
   padding: 20px 30px;
   background: #042c45;
   border-radius: 15px;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 20px;
 }
 
 .ranking-header {
-  display: inline-flex;
-  justify-content: flex-start;
-  align-items: center;
+  display: flex;
   gap: 10px;
+  align-items: center;
 }
 
-.ranking-title {
-  color: #ebfaff;
-  font-size: 28px;
+.ranking-title, .ranking-subtitle {
   font-family: "Manrope";
+  font-size: 28px;
   font-weight: 600;
   word-wrap: break-word;
 }
 
-.ranking-subtitle {
-  color: #8bcff9;
-  font-size: 28px;
-  font-family: "Manrope";
-  font-weight: 600;
-  word-wrap: break-word;
-}
+.ranking-title { color: #ebfaff; }
+.ranking-subtitle { color: #8bcff9; }
 
 .ranking-content {
-  display: flex;              /* ya era inline-flex, ahora flex (inline no es necesario) */
-  width: 100%;                /* para que ocupe todo el ancho disponible */
-  align-items: flex-end;      /* como ya tenías */
-  gap: 20px;                  /* opcional, sustituye el justify-content:space-between */
+  flex: 1;
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: stretch;
 }
 
-
 .podium-container {
-  flex: 2 1 0;   /* 1 parte de las 3 partes totales */
-  display: flex; /* conservar el layout interno */
+  flex: 2;
+  display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 30px;
 }
 
 .podium-item {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  gap: 24px;
+  justify-content: flex-end;
+  flex: 1;
+  height: 100%;
+  gap: 20px;
 }
+
+.podium-item--first .points-wrapper { height: 80%; }
+.podium-item--second .points-wrapper { height: 65%; }
+.podium-item--third .points-wrapper { height: 55%; }
 
 .profile-card {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   position: relative;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .profile-picture {
-  width: 130px;
-  height: 126px;
+  width: 160px;
+  height: 156px;
   border-radius: 9999px;
 }
 
 .profile-name-container {
-  width: 132.88px;
-  height: 26.58px;
+  width: 100%;
   padding: 4px 10px;
   background: #0b88d5;
   border-radius: 10px;
@@ -84,110 +83,100 @@
   gap: 2px;
   position: absolute;
   bottom: -10px;
+
+  transition: width 0.2s ease, max-width 0.2s ease;
+  overflow: hidden;
 }
 
-/* Only override background color */
-.profile-name-container--first {
-  background-color: #0b88d5;
-}
-
-.profile-name-container--second {
-  background-color: #0c94e9;
-}
-
-.profile-name-container--third {
-  background-color: #51b6f6;
-}
+.profile-name-container--first { background: #0b88d5; }
+.profile-name-container--second { background: #0c94e9; }
+.profile-name-container--third { background: #51b6f6; }
 
 .profile-name {
-  width: 100%;
-  text-align: center;
   color: #053c5e;
-  font-size: 15px;
   font-family: "Manrope";
+  font-size: 15px;
   font-weight: 600;
-  word-wrap: break-word;
+  text-align: center;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+
+.profile-name-container.can-expand:hover {
+  width: auto;
+  max-width: none;
+}
+
+.points-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
 }
 
 .points-card {
-  align-self: stretch;
-  height: 550px;
+  width: 100%;
   padding: 30px 25px;
-  background: #0b88d5;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  height: 100%;
 }
 
-.points-card--second {
-  background: #0c94e9;
-  height: 450px;
-}
-.points-card--third {
-  background: #51b6f6;
-  height: 350px;
-}
+.points-card--first { background: #0b88d5; }
+.points-card--second { background: #0c94e9; }
+.points-card--third { background: #51b6f6; }
 
 .points-info {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
   gap: 10px;
 }
 
 .points-number {
-  width: 81px;
-  height: 37px;
-  text-align: center;
-  color: #053c5e;
   font-size: 35px;
-  font-family: "Manrope";
   font-weight: 1000;
-  word-wrap: break-word;
+  font-family: "Manrope";
+  color: #053c5e;
+  text-align: center;
 }
 
 .points-label {
-  width: 57px;
-  height: 21px;
-  text-align: center;
-  color: #053c5e;
   font-size: 16px;
-  font-family: "Manrope";
   font-weight: 700;
-  word-wrap: break-word;
+  font-family: "Manrope";
+  color: #053c5e;
+  text-align: center;
 }
 
 .ranking-table {
-  flex: 3 1 0;
+  flex: 3;
   padding: 20px 30px;
   background: #c2f0ff;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 10px;
 }
 
-
-
 .ranking-table-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .ranking-header-item {
-    color: #064A74;
-    font-size: 20px;
-    font-family: 'Manrope';
-    font-weight: 700;
-    word-wrap: break-word;
+  color: #064A74;
+  font-size: 20px;
+  font-family: 'Manrope';
+  font-weight: 700;
 }
 
 .ranking-divider {
@@ -197,36 +186,35 @@
 }
 
 .ranking-table-body {
-  width: 100%; /* para que ocupe todo el ancho disponible */
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 8px;
 }
 
-.ranking-points {
-  color: #0b88d5;
-  font-size: 20px;
-  font-family: "Manrope";
-  font-weight: 700;
-  word-wrap: break-word;
+.ranking-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #51B6F6;
 }
 
-.ranking-name {
-  color: #064a74;
-  font-size: 20px;
+.ranking-rank, .ranking-name, .ranking-points {
   font-family: "Manrope";
-  font-weight: 400;
-  word-wrap: break-word;
+  font-size: 20px;
+  color: #064a74;
 }
 
-.ranking-rank {
-  color: #064a74;
-  font-size: 20px;
-  font-family: "Manrope";
-  font-weight: 600;
-  word-wrap: break-word;
+.ranking-rank { font-weight: 600; }
+.ranking-name { font-weight: 400; }
+.ranking-points { font-weight: 700; color: #0b88d5; }
+
+.profile-picture-small {
+  width: 61px;
+  height: 61px;
+  border-radius: 9999px;
 }
 
 .circle {
@@ -244,19 +232,3 @@
   height: 47.62px;
   background: #f62717;
 }
-
-.profile-picture-small {
-  width: 61px;
-  height: 61px;
-  border-radius: 9999px;
-}
-
-.ranking-row {
-    width: 100%;
-    display: flex;
-    flex-direction: row; /* 👈 horizontal layout */
-    justify-content: space-between; /* optional: spreads items */
-    align-items: center; /* 👈 vertical centering */
-    padding: 10px 0; /* optional: some vertical space inside each row */
-    border-bottom: 1px solid #51B6F6; /* optional: row separator if you want */
-  }

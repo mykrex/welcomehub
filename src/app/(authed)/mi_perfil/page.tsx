@@ -36,7 +36,7 @@ interface RawMiembro {
   
 
 const getUserProfile = async () => {
-    const response = await fetch("/api/users/me", {
+    const response = await fetch("/api/users/info", {
       method: "GET",
       credentials: "include", // Send cookies HttpOnly
     });
@@ -45,7 +45,7 @@ const getUserProfile = async () => {
     console.log("Respuesta de /api/users/me:", result);
   
     if (!response.ok) {
-      console.error("Error desde /api/users/me:", result.error);
+      console.error("Error desde /api/users/info:", result.error);
       throw new Error(result.error || "Error al obtener perfil");
     }
   
@@ -53,7 +53,7 @@ const getUserProfile = async () => {
 };
 
 const getTeam = async () => {
-    const response = await fetch("/api/team/info", {
+    const response = await fetch("/api/users/team", {
         credentials: "include", //Send cookie
     });
   

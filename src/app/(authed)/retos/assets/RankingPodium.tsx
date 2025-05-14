@@ -1,63 +1,70 @@
-import React from "react";
+"use client";
+import React, { useMemo } from "react";
 import "./rankingPodium.css";
+
+//* Icons */
 import TrophyIcon from "./icons/trophyIcon";
-import Image from "next/image";
 import SecondPlaceMedal from "./icons/SecondPlaceMedal";
 import ThirdPlaceMedal from "./icons/ThirdPlaceMedal";
+import Image from "next/image";
+
+//* Mock Data */
+import { mockStats, mockUsuarios } from "@/app/api/retos/mock/users";
+
+//* Check if user's name is too long and truncate if necessary */
+import { useEffect, useRef, useState } from "react";
 
 
-//* FAKE API
-{/*}
-import {useState, useEffect, Fragment} from "react";
-import {getUsers} from "../../api/users/users";
-*/}
+function TruncatingProfileName({
+  name,
+  colorClass,
+}: {
+  name: string;
+  colorClass: string;
+}) {
+  const nameRef = useRef<HTMLDivElement>(null);
+  const [canExpand, setCanExpand] = useState(false);
 
-const rankingData = [
-  {
-    name: "Rafael Pereira",
-    points: 902,
-    rank: 4,
-    image: "/Avatars/avatar (4).jpg",
-  },
-  {
-    name: "Gabriel David Cruz Martinez",
-    points: 887,
-    rank: 5,
-    image: "/Avatars/avatarGabriel.jpg",
-  },
-  {
-    name: "Gabrielly Tavares",
-    points: 850,
-    rank: 6,
-    image: "/Avatars/avatar (5).jpg",
-  },
-  {
-    name: "Renan Matos",
-    points: 657,
-    rank: 7,
-    image: "/Avatars/avatar (6).jpg",
-  },
-  {
-    name: "Hugo Souza",
-    points: 433,
-    rank: 8,
-    image: "/Avatars/avatar (7).jpg",
-  },
-  {
-    name: "Jessica Silva",
-    points: 201,
-    rank: 9,
-    image: "/Avatars/avatar (8).jpg",
-  },
-  {
-    name: "Fernando Lima",
-    points: 198,
-    rank: 10,
-    image: "/Avatars/avatar (9).jpg",
-  },
-];
+  useEffect(() => {
+    const el = nameRef.current;
+    if (el && el.scrollWidth > el.clientWidth) {
+      setCanExpand(true);
+    }
+  }, [name]);
+
+  return (
+    <div
+      className={`profile-name-container ${colorClass} ${
+        canExpand ? "can-expand" : ""
+      }`}
+    >
+      <div className="profile-name" ref={nameRef}>
+        {name}
+      </div>
+    </div>
+  );
+}
 
 export default function RankingPodium() {
+  const ranking = useMemo(() => {
+    return mockStats
+      .map((stats) => {
+        const user = mockUsuarios.find((u) => u.id_usuario === stats.id_user);
+        return {
+          id: stats.id_user,
+          nombre_completo: `${user?.nombres ?? ""} ${user?.apellidos ?? ""}`,
+          puntos: stats.puntos_total,
+          imagen: user?.imagen ?? "/Avatars/default.jpg",
+        };
+      })
+      .sort((a, b) => b.puntos - a.puntos);
+  }, []);
+
+  const first = ranking[0];
+  const second = ranking[1];
+  const third = ranking[2];
+  const others = ranking.slice(3);
+
   return (
     <div className="ranking-container">
       <div className="ranking-header">
@@ -66,81 +73,88 @@ export default function RankingPodium() {
       </div>
 
       <div className="ranking-content">
+        {/* ───────── Podium ───────── */}
         <div className="podium-container">
-          {/* SEGUNDO LUGAR */}
-          <div className="podium-item">
+          {/* SECOND PLACE */}
+          <div className="podium-item podium-item--second">
             <div className="profile-card">
               <Image
-                className="profile-picture"
-                src="/Avatars/avatar (2).jpg"
-                alt="Profile picture"
+                src={second.imagen}
+                alt="Second Place"
                 width={130}
                 height={126}
+                className="profile-picture"
               />
-              <div className="profile-name-container profile-name-container--second">
-                <div className="profile-name">Roberta Valdes</div>
-              </div>
+              <TruncatingProfileName
+                name={second.nombre_completo}
+                colorClass="profile-name-container--first"
+              />
             </div>
-
-            <div className="points-card points-card--second">
-              <SecondPlaceMedal />
-              <div className="points-info">
-                <div className="points-number">998</div>
-                <div className="points-label">Puntos</div>
+            <div className="points-wrapper">
+              <div className="points-card points-card--second">
+                <SecondPlaceMedal />
+                <div className="points-info">
+                  <div className="points-number">{second.puntos}</div>
+                  <div className="points-label">Puntos</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* PRIMER LUGAR */}
-          <div className="podium-item">
+          {/* FIRST PLACE */}
+          <div className="podium-item podium-item--first">
             <div className="profile-card">
               <Image
-                className="profile-picture"
-                src="/Avatars/avatar1.jpg"
-                alt="Profile picture"
+                src={first.imagen}
+                alt="First Place"
                 width={130}
                 height={126}
+                className="profile-picture"
               />
-              <div className="profile-name-container profile-name-container--first">
-                <div className="profile-name">Antonio Garza</div>
-              </div>
+              <TruncatingProfileName
+                name={first.nombre_completo}
+                colorClass="profile-name-container--first"
+              />
             </div>
-
-            <div className="points-card">
-              <TrophyIcon />
-              <div className="points-info">
-                <div className="points-number">1097</div>
-                <div className="points-label">Puntos</div>
+            <div className="points-wrapper">
+              <div className="points-card points-card--first">
+                <TrophyIcon />
+                <div className="points-info">
+                  <div className="points-number">{first.puntos}</div>
+                  <div className="points-label">Puntos</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Podium Item (repeat for third) */}
-          <div className="podium-item">
+          {/* THIRD PLACE */}
+          <div className="podium-item podium-item--third">
             <div className="profile-card">
               <Image
-                className="profile-picture"
-                src="/Avatars/avatar (3).jpg"
-                alt="Profile picture"
+                src={third.imagen}
+                alt="Third Place"
                 width={130}
                 height={126}
+                className="profile-picture"
               />
-              <div className="profile-name-container profile-name-container--third">
-                <div className="profile-name">David Juarez</div>
-              </div>
+              <TruncatingProfileName
+                name={third.nombre_completo}
+                colorClass="profile-name-container--first"
+              />
             </div>
-
-            <div className="points-card points-card--third">
-              <ThirdPlaceMedal />
-              <div className="points-info">
-                <div className="points-number">903</div>
-                <div className="points-label">Puntos</div>
+            <div className="points-wrapper">
+              <div className="points-card points-card--third">
+                <ThirdPlaceMedal />
+                <div className="points-info">
+                  <div className="points-number">{third.puntos}</div>
+                  <div className="points-label">Puntos</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Panel */}
+        {/* ───────── Ranking Table ───────── */}
         <div className="ranking-table">
           <div className="ranking-table-header">
             <div className="ranking-header-item">Rank</div>
@@ -151,19 +165,18 @@ export default function RankingPodium() {
           <div className="ranking-divider" />
 
           <div className="ranking-table-body">
-            {rankingData.map((user, index) => (
-              <div key={index} className="ranking-row">
-                <div className="ranking-rank">{user.rank}</div>
+            {others.map((user, index) => (
+              <div key={user.id} className="ranking-row">
+                <div className="ranking-rank">{index + 4}</div>
                 <Image
                   className="profile-picture-small"
-                  src={user.image}
-                  alt={`Profile of ${user.name}`}
+                  src={user.imagen}
+                  alt={`Profile of ${user.nombre_completo}`}
                   width={61}
                   height={61}
                 />
-                <div className="ranking-name">{user.name}</div>
-
-                <div className="ranking-points">{user.points}</div>
+                <div className="ranking-name">{user.nombre_completo}</div>
+                <div className="ranking-points">{user.puntos}</div>
               </div>
             ))}
           </div>
