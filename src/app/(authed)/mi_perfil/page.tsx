@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Fragment } from "react";
 import { useUser } from "../../context/UserContext";
+import { useChat } from "../../context/ChatContext";
 import { useRouter } from "next/navigation"
 import FotoPerfil from "../../components/fotoPerfil";
 import Titulo from "../../components/perfilTitulos";
@@ -74,6 +75,7 @@ export default function MiPerfil() {
     const [loading, setLoading] = useState(true);
     const { user, setUser } = useUser();
     const router = useRouter();
+    const { resetMessages } = useChat();
 
     // Get data when the components is loading
     useEffect(() => {
@@ -222,7 +224,7 @@ export default function MiPerfil() {
                             method: 'POST',
                             credentials: 'include',
                           });
-                    
+                          resetMessages();
                           setUser(null);
                           router.push('/login');
                         } catch (error) {
