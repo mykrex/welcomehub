@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabaseServer } from '@/lib/supabaseServer';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { serialize } from 'cookie';
 
@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Email y contraseña requeridos' });
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabaseServer.auth.signInWithPassword({ email, password });
 
   if (error || !data.session || !data.user) {
     return res.status(401).json({ error: 'Credenciales incorrectas' });
@@ -39,14 +39,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   ]);
 
   // Sync with usario table
-  const { data: existe, error: queryError } = await supabase
+  const { data: existe, error: queryError } = await supabaseServer
     .from("usuario")
     .select("id_usuario")
     .eq("id_usuario", userId)
     .maybeSingle();
 
   if (!existe && !queryError) {
-    const { error: insertError } = await supabase.from("usuario").insert({
+    const { error: insertError } = await supabaseServer.from("usuario").insert({
       id_usuario: userId,
       email: user.email,
       nombres: user.user_metadata?.nombres || '',
@@ -70,5 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       email: user.email,
       rol,
     },
+    access_token: session.access_token,
+    refresh_token: session.refresh_token
   });
 }

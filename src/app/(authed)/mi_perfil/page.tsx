@@ -35,46 +35,17 @@ interface RawMiembro {
 }
   
 
-/*const getUserProfile = async () => {
-    //const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-
-    if (sessionError || !sessionData?.session?.access_token) {
-      console.error("No se pudo obtener el token de sesión", sessionError);
-      throw new Error("No se pudo obtener el token de sesión");
-    }
-  
-    const token = sessionData.session.access_token;
-    console.log("🔐 Token obtenido:", token);
-  
-    const response = await fetch("/api/users/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  
-    const result = await response.json();
-    console.log("Respuesta de /api/users/me:", result);
-  
-    if (!response.ok) {
-      console.error("Error desde /api/users/me:", result.error);
-      throw new Error(result.error || "Error al obtener perfil");
-    }
-  
-    return result.perfil;
-};*/
-
 const getUserProfile = async () => {
-    const response = await fetch("/api/users/me", {
+    const response = await fetch("/api/users/info", {
       method: "GET",
-      credentials: "include", // Necesario para enviar cookies HttpOnly
+      credentials: "include", // Send cookies HttpOnly
     });
   
     const result = await response.json();
     console.log("Respuesta de /api/users/me:", result);
   
     if (!response.ok) {
-      console.error("Error desde /api/users/me:", result.error);
+      console.error("Error desde /api/users/info:", result.error);
       throw new Error(result.error || "Error al obtener perfil");
     }
   
@@ -82,8 +53,8 @@ const getUserProfile = async () => {
 };
 
 const getTeam = async () => {
-    const response = await fetch("/api/team/info", {
-        credentials: "include", //se envíe la cookie
+    const response = await fetch("/api/users/team", {
+        credentials: "include", //Send cookie
     });
   
     const result = await response.json();
@@ -193,6 +164,7 @@ export default function MiPerfil() {
                                 Con Neoris desde: <span className="font-normal text-gray-400 ml-2">{info?.fechaIngreso}</span>
                             </p>
                         </div>
+                        {/** Profile */}
                         <div className="relative w-[180px] h-[180px]">
                              {user?.id_usuario && <FotoPerfil userId={user.id_usuario} />}
                         </div>
@@ -208,7 +180,6 @@ export default function MiPerfil() {
                             Teléfono: <span className="font-normal text-gray-400 ml-2">{contact?.telefono}</span>
                         </p>
                         <div className="flex flex-row">
-                            {/**<VerPassword password={contact?.password}/>  Esta  funcion se debe quitar por seguridad*/}
                             <button onClick={handleChangePassword} className="text-sm text-white font-semibold text-center p-1 rounded-full bg-cyan-600 hover:bg-cyan-700">Cambiar contraseña</button>
                         </div>
                     </section>
@@ -248,12 +219,12 @@ export default function MiPerfil() {
                     onClick={async () => {
                         try {
                           await fetch('/api/auth/logout', {
-                            method: 'POST', // puedes dejarlo GET si así lo configuraste, pero POST es más limpio
+                            method: 'POST',
                             credentials: 'include',
                           });
                     
                           setUser(null);
-                          router.push('/login'); // o donde quieras llevar al usuario tras cerrar sesión
+                          router.push('/login');
                         } catch (error) {
                           console.error('Error al cerrar sesión:', error);
                         }

@@ -1,53 +1,85 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 
 export default function FotoPerfil({ userId }: { userId: string }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const ruta = `${userId}/profile.png`;
-
+  // Get the signed URL from /api/avatar/bajarAvatar
   const fetchFotoPerfil = useCallback(async () => {
-    const { data } = await supabase.storage.from('avatars').download(ruta);
-    if (data) {
-      const url = URL.createObjectURL(data);
-      setImageUrl(url);
-    } else {
+    try {
+      const resp = await fetch('/api/avatar/bajarAvatar');
+      if (!resp.ok) {
+        setImageUrl(null);
+        return;
+      }
+      const { url } = await resp.json();
+      const separator = url.includes('?') ? '&' : '?';
+      setImageUrl(`${url}${separator}v=${Date.now()}`); // bust cache
+    } catch {
       setImageUrl(null);
     }
-  }, [ruta]);
+  }, []);
 
   useEffect(() => {
     fetchFotoPerfil();
   }, [fetchFotoPerfil]);
 
-  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // Upload using the endpoint /api/avatar/subirAvatar
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-
     setLoading(true);
 
-    await supabase.storage.from('avatars').upload(ruta, file, {
-      upsert: true,
-    });
+    try {
+      const form = new FormData();
+      form.append('userId', userId);
+      form.append('file', file);
 
-    await fetchFotoPerfil();
-    setLoading(false);
+      const resp = await fetch('/api/avatar/subirAvatar', {
+        method: 'POST',
+        body: form,
+      });
+
+      if (!resp.ok) {
+        const { error } = await resp.json();
+        throw new Error(error || 'Error subiendo la imagen');
+      }
+
+      await fetchFotoPerfil();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Error inesperado';
+      console.error('Error en handleUpload:', err);
+      alert(`No se pudo subir tu foto: ${msg}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // Delete using the endpoint api/avatar/borrarAvatar
   const handleDelete = async () => {
     setLoading(true);
-
-    await supabase.storage.from('avatars').remove([ruta]);
-    setImageUrl(null);
-    setLoading(false);
+    try {
+      const resp = await fetch('/api/avatar/borrarAvatar', { method: 'POST' });
+      if (!resp.ok) {
+        const { error } = await resp.json();
+        throw new Error(error || 'Error al borrar foto');
+      }
+      setImageUrl(null);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'No se pudo borrar tu foto.';
+      alert(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col items-center space-y-2">
       <Image
+        key={imageUrl}
+        unoptimized
         src={imageUrl || '/placeholder_profile.png'}
         alt="Foto de perfil"
         width={180}
@@ -66,15 +98,15 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       <div className="flex gap-2">
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
           disabled={loading}
+          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
         >
           {loading ? 'Subiendo...' : 'Editar'}
         </button>
         <button
           onClick={handleDelete}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
           disabled={loading}
+          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
         >
           {loading ? 'Eliminando...' : 'Eliminar'}
         </button>
