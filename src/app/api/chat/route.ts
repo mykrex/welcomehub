@@ -27,18 +27,16 @@ export async function POST(req: NextRequest) {
     //console.log("Todos los usuarios en la tabla:", allUsers);
 
 
-    //  Obtener el nombre del usuario
+    //  Obtener datos de la tabla "usuario" mediante el id_usuario
     const { data: userInfo, error: userError } = await supabase
       .from("usuario")
-      .select("nombres")
+      .select("nombres, puesto, id_equipo")
       .eq("id_usuario", id_usuario)
       .single();
 
-    // debugging
-    console.log("Resultado de búsqueda del usuario:", userInfo);
 
     if (userError) {
-      console.error("Error al consultar el nombre del usuario:", userError.message || userError);
+      console.error("Error al consultar la info del usuario:", userError.message || userError);
     }
 
     if (!userInfo) {
@@ -46,39 +44,8 @@ export async function POST(req: NextRequest) {
     }
 
     const userName = userInfo?.nombres ?? "usuario";
-
-    // Obtener el puesto del usuario
-    const { data: userPosition, error: positionError } = await supabase
-      .from("usuario")
-      .select("puesto")
-      .eq("id_usuario", id_usuario)
-      .single();
-
-    // debugging
-    console.log("Resultado de búsqueda del puesto:", userPosition);
-
-    if (positionError) {
-      console.error("Error al consultar el puesto del usuario:", positionError.message || positionError);
-    }
-    if (!userPosition) {
-      console.warn("No se encontró ningún puesto para el usuario con ID:", id_usuario);
-    }
-
-    const userRole = userPosition?.puesto ?? "usuario";
-
-    //Obtener Equipo del usuario mediante el id_usuario
-    const { data: userEquipoInfo, error: equipoIdError } = await supabase
-      .from("usuario")
-      .select("id_equipo")
-      .eq("id_usuario", id_usuario)
-      .single();
-
-    const idEquipo = userEquipoInfo?.id_equipo;
-    // debugging
-    if (equipoIdError) {
-      console.error("Error al obtener el ID del equipo:", equipoIdError.message);
-    }
-
+    const userRole = userInfo?.puesto ?? "usuario";
+    const idEquipo = userInfo?.id_equipo;
     let nombreEquipo = "equipo desconocido";
 
     if (idEquipo) {
@@ -94,8 +61,9 @@ export async function POST(req: NextRequest) {
         nombreEquipo = equipoInfo?.nombre ?? nombreEquipo;
       }
     }
-    
-    //debugging
+
+    // debugging
+    console.log("Resultado de búsqueda del usuario:", userInfo);    
     console.log("Nombre del equipo:", nombreEquipo);
 
 
@@ -109,6 +77,41 @@ export async function POST(req: NextRequest) {
 
     if (historyError) {
       console.error("Error al traer el historial de mensajes:", historyError.message);
+    }
+
+    let historial: ChatCompletionMessageParam[] = [];
+
+    if (history && history.length > 0) {
+      historial.push({
+        role: "assistant",
+        content: `Hola ${userName}, retomemos donde nos quedamos.`,
+      });
+
+      historial = historial.concat(
+        history.reverse().flatMap((item) => [
+          { role: "user", content: item.input_usuario },
+          { role: "assistant", content: item.output_bot },
+        ])
+      );
+    } else {
+      const saludo = `Hola ${userName}, ¿en qué puedo ayudarte hoy?`;
+
+      // Agregar saludo al historial
+      historial.push({
+        role: "assistant",
+        content: saludo,
+      });
+
+      // Guardar saludo en la base de datos
+      await supabase.from("mensajes").insert([
+        {
+          id_usuario,
+          nombre_usuario: userName,
+          input_usuario: null,
+          output_bot: saludo,
+          timestamp: new Date().toISOString(),
+        },
+      ]);
     }
 
     const messages: ChatCompletionMessageParam[] = [
@@ -130,11 +133,8 @@ export async function POST(req: NextRequest) {
                 Siempre responde de forma amigable y clara.
                 `,
       },
-      ...(history?.reverse().flatMap((item) => [
-        { role: "user" as const, content: item.input_usuario },
-        { role: "assistant" as const, content: item.output_bot },
-      ]) ?? []),
-      { role: "user" as const, content: prompt },
+      ...historial,
+      { role: "user", content: prompt },
     ];
 
     // Solicitud a OpenAI
@@ -166,6 +166,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Hubo un error al procesar tu solicitud." },
       { status: 500 }
-    );
+    );  
   }
 }
