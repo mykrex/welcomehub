@@ -27,18 +27,16 @@ export async function POST(req: NextRequest) {
     //console.log("Todos los usuarios en la tabla:", allUsers);
 
 
-    //  Obtener el nombre del usuario
+    //  Obtener datos de la tabla "uduario" mediante el id_usuario
     const { data: userInfo, error: userError } = await supabase
       .from("usuario")
-      .select("nombres")
+      .select("nombres, puesto, id_equipo")
       .eq("id_usuario", id_usuario)
       .single();
 
-    // debugging
-    console.log("Resultado de búsqueda del usuario:", userInfo);
 
     if (userError) {
-      console.error("Error al consultar el nombre del usuario:", userError.message || userError);
+      console.error("Error al consultar la info del usuario:", userError.message || userError);
     }
 
     if (!userInfo) {
@@ -46,25 +44,27 @@ export async function POST(req: NextRequest) {
     }
 
     const userName = userInfo?.nombres ?? "usuario";
+    const userRole = userInfo?.puesto ?? "usuario";
+    const idEquipo = userInfo?.id_equipo;
+    let nombreEquipo = "equipo desconocido";
 
-    // Obtener el puesto del usuario
-    const { data: userPosition, error: positionError } = await supabase
-      .from("usuario")
-      .select("puesto")
-      .eq("id_usuario", id_usuario)
-      .single();
+    if (idEquipo) {
+      const { data: equipoInfo, error: equipoInfoError } = await supabase
+        .from("equipo_trabajo")
+        .select("nombre")
+        .eq("id_equipo", idEquipo)
+        .single();
+
+      if (equipoInfoError) {
+        console.error("Error al obtener el nombre del equipo:", equipoInfoError.message);
+      } else {
+        nombreEquipo = equipoInfo?.nombre ?? nombreEquipo;
+      }
+    }
 
     // debugging
-    console.log("Resultado de búsqueda del puesto:", userPosition);
+    console.log("Resultado de búsqueda del usuario:", userInfo);
 
-    if (positionError) {
-      console.error("Error al consultar el puesto del usuario:", positionError.message || positionError);
-    }
-    if (!userPosition) {
-      console.warn("No se encontró ningún puesto para el usuario con ID:", id_usuario);
-    }
-
-    const userRole = userPosition?.puesto ?? "usuario";
 
     //  Traer historial reciente
     const { data: history, error: historyError } = await supabase
@@ -76,6 +76,41 @@ export async function POST(req: NextRequest) {
 
     if (historyError) {
       console.error("Error al traer el historial de mensajes:", historyError.message);
+    }
+
+    let historial: ChatCompletionMessageParam[] = [];
+
+    if (history && history.length > 0) {
+      historial.push({
+        role: "assistant",
+        content: `Hola ${userName}, retomemos donde nos quedamos.`,
+      });
+
+      historial = historial.concat(
+        history.reverse().flatMap((item) => [
+          { role: "user", content: item.input_usuario },
+          { role: "assistant", content: item.output_bot },
+        ])
+      );
+    } else {
+      const saludo = `Hola ${userName}, ¿en qué puedo ayudarte hoy?`;
+
+      // Agregar saludo al historial
+      historial.push({
+        role: "assistant",
+        content: saludo,
+      });
+
+      // Guardar saludo en la base de datos
+      await supabase.from("mensajes").insert([
+        {
+          id_usuario,
+          nombre_usuario: userName,
+          input_usuario: null,
+          output_bot: saludo,
+          timestamp: new Date().toISOString(),
+        },
+      ]);
     }
 
     const messages: ChatCompletionMessageParam[] = [
@@ -91,14 +126,14 @@ export async function POST(req: NextRequest) {
                 Si te preguntan algo como "¿cuál es mi puesto?", "¿qué puesto tengo?", o "¿sabes cuál es mi puesto?", debes responder: "Tu puesto es ${userRole}".
                 Si te preguntan algo como "¿cuál es mi rol?", "¿qué rol tengo?", o "¿sabes cuál es mi rol?", debes responder: "Tu rol es ${userRole}".
 
+                El usuario pertenece al equipo ${nombreEquipo}.
+                Si te preguntan algo como "¿a qué equipo pertenezco?", "¿cuál es mi equipo?", o "¿sabes a qué equipo pertenezco?", debes responder: "Tu equipo es ${nombreEquipo}".
+
                 Siempre responde de forma amigable y clara.
                 `,
       },
-      ...(history?.reverse().flatMap((item) => [
-        { role: "user" as const, content: item.input_usuario },
-        { role: "assistant" as const, content: item.output_bot },
-      ]) ?? []),
-      { role: "user" as const, content: prompt },
+      ...historial,
+      { role: "user", content: prompt },
     ];
 
     // Solicitud a OpenAI
@@ -130,6 +165,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { error: "Hubo un error al procesar tu solicitud." },
       { status: 500 }
-    );
+    );  
   }
 }

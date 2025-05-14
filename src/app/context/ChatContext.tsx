@@ -18,7 +18,13 @@ interface ChatContextProps {
   loading: boolean;
   setPrompt: (prompt: string) => void;
   sendPrompt: () => void;
+  resetMessages: () => void;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
+}
+
+type RawMessage = {
+  input_usuario: string | null;
+  output_bot: string | null;
 }
 
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
@@ -29,42 +35,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
-  //const [userName, setUserName] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!user?.email) return;
-
-      //debugging
-      //console.log("Email recibido en ChatContext:", user.email);
-
-      const { data, error } = await supabase
-        .from("usuario")
-        .select("nombres")
-        .eq("email", user.email)
-        .maybeSingle();
-
-      if (error) {
-        console.error("Error al obtener datos del usuario:", error.message || error);
-        return;
-      }
-
-      if (!data) {
-        console.warn("No se encontró un usuario con ese correo.");
-        return;
-      }
-
-      //setUserName(data.nombres);
-      setMessages([
-        {
-          sender: "bot",
-          text: `Hola ${data.nombres}, ¿en qué puedo ayudarte hoy?`,
-        },
-      ]);
-    };
-
-    fetchUserData();
-  }, [user?.email]);
 
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
@@ -100,6 +70,44 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const resetMessages = () => {
+    setMessages([]);
+    setPrompt("");
+  };
+
+  useEffect(() => {
+    const fetchChatHistory = async () => {
+      if (!user?.id_usuario) return;
+
+      try {
+        const { data: messagesData, error } = await supabase
+          .from("mensajes")
+          .select("input_usuario, output_bot")
+          .eq("id_usuario", user.id_usuario)
+          .order("timestamp", { ascending: true });
+
+        if (error) throw error;
+
+        const historial: Message[] = [];
+
+        (messagesData as RawMessage[]).forEach((item) => {
+          if (item.input_usuario) {
+            historial.push({ sender: "user", text: item.input_usuario });
+          }
+          if (item.output_bot) {
+            historial.push({ sender: "bot", text: item.output_bot });
+          }
+        });
+
+        setMessages(historial);
+      } catch (error) {
+        console.error("Error al obtener el historial de chat:", error);
+      }
+    };
+
+    fetchChatHistory();
+  }, [user?.id_usuario]);
+
   return (
     <ChatContext.Provider
       value={{
@@ -109,6 +117,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         sendPrompt,
         loading,
         messagesEndRef,
+        resetMessages,
       }}
     >
       {children}
