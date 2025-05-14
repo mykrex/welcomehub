@@ -2,6 +2,8 @@
 
 //* Navegation
 import { usePathname, useRouter } from 'next/navigation';
+import { useUser } from '@/app/context/UserContext';
+import { type ComponentType } from 'react';
 import "@/app/components/(layout)/layout.css";
 
 //* Icons/Images
@@ -14,22 +16,38 @@ import NeorisIcon from '../../verCursos/icons/NeorisIcon';
 import ClockIcon from '../../verCursos/icons/ClockIcon';
 //import path from 'path';
 
-const SidebarMenu = () => {
+type Roles = 'administrador' | 'empleado';
+
+interface MenuItem {
+  label: string;
+  icon: ComponentType<{ className?: string }>;
+  path: string;
+  roles?: Roles[];
+}
+
+const ALL_MENU: MenuItem[] = [
+  { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard', roles: ['administrador','empleado'] },
+  { label: 'Cursos',    icon: CursosIcon,    path: '/cursos',    roles: ['administrador','empleado'] },
+  { label: 'Compi',     icon: CompiIcon,     path: '/compi',     roles: ['administrador','empleado'] },
+  { label: 'Retos',     icon: RetosIcon,     path: '/retos',     roles: ['administrador','empleado'] },
+  { label: 'Neoris',    icon: NeorisIcon,    path: '/neoris',    roles: ['administrador','empleado'] },
+  { label: 'Time Card', icon: ClockIcon,     path: '/timecard',  roles: ['administrador','empleado'] },
+  { label: 'Mi Equipo', icon: NeorisIcon,    path: '/miequipo',  roles: ['administrador'] }, 
+];
+
+export default function SidebarMenu(){
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useUser();
 
-  //* Menu items configuration
-  const menuItems = [
-    { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
-    { label: 'Cursos', icon: CursosIcon, path: '/cursos' },
-    { label: 'Compi', icon: CompiIcon, path: '/compi' }, 
-    { label: 'Retos', icon: RetosIcon, path: '/retos' },
-    { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
-    { label: 'Time Card', icon: ClockIcon, path: '/timecard' }, 
-    //{ label: 'Mi Equipo', icon: NeorisIcon, path: '/miequipo' }, 
-  ];
+  if (!user) return null;
 
-  const getIsActive = (path?: string) => {
+  // Menu items configuration
+  const menuItems = ALL_MENU.filter(item =>
+    item.roles?.includes(user.rol as Roles)
+  );
+
+  const getIsActive = (path: string) => {
     if (!path || !pathname) return false;
     return pathname.startsWith(path);
   };
@@ -58,5 +76,3 @@ const SidebarMenu = () => {
     </div>
   );
 };
-
-export default SidebarMenu;
