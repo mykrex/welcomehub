@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     //console.log("Todos los usuarios en la tabla:", allUsers);
 
 
-    //  Obtener datos de la tabla "uduario" mediante el id_usuario
+    //  Obtener datos de la tabla "usuario" mediante el id_usuario
     const { data: userInfo, error: userError } = await supabase
       .from("usuario")
       .select("nombres, puesto, id_equipo")
@@ -63,39 +63,7 @@ export async function POST(req: NextRequest) {
     }
 
     // debugging
-    console.log("Resultado de búsqueda del usuario:", userInfo);
-
-
-    //Obtener Equipo del usuario mediante el id_usuario
-    const { data: userEquipoInfo, error: equipoIdError } = await supabase
-      .from("usuario")
-      .select("id_equipo")
-      .eq("id_usuario", id_usuario)
-      .single();
-
-    const idEquipo = userEquipoInfo?.id_equipo;
-    // debugging
-    if (equipoIdError) {
-      console.error("Error al obtener el ID del equipo:", equipoIdError.message);
-    }
-
-    let nombreEquipo = "equipo desconocido";
-
-    if (idEquipo) {
-      const { data: equipoInfo, error: equipoInfoError } = await supabase
-        .from("equipo_trabajo")
-        .select("nombre")
-        .eq("id_equipo", idEquipo)
-        .single();
-
-      if (equipoInfoError) {
-        console.error("Error al obtener el nombre del equipo:", equipoInfoError.message);
-      } else {
-        nombreEquipo = equipoInfo?.nombre ?? nombreEquipo;
-      }
-    }
-    
-    //debugging
+    console.log("Resultado de búsqueda del usuario:", userInfo);    
     console.log("Nombre del equipo:", nombreEquipo);
 
 
