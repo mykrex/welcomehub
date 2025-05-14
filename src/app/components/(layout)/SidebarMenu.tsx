@@ -26,6 +26,7 @@ const SidebarMenu = () => {
     { label: 'Retos', icon: RetosIcon, path: '/retos' },
     { label: 'Neoris', icon: NeorisIcon, path: '/neoris' }, 
     { label: 'Time Card', icon: ClockIcon, path: '/timecard' }, 
+    //{ label: 'Mi Equipo', icon: NeorisIcon, path: '/miequipo' }, 
   ];
 
   const getIsActive = (path?: string) => {
