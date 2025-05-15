@@ -50,8 +50,6 @@ function getCurrentWeekRange(): string {
   return `${start} - ${end}`;
 }
 
-
-
 export default function Retos() {
   //* Fake Api -> State *//
   const [retos, setRetos] = useState<Reto[]>([]);
