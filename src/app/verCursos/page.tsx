@@ -7,9 +7,9 @@ import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
 import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 
 //ICONS
-import BullseyeIcon from "./icons/BullseyeIcon";
-import ArrowIcon from "./icons/ArrowIcon";
-import ClockIcon from "./icons/ClockIcon";
+import BullseyeIcon from "./assets/icons/BullseyeIcon";
+import ArrowIcon from "./assets/icons/ArrowIcon";
+import ClockIcon from "../components/(layout)/assetsLayout/ClockIcon";
 
 export default function VerCursos() {
   return (
@@ -239,81 +239,3 @@ export default function VerCursos() {
     </div>
   );
 }
-
-
-      {/* SIDEBAR 
-      <div className="sidebar-container">
-        {/* SIDEBAR 
-        <div className="sidebar-container">
-          {/*Logo WelcomeHub*
-          <div className="logo-container">
-            <WelcomeHubLogo className="logo-image" />
-          </div>
-
-          <div className="menu-list">
-            {/*Dashboard button
-            <div className="menu-item">
-              <DashboardIcon className="icon inactive-icon" />
-              <div className="label inactive">Dashboard</div>
-            </div>
-
-            {/*Cursos button
-            <div className="menu-item active">
-              <CursosIcon className="icon active-icon" />
-              <div className="label ">Cursos</div>
-            </div>
-
-            {/*Boris button
-            <div className="menu-item">
-              <BorisIcon className="icon inactive-icon" />
-              <div className="label inactive">Boris IA</div>
-            </div>
-
-            {/*Retos button
-            <div className="menu-item">
-              <RetosIcon className="icon inactive-icon" />
-              <div className="label inactive">Retos</div>
-            </div>
-
-            {/*Neoris button
-            <div className="menu-item">
-              <NeorisIcon className="icon inactive-icon" />
-              <div className="label inactive">Neoris</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      */}
-
-
-
-
-      {/*NAVBAR
-      <div className="navbar">
-      {/*Left
-      <div className="navbar-title">
-        <div className="navbar-title-main">Mis Cursos</div>
-        <div className="navbar-title-arrow">→</div>
-        <div className="navbar-title-sub">Atencion a Clientes y Ventas</div>
-      </div>
-
-      {/*Right
-      <div className="navbar-right">
-        <div className="navbar-status-bar">
-          <SearchIcon className="icon-placeholder" />
-        </div>
-
-        <div className="navbar-icons">
-          <SettingsIcon className="icon-placeholder" />
-          <NotificationIcon className="icon-placeholder" />
-          <Image
-            src={profilePicture.src}
-            alt="Profile"
-            width={40}
-            height={40}
-            className="profile-pic"
-          />
-        </div>
-      </div>
-    </div>
-      */}
