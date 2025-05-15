@@ -7,13 +7,13 @@ import { type ComponentType } from 'react';
 import "@/app/components/(layout)/layout.css";
 
 //* Icons/Images
-import WelcomeHubLogo from '../../verCursos/icons/WelcomeHubLogo'; //! Cambiar a WelcomeHubLogoSmall
-import DashboardIcon from '../../verCursos/icons/DashboardIcon';
-import CursosIcon from '../../verCursos/icons/CursosIcon';
-import CompiIcon from '../../verCursos/icons/CompiButtonIcon';
-import RetosIcon from '../../verCursos/icons/RetosIcon';
-import NeorisIcon from '../../verCursos/icons/NeorisIcon';
-import ClockIcon from '../../verCursos/icons/ClockIcon';
+import WelcomeHubLogo from './assetsLayout/WelcomeHubLogo'; //! Cambiar a WelcomeHubLogoSmall
+import DashboardIcon from './assetsLayout/DashboardIcon';
+import CursosIcon from './assetsLayout/CursosIcon';
+import CompiIcon from './assetsLayout/CompiButtonIcon';
+import RetosIcon from './assetsLayout/RetosIcon';
+import NeorisIcon from './assetsLayout/NeorisIcon';
+import ClockIcon from './assetsLayout/ClockIcon';
 //import path from 'path';
 
 type Roles = 'administrador' | 'empleado';
