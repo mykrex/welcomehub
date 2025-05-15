@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     }
 
     // debugging
-    console.log("Resultado de búsqueda del usuario:", userInfo);    
+    console.log("Resultado de búsqueda del usuario:", userInfo);
     console.log("Nombre del equipo:", nombreEquipo);
 
     // 1. Obtener IDs de cursos que el usuario ya tiene inscritos

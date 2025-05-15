@@ -108,6 +108,13 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     fetchChatHistory();
   }, [user?.id_usuario]);
 
+  useEffect(() => {
+  if (messagesEndRef.current) {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }
+}, [messages]);
+
+
   return (
     <ChatContext.Provider
       value={{
