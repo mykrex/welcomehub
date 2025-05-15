@@ -66,6 +66,40 @@ export async function POST(req: NextRequest) {
     console.log("Resultado de búsqueda del usuario:", userInfo);    
     console.log("Nombre del equipo:", nombreEquipo);
 
+    // 1. Obtener IDs de cursos que el usuario ya tiene inscritos
+const { data: cursosInscritos, error: inscritosError } = await supabase
+  .from("curso_usuario")
+  .select("id_curso")
+  .eq("id_usuario", id_usuario)
+  .neq("estado", "cancelado"); // opcional, si tienes cursos cancelados
+
+if (inscritosError) {
+  console.error("Error al obtener cursos inscritos:", inscritosError.message);
+}
+
+const idsCursosInscritos = cursosInscritos?.map((curso) => curso.id_curso) ?? [];
+
+// 2. Obtener cursos recomendables basados en el puesto
+const { data: cursosRecomendados, error: recomendadosError } = await supabase
+  .from("curso")
+  .select("id_curso, nombre, descripcion")
+  .ilike("puesto_objetivo", `%${userRole}%`) // campo que asocie cursos con roles
+  .not("id_curso", "in", `(${idsCursosInscritos.join(",")})`);
+
+if (recomendadosError) {
+  console.error("Error al obtener cursos recomendados:", recomendadosError.message);
+}
+
+const listaCursos = cursosRecomendados?.map(curso => `• ${curso.nombre}: ${curso.descripcion}`) ?? [];
+
+
+const cursosTexto = listaCursos.length > 0 
+  ? `Con base en su puesto (${userRole}), estos son cursos recomendados que aún no ha tomado:\n${listaCursos.join("\n")}`
+  : `No hay cursos disponibles para recomendar en este momento que no haya tomado.`;
+
+
+
+
 
     //  Traer historial reciente
     const { data: history, error: historyError } = await supabase
@@ -129,6 +163,10 @@ export async function POST(req: NextRequest) {
 
                 El usuario pertenece al equipo ${nombreEquipo}.
                 Si te preguntan algo como "¿a qué equipo pertenezco?", "¿cuál es mi equipo?", o "¿sabes a qué equipo pertenezco?", debes responder: "Tu equipo es ${nombreEquipo}".
+
+                ${cursosTexto}
+
+                Si te pregunta por cursos, solo recomiéndale aquellos mencionados arriba.
 
                 Siempre responde de forma amigable y clara.
                 `,
