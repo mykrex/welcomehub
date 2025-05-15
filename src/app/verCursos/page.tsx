@@ -7,9 +7,9 @@ import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
 import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
 
 //ICONS
-import BullseyeIcon from "./assets/icons/BullseyeIcon";
-import ArrowIcon from "./assets/icons/ArrowIcon";
-import ClockIcon from "../components/(layout)/assetsLayout/ClockIcon";
+import BullseyeIcon from "../(authed)/cursos/verCurso/assets/icons/BullseyeIcon";
+import ArrowIcon from "../(authed)/cursos/verCurso/assets/icons/ArrowIcon";
+import ClockIcon from "../(authed)/cursos/verCurso/assets/icons/ClockIcon";
 
 export default function VerCursos() {
   return (
@@ -136,6 +136,7 @@ export default function VerCursos() {
               </div>
 
               <div className="course-stats">
+                
                 <div className="score-card">
                   <div className="card-title">Puntaje Promedio</div>
 
