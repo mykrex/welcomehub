@@ -2,7 +2,7 @@
 import { Clock, Target } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import "@/app/verCursos/verCursos.css";
+import "@/app/(authed)/cursos/verCursos.css"
 
 //import SidebarMenu from "@/app/components/(layout)/SidebarMenu";
 //import NavBarMenu from "@/app/components/(layout)/NavBarMenu";
