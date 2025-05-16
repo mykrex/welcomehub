@@ -26,7 +26,7 @@ export default function Chatbot() {
       console.log("Forzando mensaje de bienvenida desde el frontend...");
       sendPrompt(""); // forzar saludo
     }
-  }, [open, messages, loading]);
+  }, [open, messages, loading, sendPrompt]); //agrege sendPront por error de lint - maru
 
   return (
     <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">

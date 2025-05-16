@@ -1,7 +1,7 @@
 // Vercurso.tsx
 "use client";
 import React from "react";
-import { useSearchParams } from "next/navigation";
+//*import { useSearchParams } from "next/navigation"; 
 import { mockCourses } from "@/app/api/cursos/verCurso/mockCourses";
 
 //* STYLES *//
