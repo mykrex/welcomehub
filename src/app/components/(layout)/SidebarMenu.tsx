@@ -13,7 +13,7 @@ import CursosIcon from './assetsLayout/CursosIcon';
 import CompiIcon from './assetsLayout/CompiButtonIcon';
 import RetosIcon from './assetsLayout/RetosIcon';
 import NeorisIcon from './assetsLayout/NeorisIcon';
-import ClockIcon from '../../(authed)/cursos/verCurso/assets/icons/ClockIcon';
+import ClockIcon from '../../(authed)/cursos/verCurso/[id]/assets/icons/ClockIcon';
 //import path from 'path';
 
 type Roles = 'administrador' | 'empleado';

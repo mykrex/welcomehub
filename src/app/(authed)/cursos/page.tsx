@@ -9,9 +9,8 @@ import "@/app/(authed)/cursos/cursos.css";
 
 export default function CoursesDashboard() {
   const router = useRouter();
-
-  const handleViewCourse = (id: number) => { //MARU
-    router.push(`/cursos/verCurso?id=${id}`);
+  const handleViewCourse = (id: number) => {
+    router.push(`/cursos/verCurso/${id}`);
   };
 
   const [asignedCourses, setAsignedCourses] = useState<Courses[]>([]);
