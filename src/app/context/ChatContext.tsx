@@ -2,14 +2,13 @@
 
 import { useUser } from "../context/UserContext";
 import { supabase } from "@/lib/supabase";
-import { useCallback } from "react"; //maru
-
 import React, {
   createContext,
   useContext,
   useState,
   useRef,
   useEffect,
+  useCallback,
 } from "react";
 
 type Message = { sender: "user" | "bot"; text: string };
@@ -47,33 +46,30 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const sendPrompt = useCallback(
     async (customPrompt?: string) => {
       const finalPrompt = customPrompt ?? prompt;
-
+  
       if (!user?.id_usuario) {
         alert("Por favor, inicia sesión para enviar un mensaje.");
         return;
       }
-
+  
       if (finalPrompt.trim()) {
         setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
       }
-
+  
       console.log("Prompt enviado:", finalPrompt);
       setPrompt("");
       setLoading(true);
-
+  
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            prompt: finalPrompt,
-            id_usuario: user.id_usuario,
-          }),
+          body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
         });
-
+  
         const data = await res.json();
         console.log("Respuesta recibida:", data.response);
-
+  
         const botMessage: Message = { sender: "bot", text: data.response };
         setMessages((prev) => [...prev, botMessage]);
       } catch (error) {
@@ -88,50 +84,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     },
     [prompt, user?.id_usuario]
   );
-
-  {
-    /* ERROR DE LINT, REMPLAZE CON LO DE ARRIBA
-  const sendPrompt = async (customPrompt?: string) => {
-    const finalPrompt = customPrompt ?? prompt;
-
-    if (!user?.id_usuario) {
-      alert("Por favor, inicia sesión para enviar un mensaje.");
-      return;
-    }
-
-    // Solo mostramos el mensaje del usuario si realmente lo escribió
-    if (finalPrompt.trim()) {
-      setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
-    }
-
-    console.log("Prompt enviado:", finalPrompt);
-    setPrompt("");
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
-      });
-
-      const data = await res.json();
-      console.log("Respuesta recibida:", data.response);
-
-      const botMessage: Message = { sender: "bot", text: data.response };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      console.error("Error al enviar el mensaje:", error);
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "Error al obtener la respuesta" },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
-  */
-  }
 
   const resetMessages = () => {
     setMessages([]);
@@ -183,7 +135,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     fetchChatHistory();
-  }, [user?.id_usuario, sendPrompt]); //Agregue send prompt por error de lint - maru
+  }, [user?.id_usuario, sendPrompt]);
 
   return (
     <ChatContext.Provider
@@ -204,6 +156,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useChat = () => {
   const context = useContext(ChatContext);
-  if (!context) throw new Error("useChat must be used within ChatProvider");
+  if (!context)
+    throw new Error("useChat must be used within ChatProvider");
   return context;
 };
