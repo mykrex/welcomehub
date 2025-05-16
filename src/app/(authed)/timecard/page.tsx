@@ -5,9 +5,13 @@ import Modal from './Modal';
 //It what we need to save all this page.
 import {
   saveWeekData,
+  loadWeekData,
   saveSubmittedWeeks,
+  loadSubmittedWeeks,
   saveApprovedWeeks,
+  loadApprovedWeeks,
   saveDeliveryDates,
+  loadDeliveryDates
 } from '@/app/api/timecard/timecard';
 
 //import '@/app/(authed)/timecard/TimeCard.css';
@@ -70,8 +74,23 @@ const TimeCard = () => {
     setWeek(getWeekFromBaseDate(startDate));
   }, [startDate]);
 
+
+
   const weekKey = week.map(d => d.iso).join(',');
   
+    useEffect(() => {
+  const loadedCourses = loadWeekData();
+  const loadedSubmitted = loadSubmittedWeeks();
+  const loadedApproved = loadApprovedWeeks();
+  const loadedDates = loadDeliveryDates();
+
+  setSavedCourses(loadedCourses);
+  setTempCourses(loadedCourses); // <-- Muy importante para reflejar en UI
+  setSubmittedWeeks(loadedSubmitted);
+  setApprovedWeeks(loadedApproved);
+  setDeliveryDates(loadedDates);
+}, [weekKey]);
+
   // Obtiene los cursos para un día específico según su clave ISO 
   const getCoursesForDay = (iso: string): Course[] => {
     return tempCourses[weekKey]?.[iso] || [];
