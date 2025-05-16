@@ -12,7 +12,13 @@ import CourseDescription from "./assets/courseDesc";
 import StatsCard from "./assets/StatsCard";
 import Modules from "./assets/modules";
 
-export default function VerCurso({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function VerCurso({ params }: PageProps) {
   const id = Number(params.id);
   const course = mockCourses.find((c) => c.id === id);
 
@@ -22,7 +28,6 @@ export default function VerCurso({ params }: { params: { id: string } }) {
     <div className="main-content">
       <div className="main-inner">
         <ProgressBar />
-
         <div className="course-row">
           <CourseDescription course={course} />
           <div className="course-stats">
@@ -30,7 +35,6 @@ export default function VerCurso({ params }: { params: { id: string } }) {
             <StatsCard />
           </div>
         </div>
-
         <Modules course={course} />
       </div>
     </div>
