@@ -18,8 +18,6 @@ export default function AdminPanel() {
     });
   }, []);
 
-  const selectedEmployee = employees.find(emp => emp.id === selectedEmployeeId);
-
   return (
     <div className="admin-container">
       <div className="header">
@@ -28,19 +26,23 @@ export default function AdminPanel() {
       </div>
 
       <div className="employee-table">
-        {employees.map(emp => (
-          <EmployeeCard
-            key={emp.id}
-            employee={emp}
-            isSelected={selectedEmployeeId === emp.id}
-            onSelect={() =>
-              setSelectedEmployeeId(prev => (prev === emp.id ? null : emp.id))
-            }
-          />
-        ))}
-      </div>
-
-      {selectedEmployee && <EmployeeDetails employee={selectedEmployee} />}
+  {employees.map(emp => (
+    <div key={emp.id} style={{ width: '100%' }}>
+      <EmployeeCard
+        employee={emp}
+        isSelected={selectedEmployeeId === emp.id}
+        onSelect={() =>
+          setSelectedEmployeeId(prev => (prev === emp.id ? null : emp.id))
+        }
+      />
+      {selectedEmployeeId === emp.id && (
+        <div className="employee-details-wrapper">
+          <EmployeeDetails employee={emp} />
+        </div>
+      )}
+    </div>
+  ))}
+</div>
     </div>
   );
 }

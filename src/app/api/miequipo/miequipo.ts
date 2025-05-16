@@ -59,7 +59,19 @@ export interface Employee {
         id: 4,
         name: "Ana Torres",
         photo: "/Avatars/avatar (2).jpg",
-        hoursPerDay: [3, 4, 4, 4, 4, 2, 0],
+        hoursPerDay: [6, 7, 8, 9, 10, 11, 12],
+        courses: {
+          completed: 4,
+          notStarted: 1,
+          incomplete: 0,
+          inProgress: 2
+        }
+      },
+      {
+        id: 5,
+        name: "Mario Torres",
+        photo: "/Avatars/avatar (6).jpg",
+        hoursPerDay: [1, 2, 3, 4, 5, 6, 12],
         courses: {
           completed: 4,
           notStarted: 1,

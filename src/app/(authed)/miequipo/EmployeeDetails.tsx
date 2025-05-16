@@ -2,7 +2,6 @@
 
 import React from 'react';
 import './AdminPanel.css';
-import Image from 'next/image';
 
 import { Employee } from '@/app/api/miequipo/miequipo';
 
@@ -10,69 +9,66 @@ interface Props {
   employee: Employee;
 }
 
-const dayLabels = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+const dayLabels = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+
+const MAX_HOURS = 13;
 
 export default function EmployeeDetails({ employee }: Props) {
   const totalHours = employee.hoursPerDay.reduce((acc, val) => acc + val, 0);
   const avgHours = (totalHours / 7).toFixed(1);
-  const maxHours = Math.max(...employee.hoursPerDay);
-  const roundedMax = Math.ceil((maxHours || 8) / 2) * 2;
 
   return (
-    <>
-      <hr className="section-divider" />
-      <div className="employee-details">
-        <div className="employee-header">
-          <Image
-            src={employee.photo}
-            alt={employee.name}
-            width={40}
-            height={40}
-            className="avatar"
-          />
-          <h3>{employee.name}</h3>
-        </div>
-
-        <div className="bar-chart-wrapper">
-          <div className="y-axis">
-            {[...Array(roundedMax / 2 + 1)].map((_, i) => {
-              const label = roundedMax - i * 2;
-              return (
-                <div key={i} className="y-label">
-                  <span>{label}</span>
-                  <div className="y-line" />
-                </div>
-              );
-            })}
-          </div>
-          <div className="bar-chart">
-            {employee.hoursPerDay.map((hours, idx) => (
-              <div key={idx} className="bar-wrapper">
-                <div className="bar-value">{hours}</div>
-                <div
-                  className="bar"
-                  style={{ height: `${(hours / roundedMax) * 100}%` }}
-                />
-                <span>{dayLabels[idx]}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p><strong>Horas totales:</strong> {totalHours} — <strong>Promedio diario:</strong> {avgHours}h</p>
-
-        <hr className="section-divider" />
-
-        <div className="course-stats">
-          <h4>Cursos</h4>
-          <ul>
-            <li>✅ Terminados: {employee.courses.completed}</li>
-            <li>⏳ En proceso: {employee.courses.inProgress}</li>
-            <li>❌ Incompletos: {employee.courses.incomplete}</li>
-            <li>📄 Sin empezar: {employee.courses.notStarted}</li>
-          </ul>
-        </div>
+    <div className="employee-details">
+      <div className="employee-header">
+        <h3>Gráfica de horas de la semana</h3>
       </div>
-    </>
+
+      <div className="chart-grid">
+
+  <div className="grid-lines-overlay">
+  {Array.from({ length: MAX_HOURS + 1 }, (_, i) => {
+  const val = i - 1; // Hides -1 
+  const isHidden = i === 0;
+
+  return (
+    <div key={i} className="grid-line-row">
+      <span className={`y-label ${isHidden ? 'invisible' : ''}`}>
+        {isHidden ? '' : val}
+      </span>
+      <div className={`grid-line ${isHidden ? 'invisible' : ''}`} />
+    </div>
+  );
+}).reverse()}
+    <span className="axis-y-title">horas</span>
+  </div>
+
+  {/*Bars*/}
+  <div className="bars-area">
+    {employee.hoursPerDay.map((val, i) => (
+      <div key={i} className="bar-column">
+        <div
+          className="bar"
+          style={{ height: `${(val / MAX_HOURS) * 100}%` }}
+        />
+        <span className="x-label">{dayLabels[i]}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+      <p style={{ textAlign: 'center' }}>
+        <strong>Horas totales:</strong> {totalHours} horas — <strong>Promedio diario:</strong> {avgHours} horas
+      </p>
+
+      <div className="course-stats">
+        <h4 className="titleofcourses">Cursos:</h4>
+        <ul>
+          <li>✅ Terminados: {employee.courses.completed}</li>
+          <li>⏳ En proceso: {employee.courses.inProgress}</li>
+          <li>❌ Incompletos: {employee.courses.incomplete}</li>
+          <li>⚠️ Sin empezar: {employee.courses.notStarted}</li>
+        </ul>
+      </div>
+    </div>
   );
 }
