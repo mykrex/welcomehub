@@ -74,13 +74,13 @@ export default function Chatbot() {
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  sendPrompt();
+                  sendPrompt(prompt);
                 }
               }}
             />
             <button
               className="mt-2 w-full bg-blue-500 text-white py-2 rounded text-sm"
-              onClick={() => sendPrompt()}
+              onClick={() => sendPrompt(prompt)}
               disabled={loading}
             >
               {loading ? "Generando..." : "Enviar"}
