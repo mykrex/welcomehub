@@ -24,7 +24,7 @@ export default function Chatbot() {
   useEffect(() => {
     if (open && messages.length === 0 && !loading) {
       console.log("Forzando mensaje de bienvenida desde el frontend...");
-      sendPrompt(); // prompt vacío
+      sendPrompt(""); // forzar saludo
     }
   }, [open, messages, loading]);
 
@@ -59,6 +59,9 @@ export default function Chatbot() {
                 </div>
               </div>
             ))}
+            {loading && (
+              <div className="text-sm text-gray-500 px-3 italic">Compi está escribiendo...</div>
+            )}
             <div ref={messagesEndRef} />
           </div>
           <div className="border-t p-2">
@@ -77,7 +80,7 @@ export default function Chatbot() {
             />
             <button
               className="mt-2 w-full bg-blue-500 text-white py-2 rounded text-sm"
-              onClick={sendPrompt}
+              onClick={() => sendPrompt()}
               disabled={loading}
             >
               {loading ? "Generando..." : "Enviar"}

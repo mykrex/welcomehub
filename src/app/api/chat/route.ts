@@ -12,8 +12,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { prompt, id_usuario } = body;
 
-    if (!prompt || !id_usuario) {
-      return NextResponse.json({ error: "Faltan datos" }, { status: 400 });
+    if (!id_usuario) {
+      return NextResponse.json({ error: "Falta el ID de usuario" }, { status: 400 });
     }
 
     //debugging
@@ -146,6 +146,12 @@ const cursosTexto = listaCursos.length > 0
           timestamp: new Date().toISOString(),
         },
       ]);
+    }
+
+    //Si el prompt está vacío, solo devuelve el saludo sin pasar por OpenAI
+    if (!prompt.trim()) {
+      const mensajeSaludo = historial[0]?.content || "Hola, ¿en qué puedo ayudarte?";
+      return NextResponse.json({ response: mensajeSaludo });
     }
 
     const messages: ChatCompletionMessageParam[] = [

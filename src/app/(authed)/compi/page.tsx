@@ -28,6 +28,9 @@ export default function ChatPage() {
             </div>
           </div>
         ))}
+        {loading && (
+          <div className="text-sm text-gray-400 italic px-4">Compi está escribiendo...</div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -49,7 +52,7 @@ export default function ChatPage() {
           />
           <button
             className="mt-2 w-full bg-blue-600 text-white py-2 rounded text-sm"
-            onClick={sendPrompt}
+            onClick={() => sendPrompt()}
             disabled={loading}
           >
             {loading ? "Generando..." : "Enviar"}

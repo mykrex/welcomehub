@@ -17,7 +17,7 @@ interface ChatContextProps {
   prompt: string;
   loading: boolean;
   setPrompt: (prompt: string) => void;
-  sendPrompt: () => void;
+  sendPrompt: (customPrompt?: string) => void;
   resetMessages: () => void;
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -25,7 +25,7 @@ interface ChatContextProps {
 type RawMessage = {
   input_usuario: string | null;
   output_bot: string | null;
-}
+};
 
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
 
@@ -42,16 +42,20 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [messages]);
 
-  const sendPrompt = async () => {
-    if (!prompt.trim()) return;
+  const sendPrompt = async (customPrompt?: string) => {
+    const finalPrompt = customPrompt ?? prompt;
 
     if (!user?.id_usuario) {
       alert("Por favor, inicia sesión para enviar un mensaje.");
       return;
     }
 
-    const userMessage: Message = { sender: "user", text: prompt };
-    setMessages((prev) => [...prev, userMessage]);
+    // Solo mostramos el mensaje del usuario si realmente lo escribió
+    if (finalPrompt.trim()) {
+      setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
+    }
+
+    console.log("Prompt enviado:", finalPrompt);
     setPrompt("");
     setLoading(true);
 
@@ -59,10 +63,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, id_usuario: user.id_usuario }),
+        body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
       });
 
       const data = await res.json();
+      console.log("Respuesta recibida:", data.response);
+
       const botMessage: Message = { sender: "bot", text: data.response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
@@ -83,7 +89,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const fetchChatHistory = async () => {
-      if (!user?.id_usuario) return;
+      if (!user?.id_usuario) {
+        console.log("No hay usuario autenticado.");
+        return;
+      }
+
+      console.log("Cargando historial para el usuario:", user.id_usuario);
 
       try {
         const { data: messagesData, error } = await supabase
@@ -105,11 +116,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
           }
         });
 
+        console.log("Historial obtenido:", historial);
+
         setMessages(historial);
+
         if (historial.length === 0) {
-          // Esperar un poco para asegurar montaje completo
+          console.log("Historial vacío, enviando saludo automático...");
           setTimeout(() => {
-            sendPrompt(); // prompt está vacío, pero la API lo interpretará como inicio
+            sendPrompt(""); // Forzar saludo si no hay historial
           }, 300);
         }
       } catch (error) {
