@@ -98,7 +98,7 @@ export interface Courses {
             
           ],
         });
-      }, 800); // Simula un delay
+      }, 200); // Simula un delay
     });
   }
   
