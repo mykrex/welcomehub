@@ -1,77 +1,44 @@
 "use client";
 import React from "react";
+import { SeeCourse } from "@/app/api/cursos/verCurso/verCurso";
+
 
 //* STYLES *//
 import "./courseDesc.css";
 
-export default function CourseDescription() {
+export default function CourseDescription({ course }: { course: SeeCourse }) {
   return (
     <div className="course-description-card">
-      <div className="course-title">Atencion al Cliente y Ventas</div>
+      <div className="course-title">{course.title}</div>
       <div className="course-meta">
         <div className="meta-item">
           <div className="meta-label">Instructor:</div>
-          <div className="meta-value">David Hernandez Sanchez</div>
+          <div className="meta-value">{course.instructor}</div>
         </div>
         <div className="meta-item">
           <div className="meta-label">Tiempo estimado de finalización:</div>
-          <div className="meta-value">3 horas</div>
+          <div className="meta-value">{course.duration}</div>
         </div>
       </div>
-
-      <div className="course-paragraph">
-        Este curso proporciona las habilidades esenciales para interactuar de
-        manera efectiva con los clientes, brindando un servicio de calidad y
-        potenciando las ventas. Incluye técnicas de comunicación, resolución de
-        problemas y estrategias de persuasión para mejorar la experiencia del
-        cliente y alcanzar mejores resultados comerciales.
-      </div>
-
+      <div className="course-paragraph">{course.description}</div>
       <div className="learning-section">
         <div className="learning-title">Puntos de Aprendizaje</div>
-
         <div className="learning-columns">
-          <div className="learning-column">
-            <div className="learning-point">
-              <div className="bullet-container">
-                <div className="large-circle" />
-                <div className="small-circle" />
-              </div>
-              <div className="learning-text">
-                Desarrollar habilidades de comunicación efectiva
-              </div>
+          {[0, 1].map((col) => (
+            <div className="learning-column" key={col}>
+              {course.learningPoints
+                .filter((_, i) => i % 2 === col)
+                .map((point, idx) => (
+                  <div className="learning-point" key={idx}>
+                    <div className="bullet-container">
+                      <div className="large-circle" />
+                      <div className="small-circle" />
+                    </div>
+                    <div className="learning-text">{point.text}</div>
+                  </div>
+                ))}
             </div>
-            <div className="learning-point">
-              <div className="bullet-container">
-                <div className="large-circle" />
-                <div className="small-circle" />
-              </div>
-              <div className="learning-text">
-                Aplicar técnicas de ventas estratégicas
-              </div>
-            </div>
-          </div>
-
-          <div className="learning-column">
-            <div className="learning-point">
-              <div className="bullet-container">
-                <div className="large-circle" />
-                <div className="small-circle" />
-              </div>
-              <div className="learning-text">
-                Manejar objeciones y resolver problemas con clientes
-              </div>
-            </div>
-            <div className="learning-point">
-              <div className="bullet-container">
-                <div className="large-circle" />
-                <div className="small-circle" />
-              </div>
-              <div className="learning-text">
-                Comprender la psicología del consumidor
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

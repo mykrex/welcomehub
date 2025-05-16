@@ -1,14 +1,18 @@
 "use client";
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import {getCursos, Courses} from "@/app/api/cursos/cursos";
+import { getCursos, Courses } from "@/app/api/cursos/cursos";
 
-import "./verCursos.css"
+import "./verCursos.css";
 import "@/app/(authed)/cursos/cursos.css";
 
 export default function CoursesDashboard() {
   const router = useRouter();
+
+  const handleViewCourse = (id: number) => { //MARU
+    router.push(`/cursos/verCurso?id=${id}`);
+  };
 
   const [asignedCourses, setAsignedCourses] = useState<Courses[]>([]);
   const [optionalCourses, setOptionalCourses] = useState<Courses[]>([]);
@@ -27,14 +31,17 @@ export default function CoursesDashboard() {
       <div
         key={course.title}
         className={"snapItem cursoCard"}
-        onClick={() => router.push("/cursos/verCurso")}
+        onClick={() => handleViewCourse(course.id)}
       >
         <div className="outliness">
           <div className="coursetitle">{course.title}</div>
           <div className="description">{course.description}</div>
           <div className="textofmodulescompleted">
             {course.completedCourses} de {course.totalCourses}
-            <span className="textofmodulescompleted2"> módulos completados</span>
+            <span className="textofmodulescompleted2">
+              {" "}
+              módulos completados
+            </span>
           </div>
           <div className="lengthofmodulestotal">
             {Array.from({ length: course.totalCourses }, (_, idx) => (
@@ -61,8 +68,16 @@ export default function CoursesDashboard() {
     <div className="main-content">
       {[
         { title: "Mis Cursos Asignados", list: asignedCourses, id: "asigned" },
-        { title: "Mis Cursos Opcionales", list: optionalCourses, id: "optional" },
-        { title: "Mis Cursos Recomendados", list: recomendedCourses, id: "recomended" },
+        {
+          title: "Mis Cursos Opcionales",
+          list: optionalCourses,
+          id: "optional",
+        },
+        {
+          title: "Mis Cursos Recomendados",
+          list: recomendedCourses,
+          id: "recomended",
+        },
       ].map(({ title, list, id }) => (
         <div key={title} className="blackrectangle">
           <h3 className="sectiontitle">{title}</h3>

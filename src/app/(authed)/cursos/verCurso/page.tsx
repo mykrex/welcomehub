@@ -1,6 +1,8 @@
 // Vercurso.tsx
 "use client";
 import React from "react";
+import { useSearchParams } from "next/navigation";
+import { mockCourses } from "@/app/api/cursos/verCurso/mockCourses";
 
 //* STYLES *//
 import "@/app/components/(layout)/layout.css";
@@ -13,6 +15,14 @@ import StatsCard from "./assets/StatsCard";
 import Modules from "./assets/modules";
 
 export default function VerCurso() {
+  const searchParams = useSearchParams();
+  const idParam = searchParams?.get("id");
+  const id = idParam ? Number(idParam) : null;
+
+  if (!id) return <div>ID de curso inválido.</div>;
+
+  const course = mockCourses.find((c) => c.id === id);
+  if (!course) return <div>Curso no encontrado.</div>;
   return (
     <div className="main-content">
       <div className="main-inner">
@@ -21,7 +31,7 @@ export default function VerCurso() {
 
         {/* ROW 1 */}
         <div className="course-row">
-          <CourseDescription />
+          <CourseDescription course={course} />
 
           <div className="course-stats">
             <StatsCard />
@@ -30,7 +40,7 @@ export default function VerCurso() {
         </div>
 
         {/* Modulos*/}
-        <Modules />
+        <Modules course={course} />
       </div>
     </div>
   );
