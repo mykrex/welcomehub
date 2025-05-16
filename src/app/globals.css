@@ -1,14 +1,13 @@
-/** GLOBAL STYLES -> Applied across the whole website*/
+/** GLOBAL STYLES -> Applied across the whole website */
 
 /** Import font Manrope */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
 /** Tailwind and Plugin Imports */
-@import "tailwindcss"; 
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
 
 html,
 body {
@@ -17,8 +16,7 @@ body {
   padding: 0;
 }
 
-
-
+/* Theme inline variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -59,6 +57,7 @@ body {
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Light theme variables */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -94,6 +93,7 @@ body {
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Dark theme variables */
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
@@ -128,16 +128,23 @@ body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Estilos base sin clases desconocidas */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: var(--ring);
+    outline-width: 1px;
+    outline-style: solid;
   }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: 'Manrope', sans-serif;
   }
 }
 
+/* Animación personalizada */
 @keyframes scrollInfinite {
   0% {
     transform: translateY(300%);

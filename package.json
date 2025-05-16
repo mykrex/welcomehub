@@ -10,6 +10,7 @@
     "test": "cross-env NODE_ENV=test dotenv -e .env.local -- jest"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.13",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.4",

@@ -159,7 +159,7 @@ export default function Retos() {
                           : "Incompleto"}
                       </span>
                     )}
-                  </div>
+                  </div>  
                 </div>
               );
             })}

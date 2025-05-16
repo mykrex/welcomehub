@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 
 interface CourseRequest {
   id: string;
-  employeeName: string;
-  courseName: string;
+  employeeId: string; 
+  courseId: string;   
   status: 'pending' | 'approved' | 'rejected';
 }
 
@@ -17,6 +17,7 @@ interface Course {
 interface Employee {
   id: string;
   name: string;
+  avatar: string;  // nombre de archivo de avatar, ej: "avatar1.jpg"
 }
 
 export function useCourseData() {
@@ -25,12 +26,12 @@ export function useCourseData() {
   const [employees, setEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
-    // Hardcoded temporal para demo
+    // Datos de prueba hardcoded
     setRequests([
-      { id: '1', employeeName: 'Ana', courseName: 'React', status: 'pending' },
+      { id: '1', employeeId: 'e1', courseId: 'c1', status: 'pending' },
     ]);
     setCourses([{ id: 'c1', name: 'React' }]);
-    setEmployees([{ id: 'e1', name: 'Ana' }]);
+    setEmployees([{ id: 'e1', name: 'Ana', avatar: 'avatar1.jpg' }]);
   }, []);
 
   return { requests, setRequests, courses, employees };
