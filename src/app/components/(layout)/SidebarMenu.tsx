@@ -33,6 +33,7 @@ const ALL_MENU: MenuItem[] = [
   { label: 'Neoris',    icon: NeorisIcon,    path: '/neoris',    roles: ['administrador','empleado'] },
   { label: 'Time Card', icon: ClockIcon,     path: '/timecard',  roles: ['administrador','empleado'] },
   { label: 'Mi Equipo', icon: NeorisIcon,    path: '/miequipo',  roles: ['administrador'] }, 
+  { label: 'Admin', icon: DashboardIcon, path: '/admin', roles: ['administrador'] },
 ];
 
 export default function SidebarMenu(){

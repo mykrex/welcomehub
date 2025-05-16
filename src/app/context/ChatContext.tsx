@@ -8,7 +8,7 @@ import React, {
   useState,
   useRef,
   useEffect,
-} from "react";
+} from </div>"react";
 
 type Message = { sender: "user" | "bot"; text: string };
 
@@ -107,13 +107,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
     fetchChatHistory();
   }, [user?.id_usuario]);
-
-  useEffect(() => {
-  if (messagesEndRef.current) {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  }
-}, [messages]);
-
 
   return (
     <ChatContext.Provider
