@@ -1,5 +1,4 @@
 // Vercurso.tsx
-"use client";
 import React from "react";
 import { mockCourses } from "@/app/api/cursos/verCurso/mockCourses";
 
