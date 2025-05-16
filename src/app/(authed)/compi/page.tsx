@@ -1,9 +1,14 @@
 'use client';
 
 import { useChat } from "@/app/context/ChatContext";
+import { useEffect } from "react";
 
 export default function ChatPage() {
   const { messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef } = useChat();
+
+  useEffect(() => {
+    console.log("Mensajes en pantalla:", messages);
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-full w-full bg-[#042C45] text-white relative">
@@ -46,13 +51,13 @@ export default function ChatPage() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                sendPrompt();
+                sendPrompt(prompt);
               }
             }}
           />
           <button
             className="mt-2 w-full bg-blue-600 text-white py-2 rounded text-sm"
-            onClick={() => sendPrompt()}
+            onClick={() => sendPrompt(prompt)}
             disabled={loading}
           >
             {loading ? "Generando..." : "Enviar"}

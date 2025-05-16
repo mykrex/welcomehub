@@ -36,6 +36,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
+  const hasSentWelcome = useRef(false);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -45,49 +46,54 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   const sendPrompt = useCallback(
     async (customPrompt?: string) => {
-      const finalPrompt = customPrompt ?? prompt;
-  
+      const finalPrompt = customPrompt ?? "";
+
       if (!user?.id_usuario) {
         alert("Por favor, inicia sesión para enviar un mensaje.");
         return;
       }
-  
+
+      setPrompt("");
+      setLoading(true);
+
+      //const newMessages: Message[] = [];
+
+      // if (finalPrompt.trim()) {
+      //   newMessages.push({ sender: "user", text: finalPrompt });
+      // }
+
       if (finalPrompt.trim()) {
         setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
       }
-  
-      console.log("Prompt enviado:", finalPrompt);
-      setPrompt("");
-      setLoading(true);
-  
+
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
         });
-  
+
         const data = await res.json();
         console.log("Respuesta recibida:", data.response);
-  
-        const botMessage: Message = { sender: "bot", text: data.response };
-        setMessages((prev) => [...prev, botMessage]);
-      } catch (error) {
-        console.error("Error al enviar el mensaje:", error);
-        setMessages((prev) => [
-          ...prev,
-          { sender: "bot", text: "Error al obtener la respuesta" },
-        ]);
+
+        setMessages((prev) => [...prev, { sender: "bot", text: data.response }]);
+    } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "Error al obtener la respuesta" },
+      ]);
       } finally {
         setLoading(false);
       }
     },
-    [prompt, user?.id_usuario]
+    [user?.id_usuario]
   );
 
   const resetMessages = () => {
     setMessages([]);
     setPrompt("");
+    hasSentWelcome.current = false;
   };
 
   useEffect(() => {
@@ -123,11 +129,10 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
         setMessages(historial);
 
-        if (historial.length === 0) {
+        if (historial.length === 0 && !hasSentWelcome.current) {
           console.log("Historial vacío, enviando saludo automático...");
-          setTimeout(() => {
-            sendPrompt(""); // Forzar saludo si no hay historial
-          }, 300);
+          hasSentWelcome.current = true;
+          sendPrompt("");
         }
       } catch (error) {
         console.error("Error al obtener el historial de chat:", error);
