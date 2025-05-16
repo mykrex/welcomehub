@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "@/app/context/ChatContext";
 import CompiIcon from "./CompiIcon";
 
@@ -14,6 +14,19 @@ export default function Chatbot() {
     loading,
     messagesEndRef,
   } = useChat();
+
+  // Log para ver qué mensajes hay
+  useEffect(() => {
+    console.log("Mensajes cargados en Chatbot.tsx:", messages);
+  }, [messages]);
+
+  // Forzar saludo inicial si no hay historial
+  useEffect(() => {
+    if (open && messages.length === 0 && !loading) {
+      console.log("Forzando mensaje de bienvenida desde el frontend...");
+      sendPrompt(); // prompt vacío
+    }
+  }, [open, messages, loading]);
 
   return (
     <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">

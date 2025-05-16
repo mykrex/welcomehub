@@ -36,6 +36,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   const sendPrompt = async () => {
     if (!prompt.trim()) return;
 
@@ -100,6 +106,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         });
 
         setMessages(historial);
+        if (historial.length === 0) {
+          // Esperar un poco para asegurar montaje completo
+          setTimeout(() => {
+            sendPrompt(); // prompt está vacío, pero la API lo interpretará como inicio
+          }, 300);
+        }
       } catch (error) {
         console.error("Error al obtener el historial de chat:", error);
       }
