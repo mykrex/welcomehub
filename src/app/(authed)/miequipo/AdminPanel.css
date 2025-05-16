@@ -1,149 +1,211 @@
+/* === CONTENEDOR PRINCIPAL === */
 .admin-container {
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    max-width: auto ;
-    background-color: #f9f9f9;
-    color: black;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .employee-count {
-    font-weight: bold;
-  }
-  
-  .employee-table {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .employee-card {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    color: black;
-  }
-  
-  .employee-card.selected {
-    background-color: #e0f7fa;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .employee-details {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #ffef99; /* color crema suave para mejor contraste */
-    border: 3px solid #222; /* borde negro más grueso */
-    border-radius: 10px;
-    color: black;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .course-stats ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-  }
-  
-  .course-stats li {
-    margin: 5px 0;
-  }
-  
-  .employee-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    
-  }
-  
-  .section-divider {
-    margin: 25px 0 15px;
-    border: none;
-    border-top: 2px solid black;
-    
-  }
-  
-  .bar-chart-wrapper {
-    display: flex;
-    align-items: stretch;
-    gap: 10px;
-    position: relative;
-    height: 200px;
-    margin-bottom: 10px;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-  
-  }
-  
-  .y-axis {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding-right: 10px;
-    font-size: 12px;
-    color: black;
-  }
-  
-  .y-label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    height: 100%;
-  }
-  
-  .y-line {
-    flex-grow: 1;
-    height: 1px;
-    background-color: #ddd;
-  }
-  
-  .bar-chart {
-    display: flex;
-    flex-grow: 1;
-    align-items: flex-end;
-    justify-content: space-around;
-  }
-  
-  .bar-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    width: 30px;
-  }
-  
-  .bar-value {
-    font-size: 12px;
-    margin-bottom: 4px;
-    color: #000;
-  }
-  
-  .bar {
-    width: 100%;
-    background-color: #4caf50;
-    border-radius: 4px 4px 0 0;
-    transition: height 0.3s ease;
-    min-height: 2px;
-  }
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #102c45;
+  color: white;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.employee-count {
+  font-weight: bold;
+}
+
+/* === EMPLEADOS Y DETALLES === */
+.employee-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.employee-details-wrapper {
+  width: 100%;
+}
+
+.employee-card {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px;
+  background-color: #064A74;
+  border: 1px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  color: white;
+}
+
+.employee-card.selected {
+  background-color: #0a314f;
+  margin-bottom: 0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.employee-details {
+  margin: 0 auto 10px auto;
+  padding: 15px;
+  width: 98%;
+  background-color: #0e4869;
+  border-radius: 0 0 10px 10px;
+  color: white;
+}
+
+.employee-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* === CURSOS === */
+.titleofcourses {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  gap: 10px;
+  margin: 10px 0 0;
+  list-style: none;
+}
+
+.course-stats ul {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  margin: 10px 0 0;
+  list-style: none;
+}
+
+.course-stats li {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* === GRÁFICA DE HORAS === */
+.chart-grid {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  background-color: #8bcff9;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+/* Eje Y: líneas horizontales y etiquetas */
+.grid-lines-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1; /* detrás de las barras */
+  padding-left: 50px; /* espacio para etiquetas del eje Y */
+}
+
+.grid-line-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grid-label,
+.y-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  width: 30px;
+  text-align: right;
+  padding-right: 4px;
+}
+
+.grid-line {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Eje Y: texto "horas" */
+.axis-y-title {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  z-index: 2;
+}
+
+/* Barras */
+.bars-area {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding-left: 50px;
+  z-index: 3;
+}
+
+.bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 234px;
+  width: 30px;
+}
+
+.bar {
+  width: 20px;
+  background-color: #00C853;
+  transition: height 0.3s ease;
+  min-height: 2px;
+}
+
+.x-label,
+.x-grid-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  margin-top: 4px;
+}
+
+/* Utilidades */
+.invisible {
+  visibility: hidden;
+}
+
+.arrow-circle {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  color: #064A74;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}

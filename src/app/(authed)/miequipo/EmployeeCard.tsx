@@ -18,13 +18,18 @@ interface Props {
         onClick={onSelect}
       >
         <Image
-        src={employee.photo}
-        alt={employee.name}
-        width={40}
-        height={40}
-        className="avatar"
+          src={employee.photo}
+          alt={employee.name}
+          width={40}
+          height={40}
+          className="avatar"
         />
-        <span>{employee.name}</span>
+        <span style={{ flexGrow: 1 }}>{employee.name}</span>
+  
+        <div className="arrow-circle">
+          {isSelected ? '˅' : '˄'}
+        </div>
       </button>
     );
   }
+  
