@@ -15,10 +15,15 @@ import StatsCard from "./assets/StatsCard";
 import Modules from "./assets/modules";
 
 export default function VerCurso() {
+  {
+    /* HOOKS 
   const searchParams = useSearchParams();
   const idParam = searchParams?.get("id");
+ 
   const id = idParam ? Number(idParam) : null;
-
+   */
+  }
+  const id = 1;
   if (!id) return <div>ID de curso inválido.</div>;
 
   const course = mockCourses.find((c) => c.id === id);
