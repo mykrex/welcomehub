@@ -41,4 +41,15 @@ interface Course {
     const delivery = localStorage.getItem('deliveryDates');
     return delivery ? JSON.parse(delivery) : {};
   };
+
+  export const getProjectsByUserId = async (userId: string): Promise<string[]> => {
+  const database: { [userId: string]: string[] } = {
+    '1': ['Proyecto EXATEC', 'Manejo de datos', 'Gamificacion'],
+    '2': ['Proyecto Delta', 'Proyecto Epsilon'],
+    //More ids but we will only use one
+  };
+
+  return database[userId] || [];
+};
+
   
