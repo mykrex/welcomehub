@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
   const rol = perfil?.rol;
 
   const url = req.nextUrl.clone();
-
+  
   // Only admin can access to /miequipo
   if ( (url.pathname === '/miequipo' || url.pathname.startsWith('/miequipo/')) && rol !== 'administrador') {
     url.pathname = '/dashboard';
