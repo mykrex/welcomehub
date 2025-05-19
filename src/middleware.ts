@@ -21,18 +21,7 @@ export async function middleware(req: NextRequest) {
   const rol = perfil?.rol;
 
   const url = req.nextUrl.clone();
-
-  /** Only empleado can access to /neoris or /timecard
-  if (
-    (url.pathname === '/neoris' || url.pathname.startsWith('/neoris/')) ||
-    (url.pathname === '/timecard' || url.pathname.startsWith('/timecard/'))
-  ) {
-    if (rol !== 'empleado') {
-      url.pathname = '/dashboard';
-      return NextResponse.redirect(url);
-    }
-  }*/
-
+  
   // Only admin can access to /miequipo
   if ( (url.pathname === '/miequipo' || url.pathname.startsWith('/miequipo/')) && rol !== 'administrador') {
     url.pathname = '/dashboard';
@@ -43,7 +32,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/miequipo/:path*'],
+  matcher: [],
 };
 
 /**export const config = {
