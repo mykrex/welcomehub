@@ -22,7 +22,7 @@ export interface Employee {
       {
         id: 1,
         name: "Juan Pérez",
-        photo: "/Avatars/avatar (5).jpg",
+        photo: "/Avatars/avatar5.jpg",
         hoursPerDay: [4, 5, 0, 3, 6, 4, 0],
         courses: {
           completed: 5,
@@ -34,7 +34,7 @@ export interface Employee {
       {
         id: 2,
         name: "Laura Gómez",
-        photo: "/Avatars/avatar (4).jpg",
+        photo: "/Avatars/avatar3.jpg",
         hoursPerDay: [2, 2, 2, 2, 2, 0, 0],
         courses: {
           completed: 3,
@@ -46,7 +46,7 @@ export interface Employee {
       {
         id: 3,
         name: "Carlos Ruiz",
-        photo: "/Avatars/avatar (3).jpg",
+        photo: "/Avatars/avatar4.jpg",
         hoursPerDay: [5, 5, 5, 5, 5, 5, 0],
         courses: {
           completed: 8,
@@ -58,7 +58,7 @@ export interface Employee {
       {
         id: 4,
         name: "Ana Torres",
-        photo: "/Avatars/avatar (2).jpg",
+        photo: "/Avatars/avatar6.jpg",
         hoursPerDay: [6, 7, 8, 9, 10, 11, 12],
         courses: {
           completed: 4,
@@ -70,7 +70,7 @@ export interface Employee {
       {
         id: 5,
         name: "Mario Torres",
-        photo: "/Avatars/avatar (6).jpg",
+        photo: "/Avatars/avatar2.jpg",
         hoursPerDay: [1, 2, 3, 4, 5, 6, 12],
         courses: {
           completed: 4,
