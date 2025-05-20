@@ -1,18 +1,8 @@
 "use client";
-
-//Libraries
-import Link from "next/link";
-import Image from "next/image";
-
-//Assets
 import { Clock, Target } from "lucide-react";
-import ProgressBar from "./assets/ProgressBar";
-
-//Styles
-import "@/app/(authed)/cursos/verCursos.css" //TODO: QUITAR
-import "@/app/components/(layout)/layout.css"; //Unico que lo usa -> main-content
-import "./dashboard.css";
-
+import Image from "next/image";
+import Link from "next/link";
+import "@/app/(authed)/cursos/verCursos.css"
 
 
 const cursos = [
@@ -68,17 +58,12 @@ const getColor = (estado: string) => {
 
 export default function Dashboard() {
   return (
-    <div className="main-content"> 
-      <div className="dashboard-wrapper">
-        <ProgressBar />
-
-        <div className="dashboard-progress-bar-container">
+    <div className="main-content">
+      <div className="gap-5 flex flex-col">
+        <div className="flex flex-col p-[20px] bg-[#042C45] rounded-[15px]">
           <span className="text-[#448AFF] font-medium text-[40px]">
             78% <span className="text-[30px] font-normal">completado</span>
           </span>
-
-
-
           <div className="w-full bg-gray-700 h-2 rounded-full mt-2 flex">
             <div
               className="bg-[#448AFF] h-2 rounded-full"

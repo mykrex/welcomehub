@@ -1,0 +1,136 @@
+:root {
+  --bg-blue-main: #042C45;
+  --white-main: #EBFAFF;
+  --blue-light: #8BCFF9;
+  --grey-light: #9DAAA6;
+  --green: #4DAA57;
+
+
+  --green-main: #06D6A0;
+  --green-score: #00C853;
+  --orange-score: #F57C00;
+  --background-dark: #042C45;
+  --text-gray: #8A8A8A;
+  --text-light: #D9D9D9;
+  --gray-bar: #888888;
+}
+.db-progress-container {
+  width: 100%;
+  height: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  background: var(--bg-blue-main);
+  overflow: hidden;
+  border-radius: 15px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  display: inline-flex;
+}
+
+.db-progress-title-container {
+  justify-content: space-between;
+  align-items: flex-start;
+  display: inline-flex;
+  width: 100%;
+}
+
+.db-progress-title-main {
+  color: var(--white-main);
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.db-progress-title-sub {
+  color: var(--blue-light);
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.db-progress-bar-group {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+}
+
+.db-progress-bar-total {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  background: var(--grey-light);
+  border-radius: 20px;
+}
+
+.db-progress-bar-completed {
+  width: 50%;
+  height: 40px;
+  position: relative;
+  background: var(--green);
+  border-radius: 20px;
+}
+
+.db-progress-dot-green {
+  width: 10px;
+  height: 10px;
+  background: #3D8744;
+  border-radius: 9999px;
+}
+
+.db-progress-dot-gray {
+  width: 10px;
+  height: 10px;
+  background: #4C5754;
+  border-radius: 9999px;
+}
+
+.db-progress-summary {
+  align-self: stretch;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+  background-color: red;
+}
+
+.db-progress-item {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  gap: 5px;
+}
+
+.db-progress-item-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: blue;
+}
+
+.db-progress-item-circle-completado {
+  background: var(--green);
+}
+
+.db-progress-item-circle--restante {
+ color: var(--grey-light);
+}
+
+.db-progress-item-label {
+  color: #9DAAA6;
+  font-size: 20px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+

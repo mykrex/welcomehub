@@ -1,0 +1,25 @@
+/* Color variables */
+:root {
+  --bg-blue-main: #042C45;
+  --green-main: #06D6A0;
+  --green-score: #00C853;
+  --orange-score: #F57C00;
+  --background-dark: #042C45;
+  --text-gray: #8A8A8A;
+  --text-light: #D9D9D9;
+  --gray-bar: #888888;
+}
+
+.dashboard-wrapper{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-progress-bar-container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--bg-blue-main);
+    border-radius: 15px;
+}
