@@ -1,28 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseServer } from '@/lib/supabaseServer';
+import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+type Data = { ok: true } | { error: string };
+
+export default async function handler( req: NextApiRequest, res: NextApiResponse<Data> ) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  // Iniciar el cliente Supabase con req y res
+  const supabase = createPagesServerClient({ req, res });
+
+  // Checamos la sesion
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+  if (sessionError || !session) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  
+  const userId = session.user.id;
+
   try {
-    // Read the token from the cookie
-    const token = req.cookies['sb-access-token'];
-    if (!token) {
-      return res.status(401).json({ error: 'No autorizado' });
-    }
-
-    // Get user from JWT
-    const { data: userData, error: authError } = await supabaseServer.auth.getUser(token);
-    if (authError || !userData.user) {
-      return res.status(401).json({ error: 'No autorizado' });
-    }
-    const userId = userData.user.id;
-
-    // Delete avatar from 'avatar' bucket
+    // Se borra la foto de perfil del bucket 'avatars'
     const filePath = `${userId}/profile.png`;
-    const { error: removeError } = await supabaseServer
+    const { error: removeError } = await supabase
       .storage
       .from('avatars')
       .remove([filePath]);
@@ -31,11 +32,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(500).json({ error: removeError.message });
     }
 
-    // Print result
+    // Respondemos ok cuando se borro
     return res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error('Delete-avatar error:', error);
-    const message = error instanceof Error ? error.message : 'Error inesperado';
+  } catch (err) {
+    console.error('Delete-avatar error:', err);
+    const message = err instanceof Error ? err.message : 'Error inesperado';
     return res.status(500).json({ error: message });
   }
 }
