@@ -43,7 +43,7 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/miequipo/:path*'],
+  matcher: [],
 };
 
 /**export const config = {
