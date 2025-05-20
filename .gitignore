@@ -50,3 +50,43 @@ scripts/
 supabase/backups/
 supabase/migrations/*_backup.sql
 supabase/migrations/*_data_only.sql
+
+# carpetas y salidas de Robot
+tests/output/
+.tests-reports/
+
+# Virtualenv
+venv/
+ENV/
+env/
+.venv/
+
+# Byte-compiled / cached
+__pycache__/
+*.py[cod]
+*$py.class
+
+# pytest
+.pytest_cache/
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage.xml
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Mypy
+.mypy_cache/
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Entornos de variables
+.env
+.env.*
