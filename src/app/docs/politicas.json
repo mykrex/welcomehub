@@ -1,0 +1,20 @@
+[
+    {
+        "id": "onboarding-overview",
+        "title": "Onboarding Overview",
+        "description": "An overview of the onboarding process for new employees.",
+        "content": "El proceso de onboarding..."
+    },
+    {
+        "id": "bienvenida",
+        "title": "Bienvenido a Welcomehub",
+        "description": "Una breve introducción a la pagina web.",
+        "content": "Bienvenido a Welcomehub, donde la innovación y la colaboración son el núcleo de nuestra cultura..."
+    },
+    {
+        "id": "vacaciones",
+        "title": "Política de Vacaciones",
+        "description": "Información sobre la política de vacaciones de la empresa.",
+        "content": "La política de vacaciones de la empresa establece que todos los empleados tienen derecho a un mínimo de 20 días laborables de vacaciones al año..."
+    }
+]
