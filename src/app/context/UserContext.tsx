@@ -9,7 +9,7 @@ interface UserContextType {
   logout: () => Promise<void>;
 }
 
-interface User {
+export interface User {
   id_usuario: string;
   email: string;
   rol: string;
