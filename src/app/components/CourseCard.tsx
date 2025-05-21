@@ -1,38 +1,66 @@
-// CourseCard.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 type CourseCardProps = {
+  courseId: string; 
+  userId: string;  
+};
+
+type CourseData = {
   title: string;
   description: string;
-  status: "completed" | "in-progress" | "not-started";
+  status: "complete" | "in_progress" | "not_started"; 
 };
 
-const statusColors = {
-  completed: "bg-green-500",
-  "in-progress": "bg-yellow-500",
-  "not-started": "bg-red-500",
-};
+export const CourseCard: React.FC<CourseCardProps> = ({ courseId, userId }) => {
+  const [courseData, setCourseData] = useState<CourseData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-export const CourseCard: React.FC<CourseCardProps> = ({
-  title,
-  description,
-  status,
-}) => {
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `https://api.example.com/courses/${courseId}/user/${userId}` // URL simulada
+        );
+        const data: CourseData = await response.json();
+        setCourseData(data);
+      } catch (error) {
+        console.error("Error fetching course data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourseData();
+  }, [courseId, userId]);
+
+  if (loading) {
+    return <p className="text-gray-300">Cargando curso...</p>;
+  }
+
+  if (!courseData) {
+    return <p className="text-gray-300">No se encontró información del curso.</p>;
+  }
+
+  const { title, description, status } = courseData;
+  const getStatusColor = () => {
+    switch (status) {
+      case "complete":
+        return "bg-green-500";
+      case "in_progress":
+        return "bg-yellow-500";
+      case "not_started":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
+
   return (
-    <div className="flex flex-col p-4 bg-[#1E293B] rounded-lg shadow-md">
-      {/* Título del curso */}
-      <h3 className="text-lg font-semibold text-white">{title}</h3>
-
-      {/* Descripción del curso */}
-      <p className="text-sm text-gray-400 mt-2">{description}</p>
-
-      {/* Estado del curso */}
-      <div className="flex items-center mt-4">
-        <div
-          className={`w-4 h-4 rounded-full ${statusColors[status]} mr-2`}
-        ></div>
-        <span className="text-sm text-white capitalize">{status.replace("-", " ")}</span>
-      </div>
+    <div className="p-4 bg-[#1E293B] rounded-lg shadow-md text-white">
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <p className="text-sm text-gray-300 mb-2">{description}</p>
+      <div className={`w-4 h-4 rounded-full ${getStatusColor()}`} title={status}></div>
     </div>
   );
 };

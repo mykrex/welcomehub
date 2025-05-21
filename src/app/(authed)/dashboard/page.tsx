@@ -3,9 +3,9 @@ import ProgressBar from "@/app/components/ProgressBar";
 import { Legend } from "@/app/components/Legend";
 import { CourseCard } from "@/app/components/CourseCard";
 import { ScoreCard } from "@/app/components/ScoreCard";
-import { RecentCourse } from "./components/RecentCourse";
+import { RecentCourse } from "@/app/components/RecentCourse";
 import  useCourses  from "@/app/hooks/useCourses";
-import { useDashboardStats } from "@/app/hooks/useDashboardStats";
+import { useDashboardStats } from "@/app/hooks/useProgress";
 
 
 export default function Dashboard() {
