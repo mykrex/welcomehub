@@ -1,11 +1,11 @@
 import "./averageStats.css";
-import { Clock, Icon as LucideIcon } from "lucide-react";
+import { Clock} from "lucide-react";
 
 interface AverageStatsProps {
   title: string;
   value: number;
   unit?: string;
-  icon?: LucideIcon;
+icon?: React.ElementType;
   comparison: {
     percent: string;
     position: "más" | "menos";

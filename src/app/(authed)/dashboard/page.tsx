@@ -93,7 +93,7 @@ export default function Dashboard() {
               title="Mis Cursos Completados"
               value={3}
               unit="de 7"
-              icon={Target}
+              icon={Clock}
               comparison={{
                 percent: "20%",
                 position: "más",
