@@ -1,11 +1,7 @@
 "use client";
 
-//Libraries
-import Link from "next/link";
-import Image from "next/image";
-
 //Assets
-import { Clock, Target } from "lucide-react";
+import { Clock } from "lucide-react";
 import AverageStats from "./assets/AverageStats";
 import ProgressBar from "./assets/ProgressBar";
 import RecentCourse from "./assets/RecentCourse";

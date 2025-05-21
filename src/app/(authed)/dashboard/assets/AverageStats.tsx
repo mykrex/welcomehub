@@ -1,5 +1,5 @@
 import "./averageStats.css";
-import { Clock, Target, Icon as LucideIcon } from "lucide-react";
+import { Clock, Icon as LucideIcon } from "lucide-react";
 
 interface AverageStatsProps {
   title: string;
