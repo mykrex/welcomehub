@@ -1,13 +1,10 @@
 /* Color variables */
 :root {
   --bg-blue-main: #042C45;
-  --green-main: #06D6A0;
-  --green-score: #00C853;
-  --orange-score: #F57C00;
-  --background-dark: #042C45;
-  --text-gray: #8A8A8A;
-  --text-light: #D9D9D9;
-  --gray-bar: #888888;
+  --white-main: #EBFAFF;
+  --blue-light: #8BCFF9;
+  --grey-light: #9DAAA6;
+  --green: #4DAA57;
 }
 
 .dashboard-wrapper{
@@ -22,4 +19,26 @@
     padding: 20px;
     background: var(--bg-blue-main);
     border-radius: 15px;
+}
+
+/* Row 1 */
+.row-one {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: stretch; /* Ensure equal height */
+}
+
+.recent-course-wrapper {
+  flex: 3;
+  height: 100%;
+  display: flex;
+}
+
+.column-one-stats {
+  flex: 2;
+  display: flex;
+  flex-direction: row; /* or row if you want cards side-by-side */
+  gap: 10px;
 }

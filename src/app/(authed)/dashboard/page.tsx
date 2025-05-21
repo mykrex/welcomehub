@@ -6,14 +6,14 @@ import Image from "next/image";
 
 //Assets
 import { Clock, Target } from "lucide-react";
+import AverageStats from "./assets/AverageStats";
 import ProgressBar from "./assets/ProgressBar";
+import RecentCourse from "./assets/RecentCourse";
 
 //Styles
-import "@/app/(authed)/cursos/verCursos.css" //TODO: QUITAR
+import "@/app/(authed)/cursos/verCursos.css"; //TODO: QUITAR
 import "@/app/components/(layout)/layout.css"; //Unico que lo usa -> main-content
 import "./dashboard.css";
-
-
 
 const cursos = [
   {
@@ -68,152 +68,43 @@ const getColor = (estado: string) => {
 
 export default function Dashboard() {
   return (
-    <div className="main-content"> 
+    <div className="main-content">
       <div className="dashboard-wrapper">
         <ProgressBar />
 
-        <div className="dashboard-progress-bar-container">
-          <span className="text-[#448AFF] font-medium text-[40px]">
-            78% <span className="text-[30px] font-normal">completado</span>
-          </span>
-
-
-
-          <div className="w-full bg-gray-700 h-2 rounded-full mt-2 flex">
-            <div
-              className="bg-[#448AFF] h-2 rounded-full"
-              style={{ width: "50%" }}
-            ></div>
-            <div
-              className="bg-[#06D6A0] h-2 rounded-full"
-              style={{ width: "28%" }}
-            ></div>
-            <div className="bg-gray-500 h-2 rounded-full flex-1"></div>
-          </div>
-          <div className="flex justify-center space-x-4 mt-2">
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-[#448AFF] rounded-full mr-2"></div>
-              <div className="legend-label">Completado</div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-[#06D6A0] rounded-full mr-2"></div>
-              <div className="legend-label">Hecho Hoy</div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-gray-500 rounded-full mr-2"></div>
-              <div className="legend-label">Restante</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-6">
-          <div className="bg-[#042C45] p-6 rounded-lg col-span-2 flex justify-between">
-            <div>
-              <h3 className="card-title">Retomar mi curso más reciente:</h3>
-              <h4 className="course-title">Atención al Cliente y Ventas</h4>
-              <p className="text-sm text-gray-400 mt-2">
-                Este curso proporciona las habilidades esenciales para
-                interactuar de manera efectiva con los clientes, brindando un
-                servicio de calidad y potenciando las ventas.
-              </p>
-              <div className="flex mt-4 space-x-1">
-                {[...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-[30px] h-[4px] bg-[#06D6A0] rounded-full"
-                  ></div>
-                ))}
-                {[...Array(2)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-[30px] h-[4px] bg-gray-500 rounded-full"
-                  ></div>
-                ))}
-              </div>
-              <div className="text-sm text-green-400 mt-2">
-                3 de 5 módulos completados
-              </div>
-            </div>
-            <div className="flex flex-col items-center">
-              <Image
-                src="/imagencurso.png"
-                alt="Curso"
-                width={100}
-                height={100}
-                className="rounded-lg mb-2 object-cover"
-              />
-              <Link href="/verCursos">
-                <button
-                  className="px-6 py-4 rounded-lg text-white text-lg font-bold"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #81A9EB 0%, #3E9ADE 100%)",
-                  }}
-                >
-                  Ir a Curso
-                </button>
-              </Link>
-            </div>
+        <div className="row-one">
+          {/* Recent Course - 3/5 */}
+          <div className="recent-course-wrapper">
+            <RecentCourse />
           </div>
 
-          <div className="score-card">
-            <div className="flex flex-col items-start w-full h-full justify-between">
-              {/* Title */}
-              <h4 className="card-title text-[#8A8A8A] text-[20px] font-semibold">
-                Mi Tiempo Promedio
-              </h4>
+          {/* Stats - 2/5 */}
+          <div className="column-one-stats">
+            <AverageStats
+              title="Mi Puntaje Promedio"
+              value={45}
+              unit="%"
+              icon={Clock}
+              comparison={{
+                percent: "6.7%",
+                position: "más",
+                direction: "alto",
+                color: "#51B6F6",
+              }}
+            />
 
-              {/* Main Score */}
-              <div className="flex items-center justify-between w-full mt-2">
-                <div className="flex items-baseline">
-                  <span className="text-[80px] text-[#F57C00] font-bold leading-none">
-                    45
-                  </span>
-                  <span className="text-[20px] text-[#F57C00] font-normal ml-1">
-                    min
-                  </span>
-                </div>
-                <Clock className="w-20 h-20 text-[#F57C00]" />
-              </div>
-
-              {/* Comparison Text */}
-              <div className="flex items-center mt-2 text-[15px]">
-                <span className="text-[#F57C00] underline mr-1">6.7%</span>
-                <span className="text-[#8A8A8A] mr-1">más</span>
-                <span className="text-[#F57C00] font-bold mr-1">alto</span>
-                <span className="text-[#8A8A8A]">que el promedio</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="score-card">
-            <div className="flex flex-col items-start w-full h-full justify-between">
-              {/* Title */}
-              <h4 className="card-title text-[#00C853] text-[20px] font-semibold">
-                Mi Puntaje Promedio
-              </h4>
-
-              {/* Main Score */}
-              <div className="flex items-center justify-between w-full mt-2">
-                <div className="flex items-baseline">
-                  <span className="text-[80px] text-[#00C853] font-bold leading-none">
-                    75
-                  </span>
-                  <span className="text-[20px] text-[#00C853] font-normal ml-1">
-                    %
-                  </span>
-                </div>
-                <Target className="w-20 h-20 text-[#00C853]" />
-              </div>
-
-              {/* Comparison Text */}
-              <div className="flex items-center mt-2 text-[15px]">
-                <span className="text-[#00C853] underline mr-1">10.8%</span>
-                <span className="text-[#8A8A8A] mr-1">más</span>
-                <span className="text-[#00C853] font-bold mr-1">bajo</span>
-                <span className="text-[#8A8A8A]">que el promedio</span>
-              </div>
-            </div>
+            <AverageStats
+              title="Mis Cursos Completados"
+              value={3}
+              unit="de 7"
+              icon={Target}
+              comparison={{
+                percent: "20%",
+                position: "más",
+                direction: "alto",
+                color: "#51B6F6",
+              }}
+            />
           </div>
         </div>
 
