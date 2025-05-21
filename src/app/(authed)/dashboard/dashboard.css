@@ -1,0 +1,44 @@
+/* Color variables */
+:root {
+  --bg-blue-main: #042C45;
+  --white-main: #EBFAFF;
+  --blue-light: #8BCFF9;
+  --grey-light: #9DAAA6;
+  --green: #4DAA57;
+}
+
+.dashboard-wrapper{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-progress-bar-container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: var(--bg-blue-main);
+    border-radius: 15px;
+}
+
+/* Row 1 */
+.row-one {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: stretch; /* Ensure equal height */
+}
+
+.recent-course-wrapper {
+  flex: 3;
+  height: 100%;
+  display: flex;
+}
+
+.column-one-stats {
+  flex: 2;
+  display: flex;
+  flex-direction: row; /* or row if you want cards side-by-side */
+  gap: 10px;
+}
