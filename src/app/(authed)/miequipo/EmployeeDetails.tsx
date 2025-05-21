@@ -3,10 +3,10 @@
 import React from 'react';
 import './AdminPanel.css';
 
-import { Employee } from '@/app/api/miequipo/miequipo';
+import { Empleado } from '@/pages/api/miequipo/fetchequipo';
 
 interface Props {
-  employee: Employee;
+  employee: Empleado;
 }
 
 const dayLabels = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
