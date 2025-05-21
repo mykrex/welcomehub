@@ -6,10 +6,10 @@ import Image from 'next/image';
 
 
 interface Props {
-    employee: { id: number; name: string; photo: string };
-    isSelected: boolean;
-    onSelect: () => void;
-  }
+  employee: { id: number; name: string; photo: string };
+  isSelected: boolean;
+  onSelect: () => void;
+}
   
   export default function EmployeeCard({ employee, isSelected, onSelect }: Props) {
     return (

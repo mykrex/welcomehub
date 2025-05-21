@@ -1,14 +1,15 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { supabase } from '@/lib/supabase';
 
 interface UserContextType {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: (u: User | null) => void;
+  logout: () => Promise<void>;
 }
 
-interface User {
+export interface User {
   id_usuario: string;
   email: string;
   rol: string;
@@ -25,31 +26,55 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
 
-  // Carga el perfil extendido desde tu API
-  const loadUserProfile = async () => {
+  // Carga el perfil tras el login o el refresh
+  const loadUserProfile = useCallback(async () => {
     try {
-      const res = await fetch('/api/users/me', {
+      const res = await fetch('/api/users/info', {
         credentials: 'include',
       });
-      if (!res.ok) throw new Error('No autorizado');
+      if (!res.ok) throw new Error();
       const perfil: User = await res.json();
       setUserState(perfil);
     } catch {
       setUserState(null);
     }
-  };
+  }, []);
 
-  useEffect(() => {
-    // 1) Al montar, recupera sesión si existe
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session?.user) {
-        loadUserProfile();
+  const refreshSession = useCallback(async () => {
+    try {
+      const res = await fetch('/api/auth/refresh', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      if (res.ok) {
+        await loadUserProfile();
       } else {
         setUserState(null);
       }
+    } catch {
+      setUserState(null);
+    }
+  }, [loadUserProfile]);
+
+  // Cerramis la sesion borrando cookies y limpiando el contexto
+  const logout = useCallback(async () => {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+    setUserState(null);
+    await supabase.auth.signOut(); // limpia estado interno
+  }, []);
+
+  useEffect(() => {
+    // Se recupera sesion y el perfil al montar
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session?.user) {
+        loadUserProfile();
+      }
     });
 
-    // 2) Escucha cambios de auth (login, logout, refresh)
+    // Escucha los cambios de auth (login, logout, refresh)
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         if (session?.user) {
@@ -60,18 +85,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
       }
     );
 
-    // Limpia listener al desmontar
+    // Refrescamos cada 30 minutos
+    const interval = setInterval(refreshSession, 30 * 60 * 1000);
+
+    // Limpiamos el listener y el intervalo al desmontar la pagina
     return () => {
       listener.subscription.unsubscribe();
+      clearInterval(interval);
     };
-  }, []);
-
-  const setUser = (user: User | null) => {
-    setUserState(user);
-  };
+  }, [loadUserProfile, refreshSession]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser: setUserState, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
@@ -84,38 +111,3 @@ export function useUser() {
   }
   return context;
 }
-  /**useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch('/api/users/me', {
-          credentials: 'include',
-        });
-        if (!res.ok) throw new Error();
-        const perfil = await res.json();
-        setUserState(perfil);
-      } catch {
-        setUserState(null);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  const setUser = (user: User | null) => {
-    setUserState(user);
-  };
-
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-}
-
-export function useUser() {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
-}**/

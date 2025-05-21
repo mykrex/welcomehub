@@ -1,19 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'cookie';
+//import { serialize } from 'cookie';
+import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== 'POST') return res.status(405).end('Method not allowed');
-    const deleteCookie = (name: string) =>
-      serialize(name, '', {
-        path: '/',
-        httpOnly: true,
-        maxAge: -1, // Delete cookies
-      });
+type Data = { message: string } | { error: string };
 
-    res.setHeader('Set-Cookie', [
-      deleteCookie('sb-access-token'),
-      deleteCookie('sb-refresh-token'),
-    ]);
+export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+  if (req.method !== 'POST') {
+    return res.status(405).end('Method not allowed');
+  }
 
-    res.status(200).json({ message: 'Sesión cerrada correctamente' });
+  // Cliente para req/res
+  const supabase = createPagesServerClient({ req, res });
+
+  // Limpiamos las cookies sb-*-token y la sesion actual
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    return res.status(500).json({ error: 'Error cerrando sesión' });
+  }
+
+  return res.status(200).json({ message: 'Sesión cerrada correctamente' });
 }

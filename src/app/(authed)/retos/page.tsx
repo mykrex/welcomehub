@@ -2,7 +2,7 @@
 
 //* Styles *//
 import "./retos.css";
-import "@/app/components/(layout)/layout.css";
+//import "@/app/components/(layout)/layout.css";
 
 //* Libraries *//
 import Image from "next/image";
