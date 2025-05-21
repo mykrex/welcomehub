@@ -4,6 +4,16 @@ import { supabase } from "@/lib/supabase.server";
 import politicas from "../app/docs/politicas.json";
 import Fuse from "fuse.js";
 
+// debugger
+console.log("Total politicas:", politicas.length);
+console.log("Politicas con 'vacaciones':",
+  politicas.filter(p =>
+    p.title.toLowerCase().includes("vacaciones") ||
+    p.description.toLowerCase().includes("vacaciones") ||
+    p.content.toLowerCase().includes("vacaciones")
+  )
+);
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -18,8 +28,18 @@ interface Result {
   error?: string;
 }
 
+// Función para normalizar cadenas (quita acentos, minusculas, trim)
+function normalizeText(str: string) {
+  return str
+    .normalize("NFD")               // separa acentos
+    .replace(/[\u0300-\u036f]/g, "")// quita los diacríticos
+    .toLowerCase()                  // todo en minúsculas
+    .trim();                        // sin espacios al inicio/fin
+}
+
 export async function handleChatRequest(body: RequestBody): Promise<Result> {
-  const { prompt, id_usuario } = body;
+  const { prompt: rawPrompt, id_usuario } = body;
+  const prompt = normalizeText(rawPrompt);
 
   if (!id_usuario) return { error: "Falta el ID de usuario" };
 
@@ -78,18 +98,52 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
   // buscar politicas con Fuse.js
   const fuse = new Fuse(politicas, {
-    keys: ["title", "content"],
-    threshold: 0.4,
+    keys: ["title","description", "content"],
+    threshold: 0.6,
+    ignoreLocation: true,
     includeScore: true,
+    minMatchCharLength: 3,
   });
 
-  const searchResults = fuse.search(prompt);
+  let searchResults = fuse.search(prompt);
+
+  // debugger
+  console.log("normalizedPrompt:", prompt);
+  console.log("Fuse.search(…) devolvió:", 
+  searchResults.map(r => ({
+    id: r.item.id,
+    title: r.item.title,
+    score: r.score
+  }))
+  );
+
+  // 3) Fallback por substring
+  if (!searchResults.length) {
+    console.log("Fallback de substring en políticas");
+    searchResults = politicas
+      .filter(p => {
+        const hay = normalizeText(p.title + " " + p.description + " " + p.content);
+        return prompt.split(" ").some(w => w.length > 3 && hay.includes(w));
+      })
+      .map((item, index) => ({ item, score: 0, refIndex: index }));
+  }
+
+
   const topSections = searchResults
     .sort((a, b) => a.score! - b.score!)
     .slice(0, 3)
-    .map((result) => result.item.content);
+    .map((result) => {
+      const { title, description, content } = result.item;
+      return [
+        `### ${title}`,
+        description,
+        content
+      ].join("\n\n");
+    });
 
-  const knowledgeContext = topSections.join("\n\n");
+    const knowledgeContext = topSections.length > 0
+      ? topSections.join("\n\n---\n\n")
+      : "No se encontró información relevante en las políticas.";
 
   // obtener historial reciente
   const { data: history } = await supabase
@@ -126,22 +180,22 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     });
   }
 
+  //debbuger
+  console.log("knowledgeContext:", knowledgeContext);
+
   // Construir mensaje para OpenAI incluyendo contexto RAG y metadata del usuario
-  const systemMessageContent = `
+  const systemMessageContent = [`
     Eres Compi, asistente virtual para onboarding de empleados en la empresa Neoris.
-    
     Usa unicamente la siguiente información para responder a las preguntas del usuario:
     ${knowledgeContext}
-    
     Información del usuario:
     - Nombre: ${userName}
     - Puesto: ${userRole}
     - Equipo: ${nombreEquipo}
     - Líder: ${liderName}
     - ID de usuario: ${id_usuario}
-    
     Responde de manera amigable y profesional. Si no tienes la respuesta, di que no lo sabes. Pero puedes contactar a tu líder que se llama ${liderName} para obtener más información.
-    `;
+    `].join("\n\n");
 
   const messages: Message[] = [
     { role: "system", content: systemMessageContent },
