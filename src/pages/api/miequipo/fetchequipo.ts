@@ -11,6 +11,7 @@ export interface Empleado {
     incomplete: number;
     notStarted: number;
   };
+  isAdmin?: boolean; // opcional si lo usas en frontend
 }
 
 export interface EquipoResponse {
