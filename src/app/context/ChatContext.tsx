@@ -44,6 +44,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [messages]);
 
+  // funcion para mandar prompts al backend
   const sendPrompt = useCallback(
     async (customPrompt?: string) => {
       const finalPrompt = customPrompt ?? "";
@@ -55,12 +56,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
       setPrompt("");
       setLoading(true);
-
-      //const newMessages: Message[] = [];
-
-      // if (finalPrompt.trim()) {
-      //   newMessages.push({ sender: "user", text: finalPrompt });
-      // }
 
       if (finalPrompt.trim()) {
         setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
@@ -96,52 +91,75 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     hasSentWelcome.current = false;
   };
 
+  // init chat: carga el historial y saludo
   useEffect(() => {
-    const fetchChatHistory = async () => {
+    const initChat = async () => {
       if (!user?.id_usuario) {
-        console.log("No hay usuario autenticado.");
+        console.log("No hay usuario autenticado");
+        return;
+      };
+
+      // obtener nombre del usuario
+      const { data: userInfo, error: userError } = await supabase
+        .from("usuario")
+        .select("nombres")
+        .eq("ID_usuario", user.id_usuario)
+        .single();
+
+      const userName = !userError && userInfo?.nombres
+        ? userInfo.nombres
+        : "ususario";
+
+      // obtener historial de mensajes
+      const { data: messagesData, error: historyError } = await supabase
+        .from("mensajes")
+        .select("input_usuario, output_bot")
+        .eq("id_usuario", user.id_usuario)
+        .order("timestamp", { ascending: true });
+
+      if (historyError) {
+        console.error("Error al obtener el historial de chat:", historyError);
         return;
       }
 
-      console.log("Cargando historial para el usuario:", user.id_usuario);
-
-      try {
-        const { data: messagesData, error } = await supabase
-          .from("mensajes")
-          .select("input_usuario, output_bot")
-          .eq("id_usuario", user.id_usuario)
-          .order("timestamp", { ascending: true });
-
-        if (error) throw error;
-
-        const historial: Message[] = [];
-
-        (messagesData as RawMessage[]).forEach((item) => {
-          if (item.input_usuario) {
-            historial.push({ sender: "user", text: item.input_usuario });
-          }
-          if (item.output_bot) {
-            historial.push({ sender: "bot", text: item.output_bot });
-          }
-        });
-
-        console.log("Historial obtenido:", historial);
-
-        setMessages(historial);
-
-        if (historial.length === 0 && !hasSentWelcome.current) {
-          console.log("Historial vacío, enviando saludo automático...");
-          hasSentWelcome.current = true;
-          sendPrompt("");
+      // Mapear a Message[]
+      const historialDB: Message[] = [];
+      (messagesData as { input_usuario: string | null; output_bot: string | null }[]).forEach((item) => {
+        if (item.input_usuario) {
+          historialDB.push({ sender: "user", text: item.input_usuario });
         }
-      } catch (error) {
-        console.error("Error al obtener el historial de chat:", error);
+        if (item.output_bot) {
+          historialDB.push({ sender: "bot", text: item.output_bot });
+        }
+      });
+
+      // Saludo inicial o de bienvenida de vuelta
+      if( !hasSentWelcome.current ){
+        hasSentWelcome.current = true;
+
+        if (historialDB.length === 0) {
+          setMessages([
+            {
+              sender: "bot",
+              text: `¡Bienvenido ${userName}!, soy Compi, tu asistente virtual. ¿En qué puedo ayudarte hoy?`,
+            },
+          ]);
+        } else {
+          setMessages([
+            {
+              sender: "bot",
+              text: `¡Bienvenido de vuelta ${userName}!, Estoy aqui para cualquier tema que tengas.`,
+            },
+            ...historialDB,
+          ]);
+        }
+      } else {
+        // Cargar historial completo tras saludo
+        setMessages(historialDB);
       }
     };
-
-    fetchChatHistory();
-  }, [user?.id_usuario, sendPrompt]);
-
+    initChat();
+  }, [user?.id_usuario]);
   return (
     <ChatContext.Provider
       value={{
