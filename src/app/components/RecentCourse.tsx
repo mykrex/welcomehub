@@ -3,7 +3,7 @@ import React from "react";
 type RecentCourseProps = {
   title: string;
   description: string;
-  status: "complete" | "in_progress" | "not_started"; // Define los posibles estados
+  status: "complete" | "in_progress" | "not_started";
 };
 
 export const RecentCourse: React.FC<RecentCourseProps> = ({ title, description, status }) => {

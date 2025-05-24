@@ -20,7 +20,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseId, userId }) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://api.example.com/courses/${courseId}/user/${userId}` // URL simulada
+          `https://api.example.com/courses/${courseId}/user/${userId}` // URL simulada fake
         );
         const data: CourseData = await response.json();
         setCourseData(data);
