@@ -33,7 +33,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const { user } = useUser();
   const hasSentWelcome = useRef(false);
 
-  // Mantener scroll en el final
+  // Mantener scroll al final
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -77,18 +77,21 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     hasSentWelcome.current = false;
   };
 
-  // Inicializar chat con saludo y cargar historial
+  // Inicializar chat con saludo personalizado y cargar historial
   useEffect(() => {
     const initChat = async () => {
       if (!user?.id_usuario) return;
 
-      // Obtener datos del auth user para nombre
-      const {
-        data: { user: authUser },
-        error: authError,
-      } = await supabase.auth.getUser();
-      const userName =
-        authUser?.user_metadata?.full_name || authUser?.email || "usuario";
+      // Obtener nombre real del usuario desde tabla 'usuario'
+      const { data: usuarioData, error: usuarioError } = await supabase
+        .from("usuario")
+        .select("nombres")
+        .eq("id_usuario", user.id_usuario)
+        .single();
+
+      const userName = !usuarioError && usuarioData?.nombres
+        ? usuarioData.nombres
+        : "usuario";
 
       // Obtener historial de mensajes
       const { data: messagesData, error: historyError } = await supabase
