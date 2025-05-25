@@ -1,6 +1,6 @@
 import { useFetch } from './useFetch';
 
-// Interfaz según lo que devuelve tu /api/users/team
+// Interfaz en base a lo que devuelve /api/users/team
 export interface RawMiembro {
   nombres: string;
   apellidos: string;
@@ -14,17 +14,12 @@ export interface TeamResponse {
   miembros: RawMiembro[];
 }
 
-/**
- * Hook específico para cargar la información del equipo del usuario.
- * Llama a GET /api/users/team.
+/** Cargamos la informacion del equipo al que pertenece el usuario
+ *  Se llama a GET /api/users/team
  */
 export function useUserTeam() {
   const { data, loading, error } = useFetch<TeamResponse>(
     '/api/users/team'
   );
-  return {
-    teamData: data,
-    loading,
-    error,
-  };
+  return { teamData: data, loading, error };
 }
