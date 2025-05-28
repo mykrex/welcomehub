@@ -1,77 +1,56 @@
-"use client";
 
-//* Styles *//
-import "@/app/(authed)/cursos/verCursos.css"; // TODO: QUITAR
-import "@/app/components/(layout)/layout.css"; // Unico que lo usa -> main-content
-import "./dashboard.css";
-
-//* Libraries *//
-import { useEffect, useState } from "react";
-
-//* Components *//
-import CursosVista from "./assets/CursosVista";
-import ProgressBar from "./assets/ProgressBar";
-import AverageStats from "./assets/AverageStats";
-import RecentCourse from "./assets/RecentCourse";
-import { Clock } from "lucide-react";
-
-//* Import getCursos desde cursos.ts *//
-import { getCursos, Courses } from "@/app/api/cursos/cursos";
+import React from "react";
+import ProgressBar from "@/app/components/ProgressBar";
+import { CourseCard } from "@/app/components/CourseCard";
+import { ScoreCard } from "@/app/components/ScoreCard";
+import { RecentCourse } from "@/app/components/RecentCourse";
+import { useCourses } from "@/app/hooks/useCourses1";
+import { useProgress } from "@/app/hooks/useProgress";
 
 export default function Dashboard() {
-  const [cursos, setCursos] = useState<Courses[]>([]);
-
-  useEffect(() => {
-    getCursos().then((data) => {
-      // Aquí asumimos que quieres mostrar cursos asignados, opcionales y recomendados juntos
-      const todosLosCursos = [
-        ...data.asignedCourses,
-        ...data.optionalCourses,
-        ...data.recomendedCourses,
-      ];
-      setCursos(todosLosCursos);
-    });
-  }, []);
+  const { courses, recentCourse } = useCourses();
+  const { completionPercentage, averageTime, totalAttempts } = useProgress();
 
   return (
-    <div className="main-content">
-      <div className="dashboard-wrapper">
-        <ProgressBar />
+    <div className="dashboard-container p-4">
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      
+      {/* Estadísticas */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-8">
+        <ScoreCard title="Progreso completado" value={`${completionPercentage}%`} />
+        <ScoreCard title="Tiempo promedio" value={`${averageTime} minutos`} />
+        <ScoreCard title="Intentos totales" value={totalAttempts} />
+      </div>
 
-        <div className="row-one">
-          <div className="recent-course-wrapper">
-            <RecentCourse />
-          </div>
+      {/* Barra de progreso y leyenda */}
+     <ProgressBar
+  completado={completionPercentage}
+  hechoHoy={25} // Reemplaza con datos reales
+  restante={100 - completionPercentage - 25} // Ajusta los valores
+/>
 
-          <div className="column-one-stats">
-            <AverageStats
-              title="Mi Puntaje Promedio"
-              value={45}
-              unit="%"
-              icon={Clock}
-              comparison={{
-                percent: "6.7%",
-                position: "más",
-                direction: "alto",
-                color: "#51B6F6",
-              }}
-            />
-            <AverageStats
-              title="Mis Cursos Completados"
-              value={3}
-              unit="de 7"
-              icon={Clock}
-              comparison={{
-                percent: "20%",
-                position: "más",
-                direction: "alto",
-                color: "#51B6F6",
-              }}
-            />
-          </div>
-        </div>
+      {/* Curso reciente */}
+      {recentCourse && (
+  <RecentCourse
+    title={recentCourse.title}
+    description={recentCourse.description}
+    status={
+      ["complete", "in_progress", "not_started"].includes(recentCourse.status)
+        ? (recentCourse.status as "complete" | "in_progress" | "not_started")
+        : "not_started"
+    }
+  />
+)}
 
-        <CursosVista cursos={cursos} />
+
+      {/* Lista de cursos */}
+      <h2 className="text-xl font-bold mb-4">Tus Cursos</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {courses.map((course) => (
+  <CourseCard key={course.id} courseId={course.id.toString()} userId={"user123"} />
+))}
+
+
       </div>
     </div>
   );
