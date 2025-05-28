@@ -1,6 +1,5 @@
 import React from "react";
 import ProgressBar from "@/app/components/ProgressBar";
-import { Legend } from "@/app/components/Legend";
 import { CourseCard } from "@/app/components/CourseCard";
 import { ScoreCard } from "@/app/components/ScoreCard";
 import { RecentCourse } from "@/app/components/RecentCourse";
@@ -23,16 +22,11 @@ export default function Dashboard() {
       </div>
 
       {/* Barra de progreso y leyenda */}
-      <div className="flex items-center gap-4 mb-8">
-        <ProgressBar percentage={completionPercentage} />
-        <Legend
-          items={[
-            { color: "#448AFF", label: "Completado" },
-            { color: "#06D6A0", label: "Hecho Hoy" },
-            { color: "#B0BEC5", label: "Restante" },
-          ]}
-        />
-      </div>
+     <ProgressBar
+  completado={completionPercentage}
+  hechoHoy={25} // Reemplaza con datos reales
+  restante={100 - completionPercentage - 25} // Ajusta los valores
+/>
 
       {/* Curso reciente */}
       {recentCourse && (
@@ -52,8 +46,9 @@ export default function Dashboard() {
       <h2 className="text-xl font-bold mb-4">Tus Cursos</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
+  <CourseCard key={course.id} courseId={course.id.toString()} userId={"user123"} />
+))}
+
       </div>
     </div>
   );
