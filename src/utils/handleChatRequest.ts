@@ -1,137 +1,166 @@
 import 'openai/shims/node';
 import { OpenAI } from "openai";
 import { supabase } from "@/lib/supabase.server";
-import { ChatCompletionMessageParam } from "openai/resources/chat/completions";
+import politicas from "../app/docs/politicas.json";
+import Fuse from "fuse.js";
 
+// Inicializa OpenAI
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function handleChatRequest({ prompt, id_usuario }: { prompt: string; id_usuario: number }) {
+// Interfaces para request y resultado
+interface RequestBody {
+  prompt: string;
+  id_usuario: string;
+}
+interface Result {
+  response?: string;
+  error?: string;
+}
+
+// Normaliza cadenas: quita acentos, pasa a minúsculas y trim
+function normalizeText(str: string) {
+  return str
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+// Función principal de manejo de chat
+export async function handleChatRequest(body: RequestBody): Promise<Result> {
+  const { prompt: rawPrompt, id_usuario } = body;
+  const prompt = normalizeText(rawPrompt);
+
+  // Validación de ID de usuario
   if (!id_usuario) {
     return { error: "Falta el ID de usuario" };
   }
 
+  // 1) Obtener información del usuario
   const { data: userInfo, error: userError } = await supabase
     .from("usuario")
     .select("nombres, puesto, id_equipo")
     .eq("id_usuario", id_usuario)
     .single();
-
-  if (userError) {
-    console.error("Error al consultar la info del usuario:", userError.message || userError);
+  if (userError || !userInfo) {
+    return { error: "Error al obtener la información del usuario" };
   }
+  const userName = userInfo.nombres;
+  const userRole = userInfo.puesto;
+  const idEquipo = userInfo.id_equipo;
 
-  const userName = userInfo?.nombres ?? "usuario";
-  const userRole = userInfo?.puesto ?? "usuario";
-  const idEquipo = userInfo?.id_equipo;
+  // 2) Obtener información de equipo y líder
   let nombreEquipo = "equipo desconocido";
-
+  let liderName = "líder desconocido";
   if (idEquipo) {
-    const { data: equipoInfo, error: equipoInfoError } = await supabase
+    const { data: eqData } = await supabase
       .from("equipo_trabajo")
-      .select("nombre")
+      .select("nombre, id_administrador")
       .eq("id_equipo", idEquipo)
       .single();
-
-    if (!equipoInfoError && equipoInfo?.nombre) {
-      nombreEquipo = equipoInfo.nombre;
+    if (eqData) {
+      nombreEquipo = eqData.nombre || nombreEquipo;
+      if (eqData.id_administrador) {
+        const { data: liData } = await supabase
+          .from("usuario")
+          .select("nombres")
+          .eq("id_usuario", eqData.id_administrador)
+          .single();
+        if (liData) liderName = liData.nombres; // Note: variable name typo fix
+      }
     }
   }
 
-//   const { data: cursosInscritos, error: inscritosError } = await supabase
-//     .from("curso_usuario")
-//     .select("id_curso")
-//     .eq("id_usuario", id_usuario)
-//     .neq("estado", "cancelado");
-
-//   const idsCursosInscritos = cursosInscritos?.map((c) => c.id_curso) ?? [];
-
-//   const { data: cursosRecomendados, error: recomendadosError } = await supabase
-//     .from("curso")
-//     .select("id_curso, nombre, descripcion")
-//     .ilike("puesto_objetivo", `%${userRole}%`)
-//     .not("id_curso", "in", `(${idsCursosInscritos.join(",")})`);
-
-//   const listaCursos = cursosRecomendados?.map(c => `• ${c.nombre}: ${c.descripcion}`) ?? [];
-
-//   const cursosTexto = listaCursos.length > 0
-//     ? `Con base en su puesto (${userRole}), estos son cursos recomendados que aún no ha tomado:\n${listaCursos.join("\n")}`
-//     : `No hay cursos disponibles para recomendar en este momento que no haya tomado.`;
-
-  const { data: history } = await supabase
-    .from("mensajes")
-    .select("id_usuario, input_usuario, output_bot")
-    .eq("id_usuario", id_usuario)
-    .order("timestamp", { ascending: false })
-    .limit(5);
-
-  let historial: ChatCompletionMessageParam[] = [];
-
-  if (history && history.length > 0) {
-    historial.push({
-      role: "assistant",
-      content: `Hola ${userName}, retomemos donde nos quedamos.`,
-    });
-
-    historial = historial.concat(
-      history.reverse().flatMap((item) => [
-        { role: "user", content: item.input_usuario },
-        { role: "assistant", content: item.output_bot },
-      ])
-    );
-  } else {
-    const saludo = `Hola ${userName}, ¿en qué puedo ayudarte hoy?`;
-    historial.push({ role: "assistant", content: saludo });
-
-    await supabase.from("mensajes").insert([
-      {
-        id_usuario,
-        nombre_usuario: userName,
-        input_usuario: null,
-        output_bot: saludo,
-        timestamp: new Date().toISOString(),
-      },
-    ]);
-
-    if (!prompt.trim()) {
-      return { response: saludo };
-    }
-  }
-
-  const messages: ChatCompletionMessageParam[] = [
-    {
-      role: "system",
-      content: `
-        Eres un asistente virtual llamado Compi. Tu tarea es ayudar a nuevos empleados durante su proceso de onboarding.
-
-        El nombre del usuario es ${userName}. Si te preguntan algo como "¿cómo me llamo?" debes responder: "Tu nombre es ${userName}".
-        El puesto del usuario es ${userRole}. Si te preguntan debes decir: "Tu puesto es ${userRole}".
-        El equipo del usuario es ${nombreEquipo}.
-
-        Siempre responde de forma amigable y clara.
-      `,
-    },
-    ...historial,
-    { role: "user", content: prompt },
-  ];
-
-  const chatResponse = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    messages,
+  // 3) RAG: búsqueda con Fuse.js sobre politicas.json
+  const fuse = new Fuse(politicas, {
+    keys: ["title", "description", "content"],
+    threshold: 0.6,
+    ignoreLocation: true,
+    includeScore: true,
+    minMatchCharLength: 3,
   });
 
-  const answer = chatResponse.choices[0].message.content;
+  let searchResults = fuse.search(prompt);
+  // Fallback por substring si Fuse no encuentra
+  if (!searchResults.length) {
+    searchResults = politicas
+      .filter(p => {
+        const hay = normalizeText(p.title + " " + p.description + " " + p.content);
+        return prompt.split(" ").some(w => w.length > 3 && hay.includes(w));
+      })
+      .map((item, index) => ({ item, score: 0, refIndex: index }));
+  }
 
-  await supabase.from("mensajes").insert([
-    {
-      id_usuario,
-      nombre_usuario: userName,
-      input_usuario: prompt,
-      output_bot: answer,
-      timestamp: new Date().toISOString(),
-    },
-  ]);
+  // Tomar secciones top
+  const topSections = searchResults
+    .sort((a, b) => a.score! - b.score!)
+    .slice(0, 3)
+    .map(r => {
+      const { title, description, content } = r.item;
+      return [
+        `## ${title}`,
+        description,
+        content
+      ].join("\n\n");
+    });
 
-  return { response: answer };
+  const knowledgeContext = topSections.length
+    ? topSections.join("\n\n---\n\n")
+    : "No se encontró información relevante en las políticas.";
+
+  // 4) Cargar historial de mensajes (sin saludo)
+  const { data: history } = await supabase
+    .from("mensajes")
+    .select("input_usuario, output_bot")
+    .eq("id_usuario", id_usuario)
+    .order("timestamp", { ascending: true })
+    .limit(5);
+
+  type Message = { role: "system" | "user" | "assistant"; content: string };
+  const historial: Message[] = history
+    ? history.flatMap(msg => [
+        ...(msg.input_usuario ? [{ role: "user" as const, content: msg.input_usuario }] : []),
+        ...(msg.output_bot ? [{ role: "assistant" as const, content: msg.output_bot }] : []),
+      ])
+    : [];
+
+  // 5) Construir mensaje de sistema con contexto y metadata
+  const systemMessage = `Eres Compi, asistente virtual para onboarding en Neoris.
+
+Usa únicamente esta información de políticas:
+${knowledgeContext}
+
+Información del usuario:
+- Nombre: ${userName}
+- Puesto: ${userRole}
+- Equipo: ${nombreEquipo}
+- Líder: ${liderName}
+
+Responde de forma amigable y profesional.`;
+
+  const messages: Message[] = [
+    { role: "system", content: systemMessage },
+    ...historial,
+    { role: "user", content: rawPrompt },
+  ];
+
+  // 6) Llamar a OpenAI
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages,
+    });
+    const answer = completion.choices[0].message.content;
+    if (!answer) return { error: "No se obtuvo respuesta de Compi" };
+
+    // 7) Guardar mensaje en BD
+    await supabase.from("mensajes").insert([{ id_usuario, input_usuario: rawPrompt, output_bot: answer, timestamp: new Date().toISOString() }]);
+
+    return { response: answer };
+  } catch (error) {
+    console.error("Error en OpenAI:", error);
+    return { error: "Error al procesar la respuesta" };
+  }
 }

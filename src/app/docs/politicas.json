@@ -2,19 +2,19 @@
     {
         "id": "onboarding-overview",
         "title": "Onboarding Overview",
-        "description": "An overview of the onboarding process for new employees.",
-        "content": "El proceso de onboarding..."
+        "description": "Un desgole de lo que es el proceso de onboarding.",
+        "content": "El proceso de onboarding es una parte crucial de la experiencia del empleado en Welcomehub. Asegura que cada nuevo miembro del equipo se sienta bienvenido y preparado para su nuevo rol..."
     },
     {
         "id": "bienvenida",
         "title": "Bienvenido a Welcomehub",
         "description": "Una breve introducción a la pagina web.",
-        "content": "Bienvenido a Welcomehub, donde la innovación y la colaboración son el núcleo de nuestra cultura..."
+        "content": "Bienvenido a Welcomehub, donde la innovación y la colaboración son el núcleo de nuestra cultura. Esta plataforma está diseñada para facilitar la comunicación y el aprendizaje continuo entre todos los miembros del equipo. Aquí encontrarás recursos valiosos, políticas de la empresa y herramientas para ayudarte a tener éxito en tu nuevo rol..."
     },
     {
         "id": "vacaciones",
         "title": "Política de Vacaciones",
         "description": "Información sobre la política de vacaciones de la empresa.",
-        "content": "La política de vacaciones de la empresa establece que todos los empleados tienen derecho a un mínimo de 20 días laborables de vacaciones al año..."
+        "content": "La política de vacaciones de la empresa establece que todos los empleados tienen derecho a un mínimo de 20 días laborables de vacaciones al año, no más de esos 20 días pueden ser acumulados para el siguiente año. Las vacaciones deben ser solicitadas con al menos 2 semanas de antelación y aprobadas por el supervisor directo. En caso de no poder tomar las vacaciones en el año correspondiente, se perderán los días no utilizados..."
     }
 ]

@@ -24,7 +24,7 @@ export function useFetch<T>( url: string, options?: RequestInit): FetchResult<T>
     setLoading(true);
 
     fetch(url, {
-      credentials: 'include', // envio de cookies
+      credentials: 'include', // envio de las cookies
       ...options,
     })
       .then(async (res) => {

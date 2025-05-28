@@ -1,3 +1,4 @@
+
 import React from "react";
 import ProgressBar from "@/app/components/ProgressBar";
 import { CourseCard } from "@/app/components/CourseCard";
@@ -48,6 +49,7 @@ export default function Dashboard() {
         {courses.map((course) => (
   <CourseCard key={course.id} courseId={course.id.toString()} userId={"user123"} />
 ))}
+
 
       </div>
     </div>

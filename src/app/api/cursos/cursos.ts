@@ -42,7 +42,7 @@ export interface Courses {
               description:
                 "Desarrolla habilidades para liderar equipos en entornos cambiantes. Fomenta la innovación y la motivación en tu equipo.",
               totalCourses: 8,
-              completedCourses: 4,
+              completedCourses: 8,
               picture: "/imagen3.jpg",
             },
             {
@@ -51,7 +51,7 @@ export interface Courses {
               description:
                 "Aprende estrategias para mejorar la comunicación y el desempeño del equipo. Domina técnicas para manejar conflictos de manera efectiva.",
               totalCourses: 6,
-              completedCourses: 5,
+              completedCourses: 6,
               picture: "/imagen4.jpg",
             },
           ],
@@ -62,7 +62,7 @@ export interface Courses {
               description:
                 "Aprende desde lo básico hasta funciones avanzadas de Excel. Mejora tu productividad y precisión en el manejo de datos.",
               totalCourses: 5,
-              completedCourses: 1,
+              completedCourses: 5,
               picture: "/imagen7.jpg",
             },
             {
@@ -71,7 +71,7 @@ export interface Courses {
               description:
                 "Descubre los principios básicos de programación con Python. Aprende a escribir código eficiente y estructurado.",
               totalCourses: 6,
-              completedCourses: 3,
+              completedCourses: 0,
               picture: "/imagen8.jpg",
             },
           ],
@@ -82,7 +82,7 @@ export interface Courses {
               description:
                 "Aprende metodologías ágiles como Scrum y Kanban para gestionar proyectos de manera eficiente. Optimiza tiempos y mejora la entrega de resultados.",
               totalCourses: 6,
-              completedCourses: 2,
+              completedCourses: 0,
               picture: "/imagen10.jpg",
             },
             {
@@ -91,7 +91,7 @@ export interface Courses {
               description:
                 "Domina las mejores prácticas para atender clientes y cerrar ventas. Mejora la experiencia del cliente y fideliza compradores.",
               totalCourses: 4,
-              completedCourses: 3,
+              completedCourses: 2,
               picture: "/imagen11.jpg",
             },
 

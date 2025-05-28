@@ -1,0 +1,152 @@
+:root {
+  --bg-blue-main: #042c45;
+  --white-main: #ebfaff;
+  --blue-light: #8bcff9;
+  --grey-light: #9daaa6;
+  --green: #4daa57;
+  --blue-4-dark: #0c94e9;
+  --blue-4: #51b6f6;
+  --blue-2: #08639b;
+  --blue-1: #053c5e;
+  --blue-2-dark: #064a74;
+  --yellow-1: #f4b942;
+  --red-1: #db504a;
+  --green-1-dark: #3d8744;
+  --yellow-1-dark: #eba10e;
+  --red-2: #bb2a25;
+  --orange-1: #df8328;
+}
+
+.cv-container {
+  flex: 1;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: var(--bg-blue-main);
+  border-radius: 15px;
+}
+
+.cv-progress-title {
+  color: var(--white-main);
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.cv-course-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cv-curso-card {
+  padding: 20px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue-1);
+  cursor: pointer; /* Añadimos cursor de mano */
+  transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+}
+
+.cv-curso-card:hover {
+  background-color: var(--blue-2);
+}
+
+.cv-curso-nombre {
+  color: var(--white-main);
+  font-size: 23px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.cv-curso-abierto {
+  color: var(--blue-light);
+  font-size: 16px;
+  font-weight: 300;
+}
+.cv-estado-div {
+  padding: 15px;
+  border-radius: 20px;
+  min-width: 200px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between; /* Centro horizontal */
+}
+
+.estado-contenido {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row; /* Círculo a la izquierda */
+}
+
+.cv-circulo-estado {
+  height: 30px; /* Mismo height que el contenedor */
+  aspect-ratio: 1 / 1;
+}
+
+.cv-circulo-estado svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.cv-circulo-base {
+  fill: none;
+  stroke: var(--grey-light);
+  stroke-width: 3.8;
+}
+
+.cv-circulo-progreso {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+}
+
+/* Colores del círculo según estado */
+.cv-circulo-en-progreso .cv-circulo-progreso {
+  stroke: var(--yellow-1);
+}
+
+.cv-circulo-completado .cv-circulo-progreso {
+  stroke: var(--green);
+}
+
+.cv-circulo-faltante .cv-circulo-progreso {
+  stroke: var(--red-1);
+}
+
+/* Estado: En Progreso */
+.cv-estado-en-progreso {
+  outline: 2px var(--yellow-1) solid;
+  outline-offset: -2px;
+  color: var(--yellow-1);
+}
+
+/* Estado: Completado */
+.cv-estado-completado {
+  outline: 2px var(--green) solid;
+  outline-offset: -2px;
+  color: var(--green);
+}
+
+/* Estado: Faltante */
+.cv-estado-faltante {
+  outline: 2px var(--red-1) solid;
+  outline-offset: -2px;
+  color: var(--red-1);
+}

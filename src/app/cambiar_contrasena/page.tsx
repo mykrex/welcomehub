@@ -4,20 +4,17 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ProgresoRecuperacion from "../components/progresoRecuperacion";
-import { supabase } from "@/lib/supabase";
 
 export default function CambiarContrasena() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
-    const paso = 3;
+    const paso = 2;
     const router = useRouter();
 
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[\d])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-
     useEffect(() => {
-        const correoGuardado = localStorage.getItem('correo_recuperacion');
+        const correoGuardado = localStorage.getItem('recup_email');
         if (!correoGuardado) {
             router.push('/');
         } else {
@@ -29,32 +26,27 @@ export default function CambiarContrasena() {
         e.preventDefault();
         setError('');
 
-        if (!passwordPattern.test(password)) {
-            setError('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial');
-            return;
-        }
-
         if (password !== confirmPassword) {
             setError('Las contraseñas no coinciden.');
             return;
         }
         
-        try{
-            const { error } = await supabase
-                .from('usuario')
-                .update({ contrasena: password, estado: true })
-                .eq('email', email);
+        try {
+            const res = await fetch('/api/auth/reset_password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, newPassword: password }),
+            });
 
-            if (error) {
-                setError('Error al actualizar la contraseña.');
-                return;
+            if (!res.ok) {
+                const { error } = await res.json();
+                setError(error);
+            } else {
+                localStorage.removeItem('recup_email');
+                router.push("/restablecimiento_exitoso");
             }
-
-            localStorage.removeItem('correo_recuperacion');
-            alert('Contraseña actualizada exitosamente.');
-            router.push("/restablecimiento_exitoso");
-        }catch(err){
-            console.error("Excepción inesperada:", err);
+        } catch (err) {
+            console.error("Error al cambiar contraseña:", err);
             setError('Ocurrió un error inesperado. Intenta de nuevo.');
         }
     };

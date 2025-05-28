@@ -33,11 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     .eq('id_usuario', userId)
     .maybeSingle();
 
-  
   if (userError || !usuario?.id_equipo) {
-    return res
-      .status(404)
-      .json({ error: 'Usuario no encontrado o sin equipo asignado' });
+    return res.status(404).json({ error: 'Usuario no encontrado o sin equipo asignado' });
   }
   const id_equipo = usuario.id_equipo;
 
@@ -60,9 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     .maybeSingle();
 
   if (adminError || !adminUsuario?.email) {
-    return res
-      .status(404)
-      .json({ error: 'Correo del administrador no encontrado' });
+    return res.status(404).json({ error: 'Correo del administrador no encontrado' });
   }
 
   // Consultamos la info de todos los miembros del equipo

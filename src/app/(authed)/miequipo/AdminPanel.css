@@ -1,4 +1,8 @@
 /* === CONTENEDOR PRINCIPAL === */
+
+.loading{
+  color: white;
+}
 .admin-container {
   padding: 20px;
   border-radius: 10px;
