@@ -42,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       .from('curso_usuario')
       .update({ 
         estado: nuevo_estado,
-        fecha_actualizacion: new Date().toISOString()
+        last_updated: new Date().toISOString()
       })
       .eq('id_usuario', userId)
       .eq('id_curso', id_curso);
@@ -56,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Error desconocido';
+    console.error('Update status error:', error)
     return res.status(500).json({ error: message });
   }
 }
