@@ -5,7 +5,7 @@ import Image from "next/image";
 import ProgresoRecuperacion from "../components/progresoRecuperacion";
 
 export default function OlvideContrasena(){
-    const paso = 4;
+    const paso = 3;
     const router = useRouter();
 
     const handleNext = () => {
