@@ -3,7 +3,7 @@ import ProgressBar from "@/app/components/ProgressBar";
 import { CourseCard } from "@/app/components/CourseCard";
 import { ScoreCard } from "@/app/components/ScoreCard";
 import { RecentCourse } from "@/app/components/RecentCourse";
-import { useCourses } from "@/app/hooks/useCourses";
+import { useCourses } from "@/app/hooks/useCourses1";
 import { useProgress } from "@/app/hooks/useProgress";
 
 export default function Dashboard() {
