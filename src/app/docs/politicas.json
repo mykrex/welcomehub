@@ -16,5 +16,17 @@
         "title": "Política de Vacaciones",
         "description": "Información sobre la política de vacaciones de la empresa.",
         "content": "La política de vacaciones de la empresa establece que todos los empleados tienen derecho a un mínimo de 20 días laborables de vacaciones al año, no más de esos 20 días pueden ser acumulados para el siguiente año. Las vacaciones deben ser solicitadas con al menos 2 semanas de antelación y aprobadas por el supervisor directo. En caso de no poder tomar las vacaciones en el año correspondiente, se perderán los días no utilizados..."
+    },
+    {
+        "id": "cursos",
+        "title": "Cursos y Capacitación",
+        "description": "Información sobre los cursos y oportunidades de capacitación disponibles.",
+        "content": "Como parte de tu proceso de onboarding, tendrás que completar 6 cursos obligatorios: \n\n 1. Concientización General en Seguridad de Información \n 2. Continuidad de Negocio \n 3. GDPR Reglamento General de Protección de Datos \n 4. PCI-DDS 4.0 \n 5. Privacidad de Datos Personales \n 6. Sistema de Gestión de Seguridad y Privacidad de la información \n\n Estos cursos son esenciales para garantizar que todos los empleados estén alineados con las políticas y procedimientos de la empresa..."
+    },
+    {
+        "id": "historia de neoris",
+        "title": "Historia de Neoris",
+        "description": "Un vistazo a la historia de Neoris y su evolución.",
+        "content": "La Historia de Neoris se remonta a su fundación en 2001, cuando un grupo de visionarios decidió crear una empresa que combinara la tecnología con la consultoría para ayudar a las empresas a transformarse digitalmente. Desde entonces, Neoris ha crecido y evolucionado, convirtiéndose en un líder en soluciones tecnológicas y consultoría estratégica a nivel global. Puedes revisar más a detalle en el menu de la izquierda en la pestaña 'Neoris'..."
     }
 ]
