@@ -1,9 +1,9 @@
+// components/AnimatedDots.tsx
 'use client';
-
 import Image from 'next/image';
 import bgLine from './bgLine.png';
 import { motion } from 'framer-motion';
-import styles from './landing.module.css';
+import styles from './landing.module.css'; // We'll create this next
 
 export default function VerticalImageScroll() {
     return (

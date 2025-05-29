@@ -34,29 +34,15 @@ export default function CourseCatalog() {
     );
   }
 
-  // Separamos los cursos inscritos en obligatorios y los 'opcionales'
-  const inscritosObligatorios = cursosInscritos?.filter((c) => c.obligatorio) ?? [];
-  const inscritosOpcionales = cursosInscritos?.filter((c) => !c.obligatorio) ?? [];
-
   return (
     <div className="space-y-8">
-      {/* Seccion de los cursos inscritos obligatorios a los que esta inscrito el usuario */}
-      {inscritosObligatorios.length > 0 && (
+      {/* Seccion de los cursos a los que esta inscrito el usuario */}
+      {cursosInscritos && cursosInscritos.length > 0 && (
         <CourseSection
-          title="Mis Cursos Obligatorios"
-          courses={inscritosObligatorios}
+          title="Mis Cursos"
+          courses={cursosInscritos}
           showStatus={true}
           showObligatory={true}
-        />
-      )}
-
-      {/* Seccion de los cursos inscritos no obligatorios a los que esta inscrito el usuario */}
-      {inscritosOpcionales.length > 0 && (
-        <CourseSection
-          title="Mis Cursos Opcionales"
-          courses={inscritosOpcionales}
-          showStatus={true}
-          showObligatory={false}
         />
       )}
 

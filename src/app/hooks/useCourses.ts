@@ -42,7 +42,7 @@ export function useCourses(): UseCursosResult {
         
         // Se ejecutan todas las peticiones de cada tipo de curso en paralelo
         const [inscritosRes, opcionalesRes, recomendadosRes] = await Promise.all([
-          fetch('/api/courses/inscritos', { credentials: 'include' }),
+          fetch('/api/courses/obligatorios', { credentials: 'include' }),
           fetch('/api/courses/opcionales', { credentials: 'include' }),
           fetch('/api/courses/recomendados', { credentials: 'include' })
         ]);
