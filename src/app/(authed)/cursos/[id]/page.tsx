@@ -18,7 +18,7 @@ export default function CourseDetailPage() {
     async function fetchCourse() {
       try {
         // Traemos los cursos inscritos del usuario
-        const response = await fetch('/api/courses/obligatorios', {
+        const response = await fetch('/api/courses/inscritos', {
           credentials: 'include'
         });
 
