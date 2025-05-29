@@ -1,8 +1,11 @@
 /* === CONTENEDOR PRINCIPAL === */
-
-.loading{
+.small-button{
+  margin-bottom: 6px;
+}
+.loading {
   color: white;
 }
+
 .admin-container {
   padding: 20px;
   border-radius: 10px;
@@ -12,12 +15,41 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
-
 .employee-count {
   font-weight: bold;
+}
+
+/* === SEMANA === */
+.week-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.week-controls button {
+  background-color: #1976d2;
+  color: white;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.week-controls button:hover {
+  background-color: #125ea8;
+}
+
+.week-label {
+  font-weight: bold;
+  color: white;
+  
 }
 
 /* === EMPLEADOS Y DETALLES === */
@@ -39,7 +71,7 @@
   justify-content: flex-start;
   gap: 10px;
   padding: 10px;
-  background-color: #064A74;
+  background-color: #064a74;
   border: 1px solid black;
   border-radius: 8px;
   cursor: pointer;
@@ -49,13 +81,25 @@
 
 .employee-card.selected {
   background-color: #0a314f;
-  margin-bottom: 0;
 }
 
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+.arrow-circle {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  color: #064a74;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .employee-details {
@@ -67,11 +111,47 @@
   color: white;
 }
 
+/* === PANEL DE ASIGNACIÓN Y FECHAS === */
+.assignment-panel {
+  display: flex;
+  flex-direction: row; /* cambio clave */
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px; /* más aire entre elementos */
+  background-color: #0a314f;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  flex-wrap: wrap; /* por si se achica mucho */
+}
+
+.assignment-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.assignment-button:hover {
+  background-color: #1976d2;
+}
+
+.assignment-dates {
+  font-size: 13px;
+  color: #ccc;
+  text-align: left;
+  line-height: 1.4;
+}
+
 .employee-header {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 /* === CURSOS === */
@@ -80,9 +160,7 @@
   justify-content: center;
   font-weight: bold;
   font-size: 20px;
-  gap: 10px;
-  margin: 10px 0 0;
-  list-style: none;
+  margin: 10px 0;
 }
 
 .course-stats ul {
@@ -110,6 +188,7 @@
   overflow: hidden;
   padding: 0 10px;
   box-sizing: border-box;
+  margin-top: 20px;
 }
 
 /* Eje Y: líneas horizontales y etiquetas */
@@ -122,24 +201,22 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 1; /* detrás de las barras */
-  padding-left: 50px; /* espacio para etiquetas del eje Y */
+  z-index: 1;
+  padding-left: 40px;
 }
 
 .grid-line-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.grid-label,
 .y-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   color: black;
   width: 30px;
   text-align: right;
-  padding-right: 4px;
 }
 
 .grid-line {
@@ -148,7 +225,6 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Eje Y: texto "horas" */
 .axis-y-title {
   position: absolute;
   top: 50%;
@@ -168,8 +244,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  padding-left: 50px;
-  z-index: 3;
+  padding-left: 40px;
+  z-index: 2;
 }
 
 .bar-column {
@@ -181,35 +257,43 @@
   width: 30px;
 }
 
-.bar {
-  width: 20px;
-  background-color: #00C853;
-  transition: height 0.3s ease;
-  min-height: 2px;
+.bar-stack {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
 }
 
-.x-label,
-.x-grid-label {
-  font-size: 14px;
+.bar {
+  width: 100%;
+  min-height: 2px;
+  transition: height 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Etiquetas eje X */
+.x-label {
+  font-size: 13px;
   font-weight: bold;
   color: black;
   margin-top: 4px;
 }
 
-/* Utilidades */
+/* Otras utilidades */
 .invisible {
   visibility: hidden;
 }
 
-.arrow-circle {
-  width: 24px;
-  height: 24px;
-  background-color: white;
-  color: #064A74;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
+.summary {
+  text-align: center;
+  margin-top: 10px;
   font-weight: bold;
+}
+
+
+.chart-container {
+  background-color: #8bcff9;
+  border-radius: 10px;
+  padding: 10px;
 }
