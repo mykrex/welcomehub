@@ -1,7 +1,6 @@
 "use client";
 
 //* Styles *//
-import "@/app/(authed)/cursos/verCursos.css"; // TODO: QUITAR
 import "@/app/components/(layout)/layout.css"; // Unico que lo usa -> main-content
 import "./dashboard.css";
 
