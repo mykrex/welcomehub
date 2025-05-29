@@ -1,6 +1,5 @@
 import { useFetch } from './useFetch';
 
-// Define la forma de tu perfil, copia de la tabla `usuario`
 export interface UserProfile {
   id_usuario: string;
   email: string;
@@ -13,17 +12,12 @@ export interface UserProfile {
   fecha_nacimiento?: string;
 }
 
-/**
- * Hook específico para cargar el perfil del usuario autenticado.
- * Llama a GET /api/users/info.
+/** Cargamos el perfil del usuario que se autentico
+ * se llama a GET /api/users/info
  */
 export function useUserProfile() {
   const { data, loading, error } = useFetch<UserProfile>(
     '/api/users/info'
   );
-  return {
-    profile: data,
-    loading,
-    error,
-  };
+  return { profile: data, loading, error };
 }
