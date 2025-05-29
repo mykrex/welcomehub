@@ -1,4 +1,4 @@
-
+'use client';
 import React from "react";
 import ProgressBar from "@/app/components/ProgressBar";
 import { CourseCard } from "@/app/components/CourseCard";

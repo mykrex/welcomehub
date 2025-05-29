@@ -1,3 +1,4 @@
+'use client';
 import { useFetch } from './useFetch';
 
 // Interfaz en base a lo que devuelve /api/users/team

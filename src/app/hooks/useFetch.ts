@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+'use client';
+import { useState, useEffect } from "react";
 
 export interface FetchResult<T> {
   data: T | null;
@@ -6,42 +7,33 @@ export interface FetchResult<T> {
   error: string | null;
 }
 
-/**
- * Hook generico para hacer fetch a un endpoint
- * - url: ruta a la API (relative o absoluta)
- * - options: cualquier RequestInit (metodo, headers, body . . .)
- *
- * Nota: para evitar re-fetches innecesarios, se memoiza `options` con useMemo()
- * en el componente que llame a este hook, si es un objeto literal
- */
-export function useFetch<T>( url: string, options?: RequestInit): FetchResult<T> {
+export function useFetch<T>(url: string, options?: RequestInit): FetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+
     setLoading(true);
 
     fetch(url, {
-      credentials: 'include', // envio de las cookies
+      credentials: "include", // envía cookies
       ...options,
+      signal, // agrega señal para cancelar fetch si el componente se desmonta
     })
       .then(async (res) => {
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || res.statusText);
-        if (isMounted) setData(json as T);
+        setData(json as T);
       })
-      .catch((err: Error) => {
-        if (isMounted) setError(err.message);
+      .catch((err) => {
+        if (err.name !== "AbortError") setError(err.message);
       })
-      .finally(() => {
-        if (isMounted) setLoading(false);
-      });
+      .finally(() => setLoading(false));
 
-    return () => {
-      isMounted = false;
-    };
+    return () => abortController.abort();
   }, [url, options]);
 
   return { data, loading, error };

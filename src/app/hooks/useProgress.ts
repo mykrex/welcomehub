@@ -1,3 +1,4 @@
+'use client';
 import { useFetch } from './useFetch';
 
 export interface Progress {
