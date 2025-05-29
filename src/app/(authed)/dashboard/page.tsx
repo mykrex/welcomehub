@@ -1,11 +1,22 @@
+//* Styles *//
+import "@/app/components/(layout)/layout.css"; // Unico que lo usa -> main-content
+import "./dashboard.css";
 
-import React from "react";
-import ProgressBar from "@/app/components/ProgressBar";
+//* Libraries *//
+import { useEffect, useState } from "react";
+
+//* Components *//
+import CursosVista from "./assets/CursosVista";
+import ProgressBar from "./assets/ProgressBar";
+import AverageStats from "./assets/AverageStats";
+import RecentCourse from "./assets/RecentCourse";
+import { Clock } from "lucide-react";
 import { CourseCard } from "@/app/components/CourseCard";
 import { ScoreCard } from "@/app/components/ScoreCard";
 import { RecentCourse } from "@/app/components/RecentCourse";
 import { useCourses } from "@/app/hooks/useCourses1";
 import { useProgress } from "@/app/hooks/useProgress";
+import ProgressBar from "@/app/components/ProgressBar";
 
 export default function Dashboard() {
   const { courses, recentCourse } = useCourses();
