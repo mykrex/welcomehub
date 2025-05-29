@@ -1,12 +1,11 @@
-
+"use client";
 import React from "react";
 import ProgressBar from "@/app/components/ProgressBar";
-import { CourseCard } from "@/app/components/CourseCard";
+import { CourseCard } from "@/app/components/isaacCourseCard"; 
 import { ScoreCard } from "@/app/components/ScoreCard";
 import { RecentCourse } from "@/app/components/RecentCourse";
 import { useCourses } from "@/app/hooks/useCourses1";
 import { useProgress } from "@/app/hooks/useProgress";
-import ProgressBar from "@/app/components/ProgressBar";
 
 export default function Dashboard() {
   const { courses, recentCourse } = useCourses();
