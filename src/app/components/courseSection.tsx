@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import CourseCard from './courseCardM';
+import CourseCard from './courseCard';
 import { CursoInscrito, CursoOpcional } from '@/app/hooks/useCourses';
 
 interface CourseSectionProps {
