@@ -1,24 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Modal from './Modal';
-//It what we need to save all this page.
-import {
-  saveWeekData,
-  loadWeekData,
-  saveSubmittedWeeks,
-  loadSubmittedWeeks,
-  saveApprovedWeeks,
-  loadApprovedWeeks,
-  saveDeliveryDates,
-  loadDeliveryDates,
-  getProjectsByUserId
-} from '@/app/api/timecard/timecard';
-
-//import '@/app/(authed)/timecard/TimeCard.css';
+import { fetchWeekData } from "@/pages/api/timecard/fetchTimeCard";
 import './TimeCard.css';
 
 interface Course {
+  id: string;
   title: string;
   hours: number;
 }
@@ -34,32 +22,53 @@ type CoursesPerDay = { [iso: string]: Course[] };
 
 const getWeekFromBaseDate = (base: Date): DayOfWeek[] => {
   const start = new Date(base);
-  start.setDate(base.getDate() - base.getDay());
-  const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  start.setHours(0, 0, 0, 0); //SUPERIMPORTANT, It makes so your timezone match, this could change
+
+  const diffToWednesday = (start.getDay() + 4) % 7; //Start with Saturday
+  start.setDate(start.getDate() - diffToWednesday);
+
+  const days = ['Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Lunes', 'Martes'];
   const week: DayOfWeek[] = [];
+
   for (let i = 0; i < 7; i++) {
     const date = new Date(start);
     date.setDate(start.getDate() + i);
+
     const format = date.toLocaleDateString('es-MX');
     const iso = date.toISOString().split('T')[0];
+
     week.push({ name: days[i], date, format, iso });
   }
+
   return week;
 };
+
+//Change states to having capital letter
+const statusFormatted = (state?: string) => {
+  switch ((state || '').toLowerCase()) {
+    case 'enviado':
+      return 'Enviado';
+    case 'aprobado':
+      return 'Aprobado';
+    default:
+      return 'Abierto';
+  }
+};
+
 
 const TimeCard = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [week, setWeek] = useState<DayOfWeek[]>([]);
   const [tempCourses, setTempCourses] = useState<{ [weekKey: string]: CoursesPerDay }>({});
   const [savedCourses, setSavedCourses] = useState<{ [weekKey: string]: CoursesPerDay }>({});
-  const [submittedWeeks, setSubmittedWeeks] = useState<Set<string>>(new Set());
   const [approvedWeeks, setApprovedWeeks] = useState<{ [weekKey: string]: string | null }>({});
+  const [weekStates, setWeekStates] = useState<{ [weekKey: string]: string }>({});
   const [deliveryDates, setDeliveryDates] = useState<{ [weekKey: string]: string }>({});
   const [expanded, setExpanded] = useState<{ [index: number]: boolean }>({});
   const [editing, setEditing] = useState<{ [iso: string]: number | null }>({});
   const [draftCourse, setDraftCourse] = useState<{ [iso: string]: Course }>({});
-  //const [isDirty, setIsDirty] = useState(false);
-
+  const [projectOptions, setProjectOptions] = useState<{ id_proyecto: string; nombre: string }[]>([]);
+  const [triggerAutoSave, setTriggerAutoSave] = useState(false);
 
   const [modal, setModal] = useState<null | {
     title: string;
@@ -70,63 +79,110 @@ const TimeCard = () => {
     onCancel?: () => void;
   }>(null);
 
-  //Obtain the info yet again from Sunday to saturday.
   useEffect(() => {
-    setWeek(getWeekFromBaseDate(startDate));
+    const result = getWeekFromBaseDate(startDate);
+    setWeek(result);
+    const initialEditingState: { [iso: string]: number | null } = {};
+    result.forEach(day => {
+      initialEditingState[day.iso] = null;
+    });
+    setEditing(initialEditingState);
+
   }, [startDate]);
+
 
 
 
   const weekKey = week.map(d => d.iso).join(',');
 
-  useEffect(() => {
-    const loadedCourses = loadWeekData();
-    const loadedSubmitted = loadSubmittedWeeks();
-    const loadedApproved = loadApprovedWeeks();
-    const loadedDates = loadDeliveryDates();
+  const isCurrentWeek = (selectedDate: Date) => {
+    const today = new Date();
+    const startOfTodayWeek = getWeekFromBaseDate(today).map(d => d.iso).join(',');
+    const startOfSelectedWeek = getWeekFromBaseDate(selectedDate).map(d => d.iso).join(',');
+    return startOfTodayWeek === startOfSelectedWeek;
+  };
 
-    setSavedCourses(loadedCourses);
-    setTempCourses(loadedCourses); //Important for appear in UI
-    setSubmittedWeeks(loadedSubmitted);
-    setApprovedWeeks(loadedApproved);
-    setDeliveryDates(loadedDates);
-  }, [weekKey]);
+  const isEditable = isCurrentWeek(startDate);
 
-  const [projectOptions, setProjectOptions] = useState<string[]>([]);
-  const userId = '1';
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      const projects = await getProjectsByUserId(userId);
-      setProjectOptions(projects);
+    const loadFromAPI = async () => {
+      if (week.length !== 7) return;
+
+      try {
+        const data = await fetchWeekData(week[0].iso);
+        if (!data) return;
+
+        const { semana, registros, proyectosDisponibles } = data;
+
+        const grouped: CoursesPerDay = {};
+        for (const r of registros) {
+          if (!grouped[r.fecha_trabajada]) grouped[r.fecha_trabajada] = [];
+          grouped[r.fecha_trabajada].push({
+            id: r.proyecto.id_proyecto, // ✅ CAMBIO: incluir id del proyecto
+            title: r.proyecto.nombre,
+            hours: r.horas,
+          });
+        }
+
+        const newWeekKey = week.map(d => d.iso).join(',');
+
+        setWeekStates(prev => ({
+          ...prev,
+          [newWeekKey]: semana?.estado || 'Abierto',
+        }));
+
+        setSavedCourses(prev => ({ ...prev, [newWeekKey]: grouped }));
+        setTempCourses(prev => ({ ...prev, [newWeekKey]: grouped }));
+        setDeliveryDates(prev => ({
+          ...prev,
+          [newWeekKey]: semana?.enviado_el || '',
+        }));
+        setApprovedWeeks(prev => ({
+          ...prev,
+          [newWeekKey]: semana?.aprobado_el || null,
+        }));
+
+        setProjectOptions(proyectosDisponibles);
+      } catch (error) {
+        console.error('Error al cargar datos de Supabase:', error);
+      }
     };
-    fetchProjects();
-  }, []);
 
-  // Obtain the proyects for a specific day from a code of ISO
+    loadFromAPI();
+  }, [week]);
+
   const getCoursesForDay = (iso: string): Course[] => {
+
     return tempCourses[weekKey]?.[iso] || [];
   };
 
-  //Stars editing the specific proyect, save the indice and temporaly the information
   const startEdit = (iso: string, index: number, course: Course) => {
-    setEditing(prev => ({ ...prev, [iso]: index }));
-    setDraftCourse(prev => ({ ...prev, [iso]: { ...course } }));
-  };
-
-  //Comfirms edition from the proyect and update the state
-  const confirmEdit = (iso: string, index: number) => {
-    const updated = draftCourse[iso];
-    if (!updated || updated.title.trim() === '') {
-      //All setModal are for the warning from here to down in all the tsx
+    const isEditingNow = Object.values(editing).some(i => i !== null);
+    if (isEditingNow) {
       setModal({
-        title: 'Error',
-        message: 'Debes seleccionar un proyecto antes de aceptar. O presiona cancelar.',
+        title: 'Advertencia',
+        message: 'Ya estás editando otro proyecto. Termínalo antes de continuar.',
         onConfirm: () => setModal(null)
       });
       return;
     }
-    //Update the proyect edited from the specific day temporally
+
+    setEditing(prev => ({ ...prev, [iso]: index }));
+    setDraftCourse(prev => ({ ...prev, [iso]: { ...course } }));
+  };
+
+  const confirmEdit = (iso: string, index: number) => {
+    const updated = draftCourse[iso];
+    if (!updated || !updated.id || updated.title.trim() === '') {
+      setModal({
+        title: 'Error',
+        message: 'Debes seleccionar un proyecto válido antes de aceptar.',
+        onConfirm: () => setModal(null)
+      });
+      return;
+    }
+
     setTempCourses(prev => {
       const dayCourses = prev[weekKey]?.[iso] || [];
       const newCourses = [...dayCourses];
@@ -139,15 +195,15 @@ const TimeCard = () => {
         },
       };
     });
+
     setEditing(prev => ({ ...prev, [iso]: null }));
-    //setIsDirty(true);
   };
-  //Cancels the edition, if the last proyect was empty, eliminates the column
+
   const cancelEdit = (iso: string) => {
     const dayCourses = tempCourses[weekKey]?.[iso] || [];
     if (dayCourses.length > 0) {
       const lastCourse = dayCourses[dayCourses.length - 1];
-      if (lastCourse.title.trim() === '' && lastCourse.hours === 0) {
+      if (!lastCourse.id && lastCourse.title.trim() === '' && lastCourse.hours === 0) {
         const newCourses = dayCourses.slice(0, -1);
         setTempCourses(prev => ({
           ...prev,
@@ -159,10 +215,19 @@ const TimeCard = () => {
       }
     }
     setEditing(prev => ({ ...prev, [iso]: null }));
-    //setIsDirty(false);
   };
-  //Delete the selected proyect temporally
+
   const deleteCourse = (iso: string, index: number) => {
+    const isEditingNow = Object.values(editing).some(i => i !== null);
+    if (isEditingNow) {
+      setModal({
+        title: 'Advertencia',
+        message: 'No puedes borrar mientras estás editando otro proyecto.',
+        onConfirm: () => setModal(null)
+      });
+      return;
+    }
+
     setTempCourses(prev => {
       const dayCourses = prev[weekKey]?.[iso] || [];
       const newCourses = dayCourses.filter((_, i) => i !== index);
@@ -174,15 +239,13 @@ const TimeCard = () => {
         },
       };
     });
-    //setIsDirty(true);
   };
 
-  //Adds a new proyect empty from the specific day and goes edition mode
   const addCourse = (iso: string) => {
     if (editing[iso] !== null && editing[iso] !== undefined) return;
     setTempCourses(prev => {
       const existing = prev[weekKey]?.[iso] || [];
-      const newCourses = [...existing, { title: '', hours: 0 }];
+      const newCourses = [...existing, { id: '', title: '', hours: 0 }];
       return {
         ...prev,
         [weekKey]: {
@@ -192,8 +255,7 @@ const TimeCard = () => {
       };
     });
     setEditing(prev => ({ ...prev, [iso]: (getCoursesForDay(iso).length || 0) }));
-    setDraftCourse(prev => ({ ...prev, [iso]: { title: '', hours: 0 } }));
-    //setIsDirty(true);
+    setDraftCourse(prev => ({ ...prev, [iso]: { id: '', title: '', hours: 0 } }));
   };
 
   const totalHours = week.reduce((acc, day) => {
@@ -208,10 +270,7 @@ const TimeCard = () => {
     const unchanged = JSON.stringify(current) === JSON.stringify(saved);
     return noEditing && unchanged;
   };
-
-  //Changes the week visually, and secure if it's saved or not
   const changeWeek = (days: number) => {
-    //...and can't change week if it's in edition mode
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
       setModal({
@@ -221,6 +280,7 @@ const TimeCard = () => {
       });
       return;
     }
+
     if (!isWeekClean()) {
       setModal({
         title: 'Advertencia',
@@ -236,7 +296,6 @@ const TimeCard = () => {
     setExpanded({});
   };
 
-  //Expand or obtain the view from the specific day, if it's in edition, it cancels out.
   const toggleExpand = (index: number) => {
     const iso = week[index]?.iso;
     const isEditingThisDay = editing[iso] !== null && editing[iso] !== undefined;
@@ -249,8 +308,7 @@ const TimeCard = () => {
     }));
   };
 
-  //Copy all the data from the last week
-  const copyLastWeek = () => {
+  const copyLastWeek = async () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
       setModal({
@@ -260,39 +318,62 @@ const TimeCard = () => {
       });
       return;
     }
-    //Asks the question and tell you if you want to do it
+
     setModal({
       title: 'Confirmar',
-      message: '¿Deseas duplicar los proyectos seleccionados de la semana pasada? Esto borrará lo que haya en la semana actual y se quedara guardado.',
+      message: '¿Deseas duplicar los proyectos de la semana pasada? Esto borrará lo actual y lo guardará automáticamente.',
       confirmText: 'Sí',
       cancelText: 'No',
-      onConfirm: () => {
+      onConfirm: async () => {
         const prevWeekDate = new Date(startDate);
         prevWeekDate.setDate(startDate.getDate() - 7);
+
         const prevWeek = getWeekFromBaseDate(prevWeekDate);
-        const prevKey = prevWeek.map(d => d.iso).join(',');
-        const prevCourses = savedCourses[prevKey];
 
-        const newWeekCourses: CoursesPerDay = {};
-        week.forEach(day => {
-          const match = prevWeek.find(d => d.name === day.name);
-          if (match && prevCourses?.[match.iso]) {
-            newWeekCourses[day.iso] = prevCourses[match.iso];
-          }
-        });
+        try {
+          const prevData = await fetchWeekData(prevWeek[0].iso); //Obtain Api
+          const prevCourses = prevData.registros.reduce((acc: CoursesPerDay, r) => {
+            if (!acc[r.fecha_trabajada]) acc[r.fecha_trabajada] = [];
+            acc[r.fecha_trabajada].push({
+              id: r.proyecto.id_proyecto,
+              title: r.proyecto.nombre,
+              hours: r.horas,
+            });
+            return acc;
+          }, {});
 
-        const updated = { ...tempCourses, [weekKey]: newWeekCourses };
-        setTempCourses(updated);
-        setSavedCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
-        saveWeekData({ ...savedCourses, [weekKey]: newWeekCourses });
-        //setIsDirty(false);
-        setModal(null);
+          const newWeekCourses: CoursesPerDay = {};
+          week.forEach((day, i) => {
+            const prevDay = prevWeek[i];
+            if (prevDay && prevCourses[prevDay.iso]) {
+              newWeekCourses[day.iso] = prevCourses[prevDay.iso].map(c => ({
+                id: c.id,
+                title: c.title,
+                hours: c.hours
+              }));
+            }
+          });
+
+          setTempCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
+          setSavedCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
+          setTriggerAutoSave(true);
+          setModal(null);
+        } catch (error) {
+          console.error("❌ Error al copiar semana pasada:", error);
+          setModal({
+            title: "Error",
+            message: "No se pudo cargar la semana anterior desde el servidor.",
+            onConfirm: () => setModal(null)
+          });
+        }
       },
       onCancel: () => setModal(null)
     });
   };
 
-  //Delete all proyects from the actual weeek and saved automatically
+
+
+
   const deleteAll = () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
@@ -306,22 +387,22 @@ const TimeCard = () => {
 
     setModal({
       title: 'Confirmar',
-      message: '¿Estás seguro de que quieres eliminar todo? Esto se guardara automaticamente.',
+      message: '¿Estás seguro de que quieres eliminar todo? Esto se guardará automáticamente.',
       confirmText: 'Sí',
       cancelText: 'No',
       onConfirm: () => {
         const updated = { ...tempCourses, [weekKey]: {} };
         setTempCourses(updated);
         setSavedCourses(prev => ({ ...prev, [weekKey]: {} }));
-        saveWeekData({ ...savedCourses, [weekKey]: {} });
-        //setIsDirty(false);
+        setTriggerAutoSave(true);
         setModal(null);
       },
       onCancel: () => setModal(null)
     });
   };
-  //Save all content of the actual weekend from the state and put it on the API
-  const saveWeek = () => {
+
+  // ✅ CAMBIO: ahora se envía curso.id en vez de curso.title
+  const saveWeek = useCallback(async () => {
     const isEditingNow = Object.values(editing).some(index => index !== null);
     if (isEditingNow) {
       setModal({
@@ -333,92 +414,101 @@ const TimeCard = () => {
     }
 
     const current = tempCourses[weekKey] || {};
-    const updatedSavedCourses = { ...savedCourses, [weekKey]: current };
 
+    const simplifiedCourses = Object.fromEntries(
+      Object.entries(current).map(([iso, entries]) => [
+        iso,
+        entries.map(c => ({
+          title: c.id, // 👈 esto sigue siendo el id_proyecto
+          hours: c.hours
+        }))
+      ])
+    );
+
+    // 🚀 Aquí asumimos que guardar también es enviar (ya no hay botón aparte)
+    const today = new Date().toISOString().split('T')[0];
+
+    const body = {
+      week,
+      coursesPerDay: simplifiedCourses,
+      deliveryDate: today,
+      approvedDate: approvedWeeks[weekKey] ?? undefined,
+      approvedBy: null
+    };
+
+    const response = await fetch('/api/timecard/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+      console.error('❌ Error guardando semana');
+
+      // Restaurar en caso de error
+      setSavedCourses(prev => ({ ...prev, [weekKey]: current }));
+      setTempCourses(prev => ({ ...prev, [weekKey]: current }));
+
+      setModal({
+        title: 'Error',
+        message: 'Hubo un error al guardar los datos.',
+        onConfirm: () => setModal(null)
+      });
+      return;
+    }
+
+    // Save everything correctly
+    const updatedSavedCourses = { ...savedCourses, [weekKey]: current };
     setSavedCourses(updatedSavedCourses);
     setTempCourses(prev => ({ ...prev, [weekKey]: current }));
-    saveWeekData(updatedSavedCourses);
-    saveSubmittedWeeks(submittedWeeks);
-    saveApprovedWeeks(approvedWeeks);
-    saveDeliveryDates(deliveryDates);
-    //setIsDirty(false);
+    setDeliveryDates(prev => ({ ...prev, [weekKey]: today }));
 
     setModal({
       title: 'Guardado',
-      message: 'Semana guardada correctamente.',
+      message: 'Semana guardada y enviada correctamente.',
       onConfirm: () => setModal(null)
     });
-  };
+  }, [editing, tempCourses, week, weekKey, approvedWeeks, savedCourses]);
 
-  //Send the week and checking if the info was send with no missing editions
-  const sendWeek = () => {
-    const isEditingNow = Object.values(editing).some(index => index !== null);
-    if (isEditingNow) {
+  useEffect(() => {
+    if (triggerAutoSave) {
+      saveWeek();
+      setTriggerAutoSave(false);
+    }
+  }, [triggerAutoSave, saveWeek]);
+
+/*
+  const toggleApproval = async () => {
+    const semana = await fetchWeekData(week[0].iso);
+    if (!semana || !semana.semana?.id_semana) return;
+
+    console.log("ID que se está enviando a aprobar:", semana.semana.id_semana); // <-- DEBUG
+
+    const response = await fetch('/api/timecard/approve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_semana: semana.semana.id_semana })
+    });
+
+    if (!response.ok) {
       setModal({
-        title: 'Advertencia',
-        message: 'No puedes enviar mientras editas.',
+        title: 'Error',
+        message: 'No se pudo aprobar la semana.',
         onConfirm: () => setModal(null)
       });
       return;
     }
 
-    const saved = savedCourses[weekKey];
-    const temp = tempCourses[weekKey];
-    if (!saved || JSON.stringify(saved) !== JSON.stringify(temp)) {
-      setModal({
-        title: 'Advertencia',
-        message: 'Debes guardar antes de enviar.',
-        onConfirm: () => setModal(null)
-      });
-      return;
-    }
-
-    const today = new Date().toLocaleDateString('es-MX');
-    setSubmittedWeeks(prev => {
-      const updated = new Set(prev).add(weekKey);
-      saveSubmittedWeeks(updated);
-      return updated;
-    });
-    setDeliveryDates(prev => {
-      const updated = { ...prev, [weekKey]: today };
-      saveDeliveryDates(updated);
-      return updated;
-    });
-
+    const now = new Date().toISOString();
+    setApprovedWeeks(prev => ({ ...prev, [weekKey]: now }));
+    setWeekStates(prev => ({ ...prev, [weekKey]: 'aprobado' }));
     setModal({
-      title: 'Enviado',
-      message: 'Semana enviada correctamente.',
+      title: 'Aprobado',
+      message: 'Semana aprobada correctamente.',
       onConfirm: () => setModal(null)
     });
   };
-  //Asigns or remove the aprovation of a specific week. This is just for practice atm and will be only for the administrator
-  const toggleApproval = () => {
-    const isEditingNow = Object.values(editing).some(index => index !== null);
-    if (isEditingNow) {
-      setModal({
-        title: 'Advertencia',
-        message: 'No puedes aprobar mientras editas.',
-        onConfirm: () => setModal(null)
-      });
-      return;
-    }
-
-    if (!submittedWeeks.has(weekKey)) return;
-
-    setApprovedWeeks(prev => {
-      const isApproved = prev[weekKey];
-      const updated = { ...prev };
-      if (isApproved) {
-        updated[weekKey] = null;
-      } else {
-        const date = new Date();
-        date.setDate(date.getDate());
-        updated[weekKey] = date.toLocaleDateString('es-MX');
-      }
-      saveApprovedWeeks(updated);
-      return updated;
-    });
-  };
+*/
 
   const today = new Date();
   const currentMonth = today.toLocaleString('es-MX', { month: 'long' });
@@ -440,7 +530,7 @@ const TimeCard = () => {
           <button className="nav-btn" onClick={() => changeWeek(7)}>Siguiente Periodo ›</button>
         </div>
 
-        {/* CALENDAR Y ESTATUS */}
+        {/* CALENDAR AND ESTATUS */}
         <div className="calendar-container">
           <div className="calendar-box">
             <div className="calendar-top">Hoy:</div>
@@ -449,7 +539,9 @@ const TimeCard = () => {
           </div>
 
           <div className="status">
-            <p><strong>Estatus de Time Card:</strong> {submittedWeeks.has(weekKey) ? (approvedWeeks[weekKey] ? 'Entregado' : 'Enviado') : 'No Entregado'}</p>
+            <p><strong>Estatus de Time Card:</strong> {
+              statusFormatted(weekStates[weekKey])
+            }</p>
             <p><strong>Horas Totales de Time Card:</strong> {totalHours.toFixed(1)} / 42.5</p>
             <p>
               <strong>Semana:</strong> {weekNumber} &nbsp;
@@ -460,7 +552,7 @@ const TimeCard = () => {
 
           <div className="dates">
             <div className="date-item">
-              <span><strong>Fecha de Entrega:</strong></span>
+              <span><strong>Guardado recientemente:</strong></span>
               <span>{deliveryDates[weekKey] || 'N/A'}</span>
             </div>
             <div className="date-item">
@@ -481,6 +573,7 @@ const TimeCard = () => {
           </thead>
           <tbody>
             {week.map((dia, index) => {
+              const iso = dia.iso;
               const cursos = getCoursesForDay(dia.iso);
               const horasTotales = cursos.reduce((sum, c) => sum + c.hours, 0);
               const isExpanded = expanded[index];
@@ -510,17 +603,27 @@ const TimeCard = () => {
                                 <div key={i} className="edit-row">
                                   <select
                                     className="course-input title-input"
-                                    value={draftCourse[dia.iso]?.title || ''}
-                                    onChange={e =>
-                                      setDraftCourse(prev => ({
-                                        ...prev,
-                                        [dia.iso]: { ...prev[dia.iso], title: e.target.value }
-                                      }))
-                                    }
+                                    value={draftCourse[iso]?.id || ''}
+                                    onChange={(e) => {
+                                      const selectedId = e.target.value;
+                                      const selectedProject = projectOptions.find(p => p.id_proyecto === selectedId);
+                                      if (selectedProject) {
+                                        setDraftCourse(prev => ({
+                                          ...prev,
+                                          [iso]: {
+                                            ...prev[iso],
+                                            id: selectedId,
+                                            title: selectedProject.nombre
+                                          }
+                                        }));
+                                      }
+                                    }}
                                   >
                                     <option value="" disabled>Selecciona un proyecto</option>
                                     {projectOptions.map((project, idx) => (
-                                      <option key={idx} value={project}>{project}</option>
+                                      <option key={idx} value={project.id_proyecto}>
+                                        {project.nombre}
+                                      </option>
                                     ))}
                                   </select>
                                   <input
@@ -539,8 +642,8 @@ const TimeCard = () => {
                                       }));
                                     }}
                                   />
-                                  <button className="action-button" onClick={() => confirmEdit(dia.iso, i)}>Aceptar</button>
-                                  <button className="action-button" onClick={() => cancelEdit(dia.iso)}>Cancelar</button>
+                                  <button className={`action-button ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => confirmEdit(dia.iso, i)}>Aceptar</button>
+                                  <button className={`action-button ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => cancelEdit(dia.iso)}>Cancelar</button>
                                 </div>
                               ) : (
 
@@ -549,8 +652,8 @@ const TimeCard = () => {
                                     <strong>{curso.title}</strong> — {curso.hours} horas
                                   </div>
                                   <div>
-                                    <button className="action-button-blue" onClick={() => startEdit(dia.iso, i, curso)}>Editar</button>
-                                    <button className="action-button-red" onClick={() => deleteCourse(dia.iso, i)}>Borrar</button>
+                                    <button className={`action-button-blue ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => startEdit(dia.iso, i, curso)}>Editar</button>
+                                    <button className={`action-button-red ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => deleteCourse(dia.iso, i)}>Borrar</button>
                                   </div>
                                 </div>
 
@@ -559,9 +662,8 @@ const TimeCard = () => {
                           ) : (
                             <div>No hay proyectos hechos este día.</div>
                           )}
-
                           {(editing[dia.iso] === null || editing[dia.iso] === undefined) && (
-                            <button className="btn-anadir" onClick={() => addCourse(dia.iso)}>
+                            <button className={`btn-anadir ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => addCourse(dia.iso)}>
                               + Añadir Curso
                             </button>
                           )}
@@ -575,20 +677,17 @@ const TimeCard = () => {
           </tbody>
         </table>
 
-        {/* BOTONES INFERIORES */}
-        <div className="buttons-bar">
+        {/*INFERIOR BUTTONS*/}
+        <div className={`buttons-bar ${isEditable ? '' : 'invisible-preserved'}`}>
           <button className="link-button" onClick={copyLastWeek}>
             Copiar la Semana Pasada
-          </button>
-
-          <button className="link-button" onClick={toggleApproval} disabled={!submittedWeeks.has(weekKey)}>
-            {approvedWeeks[weekKey] ? 'Quitar Aprobación' : 'Asignar Aprobación'}
+          </button> <button>
           </button>
 
           <div className="button-group">
-            <button className="red" onClick={deleteAll}>Eliminar Todo</button>
-            <button className="gray" onClick={saveWeek}>Guardar</button>
-            <button className="blue" onClick={sendWeek}>Enviar</button>
+            <button> </button>
+            <button className="red" style={{ visibility: isEditable ? 'visible' : 'hidden' }} onClick={deleteAll}>Eliminar Todo</button>
+            <button className="gray" style={{ visibility: isEditable ? 'visible' : 'hidden' }} onClick={saveWeek}>Guardar</button>
           </div>
         </div>
       </div>
@@ -609,4 +708,3 @@ const TimeCard = () => {
 };
 
 export default TimeCard;
-
