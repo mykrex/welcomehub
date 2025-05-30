@@ -31,7 +31,6 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
-  const hasSentWelcome = useRef(false);
 
   // Mantener scroll al final
   useEffect(() => {
@@ -71,16 +70,19 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     [user?.id_usuario]
   );
 
+  // resetear mensajes y estado
   const resetMessages = () => {
     setMessages([]);
     setPrompt("");
-    hasSentWelcome.current = false;
   };
 
   // Inicializar chat con saludo personalizado y cargar historial
   useEffect(() => {
     const initChat = async () => {
-      if (!user?.id_usuario) return;
+      if (!user?.id_usuario) {
+        setMessages([]);
+        return;
+      }
 
       // Obtener nombre real del usuario desde tabla 'usuario'
       const { data: usuarioData, error: usuarioError } = await supabase
@@ -105,6 +107,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       // Mapear a Message[]
+      // construir arreglo de historial
       const historialDB: Message[] = [];
       messagesData?.forEach(item => {
         if (item.input_usuario) historialDB.push({ sender: "user", text: item.input_usuario });
@@ -112,16 +115,11 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       // Primer saludo o bienvenida de vuelta
-      if (!hasSentWelcome.current) {
-        hasSentWelcome.current = true;
-        const greeting = historialDB.length === 0
-          ? `¡Bienvenido ${userName}! Soy Compi, tu asistente virtual. ¿En qué puedo ayudarte hoy?`
-          : `¡Bienvenido de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
-        setMessages([{ sender: "bot", text: greeting }]);
-      } else {
-        // Cargar historial tras saludo
-        setMessages(historialDB);
-      }
+      const greeting = historialDB.length === 0
+        ? `¡Bienvenido ${userName}! Soy Compi, tu asistente virtual. ¿En qué puedo ayudarte hoy?`
+        : `¡Bienvenido de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
+      
+      setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
     };
     initChat();
   }, [user?.id_usuario]);
