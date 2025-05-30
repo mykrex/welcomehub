@@ -7,6 +7,7 @@ import { EmployeeDetailsContainer } from '@/app/components/employeeDetailsContai
 import { Employee } from '@/app/types/employee';
 import { migrateFromOldStructure, debugAPIResponse } from '@/utils/migrations';
 import '@/app/(authed)/miequipo/AdminPanel.css';
+import '@/app/(authed)/miequipo/EmployeeDetails';
 
 interface TeamData {
   teamName: string;
@@ -135,7 +136,7 @@ export default function AdminPanel() {
               👥 {teamData.employees.length} empleados
             </span>
             <span className="stat">
-              👑 {teamData.employees.filter(emp => emp.isAdmin).length} administradores
+              👥 {teamData.employees.filter(emp => emp.isAdmin).length} administradores
             </span>
           </div>
         </div>
@@ -166,9 +167,9 @@ export default function AdminPanel() {
                       target.src = '/placeholder_profile.png';
                     }}
                   />
-                  {employee.isAdmin && (
-                    <div className="admin-badge">👑</div>
-                  )}
+                  {/*{employee.isAdmin && (
+                    <div className="admin-badge">👥</div>
+                  )}*/}
                 </div>
                 
                 <div className="employee-info">
@@ -184,7 +185,7 @@ export default function AdminPanel() {
                 </div>
 
                 <div className="select-indicator">
-                  {selectedEmployee?.id === employee.id ? '✅' : '👆'}
+                  {selectedEmployee?.id === employee.id ? '' : ''}
                 </div>
               </div>
             ))}
@@ -196,8 +197,8 @@ export default function AdminPanel() {
       <section className="employee-details-section">
         {selectedEmployee ? (
           <EmployeeDetailsContainer employee={selectedEmployee} />
-        ) : (
-          <div className="no-employee-selected">
+        ) : (''
+          /*<div className="no-employee-selected">
             <div className="no-selection-content">
               <h3>👆 Selecciona un empleado</h3>
               <p>Elige un empleado de la lista superior para ver sus horas trabajadas, semanas y gestionar aprobaciones.</p>
@@ -220,7 +221,7 @@ export default function AdminPanel() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>*/
         )}
       </section>
     </div>
