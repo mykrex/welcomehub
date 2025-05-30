@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import CourseCard from './courseCardM';
 import { CursoInscrito, CursoOpcional } from '@/app/hooks/useCourses';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface CourseSectionProps {
   title: string;
@@ -18,11 +19,8 @@ export default function CourseSection({ title, courses, showStatus = false, show
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;
-    
     const scrollAmount = 400;
-    const newScrollLeft = scrollContainerRef.current.scrollLeft + 
-      (direction === 'left' ? -scrollAmount : scrollAmount);
-    
+    const newScrollLeft = scrollContainerRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
     scrollContainerRef.current.scrollTo({
       left: newScrollLeft,
       behavior: 'smooth'
@@ -31,20 +29,41 @@ export default function CourseSection({ title, courses, showStatus = false, show
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
-    
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
   };
 
-  const handleCourseClick = (course: CursoInscrito | CursoOpcional) => {
-    // Si es un curso inscrito con contenido navegamos al detalle del curso
+  const handleCourseClick = async (course: CursoInscrito | CursoOpcional) => {
+    const supabase = createClientComponentClient();
+
     if ('estado' in course && 'ruta_archivo' in course && course.ruta_archivo) {
       window.location.href = `/cursos/${course.id_curso}`;
     } else {
-      // Para cursos opcionales o sin contenido mostramos la info/modal de inscripcion
-      console.log('Clicked course:', course.id_curso);
-      // Temos que checar esta implementacion de inscripcion y/o informacion del curso
+      const confirmed = window.confirm(`¿Quieres inscribirte al curso "${course.titulo}"?`);
+      if (confirmed) {
+        try {
+          const { data: { user }, error: authError } = await supabase.auth.getUser();
+          if (authError || !user) throw new Error('No autorizado');
+
+          const { error } = await supabase
+            .from('curso_usuario')
+            .insert({
+              id_usuario: user.id,
+              id_curso: course.id_curso,
+              estado: 'sin_comenzar',
+              last_updated: new Date()
+            });
+
+          if (error) throw error;
+
+          alert('¡Inscripción exitosa!');
+          window.location.reload();
+        } catch (err: any) {
+          console.error(err);
+          alert(`Error al inscribirte: ${err.message || err}`);
+        }
+      }
     }
   };
 
@@ -57,9 +76,7 @@ export default function CourseSection({ title, courses, showStatus = false, show
       <h2 className="text-white text-2xl font-bold mb-4 px-4">
         {title}
       </h2>
-      
       <div className="relative group">
-        {/* Boton izquierdo para movernos entre cursos */}
         {canScrollLeft && (
           <button onClick={() => scroll('left')} className="absolute top-1/2 left-2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,9 +84,7 @@ export default function CourseSection({ title, courses, showStatus = false, show
             </svg>
           </button>
         )}
-        
-        {/* Container de los cursos */}
-        <div ref={scrollContainerRef} onScroll={handleScroll} className="flex space-x-4 overflow-x-auto scrollbar-hide px-4 pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+        <div ref={scrollContainerRef} onScroll={handleScroll} className="flex space-x-4 overflow-x-auto scrollbar-hide px-4 pb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {courses.map((course) => (
             <CourseCard
               key={course.id_curso}
@@ -85,8 +100,6 @@ export default function CourseSection({ title, courses, showStatus = false, show
             />
           ))}
         </div>
-        
-        {/* Boton derecho para movernos entre cursos */}
         {canScrollRight && (
           <button onClick={() => scroll('right')} className="absolute top-1/2 right-2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +107,6 @@ export default function CourseSection({ title, courses, showStatus = false, show
             </svg>
           </button>
         )}
-        
       </div>
     </div>
   );

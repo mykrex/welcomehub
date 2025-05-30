@@ -93,6 +93,7 @@ export default function CourseDetailPage() {
       ruta_archivo={course.ruta_archivo!}
       estado={course.estado}
       duracion={course.duracion}
+      obligatorio={course.obligatorio}
       onStatusUpdate={handleStatusUpdate}
     />
   );
