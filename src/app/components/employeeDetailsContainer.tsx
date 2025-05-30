@@ -8,6 +8,7 @@ import { HoursChart } from "./hoursCharts";
 import { WeekApprovalPanel } from "./weekApprovalPanel";
 import { WeekSelector } from "./weekSelector";
 import { CoursesGraphSection } from "./coursesGraphSection";
+import '@/app/(authed)/miequipo/EmployeeDetails.css';
 
 interface EmployeeDetailsContainerProps {
   employee: Employee;
@@ -142,7 +143,7 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
       {/* Nueva sección: Gráfica de cursos */}
       <CoursesGraphSection employee={employee} />
 
-      {/* Debug info - remover en producción */}
+      {/* Debug info - remover en producción 
       {process.env.NODE_ENV === 'development' && (
         <div className="debug-info" style={{ 
           background: '#f8f9fa', 
@@ -169,7 +170,7 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
             }, null, 2)}</pre>
           </details>
         </div>
-      )}
+      )}*/}
     </div>
   );
 };
