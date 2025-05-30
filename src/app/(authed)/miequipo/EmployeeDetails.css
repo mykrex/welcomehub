@@ -1,0 +1,861 @@
+/* styles/EmployeeComponents.css - Versión mejorada con tema oscuro */
+
+/* =============================================================================
+   CONTENEDOR PRINCIPAL DE EMPLEADO
+============================================================================= */
+
+.employee-details-container {
+  background: #21262d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #30363d;
+  margin: 0 2rem;
+}
+
+.employee-header {
+  background: linear-gradient(135deg, #2d3339 0%, #24292e 100%);
+  color: #f6f8fa;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.employee-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #f6f8fa;
+}
+
+.employee-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(88, 166, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estados de carga */
+.loading-state, .error-state, .no-weeks-state {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #2d3339;
+  margin: 2rem;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  color: #e1e4e8;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #30363d;
+  border-top: 4px solid #58a6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-state button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #da3633;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.error-state button:hover {
+  background: #b91c1c;
+}
+
+/* =============================================================================
+   SELECTOR DE SEMANAS Y PANEL DE APROBACIÓN - LAYOUT HORIZONTAL
+============================================================================= */
+
+.week-controls-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: #2d3339;
+  border-bottom: 1px solid #30363d;
+}
+
+.week-selector-column {
+  border-right: 1px solid #30363d;
+}
+
+.approval-panel-column {
+  /* Sin borde derecho para que se vea limpio */
+}
+
+.week-selector {
+  background: transparent;
+  padding: 1.5rem 2rem;
+  border-bottom: none;
+}
+
+.week-selector label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #e1e4e8;
+  font-size: 1rem;
+}
+
+.week-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #30363d;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #21262d;
+  color: #f6f8fa;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.week-select:focus {
+  outline: none;
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+.week-select:hover {
+  border-color: #58a6ff;
+}
+
+.week-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #1c2128;
+  border-radius: 6px;
+  border-left: 4px solid #58a6ff;
+  border: 1px solid #30363d;
+}
+
+.week-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.week-status, .week-submitted, .week-approved {
+  color: #8b949e;
+}
+
+.week-status strong {
+  color: #58a6ff;
+}
+
+/* =============================================================================
+   PANEL DE APROBACIÓN
+============================================================================= */
+
+.approval-panel {
+  background: transparent;
+  padding: 1.5rem 2rem;
+  border-bottom: none;
+}
+
+.no-week-selected {
+  text-align: center;
+  color: #8b949e;
+  font-style: italic;
+}
+
+.week-status-section h4 {
+  margin: 0 0 1.5rem 0;
+  color: #f6f8fa;
+  font-size: 1.3rem;
+}
+
+.status-display {
+  margin-bottom: 1.5rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid;
+}
+
+.status-aprobado {
+  background: rgba(46, 160, 67, 0.2);
+  color: #56d364;
+  border-color: rgba(46, 160, 67, 0.4);
+}
+
+.status-enviado {
+  background: rgba(187, 128, 9, 0.2);
+  color: #f7931e;
+  border-color: rgba(187, 128, 9, 0.4);
+}
+
+.status-borrador {
+  background: rgba(139, 148, 158, 0.2);
+  color: #8b949e;
+  border-color: rgba(139, 148, 158, 0.4);
+}
+
+.status-rechazado {
+  background: rgba(218, 54, 51, 0.2);
+  color: #f85149;
+  border-color: rgba(218, 54, 51, 0.4);
+}
+
+.status-icon {
+  font-size: 1.1rem;
+}
+
+.status-description {
+  margin: 0;
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.week-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.metadata-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #30363d;
+}
+
+.metadata-row:last-child {
+  border-bottom: none;
+}
+
+.metadata-label {
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.metadata-value {
+  color: #f6f8fa;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Acciones de aprobación */
+.approval-actions {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #30363d;
+}
+
+.approve-button {
+  background: #238636;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.approve-button:hover {
+  background: #2ea043;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(35, 134, 54, 0.3);
+}
+
+.approve-button:disabled {
+  background: #484f58;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.approval-note {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(187, 128, 9, 0.15);
+  border: 1px solid rgba(187, 128, 9, 0.3);
+  border-radius: 6px;
+}
+
+.approval-note p {
+  margin: 0;
+  color: #f7931e;
+  font-size: 0.85rem;
+}
+
+.approved-badge, .info-badge, .rejected-badge {
+  display: inline-block;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border: 1px solid;
+}
+
+.approved-badge {
+  background: rgba(46, 160, 67, 0.2);
+  color: #56d364;
+  border-color: rgba(46, 160, 67, 0.4);
+}
+
+.info-badge {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  border-color: rgba(88, 166, 255, 0.3);
+}
+
+.rejected-badge {
+  background: rgba(218, 54, 51, 0.2);
+  color: #f85149;
+  border-color: rgba(218, 54, 51, 0.4);
+}
+
+.approved-note, .draft-note, .rejected-note {
+  margin: 0;
+  color: #8b949e;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* =============================================================================
+   GRÁFICA DE HORAS
+============================================================================= */
+
+.hours-chart {
+  background: #2d3339;
+  padding: 2rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.hours-chart h3 {
+  margin: 0 0 1rem 0;
+  color: #f6f8fa;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.chart-period {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-period p {
+  margin: 0;
+  color: #8b949e;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: #8b949e;
+}
+
+.no-data p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.week-summary {
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #1c2128;
+  border-radius: 8px;
+  text-align: center;
+  border-left: 4px solid #58a6ff;
+  border: 1px solid #30363d;
+}
+
+.week-summary p {
+  margin: 0;
+  color: #e1e4e8;
+  font-size: 1rem;
+}
+
+.week-summary strong {
+  color: #f6f8fa;
+}
+
+/* Tooltip personalizado */
+.custom-tooltip {
+  background: #2d3339 !important;
+  border: 1px solid #30363d !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  padding: 0.75rem !important;
+  font-size: 0.85rem !important;
+  color: #e1e4e8 !important;
+}
+
+.tooltip-label {
+  font-weight: 600 !important;
+  color: #f6f8fa !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.tooltip-date {
+  color: #8b949e !important;
+  font-size: 0.75rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.tooltip-total {
+  color: #e1e4e8 !important;
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid #30363d !important;
+}
+
+/* =============================================================================
+   DEBUG INFO (solo desarrollo)
+============================================================================= */
+
+.debug-info {
+  margin: 1rem 2rem;
+}
+
+.debug-info details {
+  cursor: pointer;
+}
+
+.debug-info summary {
+  padding: 0.5rem;
+  background: #30363d;
+  border-radius: 4px;
+  font-weight: 500;
+  color: #e1e4e8;
+}
+
+.debug-info pre {
+  background: #1c2128;
+  color: #e1e4e8;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+  border: 1px solid #30363d;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
+/* =============================================================================
+   RESPONSIVE
+============================================================================= */
+
+@media (max-width: 768px) {
+  .employee-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  
+  .employee-photo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .employee-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  /* Layout vertical en móviles */
+  .week-controls-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .week-selector-column {
+    border-right: none;
+    border-bottom: 1px solid #30363d;
+  }
+  
+  .week-selector, .approval-panel, .hours-chart {
+    padding: 1.5rem;
+  }
+  
+  .metadata-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .week-details {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .approve-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .employee-details-container {
+    margin: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .employee-header {
+    padding: 1rem;
+  }
+  
+  .employee-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .employee-photo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .week-controls-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .week-selector, .approval-panel, .hours-chart {
+    padding: 1rem;
+  }
+  
+  .hours-chart h3 {
+    font-size: 1.2rem;
+  }
+  
+  .status-badge {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .approve-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .employee-details-container {
+    margin: 0 0.5rem;
+  }
+}
+
+/* =============================================================================
+   ANIMACIONES
+============================================================================= */
+
+.employee-details-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-badge {
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =============================================================================
+   EFECTOS HOVER Y FOCUS
+============================================================================= */
+
+.approve-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(35, 134, 54, 0.3);
+}
+
+.status-badge {
+  transition: transform 0.1s ease;
+}
+
+.status-badge:hover {
+  transform: scale(1.02);
+}
+
+/* =============================================================================
+   ESTILOS ESPECÍFICOS PARA GRÁFICAS RECHARTS
+============================================================================= */
+
+.recharts-cartesian-axis-tick-value {
+  fill: #8b949e !important;
+}
+
+.recharts-cartesian-axis-line {
+  stroke: #30363d !important;
+}
+
+.recharts-cartesian-grid-horizontal line {
+  stroke: #30363d !important;
+}
+
+.recharts-legend-item-text {
+  color: #e1e4e8 !important;
+}
+
+.recharts-default-legend {
+  color: #e1e4e8 !important;
+}
+
+/* =============================================================================
+   SCROLL PERSONALIZADO
+============================================================================= */
+
+.week-select::-webkit-scrollbar {
+  width: 8px;
+}
+
+.week-select::-webkit-scrollbar-track {
+  background: #1c2128;
+}
+
+.week-select::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+
+.week-select::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
+
+/* =============================================================================
+   SECCIÓN DE CURSOS
+============================================================================= */
+
+.courses-section {
+  background: #2d3339;
+  padding: 2rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.courses-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.courses-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: #f6f8fa;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.courses-header p {
+  margin: 0;
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.courses-chart-container {
+  margin-bottom: 2rem;
+}
+
+.course-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.course-summary {
+  background: #1c2128;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+}
+
+.course-summary h4 {
+  margin: 0 0 1rem 0;
+  color: #f6f8fa;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #2d3339;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  min-width: 30px;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f6f8fa;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #8b949e;
+  font-weight: 500;
+}
+
+.stat-item.completed {
+  border-left: 4px solid #56d364;
+}
+
+.stat-item.in-progress {
+  border-left: 4px solid #f7931e;
+}
+
+.stat-item.not-started {
+  border-left: 4px solid #f85149;
+}
+
+.mandatory-courses-detail {
+  background: #1c2128;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #30363d;
+}
+
+.mandatory-courses-detail h4 {
+  margin: 0 0 1rem 0;
+  color: #f6f8fa;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.mandatory-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mandatory-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #30363d;
+  color: #e1e4e8;
+  font-size: 0.9rem;
+}
+
+.mandatory-item:last-child {
+  border-bottom: none;
+}
+
+.mandatory-item strong {
+  color: #f7931e;
+  font-weight: 600;
+}
+
+/* Responsive para sección de cursos */
+@media (max-width: 768px) {
+  .courses-section {
+    padding: 1.5rem;
+  }
+  
+  .course-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .courses-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .stat-item {
+    padding: 0.5rem;
+  }
+  
+  .stat-number {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .courses-section {
+    padding: 1rem;
+  }
+  
+  .course-summary,
+  .mandatory-courses-detail {
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  
+  .mandatory-item {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: flex-start;
+  }
+}
