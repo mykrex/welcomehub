@@ -83,7 +83,10 @@ export default function CourseContent({
     if (!confirmed) return;
 
     try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
       if (authError || !user) throw new Error("No autorizado");
 
       const { error } = await supabase
@@ -95,9 +98,14 @@ export default function CourseContent({
 
       alert("Te has desinscrito del curso.");
       window.location.href = "/cursos";
-    } catch (err: any) {
-      console.error(err);
-      alert(`Error al desinscribirte: ${err.message || err}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err);
+        alert(`Error al desinscribirte: ${err.message}`);
+      } else {
+        console.error(err);
+        alert("Error al desinscribirte.");
+      }
     }
   };
 
@@ -163,19 +171,37 @@ export default function CourseContent({
               onClick={() => window.history.back()}
               className="flex items-center text-gray-400 hover:text-white transition-colors"
             >
-              <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Volver
             </button>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-400">{duracion} min</span>
-              <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                estado === "completado" ? "bg-green-600" :
-                estado === "en_progreso" ? "bg-yellow-600" : "bg-gray-600"
-              }`}>
-                {estado === "completado" ? "Completado" :
-                 estado === "en_progreso" ? "En progreso" : "Sin comenzar"}
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  estado === "completado"
+                    ? "bg-green-600"
+                    : estado === "en_progreso"
+                    ? "bg-yellow-600"
+                    : "bg-gray-600"
+                }`}
+              >
+                {estado === "completado"
+                  ? "Completado"
+                  : estado === "en_progreso"
+                  ? "En progreso"
+                  : "Sin comenzar"}
               </span>
             </div>
           </div>
@@ -213,12 +239,26 @@ export default function CourseContent({
         {estado === "completado" && (
           <div className="text-center bg-green-900/30 border border-green-600 rounded-lg p-6">
             <div className="text-green-400 mb-2">
-              <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <svg
+                className="w-12 h-12 mx-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-green-400 mb-2">¡Curso Completado!</h3>
-            <p className="text-gray-300">Has finalizado exitosamente este curso.</p>
+            <h3 className="text-xl font-semibold text-green-400 mb-2">
+              ¡Curso Completado!
+            </h3>
+            <p className="text-gray-300">
+              Has finalizado exitosamente este curso.
+            </p>
           </div>
         )}
 
