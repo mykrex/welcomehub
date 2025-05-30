@@ -10,10 +10,12 @@ export type Curso = {
   obligatorio: boolean;
   estado: 'sin_comenzar' | 'en_progreso' | 'completado';
   ruta_archivo: string;
+  last_updated?: string;
 };
 
 type RawRow = {
   estado: 'sin_comenzar' | 'en_progreso' | 'completado';
+  last_updated?: string;
   curso: {
     id_curso: string;
     titulo: string;
@@ -41,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .from('curso_usuario')
     .select(`
       estado,
+      last_updated,
       curso (
         id_curso,
         titulo,
@@ -68,6 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     obligatorio: r.curso.obligatorio,
     estado:      r.estado,
     ruta_archivo: r.curso.ruta_archivo,
+    last_updated: r.last_updated,
   }));
 
   // Se devuelve el array de respuesta
