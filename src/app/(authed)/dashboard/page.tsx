@@ -1,3 +1,4 @@
+// src/app/(authed)/dashboard/page.tsx
 "use client";
 
 //* Styles *//
@@ -6,72 +7,43 @@ import "@/app/components/(layout)/layout.css"; // Unico que lo usa -> main-conte
 import "./dashboard.css";
 
 //* Libraries *//
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 
 //* Components *//
 import CursosVista from "./assets/CursosVista";
 import ProgressBar from "./assets/ProgressBar";
-import AverageStats from "./assets/AverageStats";
+import OnboardingStats from "./assets/OnboardingStats";
 import RecentCourse from "./assets/RecentCourse";
-import { Clock } from "lucide-react";
+//import { Clock } from "lucide-react";
 
-//* Import getCursos desde cursos.ts *//
-import { getCursos, Courses } from "@/app/api/cursos/cursos";
+//* Import useCourses hook *//
+import { useCourses } from "@/app/hooks/useCourses";
 
 export default function Dashboard() {
-  const [cursos, setCursos] = useState<Courses[]>([]);
-
-  useEffect(() => {
-    getCursos().then((data) => {
-      // Aquí asumimos que quieres mostrar cursos asignados, opcionales y recomendados juntos
-      const todosLosCursos = [
-        ...data.asignedCourses,
-        ...data.optionalCourses,
-        ...data.recomendedCourses,
-      ];
-      setCursos(todosLosCursos);
-    });
-  }, []);
+  const { cursosInscritos, loading, error } = useCourses();
 
   return (
     <div className="main-content">
       <div className="dashboard-wrapper">
-        <ProgressBar />
+        <ProgressBar cursos={cursosInscritos || []} />
 
         <div className="row-one">
           <div className="recent-course-wrapper">
-            <RecentCourse />
+            <RecentCourse cursos={cursosInscritos || []} />
           </div>
 
           <div className="column-one-stats">
-            <AverageStats
-              title="Mi Puntaje Promedio"
-              value={45}
-              unit="%"
-              icon={Clock}
-              comparison={{
-                percent: "6.7%",
-                position: "más",
-                direction: "alto",
-                color: "#51B6F6",
-              }}
-            />
-            <AverageStats
-              title="Mis Cursos Completados"
-              value={3}
-              unit="de 7"
-              icon={Clock}
-              comparison={{
-                percent: "20%",
-                position: "más",
-                direction: "alto",
-                color: "#51B6F6",
-              }}
-            />
+            <OnboardingStats cursos={cursosInscritos || []} />
           </div>
         </div>
 
-        <CursosVista cursos={cursos} />
+        {loading ? (
+          <div>Cargando cursos...</div>
+        ) : error ? (
+          <div>Error al cargar cursos: {error}</div>
+        ) : (
+          <CursosVista cursos={cursosInscritos || []} />
+        )}
       </div>
     </div>
   );

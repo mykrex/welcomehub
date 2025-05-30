@@ -53,14 +53,14 @@
 }
 
 .average-stats-number {
-  font-size: 100px;
+  font-size: 80px;
   color: #51B6F6;
   font-weight: bold;
   line-height: 1;
 }
 
 .average-stats-unit {
-  font-size: 20px;
+  font-size: 40px;
   color: #51B6F6;
   font-weight: normal;
   margin-left: 0.25rem;
