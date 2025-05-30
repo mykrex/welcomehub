@@ -103,7 +103,7 @@
      border-radius: 24px;
      padding: 10px 20px;
      font-size: 15px;
-     min-width: 250px;
+     min-width: 300px;
      display: flex;
      justify-content: space-between;
  }
@@ -307,6 +307,11 @@
  }
 
  /*buttons*/
+
+ .invisible-preserved {
+  visibility: hidden;
+}
+
  .buttons-bar {
      display: flex;
      gap: 10px;
@@ -323,21 +328,20 @@
      flex: 1;
      padding: 6px 0;
      border-radius: 24px;
-     cursor: pointer;
      color: white;
      transition: background-color 0.2s ease;
  }
 
  .button-group .red {
-     background-color: red;
+    background-color: red;
+    cursor: pointer;
+
  }
 
  .button-group .gray {
-     background-color: gray;
- }
+    background-color: gray;
+    cursor: pointer;
 
- .button-group .blue {
-     background-color: blue;
  }
 
  .button-group button:active {
