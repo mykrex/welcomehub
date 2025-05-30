@@ -69,7 +69,7 @@ export default function CourseCatalog() {
         />
       )}
 
-      {/* Seccion de cursos opcionales */}
+      {/* Seccion de cursos opcionales NO inscritos*/}
       {cursosOpcionales && cursosOpcionales.length > 0 && (
         <CourseSection
           title="Explora más cursos"

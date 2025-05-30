@@ -9,6 +9,7 @@ export interface CursoInscrito {
   obligatorio: boolean;
   estado: 'sin_comenzar' | 'en_progreso' | 'completado';
   ruta_archivo?: string;
+  last_updated?: string;
 }
 
 export interface CursoOpcional {

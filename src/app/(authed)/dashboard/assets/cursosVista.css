@@ -150,3 +150,95 @@
   outline-offset: -2px;
   color: var(--red-1);
 }
+
+/* Contenedor de los filtros */
+.cv-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botones de filtro */
+.cv-filter-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.cv-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.cv-filter-btn.active {
+  background: #51B6F6;
+  border-color: #51B6F6;
+  color: white;
+  box-shadow: 0 2px 8px rgba(81, 182, 246, 0.3);
+}
+
+/* Mensaje cuando no hay cursos */
+.cv-no-courses {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 40px 20px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* Responsivo para moviles */
+@media (max-width: 768px) {
+  .cv-filters {
+    justify-content: center;
+  }
+  
+  .cv-filter-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+.cv-filter-dropdown {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cv-filter-label {
+  font-weight: 600;
+  color: #cfcdcd;
+  margin-bottom: 0;
+}
+
+.cv-filter-select {
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  min-width: 200px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.cv-filter-select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.cv-filter-select:hover {
+  border-color: #007bff;
+}
