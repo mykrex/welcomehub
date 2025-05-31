@@ -1,0 +1,25 @@
+/* chat-ui.css */
+
+.chat-avatar {
+  border-radius: 9999px;
+  border: 2px solid var(--ring);
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.chat-input {
+  background-color: var(--muted);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.chat-bubble {
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+  max-width: 80%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
