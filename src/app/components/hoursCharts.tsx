@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { WeekData, ProjectInfo } from '../types/employee';
-import '@/app/(authed)/miequipo/employeeDetails.css';
+import '@/app/(authed)/miequipo/EmployeeDetails.css';
 
 interface HoursChartProps {
   weekData: WeekData | null;
