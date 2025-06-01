@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { Employee } from '../types/employee';
-import '@/app/(authed)/miequipo/EmployeeDetails.css';
+//import '@/app/(authed)/miequipo/employeeDetails.css';
 
 interface CoursesSectionProps {
   employee: Employee;
@@ -23,25 +23,11 @@ interface CoursesSectionProps {
 }
 
 export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee }) => {
-  // DEBUG: Mostrar datos completos del empleado
-  console.log('🔍 DEBUG - Datos completos del empleado:', JSON.stringify(employee, null, 2));
-  console.log('📚 DEBUG - Cursos normales:', employee.courses);
-  console.log('🎓 DEBUG - Cursos obligatorios:', employee.obligatoryCourses);
-
   // Verificar si las propiedades existen y tienen valores
   const normalCourses = employee.courses || { completed: 0, inProgress: 0, notStarted: 0 };
   const obligatoryCourses = employee.obligatoryCourses || { completed: 0, inProgress: 0, notStarted: 0 };
 
-  // DEBUG: Mostrar valores calculados
-  console.log('📊 DEBUG - Calculando datos para gráfica:');
-  console.log('- Terminados normales:', normalCourses.completed - obligatoryCourses.completed);
-  console.log('- Terminados obligatorios:', obligatoryCourses.completed);
-  console.log('- En proceso normales:', normalCourses.inProgress - obligatoryCourses.inProgress);
-  console.log('- En proceso obligatorios:', obligatoryCourses.inProgress);
-  console.log('- Sin empezar normales:', normalCourses.notStarted - obligatoryCourses.notStarted);
-  console.log('- Sin empezar obligatorios:', obligatoryCourses.notStarted);
-
-  // Datos para la gráfica de cursos
+  // Datos para la grafica de cursos
   const courseGraphData = [
     {
       tipo: 'Terminados',
@@ -60,7 +46,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
     },
   ];
 
-  console.log('📈 DEBUG - Datos finales para gráfica:', courseGraphData);
+  console.log('Datos finales para la grafica:', courseGraphData);
 
   // Tooltip personalizado para mantener consistencia con el tema
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload, label }) => {
@@ -92,36 +78,6 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
         <h3>Progreso de Cursos</h3>
         <p>Distribución de cursos obligatorios y normales</p>
       </div>
-
-      {/* DEBUG PANEL - Remover en producción */}
-      {process.env.NODE_ENV === 'development' && (
-        <div style={{ 
-          background: '#1c2128', 
-          border: '1px solid #30363d',
-          borderRadius: '8px',
-          padding: '1rem', 
-          margin: '1rem 0',
-          fontSize: '12px',
-          fontFamily: 'monospace',
-          color: '#e1e4e8'
-        }}>
-          <details>
-            <summary style={{ cursor: 'pointer', color: '#58a6ff' }}>
-              🐛 DEBUG: Datos de Cursos
-            </summary>
-            <div style={{ marginTop: '0.5rem' }}>
-              <h4 style={{ color: '#f6f8fa', margin: '0.5rem 0' }}>Datos Raw:</h4>
-              <pre style={{ background: '#0d1117', padding: '0.5rem', borderRadius: '4px', overflow: 'auto' }}>
-                {JSON.stringify({ 
-                  courses: employee.courses, 
-                  obligatoryCourses: employee.obligatoryCourses,
-                  graphData: courseGraphData 
-                }, null, 2)}
-              </pre>
-            </div>
-          </details>
-        </div>
-      )}
 
       {/* Gráfica de cursos */}
       <div className="courses-chart-container">
@@ -189,21 +145,18 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
           <h4>Resumen Total</h4>
           <div className="stats-grid">
             <div className="stat-item completed">
-              <span className="stat-icon">✅</span>
               <div className="stat-info">
                 <span className="stat-number">{normalCourses.completed}</span>
                 <span className="stat-label">Terminados</span>
               </div>
             </div>
             <div className="stat-item in-progress">
-              <span className="stat-icon">⏳</span>
               <div className="stat-info">
                 <span className="stat-number">{normalCourses.inProgress}</span>
                 <span className="stat-label">En proceso</span>
               </div>
             </div>
             <div className="stat-item not-started">
-              <span className="stat-icon">⚠️</span>
               <div className="stat-info">
                 <span className="stat-number">{normalCourses.notStarted}</span>
                 <span className="stat-label">Sin empezar</span>

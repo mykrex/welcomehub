@@ -1,4 +1,3 @@
-// types/employee.ts - Actualizado para usar string IDs (UUIDs)
 export interface WeekDay {
   name: string;
   date: Date;
@@ -37,7 +36,7 @@ export interface WeekData {
 }
 
 export interface Employee {
-  id: string; // Cambiado de number a string para manejar UUIDs
+  id: string; // String para manejar UUIDs
   name: string;
   photo: string;
   courses: {

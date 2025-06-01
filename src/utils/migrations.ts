@@ -1,4 +1,3 @@
-// utils/migrations.ts - Versión final que coincide con tu Employee interface
 import { Employee } from '@/app/types/employee';
 
 interface APIEmployee {
@@ -11,27 +10,23 @@ interface APIEmployee {
     completed?: number;
     inProgress?: number;
     notStarted?: number;
-    sin_comenzar?: number;
+    sin_comenzar?: number; // IMPORTANTE: Campo que viene de la API
   };
   obligatoryCourses?: {
     completed?: number;
     inProgress?: number;
     notStarted?: number;
-    sin_comenzar?: number;
+    sin_comenzar?: number; // IMPORTANTE: Campo que viene de la API
   };
   [key: string]: unknown;
 }
 
 /**
- * Convierte la estructura de empleado que viene de tu API actual
+ * Convierte la estructura de empleado que viene de la API
  * a la nueva estructura que necesitan los componentes modulares
+ * para el panel de Mi Equipo
  */
 export const migrateFromOldStructure = (oldEmployee: APIEmployee): Employee => {
-  console.log('🔄 DEBUG - Migrando empleado:', oldEmployee.name || oldEmployee.nombres);
-  console.log('📊 DEBUG - ID original:', oldEmployee.id, 'tipo:', typeof oldEmployee.id);
-  console.log('📊 DEBUG - Cursos originales:', oldEmployee.courses);
-  console.log('🎓 DEBUG - Cursos obligatorios originales:', oldEmployee.obligatoryCourses);
-
   // Validar que tenemos los datos mínimos necesarios
   if (!oldEmployee.id) {
     throw new Error('Employee ID is required');
@@ -43,17 +38,29 @@ export const migrateFromOldStructure = (oldEmployee: APIEmployee): Employee => {
   // Helper para extraer datos de cursos manejando diferentes nombres de campos
   const extractCourseData = (courseObj: APIEmployee['courses']) => {
     if (!courseObj) {
-      console.log('⚠️ DEBUG - No se encontraron datos de cursos');
+      console.log('No se encontraron datos de cursos');
       return { completed: 0, inProgress: 0, notStarted: 0 };
     }
+
+    // Manejar tanto notStarted como sin_comenzar
+    const notStartedValue = courseObj.notStarted !== undefined 
+      ? courseObj.notStarted 
+      : (courseObj.sin_comenzar !== undefined ? courseObj.sin_comenzar : 0);
 
     const result = {
       completed: Number(courseObj.completed || 0),
       inProgress: Number(courseObj.inProgress || 0),
-      notStarted: Number(courseObj.notStarted || courseObj.sin_comenzar || 0),
+      notStarted: Number(notStartedValue), // Usar el valor correcto
     };
 
-    console.log('🔧 DEBUG - Valores extraídos:', result);
+    console.log('🔧 DEBUG - Valores extraídos:', {
+      completed: courseObj.completed,
+      inProgress: courseObj.inProgress,
+      notStarted: courseObj.notStarted,
+      sin_comenzar: courseObj.sin_comenzar,
+      resultado: result
+    });
+    
     return result;
   };
 
@@ -66,14 +73,11 @@ export const migrateFromOldStructure = (oldEmployee: APIEmployee): Employee => {
     isAdmin: Boolean(oldEmployee.isAdmin), // Asegurar que sea boolean
   };
 
-  console.log('✅ DEBUG - Empleado migrado:', migratedEmployee);
+  console.log('✅ DEBUG - Empleado migrado:', JSON.stringify(migratedEmployee, null, 2));
   return migratedEmployee;
 };
 
-/**
- * Valida que los datos del empleado estén completos
- * (opcional - para debugging)
- */
+// Validar que los datos del empleado estan completos
 export const validateEmployee = (employee: unknown): employee is Employee => {
   if (!employee || typeof employee !== 'object') {
     return false;
@@ -81,7 +85,7 @@ export const validateEmployee = (employee: unknown): employee is Employee => {
 
   const emp = employee as Record<string, unknown>;
   
-  // Verificaciones básicas
+  // Verificaciones basicas
   if (typeof emp.id !== 'string') return false; // Cambiado a string
   if (typeof emp.name !== 'string') return false;
   if (typeof emp.photo !== 'string') return false;
@@ -105,52 +109,3 @@ export const validateEmployee = (employee: unknown): employee is Employee => {
 
   return true;
 };
-
-/**
- * Función helper para debuggear la migración
- * (opcional - puedes eliminarla después)
- */
-export const debugMigration = (oldData: APIEmployee, newData: Employee): void => {
-  console.log('🔄 Migración de empleado:');
-  console.log('📊 Datos originales:', oldData);
-  console.log('✅ Datos migrados:', newData);
-  console.log('🔍 Validación:', validateEmployee(newData) ? 'VÁLIDO' : 'INVÁLIDO');
-};
-
-/**
- * Función adicional para debug de la API
- * (para ayudar a encontrar el problema con sin_comenzar)
- */
-export function debugAPIResponse(apiData: {
-  employees?: APIEmployee[];
-  [key: string]: unknown;
-}): void {
-  console.log('🌐 === DEBUG API RESPONSE ===');
-  console.log('📋 Estructura completa:', JSON.stringify(apiData, null, 2));
-  
-  if (apiData.employees && Array.isArray(apiData.employees)) {
-    apiData.employees.forEach((emp, index) => {
-      console.log(`\n👤 EMPLEADO ${index + 1}: ${emp.name || emp.nombres}`);
-      console.log('📚 Cursos encontrados en:', Object.keys(emp).filter(key => 
-        key.toLowerCase().includes('curso') || key.toLowerCase().includes('course')
-      ));
-      
-      // Buscar propiedades relacionadas con cursos
-      const coursesData = emp.courses;
-      if (coursesData && typeof coursesData === 'object') {
-        console.log('📊 Datos de cursos:', coursesData);
-        console.log('🔑 Propiedades de cursos:', Object.keys(coursesData));
-        
-        // Buscar específicamente 'sin_comenzar'
-        Object.keys(coursesData).forEach(key => {
-          if (key.includes('sin_') || key.includes('not_') || key.includes('empezar') || key.includes('started')) {
-            console.log(`🎯 Encontrado campo relacionado: ${key} = ${(coursesData as Record<string, unknown>)[key]}`);
-          }
-        });
-      } else {
-        console.log('❌ No se encontraron datos de cursos para este empleado');
-      }
-    });
-  }
-  console.log('🌐 === FIN DEBUG API ===\n');
-}
