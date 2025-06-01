@@ -14,9 +14,7 @@ export interface TeamResponse {
   miembros: RawMiembro[];
 }
 
-/** Cargamos la informacion del equipo al que pertenece el usuario
- *  Se llama a GET /api/users/team
- */
+// Cargamos la informacion del equipo al que pertenece el usuario
 export function useUserTeam() {
   const { data, loading, error } = useFetch<TeamResponse>(
     '/api/users/team'

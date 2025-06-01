@@ -90,7 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'en_progreso':
           estadoCursos.inProgress++;
           break;
-        case 'no_iniciado':
+        case 'sin_comenzar':
           estadoCursos.notStarted++;
           break;
       }
@@ -122,7 +122,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'en_progreso':
           estadoObligatorios.inProgress++;
           break;
-        case 'no_iniciado':
+        case 'sin_comenzar':
           estadoObligatorios.notStarted++;
           break;
       }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { WeekData, ProjectInfo } from '../types/employee';
-import '@/app/(authed)/miequipo/EmployeeDetails.css';
+//import '@/app/(authed)/miequipo/employeeDetails.css';
 
 interface HoursChartProps {
   weekData: WeekData | null;
@@ -42,26 +42,69 @@ export const HoursChart: React.FC<HoursChartProps> = ({
     );
   }
 
-  // Crear datos para la gráfica basados en los días de la API
-  const dayNames = ['Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Lunes', 'Martes'];
-  
-  // Crear array de 7 días basado en la semana de la API
-  const chartData: ChartDataItem[] = Array.from({ length: 7 }, (_, index) => {
-    const startDate = new Date(weekData.inicio_semana);
-    const currentDate = new Date(startDate);
-    currentDate.setDate(startDate.getDate() + index);
-    const currentDateISO = currentDate.toISOString().split('T')[0];
+  // FUNCION HELPER: Formatear fecha  de ISO a DD/MM/YYYY
+  const formatISODate = (isoDateString: string): string => {
+    if (!isoDateString) return 'Fecha inválida';
     
-    // Buscar datos para este día específico
-    const dayData = weekData.dias.find(d => d.fecha_trabajada === currentDateISO);
+    try {
+      // Si es solo fecha (YYYY-MM-DD) agregamos el tiempo para evitar timezone issues
+      const dateToFormat = isoDateString.includes('T') ? isoDateString : `${isoDateString}T12:00:00`;
+      const date = new Date(dateToFormat);
+      
+      if (isNaN(date.getTime())) {
+        // Fallback parsing manual
+        const [year, month, day] = isoDateString.split('-');
+        return `${day}/${month}/${year}`;
+      }
+      
+      return date.toLocaleDateString('es-MX', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    } catch (error) {
+      console.error('Error formateando fecha:', isoDateString, error);
+      // Fallback manual
+      const [year, month, day] = isoDateString.split('-');
+      return `${day}/${month}/${year}`;
+    }
+  };
+
+  // Generar la semana correcta basada en las fechas reales de la API
+  const generateWeekDays = () => {
+    const inicioDateStr = weekData.inicio_semana; // "2025-05-28"
+    const days = ['Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Lunes', 'Martes'];
+    
+    // Parsear la fecha de inicio
+    const [year, month, day] = inicioDateStr.split('-').map(Number);
+    
+    return Array.from({ length: 7 }, (_, index) => {
+      // Crear fecha y agregar días
+      const currentDate = new Date(year, month - 1, day + index);
+      const currentDateISO = currentDate.toISOString().split('T')[0];
+      
+      return {
+        dayName: days[index],
+        dateISO: currentDateISO,
+        date: currentDate
+      };
+    });
+  };
+
+  // Crear datos para la grafica
+  const weekDays = generateWeekDays();
+  
+  const chartData: ChartDataItem[] = weekDays.map(({ dayName, dateISO }) => {
+    // Buscar datos para este dia especifico en los datos de la API
+    const dayData = weekData.dias.find(d => d.fecha_trabajada === dateISO);
     
     const chartDay: ChartDataItem = {
-      day: dayNames[index],
-      date: currentDateISO,
+      day: dayName,
+      date: dateISO, // Guardar el ISO string
       total: dayData?.total_horas || 0
     };
 
-    // Agregar horas por proyecto
+    // Agregar las horas por proyecto
     if (dayData) {
       dayData.proyectos.forEach(proyecto => {
         chartDay[proyecto.id_proyecto] = proyecto.horas;
@@ -71,14 +114,14 @@ export const HoursChart: React.FC<HoursChartProps> = ({
     return chartDay;
   });
 
-  // Obtener todos los proyectos únicos de esta semana
+  // Obtener todos los proyectos de esta semana
   const allProjects = Array.from(
     new Set(weekData.dias.flatMap(day => 
       day.proyectos.map(p => p.id_proyecto)
     ))
   );
 
-  // Colores para proyectos
+  // Colores para los proyectos
   const projectColors = [
     '#4CAF50', '#2196F3', '#FFC107', '#E91E63', 
     '#9C27B0', '#009688', '#FF5722', '#795548'
@@ -99,7 +142,7 @@ export const HoursChart: React.FC<HoursChartProps> = ({
             <strong>{label}</strong>
           </p>
           <p className="tooltip-date">
-            {day?.date ? new Date(day.date).toLocaleDateString('es-MX') : ''}
+            {day?.date ? formatISODate(day.date) : ''}
           </p>
           <p className="tooltip-total">
             Total: <strong>{day?.total || 0}h</strong>
@@ -126,8 +169,7 @@ export const HoursChart: React.FC<HoursChartProps> = ({
       <h3>Horas por día y proyecto</h3>
       <div className="chart-period">
         <p>
-          Semana del {new Date(weekData.inicio_semana).toLocaleDateString('es-MX')} 
-          al {new Date(weekData.fin_semana).toLocaleDateString('es-MX')}
+          Semana del {formatISODate(weekData.inicio_semana)} al {formatISODate(weekData.fin_semana)}
         </p>
       </div>
       

@@ -1,188 +1,158 @@
 // pages/api/miequipo/employee_weeks.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { WeekData, ProjectInfo } from '@/app/types/employee';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { supabaseServer } from '@/lib/supabaseServer';
 
-interface EmployeeWeeksResponse {
-  weeks: WeekData[];
-  proyectosDisponibles: ProjectInfo[];
-}
-
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<EmployeeWeeksResponse | { error: string }>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Método no permitido' });
+  }
+
+  const supabaseClient = createPagesServerClient({ req, res });
+  const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+  
+  if (sessionError || !session) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+
+  const { employeeId } = req.query;
+  
+  if (!employeeId) {
+    return res.status(400).json({ error: 'employeeId es requerido' });
   }
 
   try {
-    const { employeeId } = req.query;
+    // Verificar que el usuario tiene acceso al empleado (mismo equipo o es admin)
+    const userId = session.user.id;
     
-    if (!employeeId) {
-      return res.status(400).json({ error: 'Employee ID is required' });
+    const { data: currentUser } = await supabaseServer
+      .from('usuario')
+      .select('id_equipo')
+      .eq('id_usuario', userId)
+      .single();
+
+    const { data: targetEmployee } = await supabaseServer
+      .from('usuario')
+      .select('id_equipo')
+      .eq('id_usuario', employeeId)
+      .single();
+
+    if (currentUser?.id_equipo !== targetEmployee?.id_equipo) {
+      return res.status(403).json({ error: 'No tienes acceso a este empleado' });
     }
 
-    console.log('🔍 API: Obteniendo semanas para empleado ID:', employeeId);
-    
-    // TODO: Aquí debes conectar con tu base de datos real
-    // Por ahora, datos de ejemplo para testing:
-    
-    const mockWeeks: WeekData[] = [
-      {
-        id_semana: 1,
-        id_usuario: String(employeeId),
-        inicio_semana: '2025-05-26', // Esta semana
-        fin_semana: '2025-06-01',
-        enviado_el: '2025-05-29T10:00:00Z',
-        estado: 'enviado',
-        aprobado_por: null,
-        aprobado_el: null,
-        horas_totales: 43,
-        dias: [
-          {
-            fecha_trabajada: '2025-05-26',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 6 },
-              { id_proyecto: 'proj-002', nombre_proyecto: 'DevOps Automation', horas: 2 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-27',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 4 },
-              { id_proyecto: 'proj-003', nombre_proyecto: 'Blockchain Integration', horas: 4 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-28',
-            proyectos: [
-              { id_proyecto: 'proj-002', nombre_proyecto: 'DevOps Automation', horas: 6 },
-              { id_proyecto: 'proj-003', nombre_proyecto: 'Blockchain Integration', horas: 2 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-29',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 5 },
-              { id_proyecto: 'proj-004', nombre_proyecto: 'Cybersecurity Audit', horas: 3 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-30',
-            proyectos: [
-              { id_proyecto: 'proj-004', nombre_proyecto: 'Cybersecurity Audit', horas: 7 }
-            ],
-            total_horas: 7
-          },
-          {
-            fecha_trabajada: '2025-05-31',
-            proyectos: [
-              { id_proyecto: 'proj-002', nombre_proyecto: 'DevOps Automation', horas: 4 },
-              { id_proyecto: 'proj-003', nombre_proyecto: 'Blockchain Integration', horas: 2 }
-            ],
-            total_horas: 6
-          },
-          {
-            fecha_trabajada: '2025-06-01',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 6 }
-            ],
-            total_horas: 6
-          }
-        ]
-      },
-      {
-        id_semana: 2,
-        id_usuario: String(employeeId),
-        inicio_semana: '2025-05-19',
-        fin_semana: '2025-05-25',
-        enviado_el: '2025-05-22T15:30:00Z',
-        estado: 'aprobado',
-        aprobado_por: 'admin-001',
-        aprobado_el: '2025-05-23T09:00:00Z',
-        horas_totales: 40,
-        dias: [
-          {
-            fecha_trabajada: '2025-05-19',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 8 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-20',
-            proyectos: [
-              { id_proyecto: 'proj-002', nombre_proyecto: 'DevOps Automation', horas: 8 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-21',
-            proyectos: [
-              { id_proyecto: 'proj-003', nombre_proyecto: 'Blockchain Integration', horas: 8 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-22',
-            proyectos: [
-              { id_proyecto: 'proj-004', nombre_proyecto: 'Cybersecurity Audit', horas: 8 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-23',
-            proyectos: [
-              { id_proyecto: 'proj-001', nombre_proyecto: 'Mobile App Revamp', horas: 8 }
-            ],
-            total_horas: 8
-          },
-          {
-            fecha_trabajada: '2025-05-24',
-            proyectos: [],
-            total_horas: 0
-          },
-          {
-            fecha_trabajada: '2025-05-25',
-            proyectos: [],
-            total_horas: 0
-          }
-        ]
+    // Obtener las últimas 8 semanas (incluyendo la actual)
+    const { data: weeks, error: weeksError } = await supabaseServer
+      .from('semana')
+      .select(`
+        id_semana,
+        id_usuario,
+        inicio_semana,
+        fin_semana,
+        enviado_el,
+        estado,
+        aprobado_por,
+        aprobado_el,
+        horas_totales
+      `)
+      .eq('id_usuario', employeeId)
+      .order('inicio_semana', { ascending: false })
+      .limit(8);
+
+    if (weeksError) {
+      return res.status(500).json({ error: 'Error al obtener semanas' });
+    }
+
+    // Obtener proyectos disponibles para el empleado (similar a timecard/obtain.ts)
+    const { data: disponibles, error: proyectosError } = await supabaseServer
+      .from("proyecto_usuario")
+      .select("id_proyecto")
+      .eq("id_usuario", employeeId);
+
+    if (proyectosError) {
+      return res.status(500).json({ error: "Error al obtener proyectos disponibles" });
+    }
+
+    const ids = disponibles?.map(d => d.id_proyecto) || [];
+    let proyectos: { id_proyecto: string; nombre: string }[] = [];
+
+    if (ids.length > 0) {
+      const { data: proyectosData, error: nombresError } = await supabaseServer
+        .from("proyecto")
+        .select("id_proyecto, nombre")
+        .in("id_proyecto", ids);
+
+      if (nombresError) {
+        return res.status(500).json({ error: "Error al obtener nombres de proyectos" });
       }
-    ];
+      proyectos = proyectosData || [];
+    }
 
-    const mockProjects: ProjectInfo[] = [
-      { id_proyecto: 'proj-001', nombre: 'Mobile App Revamp' },
-      { id_proyecto: 'proj-002', nombre: 'DevOps Automation' },
-      { id_proyecto: 'proj-003', nombre: 'Blockchain Integration' },
-      { id_proyecto: 'proj-004', nombre: 'Cybersecurity Audit' }
-    ];
+    // Para cada semana, obtener las horas detalladas (siguiendo la logica de timecard)
+    const weeksWithHours = await Promise.all(
+      (weeks || []).map(async (week) => {
+        // Traer registros de horas sin join (como en timecard/obtain.ts)
+        const { data: registros, error: horasError } = await supabaseServer
+          .from("horas")
+          .select("id_horas, id_proyecto, fecha_trabajada, horas")
+          .eq("id_semana", week.id_semana);
 
-    // Aquí es donde conectarías con tu base de datos real:
-    /*
-    const weeks = await db.collection('weeks')
-      .where('id_usuario', '==', employeeId)
-      .orderBy('inicio_semana', 'desc')
-      .get();
-    
-    const projects = await db.collection('projects').get();
-    */
+        if (horasError) {
+          console.error('Error al obtener horas:', horasError);
+          return { ...week, dias: [] };
+        }
 
-    const responseData: EmployeeWeeksResponse = {
-      weeks: mockWeeks,
-      proyectosDisponibles: mockProjects
-    };
+        // Unir nombre al registro de horas (como en timecard/obtain.ts)
+        const registrosConNombre = (registros || []).map(r => ({
+          id_horas: r.id_horas,
+          fecha_trabajada: r.fecha_trabajada,
+          horas: r.horas,
+          proyecto: {
+            id_proyecto: r.id_proyecto,
+            nombre: proyectos.find(p => p.id_proyecto === r.id_proyecto)?.nombre || `Proyecto ${r.id_proyecto}`,
+          }
+        }));
 
-    console.log('✅ API: Enviando datos de semanas:', responseData);
+        // Agrupar horas por dia
+        const daysMap = new Map();
+        
+        registrosConNombre.forEach(registro => {
+          const dateKey = registro.fecha_trabajada;
+          
+          if (!daysMap.has(dateKey)) {
+            daysMap.set(dateKey, {
+              fecha_trabajada: dateKey,
+              proyectos: [],
+              total_horas: 0
+            });
+          }
+          
+          const day = daysMap.get(dateKey);
+          day.proyectos.push({
+            id_proyecto: registro.proyecto.id_proyecto,
+            nombre_proyecto: registro.proyecto.nombre,
+            horas: registro.horas
+          });
+          day.total_horas += registro.horas;
+        });
 
-    res.status(200).json(responseData);
-    
+        return {
+          ...week,
+          dias: Array.from(daysMap.values())
+        };
+      })
+    );
+
+    return res.status(200).json({
+      weeks: weeksWithHours,
+      proyectosDisponibles: proyectos.map(p => ({
+        id_proyecto: p.id_proyecto,
+        nombre: p.nombre
+      }))
+    });
+
   } catch (error) {
-    console.error('❌ API Error:', error);
-    res.status(500).json({ error: 'Error al obtener datos de semanas' });
+    console.error('Error en employee-weeks:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
   }
 }

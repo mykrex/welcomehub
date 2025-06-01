@@ -17,13 +17,13 @@ export function useEmployeeWeeks(employeeId: string): UseEmployeeWeeksReturn { /
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Usar useCallback para evitar recrear la función en cada render
+  // Usar useCallback para evitar recrear la funcion en cada render
   const fetchWeeks = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       
-      // Usar tu estructura de API existente
+      // Usar employee weeks endpoint
       const response = await fetch(`/api/miequipo/employee_weeks?employeeId=${employeeId}`);
       
       if (!response.ok) {
@@ -46,7 +46,7 @@ export function useEmployeeWeeks(employeeId: string): UseEmployeeWeeksReturn { /
 
   const approveWeek = useCallback(async (weekId: number): Promise<boolean> => {
     try {
-      // Usar tu estructura de API existente
+      // Usar la estructura de approve week
       const response = await fetch('/api/miequipo/approve_week', {
         method: 'POST',
         headers: {
@@ -62,7 +62,7 @@ export function useEmployeeWeeks(employeeId: string): UseEmployeeWeeksReturn { /
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
 
-      // Refrescar datos después de aprobar
+      // Refrescar datos despues de aprobar
       await fetchWeeks();
       return true;
       
@@ -78,7 +78,7 @@ export function useEmployeeWeeks(employeeId: string): UseEmployeeWeeksReturn { /
     if (employeeId) {
       fetchWeeks();
     }
-  }, [employeeId, fetchWeeks]); // Ahora fetchWeeks está en las dependencias
+  }, [employeeId, fetchWeeks]); // Ahora fetchWeeks esta en las dependencias
 
   return {
     weeks,

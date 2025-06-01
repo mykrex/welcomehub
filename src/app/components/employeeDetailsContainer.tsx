@@ -1,14 +1,13 @@
-// app/components/employeeDetailsContainer.tsx - VERSIÓN CON LAYOUT HORIZONTAL
 import { getCurrentWeek, getWeekKey } from "@/utils/weekUtils";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useEmployeeWeeks } from "../hooks/useEmployeeWeeks";
 import { Employee } from "../types/employee";
 import { HoursChart } from "./hoursCharts";
 import { WeekApprovalPanel } from "./weekApprovalPanel";
 import { WeekSelector } from "./weekSelector";
 import { CoursesGraphSection } from "./coursesGraphSection";
-import '@/app/(authed)/miequipo/EmployeeDetails.css';
+import Image from "next/image";
+//import '@/app/(authed)/miequipo/employeeDetails.css';
 
 interface EmployeeDetailsContainerProps {
   employee: Employee;
@@ -50,7 +49,7 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
     return (
       <div className="employee-details-container">
         <div className="error-state">
-          <h3>❌ Error</h3>
+          <h3>Error</h3>
           <p>{error}</p>
           <button onClick={() => window.location.reload()}>
             Reintentar
@@ -69,11 +68,11 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
           <Image src={employee.photo} alt={employee.name} className="employee-photo" />
         </div>
         <div className="no-weeks-state">
-          <h3>📅 Sin semanas registradas</h3>
+          <h3>Sin semanas registradas</h3>
           <p>Este empleado aún no tiene semanas de trabajo registradas.</p>
         </div>
         
-        {/* Mostrar gráfica de cursos aunque no haya semanas */}
+        {/* Mostrar grafica de cursos aunque no haya semanas */}
         <CoursesGraphSection employee={employee} />
       </div>
     );
@@ -82,7 +81,7 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
   // Si selectedWeekKey aún está vacío, usar la primera semana disponible
   const weekKeyToUse = selectedWeekKey || weeks[0]?.inicio_semana;
   
-  // Validar que tenemos una fecha válida antes de crear la semana
+  // Validar que tenemos una fecha valida antes de crear la semana
   try {
     if (weekKeyToUse) {
       const testDate = new Date(weekKeyToUse);
@@ -116,7 +115,7 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
         />
       </div>
 
-      {/* Nuevo layout horizontal: Selector + Panel de Aprobación */}
+      {/* Selector + Panel de Aprobacion de horas */}
       <div className="week-controls-row">
         <div className="week-selector-column">
           <WeekSelector
@@ -135,42 +134,14 @@ export const EmployeeDetailsContainer: React.FC<EmployeeDetailsContainerProps> =
         </div>
       </div>
 
+      {/* Grafica de horas */}
       <HoursChart
         weekData={selectedWeek || null}
         proyectosDisponibles={proyectosDisponibles}
       />
 
-      {/* Nueva sección: Gráfica de cursos */}
+      {/* Grafica de cursos */}
       <CoursesGraphSection employee={employee} />
-
-      {/* Debug info - remover en producción 
-      {process.env.NODE_ENV === 'development' && (
-        <div className="debug-info" style={{ 
-          background: '#f8f9fa', 
-          padding: '1rem', 
-          margin: '1rem 0', 
-          border: '1px solid #dee2e6',
-          borderRadius: '4px',
-          fontSize: '12px',
-          fontFamily: 'monospace'
-        }}>
-          <details>
-            <summary>🐛 Debug Info (solo desarrollo)</summary>
-            <pre>{JSON.stringify({
-              selectedWeekKey,
-              weekKeyToUse,
-              weeksCount: weeks.length,
-              currentWeekKey,
-              proyectosCount: proyectosDisponibles.length,
-              coursesData: {
-                completed: employee.courses.completed,
-                inProgress: employee.courses.inProgress,
-                notStarted: employee.courses.notStarted
-              }
-            }, null, 2)}</pre>
-          </details>
-        </div>
-      )}*/}
     </div>
   );
 };
