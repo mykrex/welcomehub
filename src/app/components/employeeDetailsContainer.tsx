@@ -7,7 +7,7 @@ import { WeekApprovalPanel } from "./weekApprovalPanel";
 import { WeekSelector } from "./weekSelector";
 import { CoursesGraphSection } from "./coursesGraphSection";
 import Image from "next/image";
-//import '@/app/(authed)/miequipo/employeeDetails.css';
+import '@/app/(authed)/miequipo/EmployeeDetails.css';
 
 interface EmployeeDetailsContainerProps {
   employee: Employee;

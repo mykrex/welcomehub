@@ -8,8 +8,8 @@ import { EmployeeList } from '@/app/components/employeeList';
 import { Employee } from '@/app/types/employee';
 import { migrateFromOldStructure} from '@/utils/migrations';
 import Image from 'next/image';
-import '@/app/(authed)/miequipo/adminPanel.css';
-import '@/app/(authed)/miequipo/employeeDetails.css';
+import '@/app/(authed)/miequipo/AdminPanel.css';
+import '@/app/(authed)/miequipo/EmployeeDetails.css';
 
 interface TeamData {
   teamName: string;

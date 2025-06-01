@@ -94,9 +94,9 @@
   border-right: 1px solid #30363d;
 }
 
-.approval-panel-column {
-  /* Sin borde derecho para que se vea limpio */
-}
+/*.approval-panel-column {
+  /* Sin borde derecho para que se vea limpio 
+}*/
 
 .week-selector {
   background: transparent;
