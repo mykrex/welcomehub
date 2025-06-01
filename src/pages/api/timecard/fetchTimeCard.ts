@@ -27,6 +27,8 @@ export interface WeekData {
   }[];
 }
 
+// Fetches week data based on a given week's start date
+// Aside from also checking if were getting the correct info to get the info.
 export async function fetchWeekData(inicioSemana: string): Promise<WeekData> {
   const res = await fetch(`/api/timecard/obtain?inicioSemana=${inicioSemana}`);
   if (!res.ok) {
