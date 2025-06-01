@@ -10,6 +10,7 @@ interface ModalProps {
   onCancel?: () => void;
 }
 
+//This makes the message of error AND confirmation
 const Modal: React.FC<ModalProps> = ({ title, message, confirmText = 'OK', cancelText, onConfirm, onCancel }) => {
   return (
     <div className="modal-overlay">
