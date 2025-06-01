@@ -42,7 +42,7 @@ export default function ChatPage() {
             <div
               className={`inline-block p-4 rounded-[15px] shadow-lg ${
                 message.sender === "user"
-                  ? "bg-[#06D6A0] text-white"
+                  ? "bg-[#159b78] text-white"
                   : "bg-[#448AFF]/10 border border-[#448AFF]/20 text-gray-100"
               }`}
             >
