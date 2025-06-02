@@ -12,7 +12,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, messagesEndRef]);
 
   return (
     <div className="min-h-screen bg-[#042C45] text-white">
