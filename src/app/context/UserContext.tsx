@@ -1,7 +1,14 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { supabase } from '@/lib/supabase';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  ReactNode,
+} from "react";
+import { supabase } from "@/lib/supabase";
 
 interface UserContextType {
   user: User | null;
@@ -29,12 +36,23 @@ export function UserProvider({ children }: { children: ReactNode }) {
   // Carga el perfil tras el login o el refresh
   const loadUserProfile = useCallback(async () => {
     try {
-      const res = await fetch('/api/users/info', {
-        credentials: 'include',
+      const res = await fetch("/api/users/info", {
+        credentials: "include",
       });
       if (!res.ok) throw new Error();
       const perfil: User = await res.json();
       setUserState(perfil);
+
+      // 💡 Llamar a verificar progreso de retos después de cargar perfil
+      const retosRes = await fetch("/api/retos/verificarProgreso", {
+        credentials: "include",
+      });
+      if (retosRes.ok) {
+        const data = await retosRes.json();
+        console.log("Retos verificados:", data);
+      } else {
+        console.error("Error al verificar progreso de retos");
+      }
     } catch {
       setUserState(null);
     }
@@ -42,9 +60,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const refreshSession = useCallback(async () => {
     try {
-      const res = await fetch('/api/auth/refresh', {
-        method: 'POST',
-        credentials: 'include',
+      const res = await fetch("/api/auth/refresh", {
+        method: "POST",
+        credentials: "include",
       });
       if (res.ok) {
         await loadUserProfile();
@@ -58,9 +76,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   // Cerramis la sesion borrando cookies y limpiando el contexto
   const logout = useCallback(async () => {
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
     });
     setUserState(null);
     await supabase.auth.signOut(); // limpia estado interno
@@ -96,9 +114,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [loadUserProfile, refreshSession]);
 
   return (
-    <UserContext.Provider
-      value={{ user, setUser: setUserState, logout }}
-    >
+    <UserContext.Provider value={{ user, setUser: setUserState, logout }}>
       {children}
     </UserContext.Provider>
   );
@@ -107,7 +123,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 export function useUser() {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUser debe usarse dentro de UserProvider');
+    throw new Error("useUser debe usarse dentro de UserProvider");
   }
   return context;
 }
