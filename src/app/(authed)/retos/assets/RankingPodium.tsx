@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./rankingPodium.css";
+import Image from "next/image";
 
 interface UsuarioRanking {
   id: string;
@@ -42,7 +43,7 @@ export default function RankingPodium() {
             <div key={user.id} className="ranking-row">
               <div className="ranking-left">
                 <div className="ranking-rank">{index + 1}</div>
-                <img
+                <Image
                   src={user.imagen}
                   alt={user.nombre_completo}
                   width={61}
@@ -52,6 +53,7 @@ export default function RankingPodium() {
                     const target = e.target as HTMLImageElement;
                     target.src = "/placeholder_profile.png";
                   }}
+                  unoptimized
                 />
                 <div className="ranking-name">{user.nombre_completo}</div>
               </div>

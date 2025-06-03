@@ -4,7 +4,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseServer } from "@/lib/supabaseServer";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "GET") return res.status(405).end("Method not allowed");
 
   const supabase = createPagesServerClient({ req, res });
@@ -27,7 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .single();
 
     if (userError || !user?.id_equipo) {
-      return res.status(400).json({ error: "No se encontró el equipo del usuario." });
+      return res
+        .status(400)
+        .json({ error: "No se encontró el equipo del usuario." });
     }
 
     const id_equipo = user.id_equipo;
@@ -111,8 +116,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ranking.sort((a, b) => b.puntos_total - a.puntos_total);
 
     return res.status(200).json({ equipo: nombre_equipo, ranking });
-  } catch (error: any) {
-    console.error("Error en getRankingEquipo:", error);
+  } catch (error: unknown) {
+    const err = error instanceof Error ? error.message : String(error);
+    console.error("Error en getRankingEquipo:", err);
     return res.status(500).json({ error: "Error interno del servidor" });
   }
 }
