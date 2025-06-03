@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function FotoPerfil({ userId }: { userId: string }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -9,13 +9,13 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   // Get the signed URL from /api/avatar/bajarAvatar
   const fetchFotoPerfil = useCallback(async () => {
     try {
-      const resp = await fetch('/api/avatar/bajarAvatar');
+      const resp = await fetch("/api/avatar/bajarAvatar");
       if (!resp.ok) {
         setImageUrl(null);
         return;
       }
       const { url } = await resp.json();
-      const separator = url.includes('?') ? '&' : '?';
+      const separator = url.includes("?") ? "&" : "?";
       setImageUrl(`${url}${separator}v=${Date.now()}`); // bust cache
     } catch {
       setImageUrl(null);
@@ -34,23 +34,28 @@ export default function FotoPerfil({ userId }: { userId: string }) {
 
     try {
       const form = new FormData();
-      form.append('userId', userId);
-      form.append('file', file);
+      form.append("userId", userId);
+      form.append("file", file);
 
-      const resp = await fetch('/api/avatar/subirAvatar', {
-        method: 'POST',
+      const resp = await fetch("/api/avatar/subirAvatar", {
+        method: "POST",
         body: form,
       });
 
       if (!resp.ok) {
         const { error } = await resp.json();
-        throw new Error(error || 'Error subiendo la imagen');
+        throw new Error(error || "Error subiendo la imagen");
       }
 
       await fetchFotoPerfil();
+      await fetch("/api/retos/verificarCambioFoto", {
+        method: "POST",
+        credentials: "include",
+      });
+      
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Error inesperado';
-      console.error('Error en handleUpload:', err);
+      const msg = err instanceof Error ? err.message : "Error inesperado";
+      console.error("Error en handleUpload:", err);
       alert(`No se pudo subir tu foto: ${msg}`);
     } finally {
       setLoading(false);
@@ -61,14 +66,15 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const resp = await fetch('/api/avatar/borrarAvatar', { method: 'POST' });
+      const resp = await fetch("/api/avatar/borrarAvatar", { method: "POST" });
       if (!resp.ok) {
         const { error } = await resp.json();
-        throw new Error(error || 'Error al borrar foto');
+        throw new Error(error || "Error al borrar foto");
       }
       setImageUrl(null);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'No se pudo borrar tu foto.';
+      const msg =
+        err instanceof Error ? err.message : "No se pudo borrar tu foto.";
       alert(msg);
     } finally {
       setLoading(false);
@@ -80,7 +86,7 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       <Image
         key={imageUrl}
         unoptimized
-        src={imageUrl || '/placeholder_profile.png'}
+        src={imageUrl || "/placeholder_profile.png"}
         alt="Foto de perfil"
         width={180}
         height={180}
@@ -101,14 +107,14 @@ export default function FotoPerfil({ userId }: { userId: string }) {
           disabled={loading}
           className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
         >
-          {loading ? 'Subiendo...' : 'Editar'}
+          {loading ? "Subiendo..." : "Editar"}
         </button>
         <button
           onClick={handleDelete}
           disabled={loading}
           className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
         >
-          {loading ? 'Eliminando...' : 'Eliminar'}
+          {loading ? "Eliminando..." : "Eliminar"}
         </button>
       </div>
     </div>
