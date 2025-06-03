@@ -8,48 +8,63 @@ import FlagStatsIcon from "./icons/flagStatsIcon";
 //* Libraries */
 import { useEffect, useState } from "react";
 
-//* Custom Hooks */
-import { useUser } from "@/app/context/UserContext";
+//* Custom Hook */
 import { useUserRetosCount } from "@/app/hooks/useUserRetosCount";
+import type { User } from "@/app/context/UserContext";
 
 export default function UserStats() {
-  const { user } = useUser();
   const { counts, loading, error } = useUserRetosCount();
 
   const [puntosTotales, setPuntosTotales] = useState<number>(0);
   const [retosTotales, setRetosTotales] = useState<number>(0);
-  const [loadingUser, setLoadingUser] = useState(true);
+  const [perfil, setPerfil] = useState<User | null>(null);
+  const [cargando, setCargando] = useState(true);
 
+  // Cargar perfil del usuario desde la API (como en miPerfil)
   useEffect(() => {
-    if (user && (user.nombres || user.apellidos)) {
-      setLoadingUser(false);
+    async function fetchPerfil() {
+      try {
+        const res = await fetch("/api/users/info", {
+          credentials: "include",
+        });
+        if (!res.ok) throw new Error("No se pudo cargar el perfil");
+        const data: User = await res.json();
+        setPerfil(data);
+      } catch (err) {
+        console.error("Error cargando perfil:", err);
+        setPerfil(null);
+      } finally {
+        setCargando(false);
+      }
     }
-  }, [user]);
 
+    fetchPerfil();
+  }, []);
+
+  // Calcular estadísticas una vez cargadas
   useEffect(() => {
-    if (user && counts && !loading && !error) {
+    if (perfil && counts && !loading && !error) {
       const total = counts.reduce(
         (acc, c) => acc + c.veces_completado * c.puntos,
         0
       );
-      setPuntosTotales(total);
-
       const totalRetos = counts.reduce((acc, c) => acc + c.veces_completado, 0);
+      setPuntosTotales(total);
       setRetosTotales(totalRetos);
     }
-  }, [user, counts, loading, error]);
+  }, [perfil, counts, loading, error]);
 
-  if (loadingUser || !user) {
+  if (cargando || !perfil) {
     return <p className="text-white">Cargando estadísticas del usuario...</p>;
   }
+
+  const nombreCompleto = `${perfil.nombres ?? ""} ${perfil.apellidos ?? ""}`.trim();
 
   return (
     <div className="user-stats-container">
       <div className="stats-header-wrapper">
         <div className="stats-name">
-          {user.nombres || user.apellidos
-            ? `${user.nombres ?? ""} ${user.apellidos ?? ""} |`
-            : "Usuario sin nombre |"}
+          {nombreCompleto ? `${nombreCompleto} |` : "Usuario sin nombre |"}
         </div>
         <div className="stats-title">Mis Estadísticas</div>
       </div>
