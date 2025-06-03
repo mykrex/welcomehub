@@ -1,299 +1,476 @@
-/* === CONTENEDOR PRINCIPAL === */
-.small-button{
-  margin-bottom: 6px;
-}
-.loading {
-  color: white;
+/* =============================================================================
+   PANEL DE ADMINISTRADOR - TEMA OSCURO PROFESIONAL
+============================================================================= */
+
+.admin-panel {
+  min-height: 100vh;
+  background: #1a1d23;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e1e4e8;
 }
 
-.admin-container {
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #102c45;
-  color: white;
+/* =============================================================================
+   HEADER PRINCIPAL
+============================================================================= */
+
+.admin-header {
+  background: linear-gradient(135deg, #2d3339 0%, #24292e 100%);
+  color: #f6f8fa;
+  padding: 2rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #30363d;
 }
 
-.header {
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.admin-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #f6f8fa;
+}
+
+.admin-header p {
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+  font-size: 1.1rem;
+  color: #8b949e;
+}
+
+.team-stats {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.employee-count {
-  font-weight: bold;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
-/* === SEMANA === */
-.week-controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.stat {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(88, 166, 255, 0.2);
 }
 
-.week-controls button {
-  background-color: #1976d2;
-  color: white;
-  padding: 5px 20px;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+/* =============================================================================
+   SELECTOR DE EMPLEADOS
+============================================================================= */
+
+.employee-selector-section {
+  padding: 2rem 0;
+  background: #21262d;
+  border-bottom: 1px solid #30363d;
 }
 
-.week-controls button:hover {
-  background-color: #125ea8;
+.selector-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-.week-label {
-  font-weight: bold;
-  color: white;
-  
+.employee-selector-section h2 {
+  margin: 0 0 2rem 0;
+  color: #f6f8fa;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 600;
 }
 
-/* === EMPLEADOS Y DETALLES === */
-.employee-table {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.employees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.employee-details-wrapper {
-  width: 100%;
-}
-
+/* Tarjetas de empleados */
 .employee-card {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 10px;
-  background-color: #064a74;
-  border: 1px solid black;
-  border-radius: 8px;
+  background: #2d3339;
+  border: 2px solid #30363d;
+  border-radius: 12px;
+  padding: 1.5rem;
   cursor: pointer;
-  text-align: left;
-  color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.employee-card:hover {
+  border-color: #58a6ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(88, 166, 255, 0.15);
+  background: #30363d;
 }
 
 .employee-card.selected {
-  background-color: #0a314f;
+  border-color: #58a6ff;
+  background: #1c2128;
+  box-shadow: 0 8px 25px rgba(88, 166, 255, 0.2);
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
+.employee-avatar {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem auto;
+}
+
+.employee-avatar img {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #30363d;
+  transition: border-color 0.3s ease;
 }
 
-.arrow-circle {
-  width: 24px;
-  height: 24px;
-  background-color: white;
-  color: #064a74;
+.employee-card.selected .employee-avatar img {
+  border-color: #58a6ff;
+}
+
+.admin-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #f7931e;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 1rem;
+  border: 2px solid #2d3339;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.employee-details {
-  margin: 0 auto 10px auto;
-  padding: 15px;
-  width: 98%;
-  background-color: #0e4869;
-  border-radius: 0 0 10px 10px;
-  color: white;
+.employee-info {
+  text-align: center;
 }
 
-/* === PANEL DE ASIGNACIÓN Y FECHAS === */
-.assignment-panel {
+.employee-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #f6f8fa;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.employee-stats {
   display: flex;
-  flex-direction: row; /* cambio clave */
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px; /* más aire entre elementos */
-  background-color: #0a314f;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 12px;
-  flex-wrap: wrap; /* por si se achica mucho */
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: #8b949e;
 }
 
-.assignment-button {
-  background-color: #2196f3;
+.admin-label {
+  color: #58a6ff;
+  font-weight: 600;
+}
+
+.select-indicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.employee-card.selected .select-indicator {
+  opacity: 1;
+}
+
+/* =============================================================================
+   SECCIÓN DE DETALLES
+============================================================================= */
+
+.employee-details-section {
+  padding: 2rem 0;
+  background: #1a1d23;
+}
+
+.no-employee-selected {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.no-selection-content {
+  background: #21262d;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #30363d;
+}
+
+.no-selection-content h3 {
+  margin: 0 0 1rem 0;
+  color: #f6f8fa;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.no-selection-content p {
+  margin: 0 0 2rem 0;
+  color: #8b949e;
+  line-height: 1.6;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.features-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #2d3339;
+  border-radius: 8px;
+  border-left: 4px solid #58a6ff;
+  border: 1px solid #30363d;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+.feature span:last-child {
+  color: #e1e4e8;
+  font-weight: 500;
+}
+
+/* =============================================================================
+   ESTADOS DE CARGA Y ERROR
+============================================================================= */
+
+.admin-loading,
+.admin-error,
+.admin-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #1a1d23;
+  padding: 2rem;
+}
+
+.loading-content,
+.error-content,
+.empty-content {
+  text-align: center;
+  background: #21262d;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid #30363d;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #30363d;
+  border-top: 4px solid #58a6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-content h2,
+.error-content h2,
+.empty-content h2 {
+  margin: 0 0 1rem 0;
+  color: #f6f8fa;
+  font-size: 1.5rem;
+}
+
+.loading-content p,
+.error-content p,
+.empty-content p {
+  margin: 0;
+  color: #8b949e;
+  line-height: 1.5;
+}
+
+.error-content button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #da3633;
   color: white;
   border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
 }
 
-.assignment-button:hover {
-  background-color: #1976d2;
+.error-content button:hover {
+  background: #b91c1c;
 }
 
-.assignment-dates {
-  font-size: 13px;
-  color: #ccc;
-  text-align: left;
-  line-height: 1.4;
+/* =============================================================================
+   VERSIÓN COMPACTA CON DROPDOWN
+============================================================================= */
+
+.admin-panel-compact {
+  min-height: 100vh;
+  background: #1a1d23;
 }
 
-.employee-header {
+.compact-header {
+  background: #21262d;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid #30363d;
 }
 
-/* === CURSOS === */
-.titleofcourses {
-  display: flex;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 20px;
-  margin: 10px 0;
-}
-
-.course-stats ul {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 0;
-  margin: 10px 0 0;
-  list-style: none;
-}
-
-.course-stats li {
+.compact-header h1 {
   margin: 0;
-  white-space: nowrap;
+  color: #f6f8fa;
+  font-size: 2rem;
 }
 
-/* === GRÁFICA DE HORAS === */
-.chart-grid {
-  position: relative;
-  width: 100%;
-  height: 250px;
-  background-color: #8bcff9;
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 0 10px;
-  box-sizing: border-box;
-  margin-top: 20px;
-}
-
-/* Eje Y: líneas horizontales y etiquetas */
-.grid-lines-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 250px;
+.employee-dropdown {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  z-index: 1;
-  padding-left: 40px;
+  gap: 0.5rem;
+  min-width: 250px;
 }
 
-.grid-line-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.employee-dropdown label {
+  font-weight: 600;
+  color: #e1e4e8;
+  font-size: 0.9rem;
 }
 
-.y-label {
-  font-size: 11px;
-  font-weight: bold;
-  color: black;
-  width: 30px;
-  text-align: right;
+.employee-dropdown select {
+  padding: 0.75rem;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #2d3339;
+  color: #f6f8fa;
+  cursor: pointer;
 }
 
-.grid-line {
-  flex: 1;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.2);
+.compact-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.axis-y-title {
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center;
-  font-size: 12px;
-  font-weight: bold;
-  color: black;
-  z-index: 2;
-}
-
-/* Barras */
-.bars-area {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  padding-left: 40px;
-  z-index: 2;
-}
-
-.bar-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  height: 234px;
-  width: 30px;
-}
-
-.bar-stack {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 100%;
-  height: 100%;
-}
-
-.bar {
-  width: 100%;
-  min-height: 2px;
-  transition: height 0.3s ease;
-  border-radius: 2px;
-}
-
-/* Etiquetas eje X */
-.x-label {
-  font-size: 13px;
-  font-weight: bold;
-  color: black;
-  margin-top: 4px;
-}
-
-/* Otras utilidades */
-.invisible {
-  visibility: hidden;
-}
-
-.summary {
+.compact-placeholder {
+  background: #21262d;
+  padding: 3rem;
+  border-radius: 12px;
   text-align: center;
-  margin-top: 10px;
-  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid #30363d;
 }
 
+.compact-placeholder p {
+  margin: 0;
+  color: #8b949e;
+  font-size: 1.1rem;
+}
 
-.chart-container {
-  background-color: #8bcff9;
-  border-radius: 10px;
-  padding: 10px;
+/* =============================================================================
+   RESPONSIVE
+============================================================================= */
+
+@media (max-width: 768px) {
+  .admin-header {
+    padding: 1.5rem 0;
+  }
+  
+  .header-content {
+    padding: 0 1rem;
+  }
+  
+  .admin-header h1 {
+    font-size: 2rem;
+  }
+  
+  .team-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .selector-content {
+    padding: 0 1rem;
+  }
+  
+  .employees-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .employee-card {
+    padding: 1rem;
+  }
+  
+  .employee-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .compact-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .employee-dropdown {
+    min-width: auto;
+  }
+  
+  .features-preview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0 0.5rem;
+  }
+  
+  .selector-content {
+    padding: 0 0.5rem;
+  }
+  
+  .admin-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .employee-card {
+    padding: 0.75rem;
+  }
+  
+  .no-selection-content {
+    padding: 2rem 1rem;
+  }
 }

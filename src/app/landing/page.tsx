@@ -1,6 +1,3 @@
-// npm install framer-motion
-
-// app/page.tsx or wherever your landing content is
 import AnimationLanding from './aniLanding';
 
 export default function LandingPage() {

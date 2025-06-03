@@ -1,377 +1,234 @@
+// pages/miequipo/index.tsx - Panel de Administrador Final
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import './AdminPanel.css';
-import EmployeeCard from './EmployeeCard';
-import EmployeeDetails from './EmployeeDetails';
-import { fetchFakeEquipo, EmpleadoNuevo } from '@/pages/api/miequipo/fakefetch';
-//import { fetchEquipo, Empleado as EmpleadoAPI } from '@/pages/api/miequipo/fetchequipo';
-import { fetchEquipo} from '@/pages/api/miequipo/fetchequipo';
+import { useState, useEffect } from 'react';
+import { EmployeeDetailsContainer } from '@/app/components/employeeDetailsContainer';
+import { OnboardingProgressChart } from '@/app/components/onboardingProgressChart';
+import { EmployeeList } from '@/app/components/employeeList';
+import { Employee } from '@/app/types/employee';
+import { migrateFromOldStructure} from '@/utils/migrations';
+import Image from 'next/image';
+import '@/app/(authed)/miequipo/AdminPanel.css';
+import '@/app/(authed)/miequipo/EmployeeDetails.css';
 
-
-function getStartOfWeek(date: Date): Date {
-  const day = date.getDay();
-  const diff = date.getDate() - day;
-  return new Date(date.setDate(diff));
+interface TeamData {
+  teamName: string;
+  employees: Employee[];
 }
 
-function formatWeekRange(date: Date): string {
-  const start = getStartOfWeek(new Date(date));
-  const end = new Date(start);
-  end.setDate(start.getDate() + 6);
-
-  const format = (d: Date) =>
-    `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}/${d.getFullYear().toString().slice(-2)}`;
-  return `${format(start)} - ${format(end)}`;
+interface APIEmployee {
+  id: string; // Cambiado a string para UUIDs
+  name: string;
+  photo?: string;
+  isAdmin?: boolean;
+  courses?: {
+    completed: number;
+    inProgress: number;
+    notStarted: number;
+    sin_comenzar?: number;
+  };
+  obligatoryCourses?: {
+    completed: number;
+    inProgress: number;
+    notStarted: number;
+    sin_comenzar?: number;
+  };
+  [key: string]: unknown;
 }
 
 export default function AdminPanel() {
-  const [teamName, setTeamName] = useState<string>('...');
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
-  const [selectedWeekDate, setSelectedWeekDate] = useState<Date>(getStartOfWeek(new Date()));
-  const [weekData, setWeekData] = useState<{ [weekKey: string]: EmpleadoNuevo[] }>({});
-  const [deliveryDates, setDeliveryDates] = useState<{ [week: string]: { [id: number]: string | null } }>({});
-  const [approvalDates, setApprovalDates] = useState<{ [week: string]: { [id: number]: string | null } }>({});
+  const [teamData, setTeamData] = useState<TeamData | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalEmployees, setModalEmployees] = useState<Employee[]>([]);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalSubtitle, setModalSubtitle] = useState('');
+
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const selectedWeekKey = selectedWeekDate.toISOString().slice(0, 10);
-
+  // Cargar datos del equipo
   useEffect(() => {
-    const storedDelivery = localStorage.getItem('deliveryDates');
-    const storedApproval = localStorage.getItem('approvalDates');
-
-    if (storedDelivery) setDeliveryDates(JSON.parse(storedDelivery));
-    if (storedApproval) setApprovalDates(JSON.parse(storedApproval));
-  }, []);
-
-  useEffect(() => {
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetchEquipo();
-
-      const realData: EmpleadoNuevo[] = response.employees.map(emp => ({
-        ...emp,
-        projectsPerDay: {},     // puedes llenarlo después si lo conectas con DB real
-        deliveryDate: null,
-        approvalDate: null,
-      }));
-
-      // Agrega el empleado fake con id fijo (ejemplo: 10)
-      const fake = await fetchFakeEquipo();
-      const fakeEmpleado = fake.employees.find(e => e.id === 1);
-      if (fakeEmpleado) {
-        fakeEmpleado.id = 10; // asegura que tenga un id único de test
-        realData.push(fakeEmpleado);
-      }
-
-      setTeamName(response.teamName);
-      setWeekData((prev) => ({
-        ...prev,
-        [selectedWeekKey]: realData,
-      }));
-    } catch (err) {
-      console.error('Error al obtener datos del equipo:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (!weekData[selectedWeekKey]) {
-    fetchData();
-  }
-}, [selectedWeekKey, weekData]);
-/* Este es de ejemplo
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    const fetchTeamData = async () => {
       try {
-        let data;
-
-        // Aquí decides qué usar: fake o real
-        if (selectedWeekKey === getStartOfWeek(new Date()).toISOString().slice(0, 10)) {
-          // Semana actual → usar datos REALES
-          const response = await fetchEquipo();
-          data = response.employees.map(emp => ({
-            ...emp,
-            projectsPerDay: {},         // vacía para mantener compatibilidad
-            deliveryDate: null,
-            approvalDate: null,
-          }));
-
-          setTeamName(response.teamName);
-        } else {
-          // Otras semanas → usar datos FAKE
-          const fake = await fetchFakeEquipo();
-          data = fake.employees;
-          setTeamName(fake.teamName);
+        setLoading(true);
+        const response = await fetch('/api/miequipo/miequipo');
+        
+        if (!response.ok) {
+          throw new Error('Error al obtener datos del equipo');
         }
-
-        setWeekData((prev) => ({
-          ...prev,
-          [selectedWeekKey]: data,
-        }));
+        
+        const data = await response.json();
+        
+        // Migrar empleados a nueva estructura
+        const migratedEmployees = data.employees
+          .map((emp: APIEmployee, index: number) => {
+            console.log('Migrando empleado:', emp.name || emp.nombre);
+            try {
+              const migrated = migrateFromOldStructure(emp);
+              console.log('Resultado migración:', migrated);
+              return migrated;
+            } catch (error) {
+              console.error(`Error migrando empleado ${index}:`, error);
+              return null;
+            }
+          })
+          .filter((emp: Employee | null): emp is Employee => emp !== null); // Filtrar empleados que fallaron
+        
+        setTeamData({
+          teamName: data.teamName,
+          employees: migratedEmployees
+        });
+        
       } catch (err) {
-        console.error('Error al obtener datos del equipo:', err);
+        setError(err instanceof Error ? err.message : 'Error desconocido');
       } finally {
         setLoading(false);
       }
     };
 
-    if (!weekData[selectedWeekKey]) {
-      fetchData();
-    }
-  }, [selectedWeekKey]);
-*/
-  const handleWeekChange = (direction: 'prev' | 'next') => {
-    const diff = direction === 'prev' ? -7 : 7;
-    const newDate = new Date(selectedWeekDate);
-    newDate.setDate(newDate.getDate() + diff);
-    const newStart = getStartOfWeek(newDate);
-    const newWeekKey = newStart.toISOString().slice(0, 10);
-    setSelectedWeekDate(newStart);
-
-    if (!weekData[newWeekKey]) {
-      setLoading(true); // activa loading al cambiar
-    }
-  };
-
-  if (loading) return <div className="loading">Cargando...</div>;
-
-  const employees = weekData[selectedWeekKey] || [];
-
-  return (
-    <div className="admin-container">
-      <div className="header">
-        <h2>Mi equipo: {teamName}</h2>
-        <div className="week-controls">
-          <button className="small-button" onClick={() => handleWeekChange('prev')}>
-            ← Semana anterior
-          </button>
-          <span className="week-label">Semana: {formatWeekRange(selectedWeekDate)}</span>
-          <button className="small-button" onClick={() => handleWeekChange('next')}>
-            Semana siguiente →
-          </button>
-        </div>
-        <span className="employee-count">Cantidad de empleados: {employees.length}</span>
-      </div>
-
-      <div className="employee-table">
-        {employees.map((emp) => (
-          <div key={emp.id} style={{ width: '100%' }}>
-            <EmployeeCard
-              employee={{ id: emp.id, name: emp.name, photo: emp.photo }}
-              isSelected={selectedEmployeeId === emp.id}
-              onSelect={() => {
-                setSelectedEmployeeId(prev => (prev === emp.id ? null : emp.id));
-              }}
-            />
-            {selectedEmployeeId === emp.id && (
-              <div className="employee-details-wrapper">
-                <EmployeeDetails
-                  employee={emp}
-                  selectedWeek={selectedWeekKey}
-                  deliveryDates={deliveryDates}
-                  setDeliveryDates={setDeliveryDates}
-                  approvalDates={approvalDates}
-                  setApprovalDates={setApprovalDates}
-                />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-
-/*'use client';
-
-import React, { useEffect, useState } from 'react';
-import './AdminPanel.css';
-import EmployeeCard from './EmployeeCard';
-import EmployeeDetails from './EmployeeDetails';
-import { fetchFakeEquipo, EmpleadoNuevo } from '@/pages/api/miequipo/fakefetch';
-
-function getStartOfWeek(date: Date): Date {
-  const day = date.getDay();
-  const diff = date.getDate() - day;
-  return new Date(date.setDate(diff));
-}
-
-function formatWeekRange(date: Date): string {
-  const start = getStartOfWeek(new Date(date));
-  const end = new Date(start);
-  end.setDate(start.getDate() + 6);
-
-  const format = (d: Date) =>
-    `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}/${d.getFullYear().toString().slice(-2)}`;
-  return `${format(start)} - ${format(end)}`;
-}
-
-export default function AdminPanel() {
-  const [teamName, setTeamName] = useState<string>('...');
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
-  const [selectedWeekDate, setSelectedWeekDate] = useState<Date>(getStartOfWeek(new Date()));
-  const [weekData, setWeekData] = useState<{ [weekKey: string]: EmpleadoNuevo[] }>({});
-  const [deliveryDates, setDeliveryDates] = useState<{ [week: string]: { [id: number]: string | null } }>({});
-  const [approvalDates, setApprovalDates] = useState<{ [week: string]: { [id: number]: string | null } }>({});
-  const [loading, setLoading] = useState(true);
-
-  const selectedWeekKey = selectedWeekDate.toISOString().slice(0, 10);
-
-  // Cargar datos desde localStorage una sola vez
-  useEffect(() => {
-    const storedDelivery = localStorage.getItem('deliveryDates');
-    const storedApproval = localStorage.getItem('approvalDates');
-
-    if (storedDelivery) setDeliveryDates(JSON.parse(storedDelivery));
-    if (storedApproval) setApprovalDates(JSON.parse(storedApproval));
+    fetchTeamData();
   }, []);
 
-  // Cargar datos falsos de empleados por semana
-  useEffect(() => {
-    if (!weekData[selectedWeekKey]) {
-      fetchFakeEquipo()
-        .then((data) => {
-          setTeamName(data.teamName);
-          setWeekData((prev) => ({
-            ...prev,
-            [selectedWeekKey]: data.employees,
-          }));
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error('Error al obtener datos del equipo:', err);
-          setLoading(false);
-        });
-    }
-  }, [selectedWeekKey]);
-
-  const handleWeekChange = (direction: 'prev' | 'next') => {
-    const diff = direction === 'prev' ? -7 : 7;
-    const newDate = new Date(selectedWeekDate);
-    newDate.setDate(newDate.getDate() + diff);
-    const newStart = getStartOfWeek(newDate);
-    const newWeekKey = newStart.toISOString().slice(0, 10);
-    setSelectedWeekDate(newStart);
-
-    if (!weekData[newWeekKey]) {
-      fetchFakeEquipo().then((data) => {
-        setWeekData((prev) => ({ ...prev, [newWeekKey]: data.employees }));
-      });
-    }
+  const handleSegmentClick = (employees: Employee[], title: string, subtitle: string) => {
+    setModalEmployees(employees);
+    setModalTitle(title);
+    setModalSubtitle(subtitle);
+    setShowModal(true);
   };
+  
+  // Estados de carga
+  if (loading) {
+    return (
+      <div className="admin-loading">
+        <div className="loading-content">
+          <div className="spinner"></div>
+          <h2>Cargando Panel de Administración...</h2>
+          <p>Obteniendo datos del equipo</p>
+        </div>
+      </div>
+    );
+  }
 
-  if (loading) return <div className="loading">Cargando...</div>;
-
-  const employees = weekData[selectedWeekKey] || [];
-
-  return (
-    <div className="admin-container">
-      <div className="header">
-        <h2>Mi equipo: {teamName}</h2>
-        <div className="week-controls">
-          <button className="small-button" onClick={() => handleWeekChange('prev')}>
-            ← Semana anterior
-          </button>
-          <span className="week-label">Semana: {formatWeekRange(selectedWeekDate)}</span>
-          <button className="small-button" onClick={() => handleWeekChange('next')}>
-            Semana siguiente →
+  if (error) {
+    return (
+      <div className="admin-error">
+        <div className="error-content">
+          <h2>Error al cargar</h2>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>
+            Reintentar
           </button>
         </div>
-        <span className="employee-count">Cantidad de empleados: {employees.length}</span>
       </div>
+    );
+  }
 
-      <div className="employee-table">
-        {employees.map((emp) => (
-          <div key={emp.id} style={{ width: '100%' }}>
-            <EmployeeCard
-              employee={{ id: emp.id, name: emp.name, photo: emp.photo }}
-              isSelected={selectedEmployeeId === emp.id}
-              onSelect={() => {
-                setSelectedEmployeeId(prev => (prev === emp.id ? null : emp.id));
-              }}
-            />
-            {selectedEmployeeId === emp.id && (
-              <div className="employee-details-wrapper">
-                <EmployeeDetails
-                  employee={emp}
-                  selectedWeek={selectedWeekKey}
-                  deliveryDates={deliveryDates}
-                  setDeliveryDates={setDeliveryDates}
-                  approvalDates={approvalDates}
-                  setApprovalDates={setApprovalDates}
-                />
-              </div>
-            )}
-          </div>
-        ))}
+  if (!teamData || teamData.employees.length === 0) {
+    return (
+      <div className="admin-empty">
+        <div className="empty-content">
+          <h2>Sin empleados</h2>
+          <p>No se encontraron empleados en tu equipo.</p>
+        </div>
       </div>
-    </div>
-  );
-}
-
-*/
-
-/*'use client';
-
-import React, { useEffect, useState } from 'react';
-import './AdminPanel.css';
-import EmployeeCard from './EmployeeCard';
-import EmployeeDetails from './EmployeeDetails';
-import { fetchEquipo, Empleado } from '@/pages/api/miequipo/fetchequipo';
-
-export default function AdminPanel() {
-  const [employees, setEmployees] = useState<Empleado[]>([]);
-  const [teamName, setTeamName] = useState<string>('...');
-  const [selectedEmployeeId, setSelectedEmployeeId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchEquipo().then((data) => {
-      setTeamName(data.teamName);
-      setEmployees(data.employees);
-      setLoading(false);
-    }).catch((err) => {
-      console.error('Error al obtener datos del equipo:', err);
-      setLoading(false);
-    });
-  }, []);
-
-  if (loading) return <div className = "loading">Cargando...</div>;
+    );
+  }
 
   return (
-    <div className="admin-container">
-      <div className="header">
-        <h2>Mi equipo: {teamName}</h2>
-        <span className="employee-count">Cantidad de empleados: {employees.length}</span>
-      </div>
-
-      <div className="employee-table">
-        {employees.map(emp => (
-          <div key={emp.id} style={{ width: '100%' }}>
-            <EmployeeCard
-              employee={{ id: emp.id, name: emp.name, photo: emp.photo }}
-              isSelected={selectedEmployeeId === emp.id}
-              onSelect={() =>
-                setSelectedEmployeeId(prev => (prev === emp.id ? null : emp.id))
-              }
-            />
-            {selectedEmployeeId === emp.id && (
-              <div className="employee-details-wrapper">
-                <EmployeeDetails employee={emp} />
-              </div>
-            )}
+    <div className="admin-panel">
+      {/* Header del panel */}
+      <header className="admin-header">
+        <div className="header-content">
+          <h1>Panel administrativo de Onboarding y Desempeño</h1>
+          <p>{teamData.teamName}</p>
+          
+          <div className="team-stats">
+            <span className="stat">
+              👥 {teamData.employees.length} empleados
+            </span>
+            <span className="stat">
+              👤 {teamData.employees.filter(emp => emp.isAdmin).length} administrador
+            </span>
           </div>
-        ))}
-      </div>
+
+        </div>
+      </header>
+
+      {/* Grafica del progreso del onboarding */}
+      <OnboardingProgressChart
+      employees={teamData.employees}
+      teamName={teamData.teamName}
+      onSegmentClick={handleSegmentClick}
+      />
+
+      <EmployeeList
+      isOpen={showModal}
+      onClose={() => setShowModal(false)}
+      employees={modalEmployees}
+      title={modalTitle}
+      subtitle={modalSubtitle}
+      onEmployeeSelect={setSelectedEmployee}
+      />
+
+      {/* Selector de empleado */}
+      <section className="employee-selector-section">
+        <div className="selector-content">
+          <h2>Seleccionar Empleado</h2>
+          <div className="employees-grid">
+            {teamData.employees.map((employee, index) => (
+              <div
+                key={employee.id || `employee-${index}`}
+                className={`employee-card ${
+                  selectedEmployee?.id === employee.id ? 'selected' : ''
+                }`}
+                onClick={() => setSelectedEmployee(employee)}
+              >
+                <div className="employee-avatar">
+                  <Image 
+                    src={employee.photo} 
+                    alt={employee.name}
+                    width={80}
+                    height={80}
+                    className="employee-photo-img"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/placeholder_profile.png';
+                    }}
+                  />
+                  {/*{employee.isAdmin && (
+                    <div className="admin-badge">Admin</div>
+                  )}*/}
+                </div>
+                
+                <div className="employee-info">
+                  <h3>{employee.name}</h3>
+                  <div className="employee-stats">
+                    <span>
+                      📚 {employee.courses.completed + employee.courses.inProgress + employee.courses.notStarted} cursos
+                    </span>
+                    {employee.isAdmin && (
+                      <span className="admin-label">Administrador</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="select-indicator">
+                  {selectedEmployee?.id === employee.id ? '' : ''}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Detalles del empleado seleccionado */}
+      <section className="employee-details-section">
+        {selectedEmployee ? (
+          <EmployeeDetailsContainer employee={selectedEmployee} />
+        ) : ('')}
+      </section>
     </div>
   );
 }
-*/

@@ -1,7 +1,7 @@
 import React from 'react';
 import './TimeCard.css';
 
-interface ModalProps {
+export interface ModalProps {
   title: string;
   message: string;
   confirmText?: string;
@@ -10,6 +10,7 @@ interface ModalProps {
   onCancel?: () => void;
 }
 
+//This makes the message of error AND confirmation
 const Modal: React.FC<ModalProps> = ({ title, message, confirmText = 'OK', cancelText, onConfirm, onCancel }) => {
   return (
     <div className="modal-overlay">

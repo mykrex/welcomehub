@@ -1,12 +1,20 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { supabase } from '@/lib/supabase';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  ReactNode,
+} from "react";
+import { supabase } from "@/lib/supabase";
 
 interface UserContextType {
   user: User | null;
   setUser: (u: User | null) => void;
   logout: () => Promise<void>;
+  loadingUser: boolean;
 }
 
 export interface User {
@@ -25,26 +33,33 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  // Carga el perfil tras el login o el refresh
   const loadUserProfile = useCallback(async () => {
+    setLoadingUser(true);
     try {
-      const res = await fetch('/api/users/info', {
-        credentials: 'include',
+      const res = await fetch("/api/users/info", {
+        credentials: "include",
       });
       if (!res.ok) throw new Error();
       const perfil: User = await res.json();
       setUserState(perfil);
+
+      await fetch("/api/retos/verificarProgreso", {
+        credentials: "include",
+      });
     } catch {
       setUserState(null);
+    } finally {
+      setLoadingUser(false);
     }
   }, []);
 
   const refreshSession = useCallback(async () => {
     try {
-      const res = await fetch('/api/auth/refresh', {
-        method: 'POST',
-        credentials: 'include',
+      const res = await fetch("/api/auth/refresh", {
+        method: "POST",
+        credentials: "include",
       });
       if (res.ok) {
         await loadUserProfile();
@@ -56,39 +71,37 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }, [loadUserProfile]);
 
-  // Cerramis la sesion borrando cookies y limpiando el contexto
   const logout = useCallback(async () => {
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
     });
     setUserState(null);
-    await supabase.auth.signOut(); // limpia estado interno
+    await supabase.auth.signOut();
   }, []);
 
   useEffect(() => {
-    // Se recupera sesion y el perfil al montar
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         loadUserProfile();
+      } else {
+        setLoadingUser(false);
       }
     });
 
-    // Escucha los cambios de auth (login, logout, refresh)
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         if (session?.user) {
           loadUserProfile();
         } else {
           setUserState(null);
+          setLoadingUser(false);
         }
       }
     );
 
-    // Refrescamos cada 30 minutos
     const interval = setInterval(refreshSession, 30 * 60 * 1000);
 
-    // Limpiamos el listener y el intervalo al desmontar la pagina
     return () => {
       listener.subscription.unsubscribe();
       clearInterval(interval);
@@ -96,9 +109,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [loadUserProfile, refreshSession]);
 
   return (
-    <UserContext.Provider
-      value={{ user, setUser: setUserState, logout }}
-    >
+    <UserContext.Provider value={{ user, setUser: setUserState, logout, loadingUser }}>
       {children}
     </UserContext.Provider>
   );
@@ -107,7 +118,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 export function useUser() {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUser debe usarse dentro de UserProvider');
+    throw new Error("useUser debe usarse dentro de UserProvider");
   }
   return context;
 }

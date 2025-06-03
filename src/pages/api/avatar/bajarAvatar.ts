@@ -6,19 +6,22 @@ type Data = { url: string } | { error: string };
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   if (req.method !== 'GET') return res.status(405).end('Method not allowed');
 
-  // Iniciamos el ciente  de Supabase ligado a req/res
   const supabase = createPagesServerClient({ req, res });
 
-  // Checamos la sesion con helper
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  const { id_usuario } = req.query;
 
-  if (sessionError || !session) {
-    return res.status(401).json({ error: 'No autorizado' });
+  // Si se pasa un id_usuario en query, usamos ese; si no, usamos el de sesión
+  let userId = id_usuario as string;
+
+  if (!userId) {
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session) {
+      return res.status(401).json({ error: 'No autorizado' });
+    }
+    userId = session.user.id;
   }
 
-  const userId = session.user.id;
-
-  // Se genera la URL firmada para la foto de perfil
+  // Generar URL firmada
   const { data: signedData, error: storageError } = await supabase
     .storage
     .from('avatars')
@@ -28,6 +31,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(404).json({ error: 'Avatar no encontrado' });
   }
 
-  // Se devuelve la URL al cliente
   return res.status(200).json({ url: signedData.signedUrl });
 }
