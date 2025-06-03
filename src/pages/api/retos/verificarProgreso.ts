@@ -52,14 +52,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const idRetoOpcional = getRetoId('curso_opcional_completo');
     const idRetoTodos = getRetoId('todos_cursos_obligatorios_completos');
 
-    if (!idRetoObligatorio || !idRetoOpcional || !idRetoTodos) {
-      return res.status(500).json({ message: 'Error', error: 'No se encontraron todos los retos necesarios en la base de datos.' });
-    }
-
-    const { data: userRetos } = await supabase
+    // Obtener retos ya registrados por este usuario
+    const { data: userRetos, error: errorUserRetos } = await supabase
       .from('reto_usuario')
       .select('id_reto')
       .eq('id_usuario', userId);
+
+    if (errorUserRetos) throw errorUserRetos;
 
     const userRetosIds = userRetos?.map(r => r.id_reto) || [];
 
@@ -68,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       if (!cursoDetalle) continue;
 
       if (c.estado === 'completado') {
-        if (cursoDetalle.obligatorio && !userRetosIds.includes(idRetoObligatorio)) {
+        if (cursoDetalle.obligatorio && idRetoObligatorio && !userRetosIds.includes(idRetoObligatorio)) {
           await supabase.from('reto_usuario').insert({
             id_usuario: userId,
             id_reto: idRetoObligatorio,
@@ -76,9 +75,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             terminado: new Date()
           });
           retosInsertados++;
-          detalles.push(`Registrado reto curso_obligatorio_completo para curso ${c.id_curso}`);
+          detalles.push(`Registrado curso_obligatorio_completo para curso ${c.id_curso}`);
         }
-        if (!cursoDetalle.obligatorio && !userRetosIds.includes(idRetoOpcional)) {
+        if (!cursoDetalle.obligatorio && idRetoOpcional && !userRetosIds.includes(idRetoOpcional)) {
           await supabase.from('reto_usuario').insert({
             id_usuario: userId,
             id_reto: idRetoOpcional,
@@ -86,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             terminado: new Date()
           });
           retosInsertados++;
-          detalles.push(`Registrado reto curso_opcional_completo para curso ${c.id_curso}`);
+          detalles.push(`Registrado curso_opcional_completo para curso ${c.id_curso}`);
         }
       }
     }
@@ -98,7 +97,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return cursoUsuario?.estado === 'completado';
       });
 
-    if (todosObligatoriosCompletados && !userRetosIds.includes(idRetoTodos)) {
+    if (todosObligatoriosCompletados && idRetoTodos && !userRetosIds.includes(idRetoTodos)) {
       await supabase.from('reto_usuario').insert({
         id_usuario: userId,
         id_reto: idRetoTodos,
@@ -106,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         terminado: new Date()
       });
       retosInsertados++;
-      detalles.push(`Registrado reto todos_cursos_obligatorios_completos`);
+      detalles.push(`Registrado todos_cursos_obligatorios_completos`);
     }
 
     return res.status(200).json({ message: 'Verificación completada', retosInsertados, detalles });

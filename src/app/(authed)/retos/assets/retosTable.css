@@ -1,0 +1,83 @@
+
+/* ============= header ============= */
+.retos-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.retos-title {
+  color: #ebfaff;
+  font: 600 28px/1 "Manrope", sans-serif;
+}
+.retos-subtitle {
+  color: #ebfaff;
+  font: 500 24px/1 "Manrope", sans-serif;
+}
+.retos-date {
+  color: #8bcff9;
+  font: 500 24px/1 "Manrope", sans-serif;
+}
+
+/* ============= table layout ============= */
+.retos-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.retos-table .retos-row:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.retos-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 30px;
+}
+.retos-row--header {
+  background: #8bcff9;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 2px solid #0b88d5;
+}
+.retos-row--even {
+  background: #053c5e;
+}
+.retos-row--odd {
+  background: #053c5e;
+}
+
+/* header fonts */
+.retos-row--header .retos-cell {
+  color: #064a74;
+  font: 700 18px/1 "Manrope", sans-serif;
+}
+
+/* ============= column widths ============= */
+.retos-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.retos-cell--status {
+  flex: 1;
+  
+}
+.retos-cell--cont {
+  flex: 1;
+  justify-content: left;
+  align-items: left;
+  gap: 8px;
+}
+.retos-cell--type {
+  flex: 2;
+}
+.retos-cell--points {
+  flex: 1;
+  text-align: center;
+}
+.retos-cell--description {
+  flex: 4;
+}

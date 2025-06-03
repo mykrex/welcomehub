@@ -10,6 +10,7 @@ export type UserReto = {
     titulo_reto: string;
     descripcion_reto: string;
     tipo_reto: string;
+    es_continuo: boolean;
   };
 };
 
@@ -33,7 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         puntos,
         titulo_reto,
         descripcion_reto,
-        tipo_reto
+        tipo_reto,
+        es_continuo
       )
     `)
     .eq('id_usuario', userId);

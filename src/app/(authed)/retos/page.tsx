@@ -3,13 +3,13 @@
 //* Styles *//
 import "./retos.css";
 
-//* Libraries *//
-import { useRetos } from "@/app/hooks/useRetos";
-import { useUserRetos } from "@/app/hooks/useUserRetos";
-
-//* Components *//
+import UserStats from "./assets/UserStats";
+import RetosTable from "./assets/retosTable";
 import RankingPodium from "./assets/RankingPodium";
-import Logros from "./assets/Logros";
+import useVerificarProgreso from '@/app/hooks/useVerificarProgreso';
+
+
+//import Logros from "./assets/Logros";
 
 function getCurrentWeekRange(): string {
   const today = new Date();
@@ -32,65 +32,17 @@ function getCurrentWeekRange(): string {
 }
 
 export default function Retos() {
-  const { retos, loading: loadingRetos, error: errorRetos } = useRetos();
-  const {
-    userRetos,
-    loading: loadingUserRetos,
-    error: errorUserRetos,
-  } = useUserRetos();
-
-  const weekRange = getCurrentWeekRange();
-
-  const isLoading = loadingRetos || loadingUserRetos;
-  const hasError = errorRetos || errorUserRetos;
-
+  useVerificarProgreso();
   return (
     <div className="main-content">
       <div className="retos-page">
+        <UserStats />
+
         <div className="retos-container">
-          <div className="retos-header">
-            <span className="retos-title">Mis Retos |</span>
-            <span className="retos-subtitle">Semana:</span>
-            <span className="retos-date">{weekRange}</span>
-          </div>
-
-          {/* Loader o error */}
-          {isLoading ? (
-            <p>Cargando retos...</p>
-          ) : hasError ? (
-            <p>Error al cargar retos.</p>
-          ) : (
-            <div className="retos-table">
-              <div className="retos-row retos-row--header">
-                <div className="retos-cell">Estatus</div>
-                <div className="retos-cell">Tipo de reto</div>
-                <div className="retos-cell">Puntos</div>
-                <div className="retos-cell">Descripción</div>
-              </div>
-
-              {retos &&
-                retos.map((reto) => {
-                  const completado = userRetos
-                    ? userRetos.some((ur) => ur.id_reto === reto.id_reto)
-                    : false;
-
-                  return (
-                    <div key={reto.id_reto} className="retos-row">
-                      <div className="retos-cell">
-                        {completado ? "✅ Completado" : "❌ Incompleto"}
-                      </div>
-                      <div className="retos-cell">{reto.tipo_reto}</div>
-                      <div className="retos-cell">{reto.puntos}</div>
-                      <div className="retos-cell">{reto.titulo_reto}</div>
-                    </div>
-                  );
-                })}
-            </div>
-          )}
+          <RetosTable />
         </div>
-
         <RankingPodium />
-        <Logros />
+        {/*<Logros /> Quitar por ahora*/}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export type Reto = {
   titulo_reto: string;
   descripcion_reto: string;
   tipo_reto: string;
+  es_continuo: boolean;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -15,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const supabase = createPagesServerClient({ req, res });
   const { data, error } = await supabase
     .from('reto')
-    .select('id_reto, puntos, titulo_reto, descripcion_reto, tipo_reto');
+    .select('id_reto, puntos, titulo_reto, descripcion_reto, tipo_reto, es_continuo');
 
   if (error) {
     console.error('Error al obtener retos:', error);
@@ -27,7 +28,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     puntos: Number(r.puntos),
     titulo_reto: r.titulo_reto,
     descripcion_reto: r.descripcion_reto,
-    tipo_reto: r.tipo_reto
+    tipo_reto: r.tipo_reto,
+    es_continuo: r.es_continuo
   }));
 
   return res.status(200).json(retos);

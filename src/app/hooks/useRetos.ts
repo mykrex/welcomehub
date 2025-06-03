@@ -6,6 +6,7 @@ export interface Reto {
   titulo_reto: string;
   descripcion_reto: string;
   tipo_reto: string;
+  es_continuo: boolean;
 }
 
 interface UseRetosResult {
