@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 export interface RetoCount {
   id_reto: string;
   veces_completado: number;
+  puntos: number;
 }
 
 interface UseUserRetosCountResult {

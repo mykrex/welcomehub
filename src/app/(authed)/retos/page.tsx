@@ -11,6 +11,7 @@ import useVerificarProgreso from '@/app/hooks/useVerificarProgreso';
 
 //import Logros from "./assets/Logros";
 
+{/*}
 function getCurrentWeekRange(): string {
   const today = new Date();
   const dayOfWeek = today.getDay();
@@ -30,6 +31,7 @@ function getCurrentWeekRange(): string {
   const end = format(sunday);
   return `${start} - ${end}`;
 }
+  */}
 
 export default function Retos() {
   useVerificarProgreso();

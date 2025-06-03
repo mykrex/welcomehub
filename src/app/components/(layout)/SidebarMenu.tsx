@@ -101,14 +101,15 @@ export default function SidebarMenu() {
               key={label}
               className={`menu-item ${isActive ? "active" : ""}`}
               onClick={async () => {
-                //ON click redirije a la pagina, lo otro es para verificar si el usuario ha leído la historia de Neoris
                 if (label === "Neoris") {
                   await fetch("/api/retos/verificarLeeHistoria", {
                     method: "POST",
                     credentials: "include",
                   });
                 }
-                path && router.push(path);
+                if (path) {
+                  router.push(path);
+                }
               }}
             >
               <Icon

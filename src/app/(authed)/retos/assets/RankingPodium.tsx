@@ -3,32 +3,38 @@ import React, { useEffect, useState } from "react";
 import "./rankingPodium.css";
 import Image from "next/image";
 
+interface UsuarioRanking {
+  id: string;
+  nombre_completo: string;
+  puntos_total: number;
+  imagen: string;
+}
+
 export default function RankingPodium() {
-  const [ranking, setRanking] = useState<any[]>([]);
+  const [ranking, setRanking] = useState<UsuarioRanking[]>([]);
   const [equipo, setEquipo] = useState<string>('Equipo');
 
   useEffect(() => {
-  fetch('/api/retos/getRankingEquipo', { credentials: 'include' })
-    .then(res => res.json())
-    .then(async data => {
-      const updatedRanking = await Promise.all(
-        (data.ranking ?? []).map(async (user: any) => {
-          try {
-            const res = await fetch(`/api/avatar/bajarAvatar?id_usuario=${user.id}`);
-            if (!res.ok) throw new Error();
-            const { url } = await res.json();
-            return { ...user, imagen: `${url}&v=${Date.now()}` };
-          } catch {
-            return { ...user, imagen: '/placeholder_profile.png' }; // Fallback a placeholder
-          }
-        })
-      );
-      setRanking(updatedRanking);
-      setEquipo(data.equipo ?? 'Equipo');
-    })
-    .catch(err => console.error("Error cargando ranking:", err));
-}, []);
-
+    fetch('/api/retos/getRankingEquipo', { credentials: 'include' })
+      .then(res => res.json())
+      .then(async data => {
+        const updatedRanking = await Promise.all(
+          (data.ranking ?? []).map(async (user: UsuarioRanking) => {
+            try {
+              const res = await fetch(`/api/avatar/bajarAvatar?id_usuario=${user.id}`);
+              if (!res.ok) throw new Error();
+              const { url } = await res.json();
+              return { ...user, imagen: `${url}&v=${Date.now()}` };
+            } catch {
+              return { ...user, imagen: '/placeholder_profile.png' }; // Fallback a placeholder
+            }
+          })
+        );
+        setRanking(updatedRanking);
+        setEquipo(data.equipo ?? 'Equipo');
+      })
+      .catch(err => console.error("Error cargando ranking:", err));
+  }, []);
 
   return (
     <div className="ranking-container">
