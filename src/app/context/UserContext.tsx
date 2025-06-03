@@ -14,6 +14,7 @@ interface UserContextType {
   user: User | null;
   setUser: (u: User | null) => void;
   logout: () => Promise<void>;
+  loadingUser: boolean;
 }
 
 export interface User {
@@ -32,9 +33,10 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUserState] = useState<User | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  // Carga el perfil tras el login o el refresh
   const loadUserProfile = useCallback(async () => {
+    setLoadingUser(true);
     try {
       const res = await fetch("/api/users/info", {
         credentials: "include",
@@ -43,18 +45,13 @@ export function UserProvider({ children }: { children: ReactNode }) {
       const perfil: User = await res.json();
       setUserState(perfil);
 
-      // 💡 Llamar a verificar progreso de retos después de cargar perfil
-      const retosRes = await fetch("/api/retos/verificarProgreso", {
+      await fetch("/api/retos/verificarProgreso", {
         credentials: "include",
       });
-      if (retosRes.ok) {
-        const data = await retosRes.json();
-        console.log("Retos verificados:", data);
-      } else {
-        console.error("Error al verificar progreso de retos");
-      }
     } catch {
       setUserState(null);
+    } finally {
+      setLoadingUser(false);
     }
   }, []);
 
@@ -74,39 +71,37 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
   }, [loadUserProfile]);
 
-  // Cerramis la sesion borrando cookies y limpiando el contexto
   const logout = useCallback(async () => {
     await fetch("/api/auth/logout", {
       method: "POST",
       credentials: "include",
     });
     setUserState(null);
-    await supabase.auth.signOut(); // limpia estado interno
+    await supabase.auth.signOut();
   }, []);
 
   useEffect(() => {
-    // Se recupera sesion y el perfil al montar
     supabase.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         loadUserProfile();
+      } else {
+        setLoadingUser(false);
       }
     });
 
-    // Escucha los cambios de auth (login, logout, refresh)
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         if (session?.user) {
           loadUserProfile();
         } else {
           setUserState(null);
+          setLoadingUser(false);
         }
       }
     );
 
-    // Refrescamos cada 30 minutos
     const interval = setInterval(refreshSession, 30 * 60 * 1000);
 
-    // Limpiamos el listener y el intervalo al desmontar la pagina
     return () => {
       listener.subscription.unsubscribe();
       clearInterval(interval);
@@ -114,7 +109,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [loadUserProfile, refreshSession]);
 
   return (
-    <UserContext.Provider value={{ user, setUser: setUserState, logout }}>
+    <UserContext.Provider value={{ user, setUser: setUserState, logout, loadingUser }}>
       {children}
     </UserContext.Provider>
   );

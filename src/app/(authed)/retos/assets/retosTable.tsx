@@ -7,6 +7,7 @@ import { useUserRetos } from "@/app/hooks/useUserRetos";
 import {useUserRetosCount} from '@/app/hooks/useUserRetosCount';
 import CheckmarkIcon from "./icons/checkmarkIcon";
 
+
 export default function RetosTable() {
   const { retos, loading: loadingRetos, error: errorRetos } = useRetos();
   const {

@@ -12,28 +12,16 @@ interface UsuarioRanking {
 
 export default function RankingPodium() {
   const [ranking, setRanking] = useState<UsuarioRanking[]>([]);
-  const [equipo, setEquipo] = useState<string>('Equipo');
+  const [equipo, setEquipo] = useState<string>("Equipo");
 
   useEffect(() => {
-    fetch('/api/retos/getRankingEquipo', { credentials: 'include' })
-      .then(res => res.json())
-      .then(async data => {
-        const updatedRanking = await Promise.all(
-          (data.ranking ?? []).map(async (user: UsuarioRanking) => {
-            try {
-              const res = await fetch(`/api/avatar/bajarAvatar?id_usuario=${user.id}`);
-              if (!res.ok) throw new Error();
-              const { url } = await res.json();
-              return { ...user, imagen: `${url}&v=${Date.now()}` };
-            } catch {
-              return { ...user, imagen: '/placeholder_profile.png' }; // Fallback a placeholder
-            }
-          })
-        );
-        setRanking(updatedRanking);
-        setEquipo(data.equipo ?? 'Equipo');
+    fetch("/api/retos/getRankingEquipo", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        setRanking(data.ranking ?? []);
+        setEquipo(data.equipo ?? "Equipo");
       })
-      .catch(err => console.error("Error cargando ranking:", err));
+      .catch((err) => console.error("Error cargando ranking:", err));
   }, []);
 
   return (
@@ -56,11 +44,16 @@ export default function RankingPodium() {
               <div className="ranking-left">
                 <div className="ranking-rank">{index + 1}</div>
                 <Image
-                  className="profile-picture-small"
                   src={user.imagen}
                   alt={user.nombre_completo}
                   width={61}
                   height={61}
+                  className="profile-picture-small"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/placeholder_profile.png";
+                  }}
+                  unoptimized
                 />
                 <div className="ranking-name">{user.nombre_completo}</div>
               </div>
