@@ -24,27 +24,45 @@
         "content": "Un permiso se considera como una ausencia temporal justificada de las actividades laborales que puede ser un par de horas sin exceder media jornada laboral. \n\n Los permisos generalmente son para atender temas medicos o situaciones innesperadas, si se encuentra en medio de una emergencia medica lo primero es atender la emergencia y atender a nuestra familia. Despues, cuando tengas la oportunidad debes notificar al Home Depot Team, a tu lider o al equipo de Neoris para que puedan estar al tanto de tu situación y puedan ofrecerte el apoyo necesario. \n\n Si el permiso no es por una emergencia, si no una actividad general y no sabemos cuanto tiempo va a tomar, te recomiendo solicitar todo el día como si fuera un día de vacaciones así no tienes limite de tiempi y puedes dedicarle todo el día..."
     },
     {
-        "id": "cursos",
-        "title": "Cursos y Capacitación",
-        "description": "Información sobre los cursos y oportunidades de capacitación disponibles.",
+        "id": "cursos-obligatorios",
+        "title": "Cursos Obligatorios",
+        "description": "Información sobre los cursos obligatorios.",
         "content": "Como parte de tu proceso de onboarding, tendrás que completar 6 cursos obligatorios: \n\n 1. Concientización General en Seguridad de Información \n 2. Continuidad de Negocio \n 3. GDPR Reglamento General de Protección de Datos \n 4. PCI-DDS 4.0 \n 5. Privacidad de Datos Personales \n 6. Sistema de Gestión de Seguridad y Privacidad de la información \n\n Estos cursos son esenciales para garantizar que todos los empleados estén alineados con las políticas y procedimientos de la empresa..."
     },
     {
-        "id": "Días Festivos",
+        "id": "cursos",
+        "title": "Cursos",
+        "description": "Información sobre los cursos disponibles en la plataforma.",
+        "content": "En el menu de la izquierda, encontrarás una sección dedicada a los cursos disponibles en la plataforma, ademas de los cursos obligatorios que debes completar como parte de tu onboarding. \n\n Aquí podrás explorar una variedad de cursos diseñados para ayudarte a desarrollar tus habilidades y conocimientos en diferentes áreas. Puedes acceder a los cursos haciendo click en la sección 'Cursos' del menú de la izquierda. Despues veras cursos Recomendados para ti, Cursos Obligatorios y Explora más cursos donde puedes seleccionar cualquier curso que te interese. \n\n Si tienes alguna pregunta sobre los cursos o necesitas ayuda para acceder a ellos, no dudes en contactar a tu líder o al equipo de Neoris para obtener asistencia."
+    },
+    {
+        "id": "dias-festivos",
         "title": "Días Festivos",
         "description": "Información sobre los días festivos reconocidos por la empresa.",
         "content": "Los días festivos son los asuetos que no se trabajan establecidos por el calendario laboral. Por ende vamos a usar los días festivos respectivos al país de nuestro cliente, solo por solicitud de nuestro cliente podemos tomar días festivos de otros países. \n\n Los días de asueto de otros países deben estar dados de alta en la herramienta de vacaciones de Neoris. \n\n Para equipos que trabajan en escritorio, los asuetos son manejados por solicitud del empleado y no por el calendario de Neoris..."
     },
     {
-        "id": "historia de neoris",
+        "id": "historia-neoris",
         "title": "Historia de Neoris",
         "description": "Un vistazo a la historia de Neoris y su evolución.", 
         "content": "La Historia de Neoris se remonta a su fundación en 2001, cuando un grupo de visionarios decidió crear una empresa que combinara la tecnología con la consultoría para ayudar a las empresas a transformarse digitalmente. Desde entonces, Neoris ha crecido y evolucionado, convirtiéndose en un líder en soluciones tecnológicas y consultoría estratégica a nivel global. Puedes revisar más a detalle en el menu de la izquierda en la pestaña 'Neoris'..."
     },
     {
-        "id": "time card",
+        "id": "time-card",
         "title": "Time Card",
         "description": "Herramienta para registrar horas trabajadas.",
         "content": "La herramienta de Time Card funciona para capturar las horas trabajadas por dia y el proyecto o actividad que se esta realizando. Es responsabilidad de cada empleado asignada a un proyecto llenar el Tiemcard entre Lunes y Martes sin falta. \n\n Para acceder a la herramienta, dirígete al menú de la izquierda y selecciona 'Time Card'. Allí podrás registrar tus horas trabajadas, asignarlas a los proyectos correspondientes y asegurarte de que tu tiempo se contabilice correctamente. Para cargar las horas trabajadas de la semana debes dirigirte a la semana cuando se trabajaron, haces click en el simbolo de +, seleccionas o escribes el proyecto y agregas las horas trabajadas. Despues das click en 'Aceptar' y despues en 'Guardar'. Una vez que el total de horas sea 42.h Hrs debes proceder al boton de 'Enviar' para que tu lider pueda revisarlo y aprobarlo. \n\n Despues de capturar tus horas trabajadas te pedimos que tomes una captura de pantalla de tus horas semanales y compartas la imagen en uno de los MS Teams chat donde el resto del equipo de Neoris esta..."
+    },
+    {
+        "id": "dashboard",
+        "title": "Dashboard",
+        "description": "Panel general donde puedes ver tu progreso en el onboarding.",
+        "content": "El Dashboard es tu panel de control personal donde puedes ver tu progreso en el proceso de onboarding. Aquí encontrarás información sobre los cursos que has completado, las tareas pendientes y cualquier otra actividad relacionada con tu integración en la empresa. \n\n Para acceder al Dashboard, dirígete al menú de la izquierda y selecciona 'Dashboard'. Desde allí, podrás navegar por las diferentes secciones y asegurarte de que estás al día con todos los requisitos del onboarding. \n\n Si tienes alguna pregunta o necesitas ayuda con alguna sección del Dashboard, no dudes en contactar a tu líder o al equipo de Neoris para obtener asistencia."
+    },
+    {
+        "id": "retos",
+        "title": "Retos",
+        "description": "Area de retos donde puedes participar y ganar puntos.",
+        "content": "En el menu de la izquierda puedes acceder al area de 'Retos'. Aqui podrás encontrar una variedad de retos diseñados para fomentar la participación y ayudarte a integrarte mejor a la cultura de la empresa. Participa en completar estos retos y estaras compitiendo con los miembros de tu equipo. Cada reto completado te otorgará puntos para al final ver quien es el ganador..."
     }
 ]
