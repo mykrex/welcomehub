@@ -1,4 +1,3 @@
-// src/app/(authed)/dashboard/assets/OnboardingStats.tsx
 import "./averageStats.css";
 import { GraduationCap } from "lucide-react";
 import { CursoInscrito } from '@/app/hooks/useCourses';

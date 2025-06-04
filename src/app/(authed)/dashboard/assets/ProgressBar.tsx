@@ -10,8 +10,6 @@ export default function ProgressComponent({ cursos = [] }: ProgressComponentProp
   // Calcular estadísticas de los cursos
   const totalCursos = cursos.length;
   const cursosCompletados = cursos.filter(curso => curso.estado === 'completado').length;
-  //const cursosEnProgreso = cursos.filter(curso => curso.estado === 'en_progreso').length;
-  //const cursosSinComenzar = cursos.filter(curso => curso.estado === 'sin_comenzar').length;
   
   // Calcular porcentajes
   const porcentajeCompletado = totalCursos > 0 ? Math.round((cursosCompletados / totalCursos) * 100) : 0;
@@ -46,12 +44,6 @@ export default function ProgressComponent({ cursos = [] }: ProgressComponentProp
       {/* Title */}
       <div className="db-progress-title-container">
         <div className="db-progress-title-main">Progreso Total</div>
-        {/* Dropdown
-        <select className="db-progress-dropdown" defaultValue="todos">
-          <option value="todos">Todos Mis Cursos</option>
-          <option value="asignados">Cursos Asignados</option>
-          <option value="opcionales">Cursos Opcionales</option>
-        </select> */}
       </div>
 
       {/* Progress Bar */}

@@ -4,16 +4,13 @@ import CourseCatalog from '@/app/components/courseCatalog';
 
 export default function CursosPage() {
   return (
-    <main className="min-h-screen bg-[#141414]">
+    <main className="min-h-screen bg-[#000F14]">
       {/* Header */}
-      <div className="relative bg-gradient-to-b from-[#141414] to-transparent">
+      <div className="relative bg-gradient-to-b from-[#000F14] to-transparent">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            Catálogo de Cursos
-          </h1>
-          <p className="text-gray-400 text-lg">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Descubre, aprende y haz crecer tus habilidades
-          </p>
+          </h1>
         </div>
       </div>
 

@@ -87,7 +87,7 @@ export default function CourseSection({
   }
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 bg-[#042c45] border-2 border-transparent rounded-[15px] p-2">
       <h2 className="text-white text-2xl font-bold mb-4 px-4">{title}</h2>
       <div className="relative group">
         {canScrollLeft && (
