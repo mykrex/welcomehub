@@ -1,7 +1,7 @@
 import React from 'react';
 import './TimeCard.css';
 
-interface ModalProps {
+export interface ModalProps {
   title: string;
   message: string;
   confirmText?: string;
