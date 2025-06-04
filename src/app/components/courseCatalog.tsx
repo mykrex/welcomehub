@@ -39,7 +39,7 @@ export default function CourseCatalog() {
   const inscritosOpcionales = cursosInscritos?.filter((c) => !c.obligatorio) ?? [];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-[#000F14]">
       {/* Seccion de los cursos inscritos obligatorios a los que esta inscrito el usuario */}
       {inscritosObligatorios.length > 0 && (
         <CourseSection

@@ -1,4 +1,3 @@
-// pages/miequipo/index.tsx - Panel de Administrador Final
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,6 +6,7 @@ import { OnboardingProgressChart } from '@/app/components/onboardingProgressChar
 import { EmployeeList } from '@/app/components/employeeList';
 import { Employee } from '@/app/types/employee';
 import { migrateFromOldStructure} from '@/utils/migrations';
+import {Users, User, Book} from 'lucide-react';
 import Image from 'next/image';
 import '@/app/(authed)/miequipo/AdminPanel.css';
 import '@/app/(authed)/miequipo/EmployeeDetails.css';
@@ -97,15 +97,15 @@ export default function AdminPanel() {
     setModalSubtitle(subtitle);
     setShowModal(true);
   };
-  
-  // Estados de carga
+
   if (loading) {
     return (
-      <div className="admin-loading">
-        <div className="loading-content">
-          <div className="spinner"></div>
-          <h2>Cargando Panel de Administración...</h2>
-          <p>Obteniendo datos del equipo</p>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+          {/*<p className="text-gray-400">Cargando catálogo de cursos...</p>*/}
+          <h2 className="text-gray-400">Cargando Panel de Administración...</h2>
+          <p className="text-gray-400">Obteniendo datos del equipo</p>
         </div>
       </div>
     );
@@ -145,11 +145,13 @@ export default function AdminPanel() {
           <p>{teamData.teamName}</p>
           
           <div className="team-stats">
-            <span className="stat">
-              👥 {teamData.employees.length} empleados
+            <span className="stat flex items-center">
+              <Users className='w-4 h-4 mr-1'/>
+              {teamData.employees.length} empleados
             </span>
-            <span className="stat">
-              👤 {teamData.employees.filter(emp => emp.isAdmin).length} administrador
+            <span className="stat flex items-center">
+              <User className='w-4 h-4'/>
+              {teamData.employees.filter(emp => emp.isAdmin).length} administrador
             </span>
           </div>
 
@@ -197,16 +199,14 @@ export default function AdminPanel() {
                       target.src = '/placeholder_profile.png';
                     }}
                   />
-                  {/*{employee.isAdmin && (
-                    <div className="admin-badge">Admin</div>
-                  )}*/}
                 </div>
                 
                 <div className="employee-info">
                   <h3>{employee.name}</h3>
-                  <div className="employee-stats">
-                    <span>
-                      📚 {employee.courses.completed + employee.courses.inProgress + employee.courses.notStarted} cursos
+                  <div className="employee-stats items-center">
+                    <span className="flex">
+                      {employee.courses.completed + employee.courses.inProgress + employee.courses.notStarted} cursos 
+                      <Book className='w-4 h-4 ml-1'/>
                     </span>
                     {employee.isAdmin && (
                       <span className="admin-label">Administrador</span>

@@ -26,8 +26,8 @@ export default function CourseCard({
 }: CourseCardProps) {
   const getEstadoColor = (estado?: string) => {
     switch (estado) { /** Se cambia el color del estado segun el estado */
-      case 'completado': return 'bg-green-500';
-      case 'en_progreso': return 'bg-yellow-500';
+      case 'completado': return 'bg-[#3faa49]';
+      case 'en_progreso': return 'bg-[#eba10e]';
       case 'sin_comenzar': return 'bg-gray-500';
       default: return '';
     }

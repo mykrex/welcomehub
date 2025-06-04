@@ -121,7 +121,7 @@ export default function CourseContent({
 
     if (fileType === "video") {
       return (
-        <div className="w-full max-w-4xl mx-auto border border-gray-400 hover:border-white rounded-lg p-2 transition-colors">
+        <div className="bg-[#1a242a] w-full max-w-4xl mx-auto border border-gray-400 hover:border-white rounded-lg p-2 transition-colors">
           <video
             controls
             className="w-full h-auto rounded-lg shadow-lg"
@@ -163,8 +163,8 @@ export default function CourseContent({
   };
 
   return (
-    <div className="min-h-screen bg-[#141414] text-white">
-      <div className="bg-gradient-to-b from-[#141414] to-transparent border-b border-gray-800">
+    <div className="min-h-screen bg-[#042c45] text-white">
+      <div className="bg-gradient-to-b from-[#042c45] to-transparent border-b border-gray-800 shadow-md">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between mb-4">
             <button
@@ -191,9 +191,9 @@ export default function CourseContent({
               <span
                 className={`px-3 py-1 rounded-full text-xs font-medium ${
                   estado === "completado"
-                    ? "bg-green-600"
+                    ? "bg-[#3faa49]"
                     : estado === "en_progreso"
-                    ? "bg-yellow-600"
+                    ? "bg-[#eba10e]"
                     : "bg-gray-600"
                 }`}
               >
@@ -225,17 +225,6 @@ export default function CourseContent({
           </div>
         )}
 
-        {!isObligatorio && (
-          <div className="text-center mt-4">
-            <button
-              onClick={handleUnenroll}
-              className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
-            >
-              Desinscribirme del curso
-            </button>
-          </div>
-        )}
-
         {estado === "completado" && (
           <div className="text-center bg-green-900/30 border border-green-600 rounded-lg p-6">
             <div className="text-green-400 mb-2">
@@ -259,6 +248,17 @@ export default function CourseContent({
             <p className="text-gray-300">
               Has finalizado exitosamente este curso.
             </p>
+          </div>
+        )}
+
+        {!isObligatorio && (
+          <div className="text-center mt-4">
+            <button
+              onClick={handleUnenroll}
+              className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Desinscribirme del curso
+            </button>
           </div>
         )}
 
