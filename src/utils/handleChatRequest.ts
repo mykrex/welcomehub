@@ -76,8 +76,8 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
   // intencion cursos completados, en progreso, sin comenzar
   const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
-  const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado"];
-  const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar"];
+  const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar"];
+  const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar", "no he iniciado"];
 
   // cursos completados
   if (palabrasCompletados.some(kw => prompt.includes(kw))){
