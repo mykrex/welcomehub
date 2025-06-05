@@ -10,10 +10,8 @@ body,
   height: 100%;
   margin: 0;
   font-family: "Manrope", sans-serif;
-  background-color: #000F14 ;
+  background-color: #000f14;
 }
-
-
 
 /* App container -> Es lo que contiene toda la pagina*/
 .app-container {
@@ -30,7 +28,7 @@ body,
   flex-direction: column;
   flex: 1;
   height: 100%;
-  gap: 12px; 
+  gap: 12px;
   min-height: 0;
   overflow: hidden;
 }
@@ -42,109 +40,7 @@ body,
   margin: 0;
   overflow-y: auto;
   padding-right: 5px;
-}
-
-
-
-/** ------------------------------- SIDEBAR MENU -------------------------------  */
-
-:root{
-  --sidebar-gap:10px; /* Centralized gap for spacing */
-}
-
-/* Contenedor del Side menu */
-.sidebar-container {
-  width: 160px;               /* Sidebar width */
-  height: 100%;               /* Full height of the viewport/container */
-  padding: 20px 10px 10px 10px; /* Uniform padding, 20 on top */
-  border-radius: 15px;        /* Rounded corners */
-  display: flex;              /* Flexbox layout */
-  flex-direction: column;     /* Stack children vertically */
-  justify-content: flex-start; /* Align items at the top */
-  align-items: center;        /* Center horizontally */
-  gap: 30px;                  /* Space between logo and menu-list */
-  background: #001f29;
-}
-
-/*Contenedor para el logo de welcomehub*/
-.logo {
-  width: 120px;
-  height: 35px;
-  position: relative;
-  object-fit: contain;
-  background-color: red;
-}
-
-.logo-image {
-  width: 100%;                /* Take full width of its container */
-  height: 100%;               /* Take full height of its container */
-  object-fit: contain;        /* Keep image aspect ratio, don't crop */
-}
-
-/* Menu list */
-.menu-list {
-  align-self: stretch;        /* Fills parent's width */
-  display: flex;              /* Flexbox layout */
-  flex-direction: column;     /* Stack menu-items vertically */
-  justify-content: flex-start;/* Align menu-items to the top */
-  align-items: flex-start;    /* Align items to the left */
-  gap: 10px;                  /* Space between menu items */
-  width: 140px;               /* Fixed width (less than sidebar for padding effect) */
-}
-
-/* Menu item */
-.menu-item {
-  align-self: stretch;        /* Make each item full width of menu-list */
-  height: 100%;               /* Inherit height (may be overridden by content) */
-  padding: 10px 15px;         /* Spacing inside item */
-  border-radius: 12px;        /* Rounded edges */
-  display: flex;              /* Flexbox layout */
-  justify-content: flex-start;/* Start-align icon and label */
-  align-items: center;        /* Vertically center icon and label */
-  gap: 10px;                  /* Space between icon and label */
-}
-
-/* Color del hover de los botones */
-.menu-item:hover {
-  background-color: #064A74; /* Hover effect with a dark teal color */
-}
-
-/* Color del hover de los botones cuando son activos/picados */
-.menu-item.active {
-  background: #0b88d5;        /* Active state background */
-}
-
-
-/* Icon styles */
-.icon {
-  width: 15px;                /* Fixed width for icons */
-  height: 100%;               /* Same height as parent for alignment */
-}
-
-.inactive-icon {
-  color: #9daaa6;             /* Grayish tone for inactive state */
-}
-
-.active-icon {
-  color: #f3f2f2;             /* Bright white-ish tone for active state */
-}
-
-/* Label styles */
-.label {
-  font-size: 16px;            /* Medium size text */
-  font-family: "Manrope";     /* Custom font */
-  font-weight: 500;           /* Semi-bold */
-  word-wrap: break-word;      /* Wrap long labels */
-  color: white;               /* Default label color */
-}
-
-
-.label.inactive {
-  color: #9daaa6;             /* Gray for inactive label */
-}
-
-.menu-item.active .label {
-  color: white;               /* White label when active */
+  border-radius: 15px;
 }
 
 /** ------------------------------- NAVBAR MENU -------------------------------  */
@@ -229,7 +125,7 @@ body,
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #9DAAA6;
+  background-color: #9daaa6;
   border-radius: 10px;
 }
 
