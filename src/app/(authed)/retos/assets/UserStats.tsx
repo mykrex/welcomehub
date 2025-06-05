@@ -20,7 +20,7 @@ export default function UserStats() {
   const [perfil, setPerfil] = useState<User | null>(null);
   const [cargando, setCargando] = useState(true);
 
-  // Cargar perfil del usuario desde la API (como en miPerfil)
+  // Cargar perfil del usuario desde la API
   useEffect(() => {
     async function fetchPerfil() {
       try {
