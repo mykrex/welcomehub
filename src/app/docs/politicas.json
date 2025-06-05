@@ -3,13 +3,31 @@
         "id": "onboarding-overview",
         "title": "Onboarding Overview",
         "description": "Un desgole de lo que es el proceso de onboarding.",
-        "content": "El proceso de onboarding es una parte crucial de la experiencia del empleado en Welcomehub. Asegura que cada nuevo miembro del equipo se sienta bienvenido y preparado para su nuevo rol..."
+        "content": "El proceso de onboarding es una parte crucial de la experiencia del empleado en Welcomehub. Asegura que cada nuevo miembro del equipo se sienta bienvenido y preparado para su nuevo rol."
     },
     {
-        "id": "bienvenida",
+        "id": "tour-bienvenida",
         "title": "Bienvenido a Welcomehub",
         "description": "Una breve introducción a la pagina web.",
-        "content": "Bienvenido a Welcomehub, donde la innovación y la colaboración son el núcleo de nuestra cultura. Esta plataforma está diseñada para facilitar la comunicación y el aprendizaje continuo entre todos los miembros del equipo. Aquí encontrarás recursos valiosos, políticas de la empresa y herramientas para ayudarte a tener éxito en tu nuevo rol..."
+        "content": "Una plataforma donde la innovación y la colaboración son el núcleo de nuestra cultura. Esta plataforma está diseñada para facilitar la comunicación y el aprendizaje continuo entre todos los miembros del equipo. Aquí encontrarás recursos y herramientas valiosas para ayudarte a tener éxito en tu nuevo rol."
+    },
+    {
+        "id": "tour-welcomehub",
+        "title": "Tour por Welcomehub",
+        "description": "Un recorrido por las principales secciones de la plataforma.",
+        "content": "Esta plataforma está diseñada para llevarte de la mano a través de tu proceso de onboarding. En la barra lateral izquierda encontraras un menu de opciones que te seran utiles durante tu proceso de onboarding y toda tu carrera laboral en Neoris. \n\n1. Dashboard: Aquí encontrarás un resumen de tu progreso en el onboarding asi como los cursos que estas tomando. \n2. Cursos: En esta sección podrás acceder a los cursos disponibles en la plataforma, incluyendo los cursos obligatorios que debes completar como parte de tu onboarding. \n3. Retos: En esta sección podrás ver retos que puedes completar para ganar puntos y competir con tu equipo.\n4. Neoris: Aquí encontrarás información sobre la empresa, su historia y cultura.\n5. Time Card: En esta sección deberas registrar tus horas trabajadas en los proyectos que te fueron asignados. \n6. Perfil: En la parte superior derecha esta tu foto de perfil, en esta sección podras visualizar tu información así como la de tu equipo y poder tomar acción como cambiar tu foto de perfíl, cambiar tu contraseña y cerrar sesión.\n\nCualquier duda, inquietud o problema que tengas no dudes en preguntarme, ¡Estoy para ayudarte!"
+    },
+    {
+        "id": "admin-welcomehub",
+        "title": "Tour por Welcomehub",
+        "description": "Un recorrido por las principales secciones de la plataforma.",
+        "content": "Esta plataforma está diseñada para llevarte de la mano a través de tu proceso de onboarding. En la barra lateral izquierda encontraras un menu de opciones que te seran utiles durante tu proceso de onboarding y toda tu carrera laboral en Neoris. \n\n1. Dashboard: Aquí encontrarás un resumen de tu progreso en el onboarding asi como los cursos que estas tomando. \n2. Cursos: En esta sección podrás acceder a los cursos disponibles en la plataforma, incluyendo los cursos obligatorios que debes completar como parte de tu onboarding. \n3. Retos: En esta sección podrás ver retos que puedes completar para ganar puntos y competir con tu equipo.\n4. Neoris: Aquí encontrarás información sobre la empresa, su historia y cultura.\n5. Time Card: En esta sección deberas registrar tus horas trabajadas en los proyectos que te fueron asignados.\n6. Mi Equipo: En esta sección como administrador puedes tener un vistazo a tu equipo, el estado del onboarding, los cursos que estan tomando así como tomar accion sobre solicitudes que miembos de tu equipo puedan tener.\n7. Perfil: En la parte superior derecha esta tu foto de perfil, en esta sección podras visualizar tu información así como la de tu equipo y poder tomar acción como cambiar tu foto de perfíl, cambiar tu contraseña y cerrar sesión.\n\nCualquier duda, inquietud o problema que tengas no dudes en preguntarme, ¡Estoy para ayudarte!"
+    },
+    {
+        "id": "historia-neoris",
+        "title": "Historia de Neoris",
+        "description": "Un vistazo a la historia de Neoris y su evolución.", 
+        "content": "La Historia de Neoris se remonta a su fundación en 2001, cuando un grupo de visionarios decidió crear una empresa que combinara la tecnología con la consultoría para ayudar a las empresas a transformarse digitalmente. Desde entonces, Neoris ha crecido y evolucionado, convirtiéndose en un líder en soluciones tecnológicas y consultoría estratégica a nivel global. Puedes revisar más a detalle en el menu de la izquierda en la pestaña 'Neoris'"
     },
     {
         "id": "vacaciones",
@@ -33,7 +51,7 @@
         "id": "cursos",
         "title": "Cursos",
         "description": "Información sobre los cursos disponibles en la plataforma.",
-        "content": "En el menu de la izquierda, encontrarás una sección dedicada a los cursos disponibles en la plataforma, ademas de los cursos obligatorios que debes completar como parte de tu onboarding. \n\n Aquí podrás explorar una variedad de cursos diseñados para ayudarte a desarrollar tus habilidades y conocimientos en diferentes áreas. Puedes acceder a los cursos haciendo click en la sección 'Cursos' del menú de la izquierda. Despues veras cursos Recomendados para ti, Cursos Obligatorios y Explora más cursos donde puedes seleccionar cualquier curso que te interese. \n\n Si tienes alguna pregunta sobre los cursos o necesitas ayuda para acceder a ellos, no dudes en contactar a tu líder o al equipo de Neoris para obtener asistencia."
+        "content": "En el menu de la izquierda, encontrarás una sección dedicada a los cursos disponibles en la plataforma, ademas de los cursos obligatorios que debes completar como parte de tu onboarding. \n\nAquí podrás explorar una variedad de cursos diseñados para ayudarte a desarrollar tus habilidades y conocimientos en diferentes áreas. Puedes acceder a los cursos haciendo click en la sección 'Cursos' del menú de la izquierda. Despues veras cursos Recomendados para ti, Cursos Obligatorios y Explora más cursos, donde puedes seleccionar cualquier curso que te interese. \n\nSi tienes alguna pregunta sobre los cursos o necesitas ayuda para acceder a ellos, no dudes en preguntarme, para eso esta Compi."
     },
     {
         "id": "dias-festivos",
@@ -42,27 +60,21 @@
         "content": "Los días festivos son los asuetos que no se trabajan establecidos por el calendario laboral. Por ende vamos a usar los días festivos respectivos al país de nuestro cliente, solo por solicitud de nuestro cliente podemos tomar días festivos de otros países. \n\n Los días de asueto de otros países deben estar dados de alta en la herramienta de vacaciones de Neoris. \n\n Para equipos que trabajan en escritorio, los asuetos son manejados por solicitud del empleado y no por el calendario de Neoris..."
     },
     {
-        "id": "historia-neoris",
-        "title": "Historia de Neoris",
-        "description": "Un vistazo a la historia de Neoris y su evolución.", 
-        "content": "La Historia de Neoris se remonta a su fundación en 2001, cuando un grupo de visionarios decidió crear una empresa que combinara la tecnología con la consultoría para ayudar a las empresas a transformarse digitalmente. Desde entonces, Neoris ha crecido y evolucionado, convirtiéndose en un líder en soluciones tecnológicas y consultoría estratégica a nivel global. Puedes revisar más a detalle en el menu de la izquierda en la pestaña 'Neoris'..."
-    },
-    {
         "id": "time-card",
         "title": "Time Card",
         "description": "Herramienta para registrar horas trabajadas.",
-        "content": "La herramienta de Time Card funciona para capturar las horas trabajadas por dia y el proyecto o actividad que se esta realizando. Es responsabilidad de cada empleado asignada a un proyecto llenar el Tiemcard entre Lunes y Martes sin falta. \n\n Para acceder a la herramienta, dirígete al menú de la izquierda y selecciona 'Time Card'. Allí podrás registrar tus horas trabajadas, asignarlas a los proyectos correspondientes y asegurarte de que tu tiempo se contabilice correctamente. Para cargar las horas trabajadas de la semana debes dirigirte a la semana cuando se trabajaron, haces click en el simbolo de +, seleccionas o escribes el proyecto y agregas las horas trabajadas. Despues das click en 'Aceptar' y despues en 'Guardar'. Una vez que el total de horas sea 42.h Hrs debes proceder al boton de 'Enviar' para que tu lider pueda revisarlo y aprobarlo. \n\n Despues de capturar tus horas trabajadas te pedimos que tomes una captura de pantalla de tus horas semanales y compartas la imagen en uno de los MS Teams chat donde el resto del equipo de Neoris esta..."
+        "content": "La herramienta de Time Card funciona para capturar las horas trabajadas por dia y el proyecto o actividad que se esta realizando. Es responsabilidad de cada empleado asignado a un proyecto llenar el Tiemcard entre Lunes y Martes sin falta. \n\nPara acceder a la herramienta, dirígete al menú de la izquierda y selecciona 'Time Card'. Allí podrás registrar tus horas trabajadas, asignarlas a los proyectos correspondientes y asegurarte de que tu tiempo se contabilice correctamente. Para cargar las horas trabajadas de la semana debes dirigirte a la semana cuando se trabajaron, haces click en el simbolo de +, seleccionas o escribes el proyecto y agregas las horas trabajadas. Despues das click en 'Aceptar' y despues en 'Guardar'. Una vez que el total de horas sea 42.5 Hrs debes proceder al boton de 'Enviar' para que tu lider pueda revisarlo y aprobarlo. \n\nDespues de capturar tus horas trabajadas te pedimos que tomes una captura de pantalla de tus horas semanales y compartas la imagen en uno de los MS Teams chat donde el resto del equipo de Neoris esta."
     },
     {
         "id": "dashboard",
         "title": "Dashboard",
         "description": "Panel general donde puedes ver tu progreso en el onboarding.",
-        "content": "El Dashboard es tu panel de control personal donde puedes ver tu progreso en el proceso de onboarding. Aquí encontrarás información sobre los cursos que has completado, las tareas pendientes y cualquier otra actividad relacionada con tu integración en la empresa. \n\n Para acceder al Dashboard, dirígete al menú de la izquierda y selecciona 'Dashboard'. Desde allí, podrás navegar por las diferentes secciones y asegurarte de que estás al día con todos los requisitos del onboarding. \n\n Si tienes alguna pregunta o necesitas ayuda con alguna sección del Dashboard, no dudes en contactar a tu líder o al equipo de Neoris para obtener asistencia."
+        "content": "El Dashboard es tu panel de control personal donde puedes ver tu progreso en el proceso de onboarding. Aquí encontrarás información sobre los cursos que has completado, las tareas pendientes y cualquier otra actividad relacionada con tu integración en la empresa. \n\nPara acceder al Dashboard, dirígete al menú de la izquierda y selecciona 'Dashboard'. Desde allí, podrás navegar por las diferentes secciones y asegurarte de que estás al día con todos los requisitos del onboarding. \n\nSi tienes alguna pregunta o necesitas ayuda con alguna sección del Dashboard, no dudes en contactar a tu líder o al equipo de Neoris para obtener asistencia."
     },
     {
         "id": "retos",
         "title": "Retos",
         "description": "Area de retos donde puedes participar y ganar puntos.",
-        "content": "En el menu de la izquierda puedes acceder al area de 'Retos'. Aqui podrás encontrar una variedad de retos diseñados para fomentar la participación y ayudarte a integrarte mejor a la cultura de la empresa. Participa en completar estos retos y estaras compitiendo con los miembros de tu equipo. Cada reto completado te otorgará puntos para al final ver quien es el ganador..."
+        "content": "En el menu de la izquierda puedes acceder al area de 'Retos'. Aqui podrás encontrar una variedad de retos diseñados para fomentar la participación y ayudarte a integrarte mejor a la cultura de la empresa. Participa en completar estos retos y estaras compitiendo con los miembros de tu equipo. Cada reto completado te otorgará puntos para al final ver quien es el ganador."
     }
 ]

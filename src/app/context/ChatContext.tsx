@@ -11,6 +11,8 @@ import React, {
   useCallback,
 } from "react";
 
+import politicas from "../docs/politicas.json";
+
 type Message = { sender: "user" | "bot"; text: string };
 
 interface ChatContextProps {
@@ -87,13 +89,16 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       // Obtener nombre real del usuario desde tabla 'usuario'
       const { data: usuarioData, error: usuarioError } = await supabase
         .from("usuario")
-        .select("nombres")
+        .select("nombres, rol")
         .eq("id_usuario", user.id_usuario)
         .single();
 
       const userName = !usuarioError && usuarioData?.nombres
         ? usuarioData.nombres
         : "usuario";
+      const userRole = !usuarioError && usuarioData?.rol
+        ? usuarioData.rol.toLowerCase()
+        : "";
 
       // Obtener historial de mensajes
       const { data: messagesData, error: historyError } = await supabase
@@ -116,10 +121,55 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Primer saludo o bienvenida de vuelta
       const greeting = historialDB.length === 0
-        ? `¡Bienvenido ${userName}! Soy Compi, tu asistente virtual. ¿En qué puedo ayudarte hoy?`
-        : `¡Bienvenido de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
+        ? `¡Hola ${userName}! Soy Compi, tu asistente virtual. Te estare acompañando en tu experiencia dentro de Welcomehub.`
+        : `Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
       
-      setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
+      // Construir tour por Welcomehub
+      // if( historialDB.length === 0 ) {
+      //   const tour = politicas.filter( p =>
+      //     p.id.startsWith("tour-")
+      //   );
+
+      //   const tourText = tour.map(pol => `${pol.title}\n${pol.content}`).join("\n\n");
+
+      //   setMessages([
+      //     {sender: "bot", text: greeting},
+      //     {sender: "bot", text: "Para empezar, te dare un recorrido por Welcomehub:\n\n" + tourText},
+      //   ]);
+      // } else{
+      //   setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
+      // }
+      // Su es usuario nuevo generar tour segun rol
+      if (historialDB.length === 0) {
+        let tour;
+
+        if (userRole === "administrador"){
+          tour = politicas.filter(p => p.id.startsWith("admin-"));
+        } else {
+          tour = politicas.filter(p => p.id.startsWith("tour-"));
+        }
+
+        if (!tour.length) {
+          tour = politicas.slice(0, 2);
+        }
+
+        // Construir texto del tour: titulo + content
+        const tourText = tour.map((pol) => `${pol.title}\n${pol.content}`).join("\n\n");
+        
+        // Montar mensaje
+        setMessages([
+          { sender: "bot", text: greeting },
+          {
+            sender: "bot",
+            text: 
+              userRole === "administrador"
+                ? "¡Hola admin! Aqui tienes un recorrido rápido por las funcionalidades de Welcomehub:\n\n" + tourText
+                : "Para empezar, te daré un recorrido por Welcomehub:\n\n" + tourText
+          },
+        ]);
+      } else {
+        setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
+      }
     };
     initChat();
   }, [user?.id_usuario]);
