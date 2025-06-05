@@ -90,3 +90,7 @@ pip-wheel-metadata/
 # Entornos de variables
 .env
 .env.*
+
+# Reportes y salidas de Robot Framework
+/log.html
+report.html

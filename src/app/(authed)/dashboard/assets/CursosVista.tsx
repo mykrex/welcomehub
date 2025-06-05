@@ -1,4 +1,3 @@
-// src/app/(authed)/dashboard/assets/CursosVista.tsx
 import React, { useState, useMemo } from 'react';
 import './cursosVista.css';
 import { useRouter } from 'next/navigation';

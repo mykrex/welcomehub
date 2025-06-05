@@ -89,7 +89,7 @@ export const WeekApprovalPanel: React.FC<WeekApprovalPanelProps> = ({
 
       {canApprove && (
         <button 
-          className="approve-button"
+          className="approve-button ml-4"
           onClick={handleApprove}
           disabled={approving}
         >
