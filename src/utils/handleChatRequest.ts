@@ -19,6 +19,17 @@ interface Result {
   error?: string;
 }
 
+type CursoAsignado = {
+  curso: {
+    id_curso: string;
+    titulo: string;
+    descripcion: string;
+    duracion: number;
+    obligatorio: boolean;
+  };
+  estado: string;
+};
+
 // Normaliza cadenas: quita acentos, pasa a minúsculas y trim
 function normalizeText(str: string) {
   return str
@@ -53,6 +64,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   const userRole = userInfo.rol;
 
   // Detectar intenciones especificas (cursos, lider, etc)
+
   // intencion: "mis cursos"
   if (["mis cursos", "cursos", "cursos asignados", "cursos inscritos"].some(kw => prompt.includes(normalizeText(kw)))){
     const { data: cursos, error: cursosError } = await supabase
@@ -67,52 +79,65 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       return { response: "No tienes cursos asignados o no estas inscrito a ningun curso." };
     }
     // Arreglo con toda la info de los cursos 
-    const coursesInfo = cursos.map((c: any) => ({
+    const coursesInfo = (cursos as unknown as CursoAsignado[]).map(c => ({
       id: c.curso.id_curso,
       titulo: c.curso.titulo,
       descripcion: c.curso.descripcion,
       duracion: c.curso.duracion,
       obligatorio: c.curso.obligatorio,
       estado: c.estado
-    }));
+    }))
+    .sort((a, b) => a.titulo.localeCompare(b.titulo, "es", { sensitivity: "base" })); // Ordenar por título en español
 
     // Mostramos los cursos asignados
-    const listaCursos = coursesInfo.map((course: any, i: number) => `${i + 1}. ${course.titulo}`).join("\n");
+    const listaCursos = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
     return { response: `Tus cursos asignados son:\n\n${listaCursos}` };
   }
 
-  // intencion: duracion curso especifico
-  if (prompt.includes("duracion de curso")) {
-    const match = rawPrompt.match(/duracion de curso (.+)/i);
-    if (match && match[1]) {
-      const cursoBuscado = match[1].trim();
-      const { data: cursoData, error: cursoDataError } = await supabase
-        .from("curso")
-        .select("titulo, duracion")
-        .ilike("titulo", `%${cursoBuscado}%`)
-        .single();
-      if (cursoDataError || !cursoData) {
-        return { response: "No se encontró información sobre el curso solicitado." };
+  // intencion: datos especificos de curso
+  const matchNumero = rawPrompt.match(/curso\s+(\d+)/i);
+  if (matchNumero) {
+    const nro = parseInt(matchNumero[1], 10);
+    if(!isNaN(nro)){
+      const { data: cursosAll, error: cursosAllError } = await supabase
+        .from("curso_usuario")
+        .select("curso(id_curso, titulo, descripcion, duracion, obligatorio), estado")
+        .eq("id_usuario", id_usuario);
+      if (cursosAllError || !cursosAll){
+        return { response: "Ocurrió un error al obtener tus cursos." };
       }
-      return { response: `La duración del curso "${cursoData.titulo}" es de ${cursoData.duracion} minutos.` };
-    }
-  }
+      const coursesInfoAll = (cursosAll as unknown as CursoAsignado[]).map(c => ({
+        id: c.curso.id_curso,
+        titulo: c.curso.titulo,
+        descripcion: c.curso.descripcion,
+        duracion: c.curso.duracion,
+        obligatorio: c.curso.obligatorio,
+        estado: c.estado
+        }))
+        .sort((a, b) => a.titulo.localeCompare(b.titulo, "es", { sensitivity: "base" })); // Ordenar por título en español
+      
+      if (nro < 1 || nro > coursesInfoAll.length) {
+        return { response: `Solo tienes ${coursesInfoAll.length} cursos asignados. Ingresa un número entre 1 y ${coursesInfoAll.length}.` }
+      }
 
-  // intencion: descripcion de curso 
-  if (prompt.includes("curso") || prompt.includes("descripcion curso") || prompt.includes("informacion curso")) {
-    const match = rawPrompt.match(/curso (.+)/i);
-    if (match && match[1]) {
-      const cursoBuscado = match[1].trim();
-      const { data: cursoData, error: cursoDataError } = await supabase
-        .from("curso")
-        .select("titulo, descripcion")
-        .ilike("titulo", `%${cursoBuscado}%`)
-        .single();
-      if (cursoDataError || !cursoData) {
-        return { response: "No se encontró información sobre el curso solicitado." };
+      // extraemos el curso correspondiente
+      const cursoSeleccionado = coursesInfoAll[nro -1 ];
+
+      // dependiendo de la pregunta, respondemos
+      if (prompt.includes("titulo") || prompt.includes("nombre")) {
+        return { response: `El título del curso ${nro} es: ${cursoSeleccionado.titulo}` };
+      } else if (prompt.includes("descripcion") || prompt.includes("informacion")) {
+        return { response: `La descripción del curso ${nro} es: ${cursoSeleccionado.descripcion}` };
+      } else if (prompt.includes("duracion")) {
+        return { response: `La duración del curso ${nro} es de ${cursoSeleccionado.duracion} minutos.` };
+      } else if (prompt.includes("obligatorio")) {
+        return { response: `El curso ${nro} es ${cursoSeleccionado.obligatorio ? "obligatorio" : "opcional"}.` };
+      } else if (prompt.includes("estado")) {
+        return { response: `El estado del curso ${nro} es: ${cursoSeleccionado.estado}.` };
+      } else {
+        return { response: `Información del curso ${nro}: ${cursoSeleccionado.titulo} \nDescripción: ${cursoSeleccionado.descripcion} \nDuración: ${cursoSeleccionado.duracion} minutos \nObligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"} \nEstado: ${cursoSeleccionado.estado}.` };
       }
-      return { response: `El curso "${cursoData.titulo}" es sobre ${cursoData.descripcion}` };
-    }
+    }    
   }
 
   // intencion: quien es mi lider
