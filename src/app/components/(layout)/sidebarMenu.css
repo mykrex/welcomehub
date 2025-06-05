@@ -1,0 +1,284 @@
+/* Background */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  background-color: #000f14;
+}
+
+:root {
+  --sidebar-gap: 10px;
+}
+
+/* Contenedor del Side menu */
+.sidebar-container {
+  width: 80px; /* Sidebar width CAMBIE DE 160 a 70*/
+  height: 100%; /* Full height of the viewport/container */
+  padding: 20px 10px 10px 10px; /* Uniform padding, 20 on top */
+  border-radius: 15px; /* Rounded corners */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: flex-start; /* Align items at the top */
+  /*align-items: center;        /* Center horizontally */
+  gap: 30px; /* Space between logo and menu-list */
+  background: #001f29;
+
+  transition: width 0.5s ease; /* CAMBIE ESTO*/
+  align-items: center; /* Hug content */
+}
+
+.sidebar-container:hover {
+  width: 220px;
+}
+
+.sidebar-container:hover .menu-item.active {
+  background-color: #0b88d5;
+}
+
+.sidebar-container:hover .icon-wrapper {
+  background: transparent; /* quitar doble fondo cuando expandido */
+}
+
+/*Contenedor para el logo de welcomehub*/
+
+.logo-container {
+  width: 100%;        /* ocupa todo el ancho del sidebar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Si necesitas, puedes darle un height fijo o padding */
+  margin-bottom: 30px; /* separación respecto al menú */
+}
+
+/* 1) Al inicio, visible sólo el logo compacto */
+.logo-compact {
+  display: block;   /* O “flex” si quisieras centrarlo. Pero basta con block */
+}
+.logo-full {
+  display: none;
+}
+
+.sidebar-container:hover .logo-compact {
+  display: none;
+}
+.sidebar-container:hover .logo-full {
+  display: block;
+}
+
+.logo-image {
+  width: 100%; /* Take full width of its container */
+  height: 100%; /* Take full height of its container */
+  object-fit: contain; /* Keep image aspect ratio, don't crop */
+}
+
+/* Menu list */
+.menu-list {
+  align-self: stretch; /* Fills parent's width */
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack menu-items vertically */
+  justify-content: flex-start; /* Align menu-items to the top */
+  align-items: flex-start; /* Align items to the left */
+  gap: 10px; /* Space between menu items */
+  width: 100%; /* Fixed width (less than sidebar for padding effect) */
+}
+
+/* Menu item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  width: fit-content;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+  /*align-self: stretch;        /* Make each item full width of menu-list */
+  /*height: 100%;               /* Inherit height (may be overridden by content) */
+  /*padding: 10px 15px;         /* Spacing inside item */
+  /*border-radius: 12px;        /* Rounded edges */
+  /*display: flex;              /* Flexbox layout */
+  /*justify-content: flex-start;/* Start-align icon and label */
+  /*align-items: center;        /* Vertically center icon and label */
+  /*gap: 10px;                  /* Space between icon and label */
+}
+
+.group:hover .menu-item {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Color del hover de los botones */
+.menu-item:hover {
+  background-color: #064a74; /* Hover effect with a dark teal color */
+}
+
+/* Color del hover de los botones cuando son activos/picados */
+.menu-item.active {
+  background: transparent; /*#0b88d5; /* Active state background */
+}
+
+/* Icon styles */
+.icon {
+  width: 24px; /* Fixed width for icons */
+  height: 100%; /* Same height as parent for alignment */
+  flex-shrink: 0;
+}
+
+.icon-wrapper {
+  padding: 10px;
+  border-radius: 12px;
+  align-items: center;
+  transition: background-color 0.1s ease;
+}
+.active-icon-wrapper {
+  background-color: #0b88d5;
+}
+
+.inactive-icon {
+  color: #9daaa6; /* Grayish tone for inactive state */
+}
+
+.active-icon {
+  color: #f3f2f2; /* Bright white-ish tone for active state */
+}
+
+/* Label styles */
+.label {
+  font-size: 18px; /* Medium size text */
+  font-family: "Manrope"; /* Custom font */
+  font-weight: 500; /* Semi-bold */
+  word-wrap: break-word; /* Wrap long labels */
+  color: white; /* Default label color */
+
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.group:hover .label {
+  opacity: 1;
+}
+
+/* Color para texto inactivo */
+.inactive-button {
+  color: #9daaa6;
+}
+
+/* Color para texto activo */
+.active-button {
+  color: #ffffff;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 64.5px;
+}
+
+/* Contenedor fijo abajo */
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Cambia color al hacer hover en el perfil */
+.profile-container:hover {
+  background-color: #064a74;
+}
+
+/* Nombre del usuario oculto por defecto */
+.profile-name {
+  color: #9daaa6;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.group:hover .profile-text {
+  opacity: 1; /* == visible cuando el sidebar se expande */
+}
+
+.group:hover .profile-name {
+  opacity: 1; /* == nombre visible cuando hace hover */
+}
+
+.active-profile {
+  background-color: #0b88d5;
+}
+
+.sidebar-container:hover .active-profile {
+  background-color: #0b88d5; /* aseguramos que se mantenga activo al expandir */
+}
+
+.active-profile .profile-name {
+  color: white;
+}
+
+/* Estilo cuando cualquier botón del sidebar está siendo presionado */
+.menu-item:active,
+.profile-container:active {
+  background-color: #0766ab !important; /* un azul más oscuro o diferente al hover */
+  transform: scale(0.98); /* opcional: da sensación de presión */
+  transition: background-color 0.05s ease, transform 0.05s ease;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Ocupa todo el espacio libre dentro de .profile-container */
+  min-width: 0; /* Impide que .profile-text se haga más ancho que el contenedor */
+  opacity: 0; /* Se mantendrá oculto hasta hacer hover en .group */
+  transition: opacity 0.3s ease;
+  white-space: nowrap; /* No rompe líneas */
+  overflow: hidden;
+}
+
+/* El nombre por separado (si lo necesitas) también arranca invisible: */
+.profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0; /* == invisible por defecto */
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+/* Correo: más chico y gris */
+.profile-email {
+  font-size: 13px;
+  color: #9daaa6;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.email-username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.email-domain {
+  flex-shrink: 0; /* no se trunca */
+}

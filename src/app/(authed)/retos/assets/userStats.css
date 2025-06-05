@@ -1,171 +1,103 @@
+/* userStats.css */
+
+/* Contenedor principal de estadísticas de usuario */
 .user-stats-container {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    padding: 20px 30px;
-    background: #042C45;
-    overflow: hidden;
-    border-radius: 15px;
-    gap: 10px;
-  }
-  
-  .stats-header-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .stats-name {
-    color: #EBFAFF;
-    font-size: 28px;
-    font-family: 'Manrope', sans-serif;
-    font-weight: 600;
-    word-wrap: break-word;
-  }
-  
-  .stats-title {
-    color: #8BCFF9;
-    font-size: 28px;
-    font-family: 'Manrope', sans-serif;
-    font-weight: 600;
-    word-wrap: break-word;
-  }
-  
-  .stats-cards-wrapper {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 30px;
-    align-self: stretch;
-  }
-  
-  .stats-card {
-    flex: 1 1 0;
-    height: 84px;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    overflow: hidden;
-    border-radius: 25px;
-  }
-  
-  .stats-card.puntos {
-    outline: 2px #EBA10E solid;
-    outline-offset: -2px;
-    color: #EBA10E;
-  }
-  
-  .stats-card.podiums {
-    outline: 2px #DB504A solid;
-    outline-offset: -2px;
-    color: #DB504A;
-  }
-  
-  .stats-card.streak {
-    outline: 2px #DF8328 solid;
-    outline-offset: -2px;
-    color: #DF8328;
-  }
-  
-  .stats-card.challenges {
-    outline: 2px #4DAA57 solid;
-    outline-offset: -2px;
-    color: #4DAA57;
-  }
-  
+  display: flex; /* Cambiado de inline-flex a flex */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  /* height: 100%; */ /* Eliminado para no forzar altura */
+  padding: 20px 30px;
+  background: #042c45;
+  overflow: hidden;
+  border-radius: 15px;
+  gap: 10px;
+}
+
+/* Wrapper del encabezado (nombre y título) */
+.stats-header-wrapper {
+  display: flex; /* Cambiado de inline-flex a flex */
+  align-items: center;
+  gap: 10px;
+}
+
+.stats-name {
+  color: #ebfaff;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.stats-title {
+  color: #8bcff9;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+/* Wrapper de las tarjetas de estadísticas */
+.stats-cards-wrapper {
+  display: flex; /* Cambiado de inline-flex a flex */
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  align-self: stretch;
+}
+
+/* Tarjeta individual de estadística */
+.stats-card {
+  flex: 1 1 0;
+  height: 84px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+.stats-card.puntos {
+  outline: 2px #eba10e solid;
+  outline-offset: -2px;
+  color: #eba10e;
+}
+
+.stats-card.challenges {
+  outline: 2px #4daa57 solid;
+  outline-offset: -2px;
+  color: #4daa57;
+}
 
 
-  .icon-wrapper {
-    position: relative;
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-  }
-  
-  
-  .podiums-shape1 {
-    position: absolute;
-    top: 5px;
-    left: 12.5px;
-    width: 35px;
-    height: 35px;
-    background: #DB504A;
-    opacity: 0.5;
-  }
-  
-  .podiums-shape2 {
-    position: absolute;
-    top: 36px;
-    left: 15px;
-    width: 30px;
-    height: 19px;
-    background: #DB504A;
-  }
-  
-  .streak-shape1 {
-    position: absolute;
-    top: 6.38px;
-    left: 7.5px;
-    width: 42.5px;
-    height: 48.62px;
-    background: #DF8328;
-    opacity: 0.5;
-  }
-  
-  .streak-shape2 {
-    position: absolute;
-    top: 35.68px;
-    left: 20px;
-    width: 17.5px;
-    height: 19.28px;
-    background: #DF8328;
-  }
-  
-  .challenges-shape1 {
-    position: absolute;
-    top: 2.5px;
-    left: 12.5px;
-    width: 3.75px;
-    height: 53.75px;
-    background: #4DAA57;
-    opacity: 0.5;
-  }
-  
-  .challenges-shape2 {
-    position: absolute;
-    top: 7.72px;
-    left: 16.25px;
-    width: 31.89px;
-    height: 28.1px;
-    background: #4DAA57;
-  }
-  
-  .stats-card-content {
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  .stats-card-value {
-    color: currentColor;
-    font-size: 32px;
-    font-family: 'Manrope', sans-serif;
-    font-weight: 600;
-  }
-  
-  .stats-card-label {
-    color: currentColor;
-    font-size: 18px;
-    font-family: 'Manrope', sans-serif;
-    font-weight: 600;
-  }
-  
+/* Contenedor del icono dentro de cada tarjeta */
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenido (texto) dentro de cada tarjeta */
+.stats-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.stats-card-value {
+  color: currentColor;
+  font-size: 32px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
+
+.stats-card-label {
+  color: currentColor;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
