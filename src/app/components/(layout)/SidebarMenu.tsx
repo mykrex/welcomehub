@@ -87,7 +87,7 @@ export default function SidebarMenu() {
   const { user, loadingUser } = useUser();
 
   // Obtenemos perfil (nombres, apellidos, email, etc). Puede estar “loadingProfile” aun.
-  const { profile, loading: loadingProfile, error } = useUserProfile();
+  const { profile, loading: loadingProfile } = useUserProfile();
 
   // Hooks para cargar avatar (siempre van antes de cualquier return)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
