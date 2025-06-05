@@ -19,6 +19,17 @@ interface Result {
   error?: string;
 }
 
+type CursoAsignado = {
+  curso: {
+    id_curso: string;
+    titulo: string;
+    descripcion: string;
+    duracion: number;
+    obligatorio: boolean;
+  };
+  estado: string;
+};
+
 // Normaliza cadenas: quita acentos, pasa a minúsculas y trim
 function normalizeText(str: string) {
   return str
@@ -41,17 +52,120 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   // 1) Obtener información del usuario
   const { data: userInfo, error: userError } = await supabase
     .from("usuario")
-    .select("nombres, puesto, id_equipo")
+    .select("nombres, rol, puesto, id_equipo")
     .eq("id_usuario", id_usuario)
     .single();
   if (userError || !userInfo) {
     return { error: "Error al obtener la información del usuario" };
   }
   const userName = userInfo.nombres;
-  const userRole = userInfo.puesto;
+  const userPosition = userInfo.puesto;
   const idEquipo = userInfo.id_equipo;
+  const userRole = userInfo.rol;
 
-  // 2) Obtener información de equipo y líder
+  // Detectar intenciones especificas (cursos, lider, etc)
+
+  // intencion: "mis cursos"
+  if (["mis cursos", "cursos", "cursos asignados", "cursos inscritos"].some(kw => prompt.includes(normalizeText(kw)))){
+    const { data: cursos, error: cursosError } = await supabase
+      .from("curso_usuario")
+      .select("curso(id_curso, titulo, descripcion, duracion, obligatorio), estado")
+      .eq("id_usuario", id_usuario);
+    
+    if (cursosError) {
+      return { response: "Ocurrió un error al obtener tus cursos." };
+    }
+    if (!cursos || cursos.length === 0) {
+      return { response: "No tienes cursos asignados o no estas inscrito a ningun curso." };
+    }
+    // Arreglo con toda la info de los cursos 
+    const coursesInfo = (cursos as unknown as CursoAsignado[]).map(c => ({
+      id: c.curso.id_curso,
+      titulo: c.curso.titulo,
+      descripcion: c.curso.descripcion,
+      duracion: c.curso.duracion,
+      obligatorio: c.curso.obligatorio,
+      estado: c.estado
+    }))
+    .sort((a, b) => a.titulo.localeCompare(b.titulo, "es", { sensitivity: "base" })); // Ordenar por título en español
+
+    // Mostramos los cursos asignados
+    const listaCursos = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
+    return { response: `Tus cursos asignados son:\n\n${listaCursos}` };
+  }
+
+  // intencion: datos especificos de curso
+  const matchNumero = rawPrompt.match(/curso\s+(\d+)/i);
+  if (matchNumero) {
+    const nro = parseInt(matchNumero[1], 10);
+    if(!isNaN(nro)){
+      const { data: cursosAll, error: cursosAllError } = await supabase
+        .from("curso_usuario")
+        .select("curso(id_curso, titulo, descripcion, duracion, obligatorio), estado")
+        .eq("id_usuario", id_usuario);
+      if (cursosAllError || !cursosAll){
+        return { response: "Ocurrió un error al obtener tus cursos." };
+      }
+      const coursesInfoAll = (cursosAll as unknown as CursoAsignado[]).map(c => ({
+        id: c.curso.id_curso,
+        titulo: c.curso.titulo,
+        descripcion: c.curso.descripcion,
+        duracion: c.curso.duracion,
+        obligatorio: c.curso.obligatorio,
+        estado: c.estado
+        }))
+        .sort((a, b) => a.titulo.localeCompare(b.titulo, "es", { sensitivity: "base" })); // Ordenar por título en español
+      
+      if (nro < 1 || nro > coursesInfoAll.length) {
+        return { response: `Solo tienes ${coursesInfoAll.length} cursos asignados. Ingresa un número entre 1 y ${coursesInfoAll.length}.` }
+      }
+
+      // extraemos el curso correspondiente
+      const cursoSeleccionado = coursesInfoAll[nro -1 ];
+
+      // dependiendo de la pregunta, respondemos
+      if (prompt.includes("titulo") || prompt.includes("nombre")) {
+        return { response: `El título del curso ${nro} es: ${cursoSeleccionado.titulo}` };
+      } else if (prompt.includes("descripcion") || prompt.includes("informacion")) {
+        return { response: `La descripción del curso ${nro} es: ${cursoSeleccionado.descripcion}` };
+      } else if (prompt.includes("duracion")) {
+        return { response: `La duración del curso ${nro} es de ${cursoSeleccionado.duracion} minutos.` };
+      } else if (prompt.includes("obligatorio")) {
+        return { response: `El curso ${nro} es ${cursoSeleccionado.obligatorio ? "obligatorio" : "opcional"}.` };
+      } else if (prompt.includes("estado")) {
+        return { response: `El estado del curso ${nro} es: ${cursoSeleccionado.estado}.` };
+      } else {
+        return { response: `Información del curso ${nro}: ${cursoSeleccionado.titulo} \nDescripción: ${cursoSeleccionado.descripcion} \nDuración: ${cursoSeleccionado.duracion} minutos \nObligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"} \nEstado: ${cursoSeleccionado.estado}.` };
+      }
+    }    
+  }
+
+  // intencion: quien es mi lider
+  if (["quien es mi lider", "quien es mi jefe", "quien es mi supervisor"].some(kw => prompt.includes(normalizeText(kw)))) {
+    if (userRole === "administrador") {
+      return { response: "Como administrador no tienes lider asignado o lider directo. Si necesitas asisencia yo te puedo apoyar, ¿Como te ayudo?" };
+    } else {
+      let liderName = "líder desconocido";
+      if (idEquipo){
+        const { data: eqData } = await supabase
+          .from("equipo_trabajo")
+          .select("nombre, id_administrador")
+          .eq("id_equipo", idEquipo)
+          .single();
+        if(eqData?.id_administrador){
+          const { data: liData } = await supabase
+            .from("usuario")
+            .select("nombres")
+            .eq("id_usuario", eqData.id_administrador)
+            .single();
+          if (liData) liderName = liData.nombres;
+        }
+      }
+      return { response: `Tu líder es ${liderName}. Si necesitas ayuda, no dudes en preguntar.` };
+    }
+  }
+
+  // 3) Obtener información de equipo y líder
   let nombreEquipo = "equipo desconocido";
   let liderName = "líder desconocido";
   if (idEquipo) {
@@ -129,16 +243,16 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   // 5) Construir mensaje de sistema con contexto y metadata
   const systemMessage = `Eres Compi, asistente virtual para onboarding en Neoris.
 
-Usa únicamente esta información de políticas:
-${knowledgeContext}
+  Usa únicamente esta información de políticas:
+  ${knowledgeContext}
 
-Información del usuario:
-- Nombre: ${userName}
-- Puesto: ${userRole}
-- Equipo: ${nombreEquipo}
-- Líder: ${liderName}
+  Información del usuario:
+  - Nombre: ${userName}
+  - Puesto: ${userPosition}
+  - Equipo: ${nombreEquipo}
+  - Líder: ${liderName}
 
-Responde de forma amigable y profesional.`;
+  Responde de forma amigable y profesional.`;
 
   const messages: Message[] = [
     { role: "system", content: systemMessage },
