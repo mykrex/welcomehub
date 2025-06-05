@@ -128,11 +128,11 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
         return { response: `El título del curso ${nro} es: ${cursoSeleccionado.titulo}` };
       } else if (prompt.includes("descripcion") || prompt.includes("informacion")) {
         return { response: `La descripción del curso ${nro} es: ${cursoSeleccionado.descripcion}` };
-      } else if (prompt.includes("duracion")) {
+      } else if (prompt.includes("duracion") || prompt.includes("tiempo")) {
         return { response: `La duración del curso ${nro} es de ${cursoSeleccionado.duracion} minutos.` };
-      } else if (prompt.includes("obligatorio")) {
+      } else if (prompt.includes("obligatorio") || prompt.includes("tipo")) {
         return { response: `El curso ${nro} es ${cursoSeleccionado.obligatorio ? "obligatorio" : "opcional"}.` };
-      } else if (prompt.includes("estado")) {
+      } else if (prompt.includes("estado") || prompt.includes("progreso")) {
         return { response: `El estado del curso ${nro} es: ${cursoSeleccionado.estado}.` };
       } else {
         return { response: `Información del curso ${nro}: ${cursoSeleccionado.titulo} \nDescripción: ${cursoSeleccionado.descripcion} \nDuración: ${cursoSeleccionado.duracion} minutos \nObligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"} \nEstado: ${cursoSeleccionado.estado}.` };
