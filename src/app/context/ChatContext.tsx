@@ -13,7 +13,13 @@ import React, {
 
 import politicas from "../docs/politicas.json";
 
-type Message = { sender: "user" | "bot"; text: string };
+type Action = { label: string; href: string};
+
+type Message = { 
+  sender: "user" | "bot"; 
+  text: string 
+  actions?: Action[];
+};
 
 interface ChatContextProps {
   messages: Message[];
@@ -61,7 +67,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
           body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
         });
         const data = await res.json();
-        setMessages(prev => [...prev, { sender: "bot", text: data.response }]);
+        setMessages(prev => [
+          ...prev, 
+          { 
+            sender: "bot", 
+            text: data.response,
+            actions: data.actions 
+          }
+        ]);
       } catch (error) {
         console.error("Error al enviar el mensaje:", error);
         setMessages(prev => [...prev, { sender: "bot", text: "Error al obtener la respuesta" }]);
@@ -124,22 +137,14 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         ? `¡Hola ${userName}! Soy Compi, tu asistente virtual. Te estare acompañando en tu experiencia dentro de Welcomehub.`
         : `Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
       
-      // Construir tour por Welcomehub
-      // if( historialDB.length === 0 ) {
-      //   const tour = politicas.filter( p =>
-      //     p.id.startsWith("tour-")
-      //   );
+      const shortcuts: Action[] = [
+        { label: "Mis Cursos", href: "/cursos" },
+        { label: "Mi Perfil", href: "/mi_perfil"},
+        { label: "Retos", href: "/retos"},
+        { label: "Neoris", href: "/neoris"},
+        { label: "Time Card", href: "/timecard"}
+      ];
 
-      //   const tourText = tour.map(pol => `${pol.title}\n${pol.content}`).join("\n\n");
-
-      //   setMessages([
-      //     {sender: "bot", text: greeting},
-      //     {sender: "bot", text: "Para empezar, te dare un recorrido por Welcomehub:\n\n" + tourText},
-      //   ]);
-      // } else{
-      //   setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
-      // }
-      // Su es usuario nuevo generar tour segun rol
       if (historialDB.length === 0) {
         let tour;
 
@@ -158,17 +163,18 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         
         // Montar mensaje
         setMessages([
-          { sender: "bot", text: greeting },
+          { sender: "bot", text: greeting, actions: shortcuts },
           {
             sender: "bot",
             text: 
               userRole === "administrador"
                 ? "¡Hola admin! Aqui tienes un recorrido rápido por las funcionalidades de Welcomehub:\n\n" + tourText
-                : "Para empezar, te daré un recorrido por Welcomehub:\n\n" + tourText
+                : "Para empezar, te daré un recorrido por Welcomehub:\n\n" + tourText,
+            actions: shortcuts
           },
         ]);
       } else {
-        setMessages([{ sender: "bot", text: greeting }, ...historialDB]);
+        setMessages([{ sender: "bot", text: greeting, actions: shortcuts }, ...historialDB]);
       }
     };
     initChat();

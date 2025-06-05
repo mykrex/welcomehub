@@ -14,8 +14,14 @@ interface RequestBody {
   prompt: string;
   id_usuario: string;
 }
+type Action = {
+  label: string;
+  href: string;
+};
+
 interface Result {
   response?: string;
+  actions?: Action[];
   error?: string;
 }
 
@@ -34,7 +40,7 @@ type CursoAsignado = {
 function normalizeText(str: string) {
   return str
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
 }
@@ -91,7 +97,12 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
     // Mostramos los cursos asignados
     const listaCursos = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
-    return { response: `Tus cursos asignados son:\n\n${listaCursos}` };
+    return { 
+      response: `Tus cursos asignados son:\n\n${listaCursos}`,
+      actions: [
+        { label: "Ir a mis cursos", href: "/cursos"}
+      ]
+    };
   }
 
   // intencion: datos especificos de curso
@@ -128,11 +139,11 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
         return { response: `El título del curso ${nro} es: ${cursoSeleccionado.titulo}` };
       } else if (prompt.includes("descripcion") || prompt.includes("informacion")) {
         return { response: `La descripción del curso ${nro} es: ${cursoSeleccionado.descripcion}` };
-      } else if (prompt.includes("duracion")) {
+      } else if (prompt.includes("duracion") || prompt.includes("tiempo")) {
         return { response: `La duración del curso ${nro} es de ${cursoSeleccionado.duracion} minutos.` };
-      } else if (prompt.includes("obligatorio")) {
+      } else if (prompt.includes("obligatorio") || prompt.includes("tipo")) {
         return { response: `El curso ${nro} es ${cursoSeleccionado.obligatorio ? "obligatorio" : "opcional"}.` };
-      } else if (prompt.includes("estado")) {
+      } else if (prompt.includes("estado") || prompt.includes("progreso")) {
         return { response: `El estado del curso ${nro} es: ${cursoSeleccionado.estado}.` };
       } else {
         return { response: `Información del curso ${nro}: ${cursoSeleccionado.titulo} \nDescripción: ${cursoSeleccionado.descripcion} \nDuración: ${cursoSeleccionado.duracion} minutos \nObligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"} \nEstado: ${cursoSeleccionado.estado}.` };
@@ -161,7 +172,9 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
           if (liData) liderName = liData.nombres;
         }
       }
-      return { response: `Tu líder es ${liderName}. Si necesitas ayuda, no dudes en preguntar.` };
+      return { 
+        response: `Tu líder es ${liderName}. Si necesitas ayuda, no dudes en preguntar.` ,
+      };
     }
   }
 
