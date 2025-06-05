@@ -19,6 +19,7 @@ interface Result {
   actions?: Action[];
   error?: string;
 }
+// interfaz para action (botones)
 type Action = {
   label: string;
   href: string;
@@ -76,7 +77,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
   // intencion cursos completados, en progreso, sin comenzar
   const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
-  const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar"];
+  const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar", "faltan por terminar"];
   const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar", "no he iniciado"];
 
   // cursos completados
@@ -220,7 +221,14 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       } else if (prompt.includes("estado") || prompt.includes("progreso")) {
         return { response: `El estado del curso ${nro} es: ${cursoSeleccionado.estado}.` };
       } else {
-        return { response: `Información del curso ${nro}: ${cursoSeleccionado.titulo} \nDescripción: ${cursoSeleccionado.descripcion} \nDuración: ${cursoSeleccionado.duracion} minutos \nObligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"} \nEstado: ${cursoSeleccionado.estado}.` };
+        return {
+          response: `Información del curso ${nro}:\n` +
+                    `• Título: ${cursoSeleccionado.titulo}\n` +
+                    `• Descripción: ${cursoSeleccionado.descripcion}\n` +
+                    `• Duración: ${cursoSeleccionado.duracion} minutos\n` +
+                    `• Obligatorio: ${cursoSeleccionado.obligatorio ? "Sí" : "No"}\n` +
+                    `• Estado: ${cursoSeleccionado.estado}.`
+        };
       }
     }    
   }
@@ -274,7 +282,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     }
   }
 
-  // 3) RAG: búsqueda con Fuse.js sobre politicas.json
+  // RAG: búsqueda con Fuse.js sobre politicas.json
   const fuse = new Fuse(politicas, {
     keys: ["title", "description", "content"],
     threshold: 0.6,
@@ -311,7 +319,30 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     ? topSections.join("\n\n---\n\n")
     : "No se encontró información relevante en las políticas.";
 
-  // 4) Cargar historial de mensajes (sin saludo)
+  // interaccion: construir botones basados en los IDs de las politicas
+  const matchedPolicies = searchResults
+    .sort((a, b) => a.score! - b.score!)
+    .slice(0, 3)
+    .map(r => r.item);
+
+  // Filltrar politicas accionables
+  const actionablePolicyIds = new Set([
+    "neoris",
+    "cursos",
+    "timecard",
+    "dashboard",
+    "retos",
+    "mi_perfil"
+  ])
+
+  const policyActions: Action[] = matchedPolicies
+    .filter(pol => actionablePolicyIds.has(pol.id))
+    .map(pol => ({
+      label: pol.title,
+      href: "/" + pol.id
+    }));
+  
+    // 4) Cargar historial de mensajes (sin saludo)
   const { data: history } = await supabase
     .from("mensajes")
     .select("input_usuario, output_bot")
@@ -321,25 +352,30 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
   type Message = { role: "system" | "user" | "assistant"; content: string };
   const historial: Message[] = history
-    ? history.flatMap(msg => [
-        ...(msg.input_usuario ? [{ role: "user" as const, content: msg.input_usuario }] : []),
-        ...(msg.output_bot ? [{ role: "assistant" as const, content: msg.output_bot }] : []),
-      ])
+    ? history
+        .slice()
+        .reverse()
+        .flatMap(msg => [
+          ...(msg.input_usuario ? [{ role: "user" as const, content: msg.input_usuario }] : []),
+          ...(msg.output_bot ? [{ role: "assistant" as const, content: msg.output_bot }] : []),
+        ])
     : [];
 
   // 5) Construir mensaje de sistema con contexto y metadata
-  const systemMessage = `Eres Compi, asistente virtual para onboarding en Neoris.
+  const systemMessage = [
+    `Eres Compi, asistente virtual para onboarding en Neoris.
 
-  Usa únicamente esta información de políticas:
-  ${knowledgeContext}
+    Usa únicamente esta información de políticas:
+    ${knowledgeContext}
 
-  Información del usuario:
-  - Nombre: ${userName}
-  - Puesto: ${userPosition}
-  - Equipo: ${nombreEquipo}
-  - Líder: ${liderName}
+    Información del usuario:
+    - Nombre: ${userName}
+    - Puesto: ${userPosition}
+    - Equipo: ${nombreEquipo}
+    - Líder: ${liderName}
 
-  Responde de forma amigable y profesional.`;
+    Responde de forma amigable y profesional.`
+  ].join("\n");
 
   const messages: Message[] = [
     { role: "system", content: systemMessage },
@@ -357,9 +393,17 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!answer) return { error: "No se obtuvo respuesta de Compi" };
 
     // 7) Guardar mensaje en BD
-    await supabase.from("mensajes").insert([{ id_usuario, input_usuario: rawPrompt, output_bot: answer, timestamp: new Date().toISOString() }]);
+    await supabase.from("mensajes").insert([{ 
+      id_usuario, 
+      input_usuario: rawPrompt, 
+      output_bot: answer, 
+      timestamp: new Date().toISOString()
+    }]);
 
-    return { response: answer };
+    return { 
+      response: answer,
+      actions: policyActions 
+    };
   } catch (error) {
     console.error("Error en OpenAI:", error);
     return { error: "Error al procesar la respuesta" };
