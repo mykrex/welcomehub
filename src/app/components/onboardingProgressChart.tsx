@@ -104,7 +104,7 @@ export const OnboardingProgressChart: React.FC<OnboardingProgressChartProps> = (
   };
 
   return (
-    <div className="bg-gray-800 rounded-xl p-8 m-8 text-gray-100">
+    <div className="bg-[#263345] rounded-xl p-8 m-8 text-gray-100">
       {/* Header */}
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-white mb-2">

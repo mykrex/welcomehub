@@ -3,7 +3,8 @@ import Image from "next/image";
 
 export default function FotoPerfil({ userId }: { userId: string }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Get the signed URL from /api/avatar/bajarAvatar
@@ -30,7 +31,8 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setLoading(true);
+
+    setUploading(true);
 
     try {
       const form = new FormData();
@@ -58,13 +60,13 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       console.error("Error en handleUpload:", err);
       alert(`No se pudo subir tu foto: ${msg}`);
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
   // Delete using the endpoint api/avatar/borrarAvatar
   const handleDelete = async () => {
-    setLoading(true);
+    setDeleting(true);
     try {
       const resp = await fetch("/api/avatar/borrarAvatar", { method: "POST" });
       if (!resp.ok) {
@@ -77,7 +79,7 @@ export default function FotoPerfil({ userId }: { userId: string }) {
         err instanceof Error ? err.message : "No se pudo borrar tu foto.";
       alert(msg);
     } finally {
-      setLoading(false);
+      setDeleting(false);
     }
   };
 
@@ -104,17 +106,17 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       <div className="flex gap-2">
         <button
           onClick={() => fileInputRef.current?.click()}
-          disabled={loading}
-          className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
+          disabled={uploading}
+          className="bg-cyan-700 text-white px-3 py-1 rounded hover:bg-blue-700 text-sm"
         >
-          {loading ? "Subiendo..." : "Editar"}
+          {uploading ? "Subiendo..." : "Editar"}
         </button>
         <button
           onClick={handleDelete}
-          disabled={loading}
-          className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
+          disabled={deleting}
+          className="bg-red-800 text-white px-3 py-1 rounded hover:bg-red-700 text-sm"
         >
-          {loading ? "Eliminando..." : "Eliminar"}
+          {deleting ? "Eliminando..." : "Eliminar"}
         </button>
       </div>
     </div>
