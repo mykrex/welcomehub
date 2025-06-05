@@ -14,17 +14,20 @@ interface RequestBody {
   prompt: string;
   id_usuario: string;
 }
-type Action = {
-  label: string;
-  href: string;
-};
-
 interface Result {
   response?: string;
   actions?: Action[];
   error?: string;
 }
-
+type Action = {
+  label: string;
+  href: string;
+};
+type CursoTitulo = {
+  curso: {
+    titulo: string;
+  };
+};
 type CursoAsignado = {
   curso: {
     id_curso: string;
@@ -70,6 +73,77 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   const userRole = userInfo.rol;
 
   // Detectar intenciones especificas (cursos, lider, etc)
+
+  // intencion cursos completados, en progreso, sin comenzar
+  const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
+  const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado"];
+  const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar"];
+
+  // cursos completados
+  if (palabrasCompletados.some(kw => prompt.includes(kw))){
+    const {data: cursosCompletados, error: errorCompletados } = await supabase  
+      .from("curso_usuario")
+      .select("curso(titulo)")
+      .eq("id_usuario", id_usuario)
+      .eq("estado", "completado");
+    if (errorCompletados) {
+      return { response: "Ocurrio un error al consultar tus cursos completados."};
+    }
+    if (!cursosCompletados || cursosCompletados.length === 0) {
+      return { response: "No tienes ningun curso completado en este momento" };
+    }
+    const lista = (cursosCompletados as unknown as CursoTitulo[])
+          .map((c, i) => `${i+1}. ${c.curso.titulo}`)
+          .join("\n");
+    return {
+      response: `Estos son tus cursos completados:\n\n${lista}`,
+      actions: [{ label: "Ver todos mis cursos", href: "/cursos"}]
+    }
+  }
+
+  // cursos en progreso
+  if (palabrasEnProgreso.some(kw => prompt.includes(kw))){
+    const { data: cursosProgreso, error: errorProgreso } = await supabase 
+      .from("curso_usuario")
+      .select("curso(titulo)")
+      .eq("id_usuario", id_usuario)
+      .eq("estado", "en_progreso");
+    if (errorProgreso) {
+      return { response: "Ocurrió un error al consultar tus cursos en progreso." };
+    }
+    if (!cursosProgreso || cursosProgreso.length === 0) {
+      return { response: `Hola ${userName}, no tienes cursos en progreso en este momento.` };
+    }
+    const lista = (cursosProgreso as unknown as CursoTitulo[])
+          .map((c, i) => `${i+1}. ${c.curso.titulo}`)
+          .join("\n");
+    return {
+      response: `Estos son tus cursos en progreso:\n\n${lista}`,
+      actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
+    };
+  }
+
+  // cursos sin comenzar
+  if (palabrasSinComenzar.some(kw => prompt.includes(kw))) {
+    const { data: cursosSinInicio, error: errorSinInicio } = await supabase
+      .from("curso_usuario")
+      .select("curso(titulo)")
+      .eq("id_usuario", id_usuario)
+      .eq("estado", "sin_comenzar");
+    if (errorSinInicio) {
+      return { response: "Ocurrió un error al consultar tus cursos sin empezar." };
+    }
+    if (!cursosSinInicio || cursosSinInicio.length === 0) {
+      return { response: `Hola ${userName}, no tienes cursos sin comenzar en este momento.` };
+    }
+    const lista = (cursosSinInicio as unknown as CursoTitulo[])
+          .map((c, i) => `${i+1}. ${c.curso.titulo}`)
+          .join("\n");
+    return {
+      response: `Estos son tus cursos sin comenzar:\n\n${lista}`,
+      actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
+    };
+  }
 
   // intencion: "mis cursos"
   if (["mis cursos", "cursos", "cursos asignados", "cursos inscritos"].some(kw => prompt.includes(normalizeText(kw)))){
