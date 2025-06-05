@@ -14,8 +14,14 @@ interface RequestBody {
   prompt: string;
   id_usuario: string;
 }
+type Action = {
+  label: string;
+  href: string;
+};
+
 interface Result {
   response?: string;
+  actions?: Action[];
   error?: string;
 }
 
@@ -34,7 +40,7 @@ type CursoAsignado = {
 function normalizeText(str: string) {
   return str
     .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
 }
@@ -91,7 +97,12 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
     // Mostramos los cursos asignados
     const listaCursos = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
-    return { response: `Tus cursos asignados son:\n\n${listaCursos}` };
+    return { 
+      response: `Tus cursos asignados son:\n\n${listaCursos}`,
+      actions: [
+        { label: "Ir a mis cursos", href: "/cursos"}
+      ]
+    };
   }
 
   // intencion: datos especificos de curso
@@ -161,7 +172,9 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
           if (liData) liderName = liData.nombres;
         }
       }
-      return { response: `Tu líder es ${liderName}. Si necesitas ayuda, no dudes en preguntar.` };
+      return { 
+        response: `Tu líder es ${liderName}. Si necesitas ayuda, no dudes en preguntar.` ,
+      };
     }
   }
 

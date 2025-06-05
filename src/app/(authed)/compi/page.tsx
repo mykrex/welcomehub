@@ -1,15 +1,25 @@
-'use client';
+"use client";
 
 import { useChat } from "@/app/context/ChatContext";
 import { useEffect } from "react";
-import { Bot, Send} from "lucide-react";
+import { Bot, Send } from "lucide-react";
 import { Input } from "@/app/components/Input";
 import { Button } from "@/app/components/Button";
-import { Avatar } from "@/app/components/Avatar";  // <-- Importa tu Avatar
+import { Avatar } from "@/app/components/Avatar";
+import React from "react";
+import Link from "next/link";
 
 export default function ChatPage() {
-  const { messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef } = useChat();
+  const {
+    messages,
+    prompt,
+    setPrompt,
+    sendPrompt,
+    loading,
+    messagesEndRef
+  } = useChat();
 
+  // Auto‐scroll al final cuando llegan nuevos mensajes
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, messagesEndRef]);
@@ -33,28 +43,51 @@ export default function ChatPage() {
       <div className="max-w-4xl mx-auto px-6 py-6 h-[calc(100vh-160px)] flex flex-col">
         <div className="flex-1 overflow-y-auto space-y-6 pr-2">
           {messages.map((message, index) => (
-        <div
-          key={index}
-          className={`flex gap-4 ${message.sender === "user" ? "flex-row-reverse" : "flex-row"}`}
-        >
-          <Avatar sender={message.sender} className="w-10 h-10" />
-          <div className={`flex-1 max-w-[80%] ${message.sender === "user" ? "text-right" : "text-left"}`}>
             <div
-              className={`inline-block p-4 rounded-[15px] shadow-lg ${
-                message.sender === "user"
-                  ? "bg-[#06D6A0] text-white"
-                  : "bg-[#448AFF]/10 border border-[#448AFF]/20 text-gray-100"
+              key={index}
+              className={`flex gap-4 ${
+                message.sender === "user" ? "flex-row-reverse" : "flex-row"
               }`}
             >
-              <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
-            </div>
-            <p className="text-xs text-gray-400 mt-2">
-              {message.sender === "user" ? "Tú" : "Compi"} • ahora
-            </p>
-          </div>
-        </div>
-      ))}
+              <Avatar sender={message.sender} className="w-10 h-10" />
+              <div
+                className={`flex-1 max-w-[80%] ${
+                  message.sender === "user" ? "text-right" : "text-left"
+                }`}
+              >
+                <div
+                  className={`inline-block p-4 rounded-[15px] shadow-lg ${
+                    message.sender === "user"
+                      ? "bg-[#06D6A0] text-white"
+                      : "bg-[#448AFF]/10 border border-[#448AFF]/20 text-gray-100"
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap leading-relaxed">
+                    {message.text}
+                  </p>
+                </div>
 
+                {/* Aquí renderizamos los botones si el mensaje tiene acciones */}
+                {message.actions && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {message.actions.map((action, i) => (
+                      <Link
+                        key={i}
+                        href={action.href}
+                        className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                      >
+                        {action.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                <p className="text-xs text-gray-400 mt-2">
+                  {message.sender === "user" ? "Tú" : "Compi"} • ahora
+                </p>
+              </div>
+            </div>
+          ))}
 
           {loading && (
             <div className="flex gap-4">
@@ -67,7 +100,9 @@ export default function ChatPage() {
                     <div className="w-2 h-2 bg-[#448AFF] rounded-full animate-bounce delay-200"></div>
                   </div>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">Compi está escribiendo...</p>
+                <p className="text-xs text-gray-400 mt-2">
+                  Compi está escribiendo...
+                </p>
               </div>
             </div>
           )}
@@ -82,7 +117,9 @@ export default function ChatPage() {
               className="flex-1 py-4 px-4 bg-[#448AFF]/5 border border-[#448AFF]/30 focus:border-[#448AFF] focus:ring-[#448AFF] rounded-[15px] text-white placeholder-gray-400"
               placeholder="Escribe tu mensaje aquí..."
               value={prompt}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrompt(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPrompt(e.target.value)
+              }
               onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
