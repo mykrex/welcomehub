@@ -72,7 +72,7 @@ export const HoursChart: React.FC<HoursChartProps> = ({
 
   // Generar la semana correcta basada en las fechas reales de la API
   const generateWeekDays = () => {
-    const inicioDateStr = weekData.inicio_semana; // "2025-05-28"
+    const inicioDateStr = weekData.inicio_semana;
     const days = ['Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Lunes', 'Martes'];
     
     // Parsear la fecha de inicio
@@ -173,31 +173,43 @@ export const HoursChart: React.FC<HoursChartProps> = ({
         </p>
       </div>
       
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={chartData} margin={{ top: 10, right: 30, left: 10, bottom: 5 }}>
-          <CartesianGrid stroke="#555" strokeDasharray="2 2" horizontal={true} vertical={false} />
-          <XAxis dataKey="day" tick={{ fill: 'black' }} />
-          <YAxis 
-            domain={[0, 'dataMax + 2']}
-            tickFormatter={(value: number) => `${value}h`}
-            label={{ value: 'Horas', angle: -90, position: 'insideLeft' }}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend 
-            formatter={(value: string) => getProjectName(value)}
-          />
-          
-          {allProjects.map((projectId, index) => (
-            <Bar
-              key={projectId}
-              dataKey={projectId}
-              stackId="hours"
-              fill={projectColors[index % projectColors.length]}
-              name={projectId}
+      {/* Gráfica de cursos */}
+      <div className="hours-chart-container">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData} margin={{ top: 10, right: 30, left: 10, bottom: 5 }}>
+            <CartesianGrid stroke="#555" strokeDasharray="2 2" horizontal={true} vertical={false} />
+            <XAxis dataKey="day" tick={{ fill: 'black' }} />
+            <YAxis 
+              domain={[0, 'dataMax + 2']}
+              tickFormatter={(value: number) => `${value}h`}
+              label={{ 
+                value: 'Horas',
+                angle: -90,
+                position: 'insideLeft',
+                style: {
+                  textAnchor: 'middle',
+                  fill: '#b9babc',
+                  fontSize: 18,
+                },
+              }}
             />
-          ))}
-        </BarChart>
-      </ResponsiveContainer>
+            <Tooltip content={<CustomTooltip />} />
+            <Legend 
+              formatter={(value: string) => getProjectName(value)}
+            />
+
+            {allProjects.map((projectId, index) => (
+              <Bar
+                key={projectId}
+                dataKey={projectId}
+                stackId="hours"
+                fill={projectColors[index % projectColors.length]}
+                name={projectId}
+              />
+            ))}
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
       
       <div className="week-summary">
         <p>

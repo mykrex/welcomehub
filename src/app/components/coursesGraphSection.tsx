@@ -35,12 +35,12 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
       obligatorio: obligatoryCourses.completed,
     },
     {
-      tipo: 'En proceso',
+      tipo: 'En progreso',
       normal: Math.max(0, normalCourses.inProgress - obligatoryCourses.inProgress),
       obligatorio: obligatoryCourses.inProgress,
     },
     {
-      tipo: 'Sin empezar',
+      tipo: 'Sin comenzar',
       normal: Math.max(0, normalCourses.notStarted - obligatoryCourses.notStarted),
       obligatorio: obligatoryCourses.notStarted,
     },
@@ -76,7 +76,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
     <div className="courses-section">
       <div className="courses-header">
         <h3>Progreso de Cursos</h3>
-        <p>Distribución de cursos obligatorios y normales</p>
+        <p>Avance en los cursos obligatorios y opcionales</p>
       </div>
 
       {/* Gráfica de cursos */}
@@ -87,7 +87,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid 
-              stroke="#30363d" 
+              stroke="#e4e7ef" 
               strokeDasharray="2 2" 
               horizontal={true} 
               vertical={false} 
@@ -95,13 +95,13 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
             <XAxis
               dataKey="tipo"
               tick={{ fill: '#8b949e', fontSize: 12 }}
-              axisLine={{ stroke: '#30363d' }}
-              tickLine={{ stroke: '#30363d' }}
+              axisLine={{ stroke: '#e4e7ef' }}
+              tickLine={{ stroke: '#e4e7ef' }}
             />
             <YAxis
               tick={{ fill: '#8b949e', fontSize: 12 }}
-              axisLine={{ stroke: '#30363d' }}
-              tickLine={{ stroke: '#30363d' }}
+              axisLine={{ stroke: '#e4e7ef' }}
+              tickLine={{ stroke: '#e4e7ef' }}
               allowDecimals={false}
               label={{
                 value: 'Cantidad de Cursos',
@@ -109,8 +109,8 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
                 position: 'insideLeft',
                 style: {
                   textAnchor: 'middle',
-                  fill: '#8b949e',
-                  fontSize: 12,
+                  fill: '#b9babc',
+                  fontSize: 16,
                 },
               }}
             />
@@ -132,7 +132,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
               dataKey="normal" 
               stackId="courses" 
               fill="#58a6ff" 
-              name="Normales"
+              name="Opcionales"
               radius={[4, 4, 0, 0]}
             />
           </BarChart>
@@ -159,7 +159,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
             <div className="stat-item not-started">
               <div className="stat-info">
                 <span className="stat-number">{normalCourses.notStarted}</span>
-                <span className="stat-label">Sin empezar</span>
+                <span className="stat-label">Sin comenzar</span>
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@ export const CoursesGraphSection: React.FC<CoursesSectionProps> = ({ employee })
               <strong>{obligatoryCourses.completed}</strong>
             </div>
             <div className="mandatory-item">
-              <span>En proceso: </span>
+              <span>En progreso: </span>
               <strong>{obligatoryCourses.inProgress}</strong>
             </div>
             <div className="mandatory-item">

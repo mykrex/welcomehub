@@ -3,7 +3,7 @@
 ============================================================================= */
 
 .employee-details-container {
-  background: #21262d;
+  background: #263345;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -12,7 +12,7 @@
 }
 
 .employee-header {
-  background: linear-gradient(135deg, #2d3339 0%, #24292e 100%);
+  background: linear-gradient(135deg, #202b3b 0%, #162336 100%);
   color: #f6f8fa;
   padding: 2rem;
   display: flex;
@@ -86,7 +86,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  background: #2d3339;
+  background: #263345; /* Fondo del selector*/
   border-bottom: 1px solid #30363d;
 }
 
@@ -133,7 +133,7 @@
 .week-info {
   margin-top: 1rem;
   padding: 1rem;
-  background: #1c2128;
+  background: #313742;
   border-radius: 6px;
   border-left: 4px solid #58a6ff;
   border: 1px solid #30363d;
@@ -162,6 +162,8 @@
   background: transparent;
   padding: 1.5rem 2rem;
   border-bottom: none;
+  display: flex;
+  align-items: center;
 }
 
 .no-week-selected {
@@ -184,11 +186,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 0.70rem;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
+  margin-left: 0.2rem;
   border: 1px solid;
 }
 
@@ -266,13 +269,15 @@
   background: #238636;
   color: white;
   border: none;
+  width: 12pc;
+  height: 4pc;
+  margin-left: 2rem;
   padding: 1rem 2rem;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex;
   align-items: center;
   gap: 0.5rem;
 }
@@ -319,6 +324,7 @@
   border-radius: 8px;
   font-weight: 600;
   margin-bottom: 1rem;
+  margin-left: 2rem;
   border: 1px solid;
 }
 
@@ -351,8 +357,15 @@
    GRÁFICA DE HORAS
 ============================================================================= */
 
+.hours-chart-container {
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+  background: #232a39; /* FONDO DE LA GRAFICA*/
+  border-radius: 8px;
+  border: 1px solid #30363d;
+}
 .hours-chart {
-  background: #2d3339;
+  background: #263345;
   padding: 2rem;
   border-bottom: 1px solid #30363d;
 }
@@ -390,7 +403,7 @@
 .week-summary {
   margin-top: 1.5rem;
   padding: 1rem 1.5rem;
-  background: #1c2128;
+  background: #18202c;
   border-radius: 8px;
   text-align: center;
   border-left: 4px solid #58a6ff;
@@ -401,6 +414,7 @@
   margin: 0;
   color: #e1e4e8;
   font-size: 1rem;
+  background: #18202c;
 }
 
 .week-summary strong {
@@ -666,7 +680,7 @@
 ============================================================================= */
 
 .courses-section {
-  background: #2d3339;
+  background: #202b3b;
   padding: 2rem;
   border-bottom: 1px solid #30363d;
 }
@@ -691,6 +705,10 @@
 
 .courses-chart-container {
   margin-bottom: 2rem;
+  padding-top: 2rem;
+  background: #18202c; /* FONDO DE LA GRAFICA*/
+  border-radius: 8px;
+  border: 1px solid #30363d;
 }
 
 .course-stats {
@@ -701,7 +719,7 @@
 }
 
 .course-summary {
-  background: #1c2128;
+  background: #18202c;
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid #30363d;
@@ -725,7 +743,7 @@
   align-items: center;
   gap: 1rem;
   padding: 0.75rem;
-  background: #2d3339;
+  background: #252e3a;
   border-radius: 6px;
   border: 1px solid #30363d;
 }
@@ -743,7 +761,7 @@
 .stat-number {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f6f8fa;
+  color: #dde0e6;
 }
 
 .stat-label {
@@ -765,7 +783,7 @@
 }
 
 .mandatory-courses-detail {
-  background: #1c2128;
+  background: #18202c;
   padding: 1.5rem;
   border-radius: 8px;
   border: 1px solid #30363d;
