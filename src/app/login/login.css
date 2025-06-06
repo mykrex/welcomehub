@@ -1,0 +1,25 @@
+:root {
+  --bg-blue-main: #042c45;
+  --white-main: #ebfaff;
+  --blue-light: #8bcff9;
+  --grey-light: #9daaa6;
+  --green: #4daa57;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  background-image: url('/bg_login.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}

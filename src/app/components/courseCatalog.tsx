@@ -1,23 +1,27 @@
-'use client';
+// src/app/components/courseCatalog.tsx
 
-import { useCourses } from '@/app/hooks/useCourses';
-import CourseSection from './courseSection';
+"use client";
+
+import { useCourses } from "@/app/hooks/useCourses";
+import CourseSection from "./courseSection";
+/* Importamos el CSS que creamos arriba */
+import "../(authed)/cursos/cursos.css";
 
 export default function CourseCatalog() {
-  const { 
-    cursosInscritos, 
-    cursosOpcionales, 
-    cursosRecomendados, 
-    loading, 
-    error 
+  const {
+    cursosInscritos,
+    cursosOpcionales,
+    cursosRecomendados,
+    loading,
+    error,
   } = useCourses();
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
-          <p className="text-gray-400">Cargando catálogo de cursos...</p>
+      <div className="loader-container">
+        <div className="loader-content">
+          <div className="spinner"></div>
+          <p className="loader-text">Cargando catálogo de cursos...</p>
         </div>
       </div>
     );
@@ -25,22 +29,24 @@ export default function CourseCatalog() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <p className="text-red-500 mb-4">Error al cargar los cursos</p>
-          <p className="text-gray-400">{error}</p>
+      <div className="error-container">
+        <div className="error-content">
+          <p className="error-title">Error al cargar los cursos</p>
+          <p className="error-message">{error}</p>
         </div>
       </div>
     );
   }
 
   // Separamos los cursos inscritos en obligatorios y los 'opcionales'
-  const inscritosObligatorios = cursosInscritos?.filter((c) => c.obligatorio) ?? [];
-  const inscritosOpcionales = cursosInscritos?.filter((c) => !c.obligatorio) ?? [];
+  const inscritosObligatorios =
+    cursosInscritos?.filter((c) => c.obligatorio) ?? [];
+  const inscritosOpcionales =
+    cursosInscritos?.filter((c) => !c.obligatorio) ?? [];
 
   return (
-    <div className="space-y-8 bg-[#000F14]">
-      {/* Seccion de los cursos inscritos obligatorios a los que esta inscrito el usuario */}
+    <div className="catalog-main">
+      {/* Sección: cursos obligatorios inscritos */}
       {inscritosObligatorios.length > 0 && (
         <CourseSection
           title="Mis Cursos Obligatorios"
@@ -50,7 +56,7 @@ export default function CourseCatalog() {
         />
       )}
 
-      {/* Seccion de los cursos inscritos no obligatorios a los que esta inscrito el usuario */}
+      {/* Sección: cursos opcionales inscritos */}
       {inscritosOpcionales.length > 0 && (
         <CourseSection
           title="Mis Cursos Opcionales"
@@ -60,7 +66,7 @@ export default function CourseCatalog() {
         />
       )}
 
-      {/* Seccion de cursos recomendados futuramente por Compi */}
+      {/* Sección: cursos recomendados */}
       {cursosRecomendados && cursosRecomendados.length > 0 && (
         <CourseSection
           title="Recomendados para ti"
@@ -69,7 +75,7 @@ export default function CourseCatalog() {
         />
       )}
 
-      {/* Seccion de cursos opcionales NO inscritos*/}
+      {/* Sección: cursos opcionales NO inscritos */}
       {cursosOpcionales && cursosOpcionales.length > 0 && (
         <CourseSection
           title="Explora más cursos"
@@ -78,15 +84,16 @@ export default function CourseCatalog() {
         />
       )}
 
-      {/* Mensaje si es que no hay cursos */}
-      {(!cursosInscritos || cursosInscritos.length === 0) && 
-       (!cursosOpcionales || cursosOpcionales.length === 0) && 
-       (!cursosRecomendados || cursosRecomendados.length === 0) && (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">No se encontraron cursos disponibles</p>
-        </div>
-      )}
-      
+      {/* Mensaje si no hay cursos */}
+      {(!cursosInscritos || cursosInscritos.length === 0) &&
+        (!cursosOpcionales || cursosOpcionales.length === 0) &&
+        (!cursosRecomendados || cursosRecomendados.length === 0) && (
+          <div className="empty-container">
+            <p className="empty-text">
+              No se encontraron cursos disponibles
+            </p>
+          </div>
+        )}
     </div>
   );
 }
