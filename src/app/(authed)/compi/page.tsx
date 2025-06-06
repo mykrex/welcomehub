@@ -6,6 +6,7 @@ import { Bot, Send } from "lucide-react";
 import { Input } from "@/app/components/Input";
 import { Button } from "@/app/components/Button";
 import { Avatar } from "@/app/components/Avatar";
+import CompiIcon from "@/app/components/CompiIcon";
 import React from "react";
 import Link from "next/link";
 
@@ -29,8 +30,8 @@ export default function ChatPage() {
       {/* Header */}
       <div className="bg-[#042C45] border-b border-[#448AFF]/20 sticky top-0 z-10 px-6 py-4">
         <div className="flex items-center gap-4 max-w-4xl mx-auto">
-          <div className="w-12 h-12 bg-[#448AFF] rounded-[15px] flex items-center justify-center shadow-lg">
-            <Bot className="w-7 h-7 text-white" />
+          <div className="w-12 h-12 flex items-center justify-center shadow-lg">
+            <CompiIcon className="w-12 h-12 text-white" />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-[#448AFF]">Compi</h2>
