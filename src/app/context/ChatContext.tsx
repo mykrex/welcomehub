@@ -138,6 +138,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         : `Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
       
       const shortcuts: Action[] = [
+        { label: "Dashboard", href: "/dashboard"},
         { label: "Mis Cursos", href: "/cursos" },
         { label: "Mi Perfil", href: "/mi_perfil"},
         { label: "Retos", href: "/retos"},
