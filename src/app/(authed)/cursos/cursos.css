@@ -208,7 +208,7 @@
   padding: 20px 30px; /* p-2 */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start;  
 }
 
 /* ==========================================================================
@@ -244,6 +244,10 @@
    ========================================================================== */
 .scroll-wrapper {
   position: relative; /* necesario para botones absolutos dentro */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 /* ==========================================================================
@@ -346,6 +350,8 @@
 
   /* → Scroll únicamente en el eje X */
   overflow-x: auto;
+  width: 100%;
+  justify-content: start;
 
   /* ← IMPORTANTE: al usar Grid, el valor por defecto de align-items es "stretch",
      lo que hace que cada celda (cada .course-card) se estire para llenar la altura
