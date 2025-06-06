@@ -1,0 +1,218 @@
+/* ==========================================================================
+   Landing Page Styles
+   ========================================================================== */
+
+/* Container for the entire landing page:
+   - Full viewport height
+   - Dark background color
+   - White text
+   - Flexbox centering (both vertically and horizontally)
+   - Positioned relative to allow absolute-positioned children
+   - Hides overflow
+   - Horizontal padding
+*/
+
+:root {
+  --bg-blue-main: #042c45;
+  --white-main: #ebfaff;
+  --blue-light: #8bcff9;
+  --grey-light: #9daaa6;
+  --green: #4daa57;
+}
+
+.landing-container {
+  height: 100%;
+  background-color: #000f14;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  /* justify-content: center;*/
+  position: relative;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* Wrapper for the main content area (logo, heading, text, button):
+   - Constrains maximum width (36rem / 576px)
+   - Ensures content sits above the animated background via z-index:10
+*/
+.content-wrapper {
+  width: 50%; /* ½ del ancho del contenedor padre */
+  height: 100%;
+  max-width: none; /* Quitamos el max-width para poder usar 50% */
+  z-index: 10; /* Mantener el contenido sobre la animación */
+  display: flex; /* Para centrar el contenido internamente si se desea */
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 100px;
+  padding-top: 30px;
+
+  align-items: flex-start; /* Ajustar a la izquierda; si prefieres centrar, usa center */
+  gap: 20px;
+}
+
+.middle-wrapper {
+  flex: 1; /* Ocupa todo el espacio sobrante entre el logo y el final */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente heading + bottom */
+  gap: 30px; /* Separación entre heading y bottom (igual que antes) */
+  width: 100%; /* Para que ocupe todo el ancho de content-wrapper */
+}
+
+/* Style for the logo image:
+   - Bottom margin to separate from heading
+   - Equivalent to Tailwind’s mb-8 (2rem)
+*/
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+/* Main heading (h1):
+   - Font size 2.25rem (36px) by default
+   - On small screens and up (min-width:640px), font-size increases to 3rem (48px)
+   - Light font weight (300)
+   - Tight line-height (1.25)
+   - Bottom margin (1rem) to separate from subtitle
+*/
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.camino {
+  font-size: 85px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--white-main);
+}
+
+.guia {
+  font-size: 95px;
+  font-weight: 1000;
+  line-height: 1;
+  color: var(--white-main);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: fit-content;
+}
+
+/* Responsive override: on screens ≥ 640px set font-size to 3rem */
+@media (min-width: 640px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+/* Emphasized portion inside the heading:
+   - Semi-bold font weight (600)
+   - Explicit white color (even though parent is white)
+*/
+
+/* Subtitle / paragraph text:
+   - Gray-300 color (#D1D5DB)
+   - Font size 1.125rem (18px)
+   - Line height 1.75rem (28px)
+   - Bottom margin 2rem to separate from button
+*/
+.subtitle {
+  color: var(--grey-light);
+  font-size: 30px;
+  line-height: 2rem;
+}
+
+/* Login button:
+   - Solid background color (#0B88D5)
+   - White text
+   - Medium font weight (500)
+   - Horizontal padding 1.5rem, vertical padding 0.75rem
+   - Fully rounded pill shape
+   - Font size 1.125rem, line height 1.75rem
+   - Large drop shadow
+   - Smooth brightness transition on hover 
+*/
+
+.login-button {
+  background-color: #0b88d5;
+  color: var(--white-main);
+  font-weight: 500;
+  padding: 15px 15px; /* Equivalent to Tailwind’s py-3 px-6 */
+  border-radius: 9999px; /* Equivalent to Tailwind’s rounded-full */
+  font-size: 28px; /* Equivalent to Tailwind’s text-lg */
+  transition: background-color 0.4s ease;
+}
+
+.login-button:hover {
+  background-color: #064a74; /* Hover effect with a dark teal color */
+}
+
+.login-button:active {
+  background-color: #0766ab !important; /* azul más oscuro */
+  transform: scale(0.98); /* sensación de presión */
+  transition: background-color 0.05s ease, transform 0.05s ease;
+}
+
+/*Animation */
+/* 1) Posición inicial: fuera de la vista (arriba) */
+
+.animation-wrapper {
+  width: 50%; /* Ocupa la mitad derecha del landing-container */
+  height: 100%; /* Que ocupe toda la altura de la pantalla */
+  position: relative; /* Para que sus hijos absolutos tomen como referencia este contenedor */
+  overflow: hidden; /* Si alguna parte se sale, se recorta */
+  /* Si antes tenías padding en landing-container,
+     aquí no hace falta duplicarlo. */
+  padding-right: 100px;
+  display: flex; /* Contenedor flex en fila */
+  justify-content: flex-end; /* Pegar contenido al lado derecho */
+  align-items: center; /* Alinea verticalmente (si quieres que los hijos empiecen animados desde abajo/arriba, lo sobreescribiremos abajo) */
+
+  gap: 40px;
+}
+
+.small-bg-wrapper {
+  position: relative;
+
+  /* Centrado horizontal dentro de la mitad izquierda: */
+  transform: translateY(-100%); 
+
+  /* Duración “2s” (puedes cambiar este valor para acelerar/lentar) */
+  animation: slideDown 2s ease-out forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(-30%);
+  }
+}
+
+/* ================================================================
+   Animación: BigBG entra desde abajo hasta el 75% vertical,
+   pero ubicado en el 75% del ancho (lado derecho)
+   ================================================================ */
+.big-bg-wrapper {
+    position: relative;
+  /* Empieza fuera de la vista (abajo) y sube hasta su posición estática */
+  transform: translateY(100%); 
+  animation: slideUp 1.75s ease-out forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(25%);
+  }
+}
