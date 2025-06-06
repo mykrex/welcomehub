@@ -18,7 +18,7 @@ export default function OnboardingStats({ cursos = [] }: OnboardingStatsProps) {
   return (
     <div className="average-stats-card">
       <div className="ac-content">
-        <div className="ac-title">Onboarding</div>
+        <div className="ac-title">Progreso Onboarding</div>
 
         <div className="average-stats-main-score flex flex-col items-center justify-center">
           <div className="flex items-baseline justify-items-center items-center">

@@ -1,21 +1,28 @@
-'use client';
+// src/app/page.tsx
 
-import CourseCatalog from '@/app/components/courseCatalog';
+"use client";
+
+import CourseCatalog from "@/app/components/courseCatalog";
+// Importamos el CSS que acabamos de crear
+import "./cursos.css";
 
 export default function CursosPage() {
   return (
-    <main className="min-h-screen bg-[#000F14]">
+    <main className="cursos-main">
       {/* Header */}
-      <div className="relative bg-gradient-to-b from-[#000F14] to-transparent">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+      <div className="header">
+        <div className="header-container">
+          <div className="header-title">
+            Mis Cursos: 
+          </div>
+          <div className="header-subtitle">
             Descubre, aprende y haz crecer tus habilidades
-          </h1>
+          </div>
         </div>
       </div>
 
-      {/* Catalogo */}
-      <div className="container mx-auto px-4 pb-12">
+      {/* Catálogo */}
+      <div className="catalog-container">
         <CourseCatalog />
       </div>
     </main>

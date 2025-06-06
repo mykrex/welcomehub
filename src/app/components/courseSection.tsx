@@ -1,9 +1,13 @@
+// src/app/components/courseSection.tsx
+
 "use client";
 
 import { useRef, useState } from "react";
 import CourseCard from "./courseCard";
 import { CursoInscrito, CursoOpcional } from "@/app/hooks/useCourses";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+/* Importamos el CSS separado */
+import "../(authed)/cursos/cursos.css";
 
 interface CourseSectionProps {
   title: string;
@@ -36,7 +40,8 @@ export default function CourseSection({
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    const { scrollLeft, scrollWidth, clientWidth } =
+      scrollContainerRef.current;
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
   };
@@ -87,34 +92,36 @@ export default function CourseSection({
   }
 
   return (
-    <div className="mb-8 bg-[#042c45] border-2 border-transparent rounded-[15px] p-2">
-      <h2 className="text-white text-2xl font-bold mb-4 px-4">{title}</h2>
-      <div className="relative group">
+    <div className="course-section">
+      <h2 className="course-section-title">{title}</h2>
+
+      <div className="scroll-wrapper">
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute top-1/2 left-2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="scroll-button scroll-button-left"
+            aria-label="Scroll Left"
           >
             <svg
-              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M15 19l-7-7 7-7"
-              />
+              ></path>
             </svg>
           </button>
         )}
+
         <div
           ref={scrollContainerRef}
           onScroll={handleScroll}
-          className="flex space-x-4 overflow-x-auto scrollbar-hide px-4 pb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          className="scroll-container"
         >
           {courses.map((course) => (
             <CourseCard
@@ -133,23 +140,25 @@ export default function CourseSection({
             />
           ))}
         </div>
+
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="scroll-button scroll-button-right"
+            aria-label="Scroll Right"
           >
             <svg
-              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M9 5l7 7-7 7"
-              />
+              ></path>
             </svg>
           </button>
         )}
