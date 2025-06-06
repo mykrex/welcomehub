@@ -18,7 +18,6 @@ export default function Chatbot() {
     messagesEndRef,
   } = useChat();
 
-  // Saludo inicial
   useEffect(() => {
     if (open && messages.length === 0 && !loading) {
       sendPrompt("");
@@ -36,7 +35,7 @@ export default function Chatbot() {
 
       {open && (
         <div className="mt-2 w-80 max-h-[500px] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#448AFF]/40 bg-[#042C45] text-white">
-          {/* Header del chatbot */}
+          {/* Header */}
           <div className="p-4 border-b border-[#448AFF]/20 flex items-center gap-3">
             <div className="w-8 h-8">
               <CompiIcon className="w-8 h-8 text-white" />
@@ -47,12 +46,7 @@ export default function Chatbot() {
           {/* Mensajes */}
           <div className="flex-1 overflow-y-auto p-4 space-y-2">
             {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  message.sender === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
+              <div key={index} className={`flex flex-col ${message.sender === "user" ? "items-end" : "items-start"}`}>
                 <div
                   className={`px-3 py-2 rounded-2xl text-sm max-w-[75%] ${
                     message.sender === "user"
@@ -62,6 +56,23 @@ export default function Chatbot() {
                 >
                   {message.text}
                 </div>
+
+                {/* Actions */}
+                {message.actions && message.actions.length > 0 && (
+                  <div className="mt-2 flex flex-col gap-2 w-full max-w-[75%]">
+                    {message.actions.map((action, idx) => (
+                      <a
+                        key={idx}
+                        href={action.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#448AFF] text-white text-sm text-center rounded-md py-1 px-2 hover:bg-[#336dcc] transition-colors"
+                      >
+                        {action.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
             {loading && (
