@@ -24,6 +24,7 @@ type Action = {
   label: string;
   href: string;
 };
+// interfaces para los cursos
 type CursoTitulo = {
   curso: {
     titulo: string;
@@ -68,7 +69,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     return { error: "Falta el ID de usuario" };
   }
 
-  // 1) Obtener información del usuario
+  // Obtener información del usuario
   const { data: userInfo, error: userError } = await supabase
     .from("usuario")
     .select("nombres, rol, puesto, id_equipo")
@@ -83,7 +84,6 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   const userRole = userInfo.rol;
 
   // Detectar intenciones especificas (cursos, lider, etc)
-
   // INTENCION: cursos completados, en progreso, sin comenzar
   const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
   const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar", "faltan por terminar"];
