@@ -60,6 +60,11 @@
   justify-content: center;
   align-items: center;
   
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white-main);
+  font-family: Manrope;
+
 }
 .retos-cell--status {
   flex: 1;
