@@ -33,7 +33,13 @@
         "id": "vacaciones",
         "title": "Política de Vacaciones",
         "description": "Información sobre la política de vacaciones de la empresa.",
-        "content": "Los días de vacaciones son los días que por ley se otorgan a los empleados despues de tener cierta cantidad de tiempo en la empresa, estos son renovados y aumentan cada año depende de la ley de cada país.\n\n Las vacaciones deben solicitarse con al menos 1 mes de antelación. \n\nSe tiene que tomar en consideración la carga de trabajo en el proyecto en el que se esta trabajando o si es que hay otras personas también tomando vacaciones para que los días que planea solicitar no afecten al equipo o al proyecto.\n\n También se tiene que tomar en consieración las fechas donde generalmente se toman vacaciones, como Navidad, Año Nuevo, Pascua, Día de Accion de Gracias etc., para organizarnos con el resto del equipo y tomar las vacaciones en orden, darle la oportunidad para otros compañeros de también tomar vacaciones..."
+        "content": "Los días de vacaciones son los días que por ley se otorgan a los empleados despues de tener cierta cantidad de tiempo en la empresa, estos son renovados y aumentan cada año depende de la ley de cada país.\n\n Las vacaciones deben solicitarse con al menos 1 mes de antelación. \n\nSe tiene que tomar en consideración la carga de trabajo en el proyecto en el que se esta trabajando o si es que hay otras personas también tomando vacaciones para que los días que planea solicitar no afecten al equipo o al proyecto.\n\n También se tiene que tomar en consieración las fechas donde generalmente se toman vacaciones, como Navidad, Año Nuevo, Pascua, Día de Accion de Gracias etc., para organizarnos con el resto del equipo y tomar las vacaciones en orden, darle la oportunidad para otros compañeros de también tomar vacaciones."
+    },
+    {
+        "id": "proceso-solicitar-vacaciones",
+        "title": "Proceso para solicitar vacaciones",
+        "description": "Pasos a seguir para solicitar vacaciones",
+        "content": "Las vacaciones pueden ser solicitadas despues de tener cierto tiempo ya con la empresa y siguiendo los siguientes pasos:\n\nPaso1: Discutir con tu equipo tus intenciones de solicitar vacaciones con al menos un mes de anticipacion, mencionar la cantidad de días y las fechas\n\nPaso2: Una vez el punto 1 se haya discutido y acordado con el equipo, deberas mandarle un correo a tu lider para que quede la solicitud, este correo debe mencionar: \n- Razon de la solicitus\n- Cantidad de dias a tomar\n- Fecha de inicio y final\n\nPaso 3: Este mismo correo sera reenviado al equipo de Administración de Operaciones de Neoris para notificarles las fechas y confirmar que ya se discutio con el equipo\n\n Paso 4: Una vez que Cesar Bermudez haya autorizado la solicitud, se procedera a abrir el Portal de Vacaciones de Neoris para registrar la solicitud."
     },
     {
         "id": "permisos",
@@ -82,5 +88,17 @@
         "title": "Perfil del usuario",
         "description": "Area donde se visualiza el perfil del usuario",
         "content": "En el perfil podras visualizar tu información así como la información de tu equipo y de tu lider. Ademas podras tomar acciones como cambiar tu contraseña, cambiar tu foto de perfil y cerrar sesión"
-    }
+    },
+    {
+        "id": "horario-laboral",
+        "title": "Horario Laboral",
+        "description": "Horario laboral",
+        "content": "El horario laboral dependera de los proyectos en los que estas colaborando, este horario depende de la ubicación de los clientes con los que estas colaborando."
+    },
+    {
+        "id": "problemas-tecnicos",
+        "title": "Problemas tecnicos",
+        "description": "Que hacer si tienes problemas tecnicos con software o hardware",
+        "content": "Si llegas a tener problemas con tu equipo ya sean internos de software o externos de hardware deberas de levantar un ticket para el departamento de TI. El ticket debe contener tu numero de empleado, nombre, equipo y una descripcion del problema. Este ticket se levanta desde tu perfil."
+    }    
 ]
