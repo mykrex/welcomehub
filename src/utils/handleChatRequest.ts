@@ -75,7 +75,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
 
   // Detectar intenciones especificas (cursos, lider, etc)
 
-  // intencion cursos completados, en progreso, sin comenzar
+  // INTENCION: cursos completados, en progreso, sin comenzar
   const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
   const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar", "faltan por terminar"];
   const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar", "no he iniciado"];
@@ -146,8 +146,114 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     };
   }
 
+  // INTENCION: cursos obligatorios
+  if (
+    ["cursos obligatorios", "lista cursos obligatorios", "cuales cursos obligatorios"].some(
+      kw => prompt.includes(kw)
+    )
+  ) {
+    const { data: mandCursos, error: mandError } = await supabase
+      .from("curso")
+      .select("titulo")
+      .eq("obligatorio", true);
+
+    if (mandError) {
+      return { response: "Ocurrió un error al consultar los cursos obligatorios." };
+    }
+    if (!mandCursos || mandCursos.length === 0) {
+      return { response: "Actualmente no hay cursos marcados como obligatorios." };
+    }
+    const listaMand = mandCursos
+      .map((c: any, i: number) => `${i + 1}. ${c.titulo}`)
+      .join("\n");
+    return {
+      response: `Estos son los cursos obligatorios:\n\n${listaMand}`,
+      actions: [{ label: "Ver oferta completa de cursos", href: "/cursos" }]
+    };
+  }
+
+  // Intencion: oferta de cursos
+  if (
+    ["oferta de cursos", "cursos no obligatorios", "cursos opcionales", "cuales cursos opcionales"].some(
+      kw => prompt.includes(kw)
+    )
+  ) {
+    const { data: optCursos, error: optError } = await supabase
+      .from("curso")
+      .select("titulo")
+      .eq("obligatorio", false);
+
+    if (optError) {
+      return { response: "Ocurrió un error al consultar la oferta de cursos." };
+    }
+    if (!optCursos || optCursos.length === 0) {
+      return { response: "Actualmente no hay cursos disponibles como opcionales." };
+    }
+    const listaOpt = optCursos
+      .map((c: any, i: number) => `${i + 1}. ${c.titulo}`)
+      .join("\n");
+    return {
+      response: `Estos son los cursos opcionales (oferta):\n\n${listaOpt}`,
+      actions: [{ label: "Ver oferta completa de cursos", href: "/cursos" }]
+    };
+  }
+
+  // Intencion: cursos obligatorios
+  if (
+    ["mis cursos obligatorios", "cursos obligatorios que tengo"].some(
+      kw => prompt.includes(kw)
+    )
+  ) {
+    const { data: userMandCursos, error: umcError } = await supabase
+      .from("curso_usuario")
+      .select("curso(titulo), estado")
+      .eq("id_usuario", id_usuario)
+      .eq("curso.obligatorio", true); // filtramos sólo los obligatorios en la relación
+
+    if (umcError) {
+      return { response: "Ocurrió un error al consultar tus cursos obligatorios." };
+    }
+    if (!userMandCursos || userMandCursos.length === 0) {
+      return { response: `Hola ${userName}, no estás inscrito en ningún curso obligatorio.` };
+    }
+    const listaUserMand = (userMandCursos as any[])
+      .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`)
+      .join("\n");
+    return {
+      response: `Estos son tus cursos obligatorios:\n\n${listaUserMand}`,
+      actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
+    };
+  }
+
+  // Intencion: cursos opcionales
+  if (
+    ["mis cursos opcionales", "cursos opcionales que tengo", "mis cursos no obligatorios"].some(
+      kw => prompt.includes(kw)
+    )
+  ) {
+    const { data: userOptCursos, error: uocError } = await supabase
+      .from("curso_usuario")
+      .select("curso(titulo), estado")
+      .eq("id_usuario", id_usuario)
+      .eq("curso.obligatorio", false); // filtramos sólo los opcionales
+
+    if (uocError) {
+      return { response: "Ocurrió un error al consultar tus cursos opcionales." };
+    }
+    if (!userOptCursos || userOptCursos.length === 0) {
+      return { response: `Hola ${userName}, no estás inscrito en ningún curso opcional.` };
+    }
+    const listaUserOpt = (userOptCursos as any[])
+      .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`)
+      .join("\n");
+    return {
+      response: `Estos son tus cursos opcionales:\n\n${listaUserOpt}`,
+      actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
+    };
+  }
+
   // intencion: "mis cursos"
-  if (["mis cursos", "cursos", "cursos asignados", "cursos inscritos"].some(kw => prompt.includes(normalizeText(kw)))){
+  if (["mis cursos", "cursos asignados", "cursos inscritos"].some(kw => prompt.includes(normalizeText(kw)))){
     const { data: cursos, error: cursosError } = await supabase
       .from("curso_usuario")
       .select("curso(id_curso, titulo, descripcion, duracion, obligatorio), estado")
