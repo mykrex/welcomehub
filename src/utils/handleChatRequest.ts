@@ -39,6 +39,15 @@ type CursoAsignado = {
   };
   estado: string;
 };
+type CursoSimple = {
+  titulo: string;
+}
+type CursoEstado = {
+  curso: {
+    titulo: string;
+  };
+  estado: string;
+}
 
 // Normaliza cadenas: quita acentos, pasa a minúsculas y trim
 function normalizeText(str: string) {
@@ -164,7 +173,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       return { response: "Actualmente no hay cursos marcados como obligatorios." };
     }
     const listaMand = mandCursos
-      .map((c: any, i: number) => `${i + 1}. ${c.titulo}`)
+      .map((c: CursoSimple, i: number) => `${i + 1}. ${c.titulo}`)
       .join("\n");
     return {
       response: `Estos son los cursos obligatorios:\n\n${listaMand}`,
@@ -190,7 +199,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       return { response: "Actualmente no hay cursos disponibles como opcionales." };
     }
     const listaOpt = optCursos
-      .map((c: any, i: number) => `${i + 1}. ${c.titulo}`)
+      .map((c: CursoSimple, i: number) => `${i + 1}. ${c.titulo}`)
       .join("\n");
     return {
       response: `Estos son los cursos opcionales (oferta):\n\n${listaOpt}`,
@@ -216,7 +225,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!userMandCursos || userMandCursos.length === 0) {
       return { response: `Hola ${userName}, no estás inscrito en ningún curso obligatorio.` };
     }
-    const listaUserMand = (userMandCursos as any[])
+    const listaUserMand = (userMandCursos as unknown as CursoEstado[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`)
       .join("\n");
     return {
@@ -243,7 +252,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!userOptCursos || userOptCursos.length === 0) {
       return { response: `Hola ${userName}, no estás inscrito en ningún curso opcional.` };
     }
-    const listaUserOpt = (userOptCursos as any[])
+    const listaUserOpt = (userOptCursos as unknown as CursoEstado[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`)
       .join("\n");
     return {

@@ -2,7 +2,7 @@
 
 import { useChat } from "@/app/context/ChatContext";
 import { useEffect } from "react";
-import { Bot, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { Input } from "@/app/components/Input";
 import { Button } from "@/app/components/Button";
 import { Avatar } from "@/app/components/Avatar";
