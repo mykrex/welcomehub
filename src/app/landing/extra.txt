@@ -1,0 +1,38 @@
+{/** 
+       * Decorative animation wrapper: 
+       * two columns of images scrolling upward in a loop.
+       */}
+      <div className="decor-wrapper">
+        {/** First decoration column **/}
+        <div className="decor-col">
+          {[...Array(repetitions)].map((_, i) => (
+            <Image
+              key={`col1-${i}`}
+              src="/element.svg"
+              alt="Decoración azul"
+              width={150}
+              height={600}
+              // Each image is positioned absolutely and shares the scroll animation.
+              className="scroll-element"
+              // Stagger the animation start by 4-second increments
+              style={{ animationDelay: `${i * 4}s` }}
+            />
+          ))}
+        </div>
+
+        {/** Second decoration column, offset by 2 seconds **/}
+        <div className="decor-col">
+          {[...Array(repetitions)].map((_, i) => (
+            <Image
+              key={`col2-${i}`}
+              src="/element.svg"
+              alt="Decoración azul"
+              width={150}
+              height={600}
+              className="scroll-element"
+              // Staggered by (i*4 + 2) seconds for visual offset
+              style={{ animationDelay: `${i * 4 + 2}s` }}
+            />
+          ))}
+        </div>
+      </div>
