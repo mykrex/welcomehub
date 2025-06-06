@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useChat } from "@/app/context/ChatContext";
+import { Send } from "lucide-react";
+import { Input } from "@/app/components/Input";
+import { Button } from "@/app/components/Button";
 import CompiIcon from "./CompiIcon";
 
 export default function Chatbot() {
@@ -15,32 +18,34 @@ export default function Chatbot() {
     messagesEndRef,
   } = useChat();
 
-  // Log para ver qué mensajes hay
-  useEffect(() => {
-    console.log("Mensajes cargados en Chatbot.tsx:", messages);
-  }, [messages]);
-
-  // Forzar saludo inicial si no hay historial
+  // Saludo inicial
   useEffect(() => {
     if (open && messages.length === 0 && !loading) {
-      console.log("Forzando mensaje de bienvenida desde el frontend...");
-      sendPrompt(""); // forzar saludo
+      sendPrompt("");
     }
   }, [open, messages, loading, sendPrompt]);
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end">
       <button
-        className="p-2 rounded-full shadow-lg"
         onClick={() => setOpen(!open)}
+        className="rounded-full bg-[#042C45] p-3 shadow-lg hover:bg-[#064C75] transition-colors"
       >
-        <CompiIcon className="w-12 h-12" />
+        <CompiIcon className="w-10 h-10 text-white" />
       </button>
 
       {open && (
-        <div className="bg-white shadow-lg rounded-lg w-80 border mt-2 flex flex-col max-h-[500px]">
-          <h2 className="text-lg font-bold p-4 border-b">Compi</h2>
-          <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
+        <div className="mt-2 w-80 max-h-[500px] rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#448AFF]/40 bg-[#042C45] text-white">
+          {/* Header del chatbot */}
+          <div className="p-4 border-b border-[#448AFF]/20 flex items-center gap-3">
+            <div className="w-8 h-8">
+              <CompiIcon className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="font-semibold text-base">Compi</h2>
+          </div>
+
+          {/* Mensajes */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-2">
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -49,10 +54,10 @@ export default function Chatbot() {
                 }`}
               >
                 <div
-                  className={`px-3 py-2 rounded-lg text-sm max-w-[75%] ${
+                  className={`px-3 py-2 rounded-2xl text-sm max-w-[75%] ${
                     message.sender === "user"
                       ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-black"
+                      : "bg-white text-black"
                   }`}
                 >
                   {message.text}
@@ -60,15 +65,14 @@ export default function Chatbot() {
               </div>
             ))}
             {loading && (
-              <div className="text-sm text-gray-500 px-3 italic">Compi está escribiendo...</div>
+              <div className="text-sm text-gray-400 italic">Compi está escribiendo...</div>
             )}
             <div ref={messagesEndRef} />
           </div>
-          <div className="border-t p-2">
-            <textarea
-              className="w-full border p-2 rounded text-sm resize-none"
-              rows={2}
-              placeholder="Hola, ¿cómo puedo ayudarte?"
+
+          {/* Input */}
+          <div className="border-t border-[#448AFF]/20 p-2 bg-[#021d30]">
+            <Input
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => {
@@ -77,14 +81,21 @@ export default function Chatbot() {
                   sendPrompt(prompt);
                 }
               }}
+              placeholder="Escribe tu mensaje..."
+              className="text-sm text-white bg-[#042C45] border border-[#448AFF]/40"
             />
-            <button
-              className="mt-2 w-full bg-blue-500 text-white py-2 rounded text-sm"
+            <Button
               onClick={() => sendPrompt(prompt)}
+              className="mt-2 w-full text-sm"
               disabled={loading}
             >
-              {loading ? "Generando..." : "Enviar"}
-            </button>
+              {loading ? "Generando..." : (
+                <div className="flex items-center justify-center gap-2">
+                  <Send className="w-4 h-4" />
+                  Enviar
+                </div>
+              )}
+            </Button>
           </div>
         </div>
       )}
