@@ -87,7 +87,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   // INTENCION: cursos completados, en progreso, sin comenzar
   const palabrasCompletados = ["cursos completados", "cursos ya completos", "cursos terminados", "ya termine", "ya termine"];
   const palabrasEnProgreso = ["cursos en progreso", "cursos pendientes", "cursos sin terminar", "no he terminado", "faltan por completar", "faltan por terminar"];
-  const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar", "no he iniciado"];
+  const palabrasSinComenzar = ["cursos sin comenzar", "cursos no iniciados", "cursos sin iniciar", "no he empezado", "sin iniciar", "no he iniciado", "no he comenzado"];
 
   // cursos completados
   if (palabrasCompletados.some(kw => prompt.includes(kw))){
@@ -155,6 +155,9 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     };
   }
 
+  // detectar cursos obligatorios, oferta
+
+
   // INTENCION: cursos obligatorios
   if (
     ["cursos obligatorios", "lista cursos obligatorios", "cuales cursos obligatorios"].some(
@@ -207,7 +210,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     };
   }
 
-  // Intencion: cursos obligatorios
+  // Intencion: cursos obligatorios del usuario
   if (
     ["mis cursos obligatorios", "cursos obligatorios que tengo"].some(
       kw => prompt.includes(kw)
@@ -397,7 +400,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     }
   }
 
-  // RAG: búsqueda con Fuse.js sobre politicas.json
+  // 3) RAG: búsqueda con Fuse.js para armar el contexto
   const fuse = new Fuse(politicas, {
     keys: ["title", "description", "content"],
     threshold: 0.6,
@@ -406,41 +409,41 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     minMatchCharLength: 3,
   });
 
-  let searchResults = fuse.search(prompt);
-  // Fallback por substring si Fuse no encuentra
-  if (!searchResults.length) {
+  // 3.1) Intentamos buscar con Fuse (resultados “auténticos”)
+  const fuseResults = fuse.search(prompt);
+
+  // 3.2) Variables para saber si usamos fallback o no
+  let useFallback = false;
+  let searchResults = fuseResults;
+
+  // 3.3) Si Fuse no arrojó nada, aplicamos el fallback de substring
+  if (!fuseResults.length) {
+    useFallback = true;
     searchResults = politicas
       .filter(p => {
-        const hay = normalizeText(p.title + " " + p.description + " " + p.content);
-        return prompt.split(" ").some(w => w.length > 3 && hay.includes(w));
+        const combinado = normalizeText(p.title + " " + p.description + " " + p.content);
+        return prompt
+          .split(" ")
+          .some(w => w.length > 3 && combinado.includes(w));
       })
       .map((item, index) => ({ item, score: 0, refIndex: index }));
   }
 
-  // Tomar secciones top
+  // 3.4) Armar el knowledgeContext (top 3) usando searchResults
   const topSections = searchResults
     .sort((a, b) => a.score! - b.score!)
     .slice(0, 3)
     .map(r => {
       const { title, description, content } = r.item;
-      return [
-        `## ${title}`,
-        description,
-        content
-      ].join("\n\n");
+      return [`## ${title}`, description, content].join("\n\n");
     });
 
   const knowledgeContext = topSections.length
     ? topSections.join("\n\n---\n\n")
     : "No se encontró información relevante en las políticas.";
 
-  // interaccion: construir botones basados en los IDs de las politicas
-  const matchedPolicies = searchResults
-    .sort((a, b) => a.score! - b.score!)
-    .slice(0, 3)
-    .map(r => r.item);
-
-  // Filltrar politicas accionables
+  // 4) Construir matchedPolicies SÓLO con aquellos resultados de Fuse que sean “acciónables”
+  //    y NO usar fallback para generar botones.
   const actionablePolicyIds = new Set([
     "neoris",
     "cursos",
@@ -448,14 +451,29 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     "dashboard",
     "retos",
     "mi_perfil"
-  ])
+  ]);
 
-  const policyActions: Action[] = matchedPolicies
-    .filter(pol => actionablePolicyIds.has(pol.id))
-    .map(pol => ({
-      label: pol.title,
-      href: "/" + pol.id
-    }));
+  let matchedPolicies: typeof politicas = [];
+  if (!useFallback) {
+    // Filtramos fuseResults únicamente por IDs “acciónables”
+    matchedPolicies = fuseResults
+      .filter(r => {
+    const id = r.item.id.toLowerCase();
+    return (
+      actionablePolicyIds.has(id) &&
+      prompt.split(/\s+/).includes(id)  // verifica existencia exacta como palabra
+    );
+  })
+  .sort((a, b) => a.score! - b.score!)
+  .slice(0, 3)
+  .map(r => r.item);
+  }
+
+  // 5) Generar policyActions a partir de matchedPolicies filtradas:
+  const policyActions: Action[] = matchedPolicies.map(pol => ({
+    label: pol.title,
+    href: "/" + pol.id
+  }));
   
     // 4) Cargar historial de mensajes (sin saludo)
   const { data: history } = await supabase
