@@ -25,11 +25,6 @@ type Action = {
   href: string;
 };
 // interfaces para los cursos
-type CursoTitulo = {
-  curso: {
-    titulo: string;
-  };
-};
 type CursoAsignado = {
   curso: {
     id_curso: string;
@@ -40,9 +35,6 @@ type CursoAsignado = {
   };
   estado: string;
 };
-type CursoSimple = {
-  titulo: string;
-}
 type CursoEstado = {
   curso: {
     titulo: string;
