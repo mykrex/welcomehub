@@ -25,7 +25,7 @@ type Action = {
   href: string;
 };
 // interfaces para los cursos
-type CursoAsignado = {
+type Assignedcourse = {
   curso: {
     id_curso: string;
     titulo: string;
@@ -35,7 +35,7 @@ type CursoAsignado = {
   };
   estado: string;
 };
-type CursoEstado = {
+type courseState = {
   curso: {
     titulo: string;
   };
@@ -72,7 +72,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   }
   const userName = userInfo.nombres;
   const userPosition = userInfo.puesto;
-  const idEquipo = userInfo.id_equipo;
+  const idTeam = userInfo.id_equipo;
   const userRole = userInfo.rol;
 
     // ---------------- INTENCIONES DE CURSOS ----------------
@@ -89,21 +89,21 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!userCursos || userCursos.length === 0) {
       return { response: "No tienes cursos asignados en este momento." };
     }
-    const opcionales = (userCursos as unknown as { curso: { titulo: string; obligatorio: boolean }; estado: string }[])
+    const optionalcourses = (userCursos as unknown as { curso: { titulo: string; obligatorio: boolean }; estado: string }[])
       .filter(c => !c.curso.obligatorio);
-    if (opcionales.length === 0) {
+    if (optionalcourses.length === 0) {
       return { response: "De tus cursos asignados, todos son obligatorios." };
     }
-    const lista = opcionales.map((c, i) => `${i + 1}. ${c.curso.titulo}`).join("\n");
+    const courseList = optionalcourses.map((c, i) => `${i + 1}. ${c.curso.titulo}`).join("\n");
     return {
-      response: `De esos cursos que tienes asignados, estos NO son obligatorios:\n\n${lista}`,
+      response: `De esos cursos que tienes asignados, estos NO son obligatorios:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
 
   // 1) "Mis cursos obligatorios"
   if (/\bmis cursos obligatorios\b/.test(prompt)) {
-    const { data: userMandCursos, error } = await supabase
+    const { data: usermandCourses, error } = await supabase
       .from("curso_usuario")
       .select("curso(titulo), estado")
       .eq("id_usuario", id_usuario)
@@ -111,13 +111,13 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (error) {
       return { response: "Ocurrió un error al consultar tus cursos obligatorios." };
     }
-    if (!userMandCursos || userMandCursos.length === 0) {
+    if (!usermandCourses || usermandCourses.length === 0) {
       return { response: `Hola ${userName}, no estás inscrito en ningún curso obligatorio.` };
     }
-    const lista = (userMandCursos as unknown as CursoEstado[])
+    const courseList = (usermandCourses as unknown as courseState[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`).join("\n");
     return {
-      response: `Estos son tus cursos obligatorios:\n\n${lista}`,
+      response: `Estos son tus cursos obligatorios:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
@@ -135,10 +135,10 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!userOptCursos || userOptCursos.length === 0) {
       return { response: `Hola ${userName}, no estás inscrito en ningún curso opcional.` };
     }
-    const lista = (userOptCursos as unknown as CursoEstado[])
+    const courseList = (userOptCursos as unknown as courseState[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo} (estado: ${c.estado})`).join("\n");
     return {
-      response: `Estos son tus cursos opcionales:\n\n${lista}`,
+      response: `Estos son tus cursos opcionales:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
@@ -156,10 +156,10 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!cursosCompletados || cursosCompletados.length === 0) {
       return { response: "No tienes ningún curso completado en este momento." };
     }
-    const lista = (cursosCompletados as unknown as { curso: { titulo: string } }[])
+    const courseList = (cursosCompletados as unknown as { curso: { titulo: string } }[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo}`).join("\n");
     return {
-      response: `Estos son tus cursos completados:\n\n${lista}`,
+      response: `Estos son tus cursos completados:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
@@ -177,10 +177,10 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!cursosProgreso || cursosProgreso.length === 0) {
       return { response: `Hola ${userName}, no tienes cursos en progreso en este momento.` };
     }
-    const lista = (cursosProgreso as unknown as { curso: { titulo: string } }[])
+    const courseList = (cursosProgreso as unknown as { curso: { titulo: string } }[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo}`).join("\n");
     return {
-      response: `Estos son tus cursos en progreso:\n\n${lista}`,
+      response: `Estos son tus cursos en progreso:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
@@ -198,10 +198,10 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!cursosSinInicio || cursosSinInicio.length === 0) {
       return { response: `Hola ${userName}, no tienes cursos sin comenzar en este momento.` };
     }
-    const lista = (cursosSinInicio as unknown as { curso: { titulo: string } }[])
+    const courseList = (cursosSinInicio as unknown as { curso: { titulo: string } }[])
       .map((c, i) => `${i + 1}. ${c.curso.titulo}`).join("\n");
     return {
-      response: `Estos son tus cursos sin comenzar:\n\n${lista}`,
+      response: `Estos son tus cursos sin comenzar:\n\n${courseList}`,
       actions: [{ label: "Ver todos mis cursos", href: "/cursos" }]
     };
   }
@@ -220,7 +220,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!cursos || cursos.length === 0) {
       return { response: "No tienes cursos asignados o no estás inscrito en ningún curso." };
     }
-    const coursesInfo = (cursos as unknown as CursoAsignado[])
+    const coursesInfo = (cursos as unknown as Assignedcourse[])
       .map(c => ({
         id: c.curso.id_curso,
         titulo: c.curso.titulo,
@@ -230,9 +230,9 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
         estado: c.estado
       }))
       .sort((a, b) => a.titulo.localeCompare(b.titulo, "es", { sensitivity: "base" }));
-    const lista = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
+    const courseList = coursesInfo.map((course, i) => `${i + 1}. ${course.titulo}`).join("\n");
     return {
-      response: `Tus cursos asignados son:\n\n${lista}`,
+      response: `Tus cursos asignados son:\n\n${courseList}`,
       actions: [{ label: "Ir a mis cursos", href: "/cursos" }]
     };
   }
@@ -249,30 +249,30 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
     if (!optCursos || optCursos.length === 0) {
       return { response: "Actualmente no hay cursos disponibles como opcionales." };
     }
-    const lista = (optCursos as unknown as { titulo: string }[])
+    const courseList = (optCursos as unknown as { titulo: string }[])
       .map((c, i) => `${i + 1}. ${c.titulo}`).join("\n");
     return {
-      response: `Estos son los cursos opcionales (oferta):\n\n${lista}`,
+      response: `Estos son los cursos opcionales (oferta):\n\n${courseList}`,
       actions: [{ label: "Ver oferta completa de cursos", href: "/cursos" }]
     };
   }
 
   // 8) "Cursos obligatorios" (tabla global)
   if (/\bcursos obligatorios\b/.test(prompt) || /\blista cursos obligatorios\b/.test(prompt) || /\bcuales cursos obligatorios\b/.test(prompt)) {
-    const { data: mandCursos, error } = await supabase
+    const { data: mandCourses, error } = await supabase
       .from("curso")
       .select("titulo")
       .eq("obligatorio", true);
     if (error) {
       return { response: "Ocurrió un error al consultar los cursos obligatorios." };
     }
-    if (!mandCursos || mandCursos.length === 0) {
+    if (!mandCourses || mandCourses.length === 0) {
       return { response: "Actualmente no hay cursos marcados como obligatorios." };
     }
-    const lista = (mandCursos as unknown as { titulo: string }[])
+    const courseList = (mandCourses as unknown as { titulo: string }[])
       .map((c, i) => `${i + 1}. ${c.titulo}`).join("\n");
     return {
-      response: `Estos son los cursos obligatorios:\n\n${lista}`,
+      response: `Estos son los cursos obligatorios:\n\n${courseList}`,
       actions: [{ label: "Ver oferta completa de cursos", href: "/cursos" }]
     };
   }
@@ -289,7 +289,7 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       if (error || !cursosAll) {
         return { response: "Ocurrió un error al obtener tus cursos." };
       }
-      const coursesInfoAll = (cursosAll as unknown as CursoAsignado[])
+      const coursesInfoAll = (cursosAll as unknown as Assignedcourse[])
         .map(c => ({
           id: c.curso.id_curso,
           titulo: c.curso.titulo,
@@ -332,11 +332,11 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
       return { response: "Como administrador no tienes lider asignado o lider directo. Si necesitas asisencia yo te puedo apoyar, ¿Como te ayudo?" };
     } else {
       let liderName = "líder desconocido";
-      if (idEquipo){
+      if (idTeam){
         const { data: eqData } = await supabase
           .from("equipo_trabajo")
           .select("nombre, id_administrador")
-          .eq("id_equipo", idEquipo)
+          .eq("id_equipo", idTeam)
           .single();
         if(eqData?.id_administrador){
           const { data: liData } = await supabase
@@ -356,11 +356,11 @@ export async function handleChatRequest(body: RequestBody): Promise<Result> {
   // 3) Obtener información de equipo y líder
   let nombreEquipo = "equipo desconocido";
   let liderName = "líder desconocido";
-  if (idEquipo) {
+  if (idTeam) {
     const { data: eqData } = await supabase
       .from("equipo_trabajo")
       .select("nombre, id_administrador")
-      .eq("id_equipo", idEquipo)
+      .eq("id_equipo", idTeam)
       .single();
     if (eqData) {
       nombreEquipo = eqData.nombre || nombreEquipo;
