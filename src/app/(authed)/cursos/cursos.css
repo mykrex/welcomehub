@@ -1,0 +1,573 @@
+/* ====================================================================
+   estilos para la página de Cursos
+   ==================================================================== */
+
+:root {
+  --bg-blue-main: #042c45;
+  --white-main: #ebfaff;
+  --blue-light: #8bcff9;
+  --grey-light: #9daaa6;
+  --green: #4daa57;
+  --blue-4-dark: #0c94e9;
+  --blue-4: #51b6f6;
+  --blue-2: #08639b;
+  --blue-1: #053c5e;
+  --blue-2-dark: #064a74;
+  --yellow-1: #f4b942;
+  --red-1: #db504a;
+  --green-1-dark: #3d8744;
+  --yellow-1-dark: #eba10e;
+  --red-2: #bb2a25;
+  --orange-1: #df8328;
+}
+
+.cursos-main {
+  width: 100%;
+  background-color: #000f14;
+}
+
+.header {
+  position: relative;
+}
+
+.header-container {
+  width: 100%;
+  padding: 20px 20px; /* py-8 px-4 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--white-main);
+  font-family: Manrope;
+}
+
+.header-subtitle {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--blue-light);
+  font-family: Manrope;
+}
+
+@media (min-width: 768px) {
+  .header-title {
+    font-size: 2rem;
+  }
+}
+
+.catalog-container {
+  width: 100%;
+}
+
+/* ====================================================================
+   COURSE CATALOG
+   ==================================================================== */
+
+/* 
+  .loader-container equivale a:
+    flex items-center justify-center min-h-[400px]
+*/
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  height: 3rem; /* h-12 */
+  width: 3rem; /* w-12 */
+  border: 2px solid transparent;
+  border-bottom-color: #4fd1c5; /* teal-400 */
+  border-radius: 9999px; /* rounded-full */
+  margin: 0 auto 1rem; /* mx-auto mb-4 */
+  animation: spin 1s linear infinite; /* animate-spin */
+}
+
+/* 
+  .loader-text equivale a:
+    text-gray-400
+*/
+.loader-text {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* ==============================
+   2) Error message 
+   ============================== */
+
+/* 
+  .error-container equivale a:
+    flex items-center justify-center min-h-[400px]
+  (idéntico a .loader-container)
+*/
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+/* 
+  .error-content equivale a:
+    text-center
+  (idéntico a .loader-content)
+*/
+.error-content {
+  text-align: center;
+}
+
+/* 
+  .error-title equivale a:
+    text-red-500 mb-4
+*/
+.error-title {
+  color: #ef4444; /* red-500 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* 
+  .error-message equivale a:
+    text-gray-400
+  (idéntico a .loader-text)
+*/
+.error-message {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* ==============================
+   3) Catálogo de cursos
+   ============================== */
+
+/* 
+  .catalog-main equivale a:
+    space-y-8 bg-[#000F14]
+  - space-y-8 => margen-top: 2rem entre cada hijo directo
+  - background-color: #000F14
+*/
+.catalog-main {
+  width: 100%;
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 5px;
+}
+
+/*.catalog-main > * + * {
+ * margin-top: 2rem;
+}**/
+
+/* ==============================
+   4) Mensaje “no hay cursos” 
+   ============================== */
+
+/* 
+  .empty-container equivale a:
+    text-center py-12
+  - text-center
+  - padding-top y padding-bottom: 3rem
+*/
+.empty-container {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+/* 
+  .empty-text equivale a:
+    text-gray-400 text-lg
+  - gray-400
+  - text-lg => font-size: 1.125rem, line-height: 1.75rem 
+*/
+.empty-text {
+  color: #9ca3af; /* gray-400 */
+  font-size: 1.125rem; /* text-lg */
+  line-height: 1.75rem;
+}
+
+/* ====================================================================
+   COURSE SECTION
+   ==================================================================== */
+
+.course-section {
+  background-color: var(--bg-blue-main); /* bg-[#042c45] */
+  border-radius: 15px; /* rounded-[15px] */
+  padding: 20px 30px; /* p-2 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  
+}
+
+/* ==========================================================================
+   2) Título de la sección
+   --------------------------------------------------------------------------
+
+   Equivalente a: "text-white text-2xl font-bold mb-4 px-4"
+   - color: white              (text-white)
+   - font-size: 1.5rem         (text-2xl)
+   - font-weight: 700          (font-bold)
+   - margin-bottom: 1rem       (mb-4)
+   - padding-left/right: 1rem  (px-4)
+   ========================================================================== */
+.course-section-title {
+  color: var(--white-main);
+  font-size: 26px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+}
+
+/* ==========================================================================
+   3) Wrapper para el scroll horizontal
+   --------------------------------------------------------------------------
+
+   - position: relative; (para que los botones “absolute” dentro se ubiquen
+     en relación con este contenedor)
+   - display: flex;      (necesario en la estructura del JSX, pero no se define aquí 
+                          porque la flex se aplica a “scroll-container” abajo)
+   - “group” en Tailwind se traduce aquí en que, cuando se hace hover sobre 
+     .scroll-wrapper, queremos que los botones cambien su opacidad.
+   ========================================================================== */
+.scroll-wrapper {
+  position: relative; /* necesario para botones absolutos dentro */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* ==========================================================================
+   4) Botones de flecha (izquierda/derecha)
+   --------------------------------------------------------------------------
+
+   Equivalente a:
+   "absolute top-1/2 left-2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70
+    text-white p-2 rounded-full opacity-0 group-hover:opacity-100 
+    transition-opacity duration-300"
+
+   - position: absolute;                   (absolute)
+   - top: 50%                              (top-1/2)
+   - transform: translateY(-50%)           (-translate-y-1/2)
+   - z-index: 10                           (z-10)
+   - background-color: rgba(0,0,0,0.5)     (bg-black/50)
+   - on hover: background-color: rgba(0,0,0,0.7) (hover:bg-black/70)
+   - color: white                          (text-white)
+   - padding: 0.5rem                       (p-2)
+   - border-radius: 9999px                 (rounded-full)
+   - opacity: 0                            (opacity-0)
+   - al hacer hover en el contenedor padre (.scroll-wrapper:hover), 
+     la opacidad pasa a 1 (group-hover:opacity-100)
+   - transition: opacity 300ms             (transition-opacity duration-300)
+   ========================================================================== */
+.scroll-button {
+   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;                /* <-- Súbelo bastante para que siempre sobrepase al scroll-container */
+  
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  
+  opacity: 0;
+  transition: opacity 300ms ease-in-out;
+  pointer-events: auto;       /* Asegura que reciba clics */
+}
+
+/* Mostrar botón al hacer hover en el wrapper */
+.scroll-wrapper:hover .scroll-button {
+  opacity: 1; /* group-hover:opacity-100 */
+}
+
+/* --------------------------------------------------------------------------
+   Ajustes específicos para cada botón (izquierda y derecha):
+   - left: 0.5rem  (left-2)
+   - right: 0.5rem (right-2)
+   ========================================================================== */
+.scroll-button-left {
+  left: 0.5rem; /* left-2 */
+}
+
+.scroll-button-right {
+  right: 1rem; /* right-2 */
+}
+
+/* ==========================================================================
+   5) Icono SVG dentro de los botones
+   --------------------------------------------------------------------------
+   
+   Equivalente a: "w-6 h-6"
+   - width: 1.5rem (w-6)
+   - height: 1.5rem (h-6)
+   ========================================================================== */
+.scroll-button svg {
+  width: 1.5rem; /* w-6 */
+  height: 1.5rem; /* h-6 */
+}
+
+/* ==========================================================================
+   6) Contenedor que hace scroll horizontal de tarjetas
+   --------------------------------------------------------------------------
+
+   Equivalente a: "flex space-x-4 overflow-x-auto scrollbar-hide px-4 pb-4"
+   - display: flex;                      (flex)
+   - gap entre hijos: 1rem                (space-x-4)
+   - overflow-x: auto;                   (overflow-x-auto)
+   - ocultar scrollbar:
+     - scrollbar-width: none;            (Firefox)
+     - -ms-overflow-style: none;         (IE/Edge)
+     - ::-webkit-scrollbar { display: none; } (WebKit)
+   - padding-left/right: 1rem             (px-4)
+   - padding-bottom: 1rem                 (pb-4)
+   ========================================================================== */
+.scroll-container {
+  /* ← CAMBIO PRINCIPAL: usamos GRID en vez de FLEX */
+  display: grid;
+
+  /* → "grid-auto-flow: column" pone cada .course-card en una columna sucesiva */
+  grid-auto-flow: column;
+
+  /* → un solo track en “fila”: la altura de esa fila la dictará la tarjeta más alta */
+  grid-auto-rows: auto;
+
+  /* → mantiene el gap horizontal entre cada tarjeta */
+  gap: 20px;
+
+  /* → Scroll únicamente en el eje X */
+  overflow-x: auto;
+  width: 100%;
+  justify-content: start;
+
+  /* ← IMPORTANTE: al usar Grid, el valor por defecto de align-items es "stretch",
+     lo que hace que cada celda (cada .course-card) se estire para llenar la altura
+     de la fila (y esa fila se calcula basándose en la tarjeta más alta). */
+  /* Por claridad se puede escribir explícitamente: */
+  align-items: stretch;
+
+  /* Ocultar scrollbar en Firefox e IE */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  /* (Opcional) Si quieres un poco de padding a los lados:
+  padding: 0 1rem 1rem 1rem; */
+}
+
+
+/* Ocultar scrollbar en WebKit (Chrome, Safari) */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.scroll-container > .course-card {
+  height: 100% !important;
+}
+
+/* ==========================================================================
+   courseCard.css
+   ========================================================================== */
+
+/* ==========================================================================
+   1) Tarjeta de curso (contenedor principal)
+   --------------------------------------------------------------------------
+   Equivalente a:
+     flex-shrink-0 w-80 bg-[#181818] rounded-lg overflow-hidden
+     cursor-pointer transform transition-transform duration-300
+     hover:scale-105 hover:z-10
+   ========================================================================== */
+.course-card {
+   display: flex;
+  flex-direction: column;
+  height: 100% !important;
+  flex-shrink: 0;                     /* flex-shrink-0 */
+  width: 20rem;                       /* w-80 (80 * 0.25rem = 20rem) */
+  background-color: var(--blue-1);          /* bg-[#181818] */
+  border-radius: 15px;              /* rounded-lg */
+  overflow: hidden;                   /* overflow-hidden */
+  cursor: pointer;                    /* cursor-pointer */
+  /* Para permitir transformaciones y animarlas */
+  transform: scale(1);
+  transition: transform 300ms ease-in-out; /* transition-transform duration-300 */
+}
+
+.course-card:hover {
+  transform: scale(1.05); /* hover:scale-105 */
+  z-index: 10;            /* hover:z-10 */
+}
+
+
+/* ==========================================================================
+   2) Wrapper relativo para la imagen (para el badge de estado)
+   --------------------------------------------------------------------------
+   Equivalente a: relative
+   ========================================================================== */
+.image-wrapper {
+  position: relative;
+}
+
+/* ==========================================================================
+   3) Imagen de portada
+   --------------------------------------------------------------------------
+   Equivalente a: w-full h-48 object-cover
+   ========================================================================== */
+.course-image {
+  width: 100%;        /* w-full */
+  height: 12rem;      /* h-48 (48 * 0.25rem = 12rem) */
+  object-fit: cover;  /* object-cover */
+}
+
+/* ==========================================================================
+   4) Contenedor absoluto para el badge de estado
+   --------------------------------------------------------------------------
+   Equivalente a: absolute top-2 right-2 flex flex-col gap-1
+   ========================================================================== */
+.status-container {
+  position: absolute; /* absolute */
+  top: 0.5rem;        /* top-2 (2 * 0.25rem = 0.5rem) */
+  right: 0.5rem;      /* right-2 */
+  display: flex;      /* flex */
+  flex-direction: column; /* flex-col */
+  gap: 0.25rem;       /* gap-1 (1 * 0.25rem = 0.25rem) */
+}
+
+/* ==========================================================================
+   5) Badge de estado genérico
+   --------------------------------------------------------------------------
+   Equivalente a: px-2 py-1 rounded-full text-xs font-medium text-white
+   ========================================================================== */
+.status-badge {
+  padding: 0.25rem 0.5rem;   /* px-2 (0.5rem), py-1 (0.25rem) */
+  border-radius: 9999px;     /* rounded-full */
+  font-size: 13px;           /* text-xs */
+  font-weight: 500;             /* font-medium */
+  color: var(--white-main);               /* text-white */
+}
+
+/* Colores específicos según estado */
+.estado-completado {
+  background-color: var(--green); /* bg-[#3faa49] */
+}
+
+.estado-en-progreso {
+  background-color: var(--yellow-1-dark); /* bg-[#eba10e] */
+}
+
+.estado-sin-comenzar {
+  background-color: var(--grey-light); /* bg-gray-500 */
+}
+
+
+/* ==========================================================================
+   6) Contenido interno de la tarjeta
+   --------------------------------------------------------------------------
+   Equivalente a: p-4
+   ========================================================================== */
+.course-content {
+  padding: 15px; /* p-4 (4 * 0.25rem = 1rem) */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+    justify-content: space-between; /* Para que el pie de tarjeta se mantenga al final */
+}
+
+/* ==========================================================================
+   7) Título del curso
+   --------------------------------------------------------------------------
+   Equivalente a: text-white font-semibold text-lg mb-2 line-clamp-2
+   - text-white      => color: #ffffff
+   - font-semibold   => font-weight: 600
+   - text-lg         => font-size: 1.125rem, line-height: 1.75rem
+   - mb-2            => margin-bottom: 0.5rem
+   - line-clamp-2    => limitar a 2 líneas, con overflow oculto
+   ========================================================================== */
+.course-title {
+  color: var(--white-main);
+  font-size: 20px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.course-text{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ==========================================================================
+   8) Descripción del curso
+   --------------------------------------------------------------------------
+   Equivalente a: text-gray-400 text-sm mb-3 line-clamp-3
+   - text-gray-400 => color: #9ca3af
+   - text-sm       => font-size: 0.875rem, line-height: 1.25rem
+   - mb-3          => margin-bottom: 0.75rem
+   - line-clamp-3  => limitar a 3 líneas
+   ========================================================================== */
+.course-description {
+  color: var(--grey-light);
+  font-size: 14px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  padding-bottom: 30px;
+
+  display: -webkit-box;             
+  -webkit-line-clamp: 3;            
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   9) Pie de tarjeta (duración, disponibilidad, badge “Obligatorio”)
+   --------------------------------------------------------------------------
+   Equivalente a: flex justify-between items-center text-xs text-gray-500
+   - flex               => display: flex
+   - justify-between    => justify-content: space-between
+   - items-center       => align-items: center
+   - text-xs            => font-size: 0.75rem
+   - text-gray-500      => color: #6b7280
+   ========================================================================== */
+.course-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--grey-light);
+}
+
+/* ==========================================================================
+   10) Badge “Obligatorio”
+   --------------------------------------------------------------------------
+   Equivalente a: bg-cyan-600 px-2 py-1 rounded-full text-xs font-medium text-white
+   - bg-cyan-600   => background-color: #0891b2
+   - px-2 py-1     => padding: 0.25rem 0.5rem
+   - rounded-full  => border-radius: 9999px
+   - text-xs       => font-size: 0.75rem
+   - font-medium   => font-weight: 500
+   - text-white    => color: #ffffff
+   ========================================================================== */
+.obligatory-badge {
+  background-color: var(--blue-4-dark);   /* bg-cyan-600 */
+  padding: 0.25rem 0.5rem;      /* px-2 py-1 */
+  border-radius: 9999px;        /* rounded-full */
+  font-size: 13px;           /* text-xs */
+  font-weight: 500;             /* font-medium */
+  color: var(--white-main);               /* text-white */
+}
+
+

@@ -135,7 +135,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       // Primer saludo o bienvenida de vuelta
       const greeting = historialDB.length === 0
         ? `¡Hola ${userName}! Soy Compi, tu asistente virtual. Te estare acompañando en tu experiencia dentro de Welcomehub.`
-        : `Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
+        : `¡Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
       
       const shortcuts: Action[] = [
         { label: "Dashboard", href: "/dashboard"},
@@ -175,7 +175,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
           },
         ]);
       } else {
-        setMessages([{ sender: "bot", text: greeting, actions: shortcuts }, ...historialDB]);
+        setMessages([...historialDB, { sender: "bot", text: greeting, actions: shortcuts }]);
       }
     };
     initChat();

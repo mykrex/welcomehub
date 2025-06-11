@@ -4,8 +4,11 @@ import { useState } from 'react';
 import { useUser } from '../context/UserContext'
 import { useRouter } from 'next/navigation';
 //import { supabase } from '@/lib/supabase'; // Descomentar para trabajar en LOCAL
-import Image from 'next/image';
 import Link from 'next/link';
+
+import WelcomeHubLogo from "../components/(layout)/assetsLayout/WelcomeHubLogo";
+import './login.css'; // Asegúrate de tener este archivo CSS para los estilos
+
 
 export default function Home() {
   const { setUser } = useUser();
@@ -64,14 +67,10 @@ export default function Home() {
   
 
   return (
-      <div className="flex flex-col justify-center items-center h-screen text-white bg-[url(/bg_login.png)]">
+      <div className="login-wrapper">
           <div className="flexjustify-center items-center mb-8">
-              <Image
-                src="/welcomehub.png"
-                alt="Logo"
-                width={400}
-                height={10}
-              />
+                      <WelcomeHubLogo className="logo" />
+
           </div>
           
           <div className="bg-gray-700/85 p-4 rounded-lg shadow-md w-96 text-white flex flex-col items-center">
