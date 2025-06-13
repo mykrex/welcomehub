@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { WeekData, ProjectInfo } from '../../types/employee';
+import { WeekData, ProjectInfo } from '@/app/types/employee';
 import '@/app/(authed)/mi_equipo/mi_equipo.css';
 
 interface HoursChartProps {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { Employee } from '../../types/employee';
+import { Employee } from '@/app/types/employee';
 
 interface EmployeeListProps {
   isOpen: boolean;

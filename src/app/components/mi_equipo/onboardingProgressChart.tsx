@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Employee } from '../../types/employee';
+import { Employee } from '@/app/types/employee';
 
 interface OnboardingProgressChartProps {
   employees: Employee[];

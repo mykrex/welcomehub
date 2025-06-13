@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { WeekData } from "../../types/employee";
+import { WeekData } from '@/app/types/employee';
 
 interface WeekApprovalPanelProps {
   week: WeekData | null;
