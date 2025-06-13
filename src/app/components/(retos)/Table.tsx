@@ -1,11 +1,10 @@
 "use client";
 
-import "./retosTable.css";
 import { useEffect } from "react";
 import { useRetos } from "@/app/hooks/useRetos";
 import { useUserRetos } from "@/app/hooks/useUserRetos";
 import {useUserRetosCount} from '@/app/hooks/useUserRetosCount';
-import CheckmarkIcon from "./icons/checkmarkIcon";
+import CheckmarkIcon from "../(icons)/Checkmark";
 
 
 export default function RetosTable() {

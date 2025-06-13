@@ -1,6 +1,6 @@
 //./hooks/usecourseoptions.ts
 import { useCallback } from 'react';
-import { Course, CoursesPerDay } from './usebeforeTimecard';
+import { Course, CoursesPerDay } from './useBeforeTC';
 
 type ModalSetter = React.Dispatch<React.SetStateAction<{
   title: string;

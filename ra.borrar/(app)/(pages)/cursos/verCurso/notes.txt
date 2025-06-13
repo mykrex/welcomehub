@@ -1,0 +1,5 @@
+Este folder (app) estaba adentro de src/app
+No tenia nada adentro
+
+Los folders de (assets) y (styles) estaban asi:
+(app)/(pages)/cursos/verCurso

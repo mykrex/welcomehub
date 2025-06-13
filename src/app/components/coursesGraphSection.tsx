@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { Employee } from '../types/employee';
-import '@/app/(authed)/miequipo/EmployeeDetails.css';
+import '@/app/(authed)/mi_equipo/mi_equipo.css';
 
 interface CoursesSectionProps {
   employee: Employee;

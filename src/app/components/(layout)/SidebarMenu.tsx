@@ -59,7 +59,7 @@ const ALL_MENU: MenuItem[] = [
   {
     label: "Mi Equipo",
     icon: TeamIcon,
-    path: "/miequipo",
+    path: "/mi_equipo",
     roles: ["administrador"],
   },
   {

@@ -1,7 +1,7 @@
 //./hooks/usetimecard.ts
 //All functions for the timecard
 import { useState } from 'react';
-import { Course, DayOfWeek, CoursesPerDay } from './usebeforeTimecard';
+import { Course, DayOfWeek, CoursesPerDay } from './useBeforeTC';
 
 type ProjectOption = { id_proyecto: string; nombre: string };
 

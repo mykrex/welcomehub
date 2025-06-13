@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import './cursosVista.css';
+import '@/app/(authed)/dashboard/dashboard.css'
 import { useRouter } from 'next/navigation';
 import { CursoInscrito } from '@/app/hooks/useCourses';
 

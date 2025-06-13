@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect, Fragment } from "react";
-import { useUser } from "../../context/UserContext";
-import { useChat } from "../../context/ChatContext";
+import { useUser } from "../../src/app/context/UserContext";
+import { useChat } from "../../src/app/context/ChatContext";
 import { useRouter } from "next/navigation"
-import FotoPerfil from "../../components/fotoPerfil";
-import Titulo from "../../components/perfilTitulos";
+import FotoPerfil from "../../src/app/components/fotoPerfil";
+import Titulo from "../../src/app/components/perfilTitulos";
 
 interface Info {
      id_usuario: string;

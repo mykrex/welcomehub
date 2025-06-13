@@ -1,5 +1,5 @@
-import type { DayOfWeek } from './usebeforeTimecard';
-import type { ModalProps as ModalData } from '../Modal';
+import type { DayOfWeek } from './useBeforeTC';
+import type { ModalProps as ModalData } from '../components/(timecard)/Modal';
 
 /**
  * Props required by the useWeekNavigation hook

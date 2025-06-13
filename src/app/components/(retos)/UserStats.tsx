@@ -1,9 +1,8 @@
 "use client";
-import "./userStats.css";
 
 //* Assets */
-import StarIcon from "./icons/starIcon";
-import FlagStatsIcon from "./icons/flagStatsIcon";
+import StarIcon from "../(icons)/Star";
+import FlagStatsIcon from "../(icons)/Flag";
 
 //* Libraries */
 import { useEffect, useState } from "react";

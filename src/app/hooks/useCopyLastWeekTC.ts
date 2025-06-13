@@ -1,8 +1,8 @@
 // /.hooks/usecopyLastWeek.ts
 import { useCallback } from 'react';
 import { fetchWeekData } from '@/pages/api/timecard/fetchTimeCard';
-import { getWeekFromBaseDate } from './usebeforeTimecard';
-import type { ModalProps as ModalData } from '../Modal';
+import { getWeekFromBaseDate } from './useBeforeTC';
+import type { ModalProps as ModalData } from '../components/(timecard)/Modal';
 
 interface Course {
   id: string;

@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
-import type { ModalProps as ModalData } from '../Modal'; // You already use this type
-import { DayOfWeek, CoursesPerDay } from './usebeforeTimecard';
+import type { ModalProps as ModalData } from '../components/(timecard)/Modal'; // You already use this type
+import { DayOfWeek, CoursesPerDay } from './useBeforeTC';
 
 type CoursesPerDayByWeek = {
   [weekKey: string]: CoursesPerDay;

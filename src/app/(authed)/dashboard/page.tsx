@@ -2,19 +2,14 @@
 "use client";
 
 //* Styles *//
-import "@/app/(authed)/cursos//verCurso/[id]/verCurso.css"; // TODO: QUITAR
-import "@/app/components/(layout)/layout.css"; // Unico que lo usa -> main-content
 import "./dashboard.css";
 
-//* Libraries *//
-//import { useEffect, useState } from "react";
 
 //* Components *//
-import CursosVista from "./assets/CursosVista";
-import ProgressBar from "./assets/ProgressBar";
-import OnboardingStats from "./assets/OnboardingStats";
-import RecentCourse from "./assets/RecentCourse";
-//import { Clock } from "lucide-react";
+import CursosVista from "../../components/(dashboard)/CursosVista";
+import ProgressBar from "../../components/(dashboard)/ProgressBar";
+import OnboardingStats from "../../components/(dashboard)/OnboardingStats";
+import RecentCourse from "../../components/(dashboard)/RecentCourse";
 
 //* Import useCourses hook *//
 import { useCourses } from "@/app/hooks/useCourses";

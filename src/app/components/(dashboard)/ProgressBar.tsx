@@ -1,5 +1,6 @@
 // src/app/(authed)/dashboard/assets/ProgressBar.jsx
-import "./progressBar.css";
+import '@/app/(authed)/dashboard/dashboard.css'
+
 import { CursoInscrito } from '@/app/hooks/useCourses';
 
 interface ProgressComponentProps {

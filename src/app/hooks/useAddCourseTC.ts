@@ -1,4 +1,4 @@
-import type { CoursesPerDay } from './usebeforeTimecard';
+import type { CoursesPerDay } from './useBeforeTC';
 
 type AddCourseProps = {
   weekKey: string;

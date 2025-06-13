@@ -3,7 +3,9 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
-import "./recentCourse.css";
+
+import '@/app/(authed)/dashboard/dashboard.css'
+
 import { CursoInscrito } from "@/app/hooks/useCourses";
 
 interface RecentCourseProps {

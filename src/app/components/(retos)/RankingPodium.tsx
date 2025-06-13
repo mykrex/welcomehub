@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./rankingPodium.css";
 import Image from "next/image";
 
 interface UsuarioRanking {

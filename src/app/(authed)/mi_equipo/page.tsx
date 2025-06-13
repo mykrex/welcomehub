@@ -8,8 +8,8 @@ import { Employee } from '@/app/types/employee';
 import { migrateFromOldStructure} from '@/utils/migrations';
 import {Users, User, Book} from 'lucide-react';
 import Image from 'next/image';
-import '@/app/(authed)/miequipo/AdminPanel.css';
-import '@/app/(authed)/miequipo/EmployeeDetails.css';
+
+import './mi_equipo.css';
 
 interface TeamData {
   teamName: string;

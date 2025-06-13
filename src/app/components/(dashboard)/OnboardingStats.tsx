@@ -1,4 +1,5 @@
-import "./averageStats.css";
+import '@/app/(authed)/dashboard/dashboard.css'
+
 import { GraduationCap } from "lucide-react";
 import { CursoInscrito } from '@/app/hooks/useCourses';
 
