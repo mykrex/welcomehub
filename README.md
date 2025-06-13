@@ -20,6 +20,13 @@ Ser referente en transformación digital, conectando ideas e impulsando el futur
 ## :point_right: Uso
 Antes de ejecutar el proyecto de forma local asegurese de correr lo siguiente:`npm install` en la terminal para instalar los modulos necesarios.
 
+## Arquitectura
+A continuación se presenta el diagrama de arquitectura de la aplicación y las tecnologías utilizadas.
+
+![IMAGE] (https://drive.google.com/file/d/1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz/view?usp=drive_link)
+
+![](/repository_assets/Login2.png)
+
 ## Preview
 
 ![](/repository_assets/Login2.png)
