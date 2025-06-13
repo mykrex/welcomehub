@@ -1,4 +1,4 @@
-import { SeeCourse } from "@/app/api/cursos/verCurso/verCurso";
+import { SeeCourse } from "./verCurso";
 //1. Estrategias de Venta Avanzadas
 //2. Gestión del Tiempo y Productividad
 //8. Fundamentos de la atencion al cliente

@@ -1,4 +1,4 @@
-import { Reto } from '@/app/api/retos/types/retoTypes';
+import { Reto } from '../../../../../ra.borrar/types/retoTypes';
 
 export const mockRetos: Reto[] = [
   {

@@ -1,4 +1,4 @@
-import { Usuario, RetoUsuarioStats } from '@/app/api/retos/types/retoTypes';
+import { Usuario, RetoUsuarioStats } from '../../../../../ra.borrar/types/retoTypes';
 
 export const mockStats: RetoUsuarioStats[] = [
   { id_user: 1, puntos_total: 850, retos_completados_total: 13, streak_actual: 2, streak_record: 5, podios_total: 0 },

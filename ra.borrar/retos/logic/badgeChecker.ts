@@ -1,5 +1,5 @@
-import { Badge, BadgeUsuario } from '@/app/api/retos/types/badgeTypes';
-import { RetoUsuarioStats } from '@/app/api/retos/types/retoTypes';
+import { Badge, BadgeUsuario } from '../types/badgeTypes';
+import { RetoUsuarioStats } from '../types/retoTypes';
 
 export function checkBadgesForUser(
   stats: RetoUsuarioStats,

@@ -1,4 +1,4 @@
-import { RetoUsuario } from "../types/retoTypes";
+import { RetoUsuario } from "../../../../../ra.borrar/types/retoTypes";
 
 export const mockRetoUsuarios: RetoUsuario[] = [
   {

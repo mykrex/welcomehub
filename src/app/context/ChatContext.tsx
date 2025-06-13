@@ -61,7 +61,7 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         setMessages(prev => [...prev, { sender: "user", text: finalPrompt }]);
       }
       try {
-        const res = await fetch("/api/chat", {
+        const res = await fetch("@/app/pages/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),

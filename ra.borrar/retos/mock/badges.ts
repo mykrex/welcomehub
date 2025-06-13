@@ -1,4 +1,4 @@
-import { Badge } from '@/app/api/retos/types/badgeTypes';
+import { Badge } from '../../../../../ra.borrar/types/badgeTypes';
 
 export const mockBadges: Badge[] = [
   {
