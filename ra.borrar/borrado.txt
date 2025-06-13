@@ -1,6 +1,0 @@
-1. folder (app) que estaba adentro de src/app
-2. folder verCurso estaba adentro de src/app/(authed)/cursos
-3. mi perfil viejo (anterior.tsx)
-4. estilos css de mi equipo anteriores
-5. estilos dashboard anteriores
-6. Retos, iconos que no se usaban y componentes que tampoco, css's que se movieron al main

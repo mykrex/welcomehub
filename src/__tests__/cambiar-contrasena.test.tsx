@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CambiarContrasena from '@/app/cambiar_contrasena/page';
+import CambiarContrasena from '@/app/(login)/cambiar_contrasena/page';
 
 // Mock for this test
 const mockPush = jest.fn();

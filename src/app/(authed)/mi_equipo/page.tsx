@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { EmployeeDetailsContainer } from '@/app/components/employeeDetailsContainer';
-import { OnboardingProgressChart } from '@/app/components/onboardingProgressChart';
-import { EmployeeList } from '@/app/components/employeeList';
+import { EmployeeDetailsContainer } from '@/app/components/mi_equipo/employeeDetailsContainer';
+import { OnboardingProgressChart } from '@/app/components/mi_equipo/onboardingProgressChart';
+import { EmployeeList } from '@/app/components/mi_equipo/employeeList';
 import { Employee } from '@/app/types/employee';
 import { migrateFromOldStructure} from '@/utils/migrations';
 import {Users, User, Book} from 'lucide-react';

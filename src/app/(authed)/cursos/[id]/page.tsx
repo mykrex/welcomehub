@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import CourseContent from '@/app/components/courseContent';
+import CourseContent from '@/app/components/(courses)/courseContent';
 import { CursoInscrito } from '@/app/hooks/useCourses';
 
 export default function CourseDetailPage() {

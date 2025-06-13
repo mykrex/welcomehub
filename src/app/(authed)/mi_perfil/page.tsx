@@ -4,11 +4,11 @@ import { useUser } from '@/app/context/UserContext';
 import { useUserProfile } from '@/app/hooks/useUserProfile';
 import { useUserTeam } from '@/app/hooks/useUserTeam';
 
-import ProfileInfo from '@/app/components/profileInfo';
-import ContactInfo from '@/app/components/contactInfo';
-import TeamSection from '@/app/components/teamSection';
+import ProfileInfo from '@/app/components/(mi_perfil)/profileInfo';
+import ContactInfo from '@/app/components/(mi_perfil)/contactInfo';
+import TeamSection from '@/app/components/mi_equipo/teamSection';
 
-import LoadingSpinner from '@/app/components/loadingSpinner';
+import LoadingSpinner from '@/app/components/(mi_perfil)/loadingSpinner';
 
 import { useRouter } from 'next/navigation';
 import { useChat } from '@/app/context/ChatContext';

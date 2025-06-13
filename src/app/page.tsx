@@ -3,12 +3,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import WelcomeHubLogo from "./components/(layout)/assetsLayout/WelcomeHubLogo";
-import "./landing/landing.css";
+import WelcomeHubLogo from "./components/(icons)/WelcomeHubLogo";
+import "./(landing)/landing/landing.css";
 
 // Assets para animar
-import SmallBG from "./landing/smallBG";
-import BigBG from "./landing/bigBG";
+import SmallBG from "./(landing)/landing/smallBG";
+import BigBG from "./(landing)/landing/bigBG";
 
 export default function LandingPage() {
   const router = useRouter();

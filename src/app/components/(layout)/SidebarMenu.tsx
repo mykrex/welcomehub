@@ -12,15 +12,15 @@ import { useUserProfile } from "@/app/hooks/useUserProfile";
 import type { ComponentType } from "react";
 import "./sidebarMenu.css";
 
-import WelcomeHubLogo from "./assetsLayout/WelcomeHubLogo";
-import WHLogo from "./assetsLayout/WHlogo";
-import DashboardIcon from "./assetsLayout/DashboardIcon";
-import CursosIcon from "./assetsLayout/CursosIcon";
-import CompiIcon from "./assetsLayout/CompiButtonIcon";
-import RetosIcon from "./assetsLayout/RetosIcon";
-import NeorisIcon from "./assetsLayout/NeorisIcon";
-import ClockIcon from "./assetsLayout/ClockIcon";
-import TeamIcon from "./assetsLayout/TeamIcon";
+import WelcomeHubLogo from "../(icons)/WelcomeHubLogo";
+import WHLogo from "../(icons)/WHlogo";
+import DashboardIcon from "../(icons)/Dashboard";
+import CursosIcon from "../(icons)/Book";
+import CompiIcon from "../(icons)/Message";
+import RetosIcon from "../(icons)/StarRetos";
+import NeorisIcon from "../(icons)/Information";
+import ClockIcon from "../(icons)/Clock";
+import TeamIcon from "../(icons)/Team";
 
 type Roles = "administrador" | "empleado";
 
