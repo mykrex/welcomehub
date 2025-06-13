@@ -1,0 +1,39 @@
+name: 'Tests'
+
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+    branches: ['main', 'master']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Prepare test environment
+        run: |
+          cat > .env.test << EOL
+          NODE_ENV=test
+          NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY=fake-test-key
+          EOL
+        
+      - name: Run Tests
+        run: npm test
+
+      - name: Run Tests with Coverage
+        run: npm test -- --coverage --watchAll=false
+        continue-on-error: true
