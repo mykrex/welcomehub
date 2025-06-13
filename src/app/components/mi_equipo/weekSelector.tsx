@@ -1,5 +1,5 @@
 import React from 'react';
-import { WeekData } from '../types/employee';
+import { WeekData } from '../../types/employee';
 
 interface WeekSelectorProps {
   weeks: WeekData[];
