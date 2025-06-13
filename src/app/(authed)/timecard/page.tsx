@@ -14,7 +14,7 @@ import { useWeekNavigation } from '../../hooks/useWeekNavigationTC';
 import { useCopyLastWeek } from '../../hooks/useCopyLastWeekTC';
 import { useSaveWeek } from '../../hooks/useSaveWeekDetailsTC';
 
-import './timecard.css';
+import './timecardStyles.css';
 
 
 // Main component for rendering the time card UI

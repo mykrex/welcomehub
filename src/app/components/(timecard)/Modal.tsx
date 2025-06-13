@@ -1,5 +1,5 @@
 import React from 'react';
-import '@/app/(authed)/timecard/timecard.css';
+import "@/app/(authed)/timecard/timecardStyles.css";
 
 export interface ModalProps {
   title: string;
