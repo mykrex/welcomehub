@@ -6,7 +6,7 @@ import { useUserTeam } from '@/app/hooks/useUserTeam';
 
 import ProfileInfo from '@/app/components/(mi_perfil)/profileInfo';
 import ContactInfo from '@/app/components/(mi_perfil)/contactInfo';
-import TeamSection from '@/app/components/mi_equipo/teamSection';
+import TeamSection from '@/app/components/(mi_equipo)/teamSection';
 
 import LoadingSpinner from '@/app/components/(mi_perfil)/loadingSpinner';
 

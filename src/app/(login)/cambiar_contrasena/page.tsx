@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ProgresoRecuperacion from "../../components/mi_equipo/progresoRecuperacion";
+import ProgresoRecuperacion from "../../components/(mi_equipo)/progresoRecuperacion";
 
 export default function CambiarContrasena() {
     const [password, setPassword] = useState("");

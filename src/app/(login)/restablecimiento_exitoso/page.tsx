@@ -2,7 +2,7 @@
 
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-import ProgresoRecuperacion from "../../components/mi_equipo/progresoRecuperacion";
+import ProgresoRecuperacion from "../../components/(mi_equipo)/progresoRecuperacion";
 
 export default function OlvideContrasena(){
     const paso = 3;
