@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock for the component ProgresoRecuperacion in case of truble
-jest.mock('@/app/components/progresoRecuperacion', () => {
+jest.mock('@/app/components/(mi_equipo)/progresoRecuperacion', () => {
   return function MockProgresoRecuperacion({ pasoActual }: { pasoActual: number }) {
     return <div data-testid="progreso-recuperacion">Paso: {pasoActual}</div>;
   };

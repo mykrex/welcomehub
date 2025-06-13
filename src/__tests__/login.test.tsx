@@ -9,7 +9,7 @@ jest.mock("next/navigation", () => ({
 }));
 
 // WelcomeHubLogo component mock
-jest.mock("@/app/components/(layout)/assetsLayout/WelcomeHubLogo", () => {
+jest.mock("@/app/components/(icons)/WelcomeHubLogo", () => {
   return function MockWelcomeHubLogo({ className }: { className?: string }) {
     return <div data-testid="welcome-hub-logo" className={className}>WelcomeHub Logo</div>;
   };
