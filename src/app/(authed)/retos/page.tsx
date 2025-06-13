@@ -3,9 +3,9 @@
 //* Styles *//
 import "./retos.css";
 
-import UserStats from "./assets/UserStats";
-import RetosTable from "./assets/retosTable";
-import RankingPodium from "./assets/RankingPodium";
+import UserStats from "../../components/(retos)/UserStats";
+import RetosTable from "../../components/(retos)/Table";
+import RankingPodium from "../../components/(retos)/RankingPodium";
 import useVerificarProgreso from '@/app/hooks/useVerificarProgreso';
 
 

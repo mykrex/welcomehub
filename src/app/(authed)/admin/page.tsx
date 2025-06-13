@@ -1,8 +1,7 @@
 'use client';
 
-
 import { useState, useEffect } from 'react';
-import Titulo from '../../components/perfilTitulos';
+import Titulo from '../../components/(admin)/perfilTitulos';
 
 interface CourseRequest {
     id: string;

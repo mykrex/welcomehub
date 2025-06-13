@@ -1,10 +1,30 @@
 /* Color variables */
 :root {
-  --bg-blue-main: #042C45;
-  --white-main: #EBFAFF;
-  --blue-light: #8BCFF9;
-  --grey-light: #9DAAA6;
-  --green: #4DAA57;
+  --bg-blue-main: #042c45;
+  --white-main: #ebfaff;
+  --blue-light: #8bcff9;
+  --grey-light: #9daaa6;
+  --green: #4daa57;
+  --blue-4-dark: #0c94e9;
+  --blue-4: #51b6f6;
+  --blue-2: #08639b;
+  --blue-1: #053c5e;
+  --blue-2-dark: #064a74;
+  --yellow-1: #f4b942;
+  --red-1: #db504a;
+  --green-1-dark: #3d8744;
+  --yellow-1-dark: #eba10e;
+  --red-2: #bb2a25;
+  --orange-1: #df8328;
+}
+
+.main-content {
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  overflow-y: auto;
+  padding-right: 5px;
+  border-radius: 15px;
 }
 
 .dashboard-wrapper{
@@ -41,4 +61,750 @@
   display: flex;
   flex-direction: row; /* or row if you want cards side-by-side */
   gap: 10px;
+}
+
+
+/* ====================================================================
+   CURSOS VISTA
+   ==================================================================== */
+
+
+.cv-container {
+  flex: 1;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: var(--bg-blue-main);
+  border-radius: 15px;
+}
+
+.cv-progress-title {
+  color: var(--white-main);
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.cv-course-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cv-curso-card {
+  padding: 20px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue-1);
+  cursor: pointer; /* Añadimos cursor de mano */
+  transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+}
+
+.cv-curso-card:hover {
+  background-color: var(--blue-2);
+}
+
+.cv-curso-nombre {
+  color: var(--white-main);
+  font-size: 23px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.cv-curso-abierto {
+  color: var(--blue-light);
+  font-size: 16px;
+  font-weight: 300;
+}
+.cv-estado-div {
+  padding: 15px;
+  border-radius: 20px;
+  min-width: 200px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between; /* Centro horizontal */
+}
+
+.estado-contenido {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row; /* Círculo a la izquierda */
+}
+
+.cv-circulo-estado {
+  height: 30px; /* Mismo height que el contenedor */
+  aspect-ratio: 1 / 1;
+}
+
+.cv-circulo-estado svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.cv-circulo-base {
+  fill: none;
+  stroke: var(--grey-light);
+  stroke-width: 3.8;
+}
+
+.cv-circulo-progreso {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+}
+
+/* Colores del círculo según estado */
+.cv-circulo-en-progreso .cv-circulo-progreso {
+  stroke: var(--yellow-1);
+}
+
+.cv-circulo-completado .cv-circulo-progreso {
+  stroke: var(--green);
+}
+
+.cv-circulo-faltante .cv-circulo-progreso {
+  stroke: var(--red-1);
+}
+
+/* Estado: En Progreso */
+.cv-estado-en-progreso {
+  outline: 2px var(--yellow-1) solid;
+  outline-offset: -2px;
+  color: var(--yellow-1);
+}
+
+/* Estado: Completado */
+.cv-estado-completado {
+  outline: 2px var(--green) solid;
+  outline-offset: -2px;
+  color: var(--green);
+}
+
+/* Estado: Faltante */
+.cv-estado-faltante {
+  outline: 2px var(--red-1) solid;
+  outline-offset: -2px;
+  color: var(--red-1);
+}
+
+/* Contenedor de los filtros */
+.cv-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botones de filtro */
+.cv-filter-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.cv-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.cv-filter-btn.active {
+  background: #51B6F6;
+  border-color: #51B6F6;
+  color: white;
+  box-shadow: 0 2px 8px rgba(81, 182, 246, 0.3);
+}
+
+/* Mensaje cuando no hay cursos */
+.cv-no-courses {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 40px 20px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* Responsivo para moviles */
+@media (max-width: 768px) {
+  .cv-filters {
+    justify-content: center;
+  }
+  
+  .cv-filter-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+.cv-filter-dropdown {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cv-filter-label {
+  font-weight: 600;
+  color: #cfcdcd;
+  margin-bottom: 0;
+}
+
+.cv-filter-select {
+  padding: 8px 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  min-width: 200px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.cv-filter-select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.cv-filter-select:hover {
+  border-color: #007bff;
+}
+
+
+
+   /* ====================================================================
+   PROGRESS BAR
+   ==================================================================== */
+
+.db-progress-container {
+  width: 100%;
+  height: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  background: var(--bg-blue-main);
+  overflow: hidden;
+  border-radius: 15px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: inline-flex;
+}
+
+.db-progress-title-container {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.db-progress-title-main {
+  color: var(--white-main);
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.db-progress-dropdown {
+  background: var(--bg-blue-main);
+  color: var(--blue-light);
+  font-size: 18px;
+  font-family: Manrope;
+  font-weight: 600;
+  outline: none;
+  padding: 5px 30px 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--blue-light); 
+  vertical-align: middle;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='7' viewBox='0 0 10 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238BCFF9' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+}
+
+
+
+.db-progress-bar-group {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 40px;
+}
+
+.db-progress-bar-total {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: var(--grey-light);
+  border-radius: 20px;
+}
+
+.db-progress-bar-completed {
+  height: 100%;
+  position: absolute;
+  background: var(--green);
+  border-radius: 20px;
+}
+
+.db-progress-dot-green {
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  border-radius: 9999px;
+}
+
+.db-progress-dot-gray {
+  width: 10px;
+  height: 10px;
+  background: var(--grey-light);
+  border-radius: 9999px;
+}
+
+.db-progress-summary {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+}
+
+.db-progress-item {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  gap: 5px;
+}
+
+.db-progress-item-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+}
+
+.circle-completado {
+  background: var(--green);
+}
+
+.circle-restante {
+ background: var(--grey-light);
+}
+
+.db-progress-item-label {
+  color: var(--grey-light);
+  font-size: 20px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+
+     /* ====================================================================
+   ONBOARDING STATS
+   ==================================================================== */
+
+   
+.average-stats-card {
+  background: var(--bg-blue-main);
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  gap: 30px;
+  flex: 1;
+}
+
+.ac-content {
+  justify-content: space-between;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.ac-title {
+  font-size: 20px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+  color: var(--white-main);
+}
+
+.average-stats-main-score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.average-stats-number {
+  font-size: 80px;
+  color: #51B6F6;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.average-stats-unit {
+  font-size: 40px;
+  color: #51B6F6;
+  font-weight: normal;
+  margin-left: 0.25rem;
+}
+
+.average-stats-icon {
+  width: 5rem;
+  height: 5rem;
+  color: #51B6F6;
+}
+
+.average-stats-comparison {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  font-size: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+.average-stats-comparison .percent {
+  color: #F57C00;
+  text-decoration: underline;
+  margin-right: 0.25rem;
+}
+
+.average-stats-comparison .gray {
+  color: #8A8A8A;
+  margin-right: 0.25rem;
+}
+
+.average-stats-comparison .highlight {
+  color: #F57C00;
+  font-weight: bold;
+  margin-right: 0.25rem;
+}
+        /* ====================================================================
+   RECENT COURSE
+   ==================================================================== */
+
+
+   
+.recent-course-container {
+  background: var(--bg-blue-main);
+  padding-left: 30px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 15px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.recent-course-header {
+  justify-content: space-between;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  width: 100%;
+}
+
+.recent-course-header-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.rc-card-title {
+  font-size: 20px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+  color: var(--white-main);
+}
+
+.rc-course-title {
+  font-size: 28px;
+  font-family: Manrope;
+  font-weight: 600;
+  word-wrap: break-word;
+  color: var(--white-main);
+  transition: opacity 0.3s ease;
+}
+
+.rc-description {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: var(--grey-light);
+  font-size: 16px;
+  font-family: Manrope;
+  font-weight: 500;
+  word-wrap: break-word;
+  width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.recent-course-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.recent-course-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.recent-course-image {
+  object-fit: cover;
+  border-radius: 15px;
+  fill: true;
+}
+
+.shine {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.shine:hover::before,
+.shine:focus::before {
+  opacity: 1;
+  animation: shine-move 1.5s forwards;
+}
+
+@keyframes shine-move {
+  100% {
+    left: 125%;
+  }
+}
+
+.recent-course-button {
+  display: inline-block;        /* allow pseudo-elements */
+  text-align: center;
+  border: none;
+  font-weight: 500;
+  font-size: 1.125rem;
+  padding: 10px;
+  width: 100%;
+  border-radius: 15px;
+  background-color: var(--blue-2);
+  color: var(--white-main);
+  cursor: pointer;
+  position: relative;           /* required for ::before shine */
+  overflow: hidden;             /* clip the shine effect */
+}
+
+.modern-arrow-button {
+  display: inline-flex;            /* ✅ inline layout with alignment */
+  align-items: center;            /* center vertically */
+  justify-content: center;        /* center horizontally */
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.125rem;
+  padding: 10px 20px;
+  width: 100%;
+  border-radius: 15px;
+  background-color: var(--blue-2);
+  color: var(--white-main);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+/* Inline arrow next to text */
+.modern-arrow-button::after {
+  content: "→";
+  font-size: 20px;
+  margin-left: 8px;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* On hover, fade in and shift arrow */
+.modern-arrow-button:hover {
+  background-color: var(--blue-2-dark);
+}
+
+.modern-arrow-button:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Active state = even darker */
+.modern-arrow-button:active {
+  background-color: var(--blue-4-dark); /* or define var(--blue-4-darker) */
+}
+
+/* Estilos adicionales para recentCourse.css */
+
+/* Información de última actualización */
+.rc-last-updated {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+/* Contenedor de información del curso */
+.rc-course-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Badges de estado */
+.rc-estado-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rc-estado-completado {
+  background: #4CAF50;
+  color: white;
+}
+
+.rc-estado-en_progreso {
+  background: #FF9800;
+  color: white;
+}
+
+.rc-estado-sin_comenzar {
+  background: #f44336;
+  color: white;
+}
+
+.rc-duracion i {
+  font-size: 10px;
+}
+
+/* Badge obligatorio */
+.rc-obligatorio {
+  font-size: 11px;
+  color: #FF6B35;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rc-obligatorio i {
+  font-size: 10px;
+}
+
+/* Imagen placeholder */
+.rc-placeholder-image {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(81, 182, 246, 0.3), rgba(81, 182, 246, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.rc-placeholder-image i {
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .rc-course-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .rc-last-updated {
+    font-size: 11px;
+  }
+  
+  .rc-placeholder-image i {
+    font-size: 36px;
+  }
+}
+
+.rc-last-updated {
+  transition: opacity 0.3s ease;
 }

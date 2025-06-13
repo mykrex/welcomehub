@@ -34,7 +34,3 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [],
 };
-
-/**export const config = {
-  matcher: ['/app/(authed|dashboard|mi_perfil|neoris|retos|timecard)(.*)'],
-};*/

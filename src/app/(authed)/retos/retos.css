@@ -23,3 +23,311 @@
   flex-direction: column;
   gap: 10px; /* spacing between retos and ranking */
 }
+
+
+/* =============================================================================
+   USER STATS
+============================================================================= */
+
+
+/* userStats.css */
+
+/* Contenedor principal de estadísticas de usuario */
+.user-stats-container {
+  display: flex; /* Cambiado de inline-flex a flex */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  /* height: 100%; */ /* Eliminado para no forzar altura */
+  padding: 20px 30px;
+  background: #042c45;
+  overflow: hidden;
+  border-radius: 15px;
+  gap: 10px;
+}
+
+/* Wrapper del encabezado (nombre y título) */
+.stats-header-wrapper {
+  display: flex; /* Cambiado de inline-flex a flex */
+  align-items: center;
+  gap: 10px;
+}
+
+.stats-name {
+  color: #ebfaff;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.stats-title {
+  color: #8bcff9;
+  font-size: 28px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+/* Wrapper de las tarjetas de estadísticas */
+.stats-cards-wrapper {
+  display: flex; /* Cambiado de inline-flex a flex */
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  align-self: stretch;
+}
+
+/* Tarjeta individual de estadística */
+.stats-card {
+  flex: 1 1 0;
+  height: 84px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+.stats-card.puntos {
+  outline: 2px #eba10e solid;
+  outline-offset: -2px;
+  color: #eba10e;
+}
+
+.stats-card.challenges {
+  outline: 2px #4daa57 solid;
+  outline-offset: -2px;
+  color: #4daa57;
+}
+
+
+/* Contenedor del icono dentro de cada tarjeta */
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contenido (texto) dentro de cada tarjeta */
+.stats-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.stats-card-value {
+  color: currentColor;
+  font-size: 32px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
+
+.stats-card-label {
+  color: currentColor;
+  font-size: 18px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+}
+
+
+/* =============================================================================
+   RETOS TABLE
+============================================================================= */
+
+/* ============= header ============= */
+.retos-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.retos-title {
+  color: #ebfaff;
+  font: 600 28px/1 "Manrope", sans-serif;
+}
+.retos-subtitle {
+  color: #ebfaff;
+  font: 500 24px/1 "Manrope", sans-serif;
+}
+.retos-date {
+  color: #8bcff9;
+  font: 500 24px/1 "Manrope", sans-serif;
+}
+
+/* ============= table layout ============= */
+.retos-table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.retos-table .retos-row:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.retos-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 30px;
+}
+.retos-row--header {
+  background: #8bcff9;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 2px solid #0b88d5;
+}
+.retos-row--even {
+  background: #053c5e;
+}
+.retos-row--odd {
+  background: #053c5e;
+}
+
+/* header fonts */
+.retos-row--header .retos-cell {
+  color: #064a74;
+  font: 700 18px/1 "Manrope", sans-serif;
+}
+
+/* ============= column widths ============= */
+.retos-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white-main);
+  font-family: Manrope;
+
+}
+.retos-cell--status {
+  flex: 1;
+  
+}
+.retos-cell--cont {
+  flex: 1;
+  justify-content: left;
+  align-items: left;
+  gap: 8px;
+}
+.retos-cell--type {
+  flex: 2;
+}
+.retos-cell--points {
+  flex: 1;
+  text-align: center;
+}
+.retos-cell--description {
+  flex: 4;
+}
+
+/* =============================================================================
+   RANKING PODIUM
+============================================================================= */
+
+.ranking-container {
+  width: 100%;
+  padding: 20px 30px;
+  background: #042c45;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ranking-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ranking-title, .ranking-subtitle {
+  font-family: "Manrope";
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.ranking-title { color: #ebfaff; }
+.ranking-subtitle { color: #8bcff9; }
+
+.ranking-table {
+  background: #c2f0ff;
+  border-radius: 15px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ranking-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ranking-header-item {
+  font-family: "Manrope";
+  font-size: 20px;
+  font-weight: 700;
+  color: #064A74;
+}
+
+.ranking-divider {
+  width: 100%;
+  border-bottom: 1px solid #51b6f6;
+}
+
+.ranking-table-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ranking-row {
+  display: flex;
+  justify-content: space-between; /* Distribuye rank+foto+nombre a la izquierda y puntos a la derecha */
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #51B6F6;
+}
+
+.ranking-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+}
+
+.ranking-rank {
+  font-family: "Manrope";
+  font-size: 20px;
+  font-weight: 600;
+  color: #064a74;
+  padding-right: 50px;
+}
+
+.profile-picture-small {
+  width: 61px;
+  height: 61px;
+  border-radius: 9999px;
+}
+
+.ranking-name {
+  font-family: "Manrope";
+  font-size: 18px;
+  font-weight: 600;
+  color: #053c5e;
+}
+
+.ranking-points {
+  font-family: "Manrope";
+  font-size: 20px;
+  font-weight: 700;
+  color: #0b88d5;
+}

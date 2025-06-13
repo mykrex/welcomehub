@@ -1,19 +1,20 @@
 'use client';
 
 import React, {useEffect} from 'react';
-import Modal from './Modal';
+import Modal from '../../components/(timecard)/Modal';
 import { fetchWeekData } from "@/pages/api/timecard/fetchTimeCard";
-import './TimeCard.css';
-import TimeTable from './TimeTable';
-import ButtonsBar from './ButtonsBar';
-import CalendarStatus from './CalendarStatus';
-import { getWeekFromBaseDate, statusFormatted, CoursesPerDay } from './hooks/usebeforeTimecard';
-import { useTimecard } from './hooks/usetimecard';
-import { useCourseOptions } from './hooks/usecourseoptions';
-import { useAddCourse } from './hooks/useaddcourse';
-import { useWeekNavigation } from './hooks/useweeknavigation';
-import { useCopyLastWeek } from './hooks/usecopyLastWeek';
-import { useSaveWeek } from './hooks/usesaveweekdeleteall';
+import TimeTable from '../../components/(timecard)/TimeTable';
+import ButtonsBar from '../../components/(timecard)/ButtonsBar';
+import CalendarStatus from '../../components/(timecard)/CalendarStatus';
+import { getWeekFromBaseDate, statusFormatted, CoursesPerDay } from '../../hooks/useBeforeTC';
+import { useTimecard } from '../../hooks/useTimecardTC';
+import { useCourseOptions } from '../../hooks/useCourseOptionsTC';
+import { useAddCourse } from '../../hooks/useAddCourseTC';
+import { useWeekNavigation } from '../../hooks/useWeekNavigationTC';
+import { useCopyLastWeek } from '../../hooks/useCopyLastWeekTC';
+import { useSaveWeek } from '../../hooks/useSaveWeekDetailsTC';
+
+import './timecardStyles.css';
 
 
 // Main component for rendering the time card UI

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LoginPage from "@/app/login/page";
+import LoginPage from "@/app/(login)/login/page";
 import { useRouter } from "next/navigation";
 
 // Router mock
@@ -9,7 +9,7 @@ jest.mock("next/navigation", () => ({
 }));
 
 // WelcomeHubLogo component mock
-jest.mock("@/app/components/(layout)/assetsLayout/WelcomeHubLogo", () => {
+jest.mock("@/app/components/(icons)/WelcomeHubLogo", () => {
   return function MockWelcomeHubLogo({ className }: { className?: string }) {
     return <div data-testid="welcome-hub-logo" className={className}>WelcomeHub Logo</div>;
   };

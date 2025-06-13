@@ -2,7 +2,7 @@
 
 "use client";
 
-import CourseCatalog from "@/app/components/courseCatalog";
+import CourseCatalog from "@/app/components/(courses)/courseCatalog";
 // Importamos el CSS que acabamos de crear
 import "./cursos.css";
 

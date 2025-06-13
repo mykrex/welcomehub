@@ -3,10 +3,10 @@
 import { useChat } from "@/app/context/ChatContext";
 import { useEffect } from "react";
 import { Send } from "lucide-react";
-import { Input } from "@/app/components/Input";
-import { Button } from "@/app/components/Button";
-import { Avatar } from "@/app/components/Avatar";
-import CompiIcon from "@/app/components/CompiIcon";
+import { Input } from "@/app/components/(compi)/Input";
+import { Button } from "@/app/components/(compi)/Button";
+import { Avatar } from "@/app/components/(compi)/Avatar";
+import CompiIcon from "@/app/components/(compi)/CompiIcon";
 import React from "react";
 import Link from "next/link";
 

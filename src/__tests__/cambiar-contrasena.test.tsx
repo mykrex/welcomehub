@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CambiarContrasena from '@/app/cambiar_contrasena/page';
+import CambiarContrasena from '@/app/(login)/cambiar_contrasena/page';
 
 // Mock for this test
 const mockPush = jest.fn();
@@ -11,7 +11,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock for the component ProgresoRecuperacion in case of truble
-jest.mock('@/app/components/progresoRecuperacion', () => {
+jest.mock('@/app/components/(mi_equipo)/progresoRecuperacion', () => {
   return function MockProgresoRecuperacion({ pasoActual }: { pasoActual: number }) {
     return <div data-testid="progreso-recuperacion">Paso: {pasoActual}</div>;
   };
