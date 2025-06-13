@@ -3,7 +3,6 @@
 import React, {useEffect} from 'react';
 import Modal from '../../components/(timecard)/Modal';
 import { fetchWeekData } from "@/pages/api/timecard/fetchTimeCard";
-import './timecard.css';
 import TimeTable from '../../components/(timecard)/TimeTable';
 import ButtonsBar from '../../components/(timecard)/ButtonsBar';
 import CalendarStatus from '../../components/(timecard)/CalendarStatus';
@@ -14,6 +13,8 @@ import { useAddCourse } from '../../hooks/useAddCourseTC';
 import { useWeekNavigation } from '../../hooks/useWeekNavigationTC';
 import { useCopyLastWeek } from '../../hooks/useCopyLastWeekTC';
 import { useSaveWeek } from '../../hooks/useSaveWeekDetailsTC';
+
+import './timecard.css';
 
 
 // Main component for rendering the time card UI
