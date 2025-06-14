@@ -40,9 +40,9 @@ A continuación se presenta el diagrama de arquitectura de la aplicación y las 
 
 [![Stack Tecnologico](https://drive.google.com/uc?export=view&id=1OIjOjRX-gH38xyS5uGycfxbtDFGPeNfd)](https://drive.google.com/file/d/1OIjOjRX-gH38xyS5uGycfxbtDFGPeNfd/view?usp=sharing)
 
-[Alto Nivel](https://drive.google.com/file/d/1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz/view?usp=sharing)
+[Alto Nivel](https://drive.google.com/file/d/1M0_G-D1h8L4Gd8zEc6RcenRbXaKCV9AK/view?usp=sharing)
 
-[![Alto Nivel](https://drive.google.com/uc?export=view&id=1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz)](https://drive.google.com/file/d/1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz/view?usp=sharing)
+[![Alto Nivel](https://drive.google.com/uc?export=view&id=1M0_G-D1h8L4Gd8zEc6RcenRbXaKCV9AK)](https://drive.google.com/file/d/1M0_G-D1h8L4Gd8zEc6RcenRbXaKCV9AK/view?usp=sharing)
 
 
 ## Presentación de la aplicación
