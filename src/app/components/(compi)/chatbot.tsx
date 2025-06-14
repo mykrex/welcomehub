@@ -9,14 +9,8 @@ import CompiIcon from "./CompiIcon";
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
-  const {
-    messages,
-    prompt,
-    setPrompt,
-    sendPrompt,
-    loading,
-    messagesEndRef,
-  } = useChat();
+  const { messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef } =
+    useChat();
 
   useEffect(() => {
     if (open && messages.length === 0 && !loading) {
@@ -46,7 +40,12 @@ export default function Chatbot() {
           {/* Mensajes */}
           <div className="flex-1 overflow-y-auto p-4 space-y-2">
             {messages.map((message, index) => (
-              <div key={index} className={`flex flex-col ${message.sender === "user" ? "items-end" : "items-start"}`}>
+              <div
+                key={index}
+                className={`flex flex-col ${
+                  message.sender === "user" ? "items-end" : "items-start"
+                }`}
+              >
                 <div
                   className={`px-3 py-2 rounded-2xl text-sm max-w-[75%] ${
                     message.sender === "user"
@@ -76,7 +75,9 @@ export default function Chatbot() {
               </div>
             ))}
             {loading && (
-              <div className="text-sm text-gray-400 italic">Compi está escribiendo...</div>
+              <div className="text-sm text-gray-400 italic">
+                Compi está escribiendo...
+              </div>
             )}
             <div ref={messagesEndRef} />
           </div>
@@ -100,7 +101,9 @@ export default function Chatbot() {
               className="mt-2 w-full text-sm"
               disabled={loading}
             >
-              {loading ? "Generando..." : (
+              {loading ? (
+                "Generando..."
+              ) : (
                 <div className="flex items-center justify-center gap-2">
                   <Send className="w-4 h-4" />
                   Enviar

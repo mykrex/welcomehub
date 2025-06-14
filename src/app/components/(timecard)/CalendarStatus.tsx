@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface CalendarStatusProps {
   today: Date;
@@ -35,10 +35,12 @@ const CalendarStatus: React.FC<CalendarStatusProps> = ({
 
       <div className="status">
         <p>
-          <strong>Estatus de Time Card:</strong> {statusFormatted(weekStates[weekKey])}
+          <strong>Estatus de Time Card:</strong>{" "}
+          {statusFormatted(weekStates[weekKey])}
         </p>
         <p>
-          <strong>Horas Totales de Time Card:</strong> {totalHours.toFixed(1)} / 42.5
+          <strong>Horas Totales de Time Card:</strong> {totalHours.toFixed(1)} /
+          42.5
         </p>
         <p>
           <strong>Semana:</strong> {weekNumber} &nbsp;
@@ -52,13 +54,13 @@ const CalendarStatus: React.FC<CalendarStatusProps> = ({
           <span>
             <strong>Guardado recientemente:</strong>
           </span>
-          <span>{deliveryDates[weekKey] || 'N/A'}</span>
+          <span>{deliveryDates[weekKey] || "N/A"}</span>
         </div>
         <div className="date-item">
           <span>
             <strong>Fecha de Aprobación:</strong>
           </span>
-          <span>{approvedWeeks[weekKey] || 'N/A'}</span>
+          <span>{approvedWeeks[weekKey] || "N/A"}</span>
         </div>
       </div>
     </div>

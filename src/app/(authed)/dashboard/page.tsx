@@ -1,17 +1,12 @@
-// src/app/(authed)/dashboard/page.tsx
 "use client";
 
-//* Styles *//
 import "./dashboard.css";
 
-
-//* Components *//
 import CursosVista from "../../components/(dashboard)/CursosVista";
 import ProgressBar from "../../components/(dashboard)/ProgressBar";
 import OnboardingStats from "../../components/(dashboard)/OnboardingStats";
 import RecentCourse from "../../components/(dashboard)/RecentCourse";
 
-//* Import useCourses hook *//
 import { useCourses } from "@/app/hooks/useCourses";
 
 export default function Dashboard() {

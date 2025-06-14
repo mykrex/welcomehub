@@ -1,34 +1,33 @@
-// src/app/(authed)/dashboard/assets/ProgressBar.jsx
-import '@/app/(authed)/dashboard/dashboard.css'
+import "@/app/(authed)/dashboard/dashboard.css";
 
-import { CursoInscrito } from '@/app/hooks/useCourses';
+import { CursoInscrito } from "@/app/hooks/useCourses";
 
 interface ProgressComponentProps {
   cursos: CursoInscrito[];
 }
 
-export default function ProgressComponent({ cursos = [] }: ProgressComponentProps) {
-  // Calcular estadísticas de los cursos
+export default function ProgressComponent({
+  cursos = [],
+}: ProgressComponentProps) {
   const totalCursos = cursos.length;
-  const cursosCompletados = cursos.filter(curso => curso.estado === 'completado').length;
-  
-  // Calcular porcentajes
-  const porcentajeCompletado = totalCursos > 0 ? Math.round((cursosCompletados / totalCursos) * 100) : 0;
+  const cursosCompletados = cursos.filter(
+    (curso) => curso.estado === "completado"
+  ).length;
+
+  const porcentajeCompletado =
+    totalCursos > 0 ? Math.round((cursosCompletados / totalCursos) * 100) : 0;
   const porcentajeRestante = 100 - porcentajeCompletado;
-  
-  // Si no hay cursos, mostrar mensaje alternativo
+
   if (totalCursos === 0) {
     return (
       <div className="db-progress-container">
         <div className="db-progress-title-container">
           <div className="db-progress-title-main">Progreso Total</div>
-          <div className="db-progress-stats">
-            No hay cursos inscritos
-          </div>
+          <div className="db-progress-stats">No hay cursos inscritos</div>
         </div>
         <div className="db-progress-bar-group">
           <div className="db-progress-bar-total" />
-          <div className="db-progress-bar-completed" style={{ width: '0%' }} />
+          <div className="db-progress-bar-completed" style={{ width: "0%" }} />
         </div>
         <div className="db-progress-summary">
           <div className="db-progress-item">
@@ -39,7 +38,7 @@ export default function ProgressComponent({ cursos = [] }: ProgressComponentProp
       </div>
     );
   }
-  
+
   return (
     <div className="db-progress-container">
       {/* Title */}
@@ -53,8 +52,8 @@ export default function ProgressComponent({ cursos = [] }: ProgressComponentProp
         {/* Progress Bar Total -> 100% */}
         <div className="db-progress-bar-total" />
         {/* Progress Bar Completed -> variable */}
-        <div 
-          className="db-progress-bar-completed" 
+        <div
+          className="db-progress-bar-completed"
           style={{ width: `${porcentajeCompletado}%` }}
         />
       </div>

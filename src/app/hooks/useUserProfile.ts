@@ -12,7 +12,6 @@ export interface UserProfile {
   fecha_nacimiento?: string;
 }
 
-//Cargamos el perfil del usuario que se autentico
 export function useUserProfile() {
   const { data, loading, error } = useFetch<UserProfile>(
     '/api/users/info'

@@ -16,10 +16,9 @@ export default async function handler(
     return res.status(401).json({ error: "No autorizado" });
 
   const userId = session.user.id;
-  const idReto = "e01f8e1d-cdd0-413d-bbc5-eb27aa81d074"; // ID del reto "chatea con compi"
+  const idReto = "e01f8e1d-cdd0-413d-bbc5-eb27aa81d074";
 
   try {
-    // Contar cuántos mensajes tiene el usuario en la tabla mensajes
     const { data: mensajes, error: errorMensajes } = await supabase
       .from("mensajes")
       .select("id")
@@ -29,7 +28,6 @@ export default async function handler(
 
     const totalMensajes = mensajes?.length ?? 0;
 
-    // Contar cuántos registros de reto tiene el usuario para este reto
     const { data: retos, error: errorRetos } = await supabase
       .from("reto_usuario")
       .select("id_reto_usuario")
@@ -40,11 +38,9 @@ export default async function handler(
 
     const totalRetos = retos?.length ?? 0;
 
-    // Determinar cuántos registros faltan
     const faltan = totalMensajes - totalRetos;
 
     if (faltan > 0) {
-      // Crear los registros faltantes
       const inserts = Array.from({ length: faltan }, () => ({
         id_usuario: userId,
         id_reto: idReto,

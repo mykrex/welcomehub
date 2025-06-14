@@ -1,12 +1,9 @@
-// src/app/page.tsx
-
 "use client";
 
 import { useRouter } from "next/navigation";
 import WelcomeHubLogo from "./components/(icons)/WelcomeHubLogo";
 import "./(landing)/landing/landing.css";
 
-// Assets para animar
 import SmallBG from "./(landing)/landing/smallBG";
 import BigBG from "./(landing)/landing/bigBG";
 
@@ -19,7 +16,6 @@ export default function LandingPage() {
 
   return (
     <div className="landing-container">
-      {/** ← Mitad izquierda: contenido fijo */}
       <div className="content-wrapper">
         <WelcomeHubLogo className="logo" />
 
@@ -31,7 +27,8 @@ export default function LandingPage() {
 
           <div className="bottom">
             <div className="subtitle">
-              Empieza tu recorrido con el apoyo que necesitas,<br />
+              Empieza tu recorrido con el apoyo que necesitas,
+              <br />
               diseñada para impulsar tu crecimiento profesional.
             </div>
             <button onClick={handleLogin} className="login-button">
@@ -41,7 +38,6 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/** ← Mitad derecha: contenedor de animación */}
       <div className="animation-wrapper">
         <div className="small-bg-wrapper">
           <SmallBG />

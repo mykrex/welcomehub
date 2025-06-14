@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 export interface FetchResult<T> {
   data: T | null;
@@ -6,15 +6,10 @@ export interface FetchResult<T> {
   error: string | null;
 }
 
-/**
- * Hook generico para hacer fetch a un endpoint
- * - url: ruta a la API (relative o absoluta)
- * - options: cualquier RequestInit (metodo, headers, body . . .)
- *
- * Nota: para evitar re-fetches innecesarios, se memoiza `options` con useMemo()
- * en el componente que llame a este hook, si es un objeto literal
- */
-export function useFetch<T>( url: string, options?: RequestInit): FetchResult<T> {
+export function useFetch<T>(
+  url: string,
+  options?: RequestInit
+): FetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +19,7 @@ export function useFetch<T>( url: string, options?: RequestInit): FetchResult<T>
     setLoading(true);
 
     fetch(url, {
-      credentials: 'include', // envio de las cookies
+      credentials: "include",
       ...options,
     })
       .then(async (res) => {

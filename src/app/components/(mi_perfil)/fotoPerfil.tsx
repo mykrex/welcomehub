@@ -7,7 +7,6 @@ export default function FotoPerfil({ userId }: { userId: string }) {
   const [deleting, setDeleting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Get the signed URL from /api/avatar/bajarAvatar
   const fetchFotoPerfil = useCallback(async () => {
     try {
       const resp = await fetch("/api/avatar/bajarAvatar");
@@ -17,7 +16,7 @@ export default function FotoPerfil({ userId }: { userId: string }) {
       }
       const { url } = await resp.json();
       const separator = url.includes("?") ? "&" : "?";
-      setImageUrl(`${url}${separator}v=${Date.now()}`); // bust cache
+      setImageUrl(`${url}${separator}v=${Date.now()}`);
     } catch {
       setImageUrl(null);
     }
@@ -27,7 +26,6 @@ export default function FotoPerfil({ userId }: { userId: string }) {
     fetchFotoPerfil();
   }, [fetchFotoPerfil]);
 
-  // Upload using the endpoint /api/avatar/subirAvatar
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -54,7 +52,6 @@ export default function FotoPerfil({ userId }: { userId: string }) {
         method: "POST",
         credentials: "include",
       });
-      
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Error inesperado";
       console.error("Error en handleUpload:", err);
@@ -64,7 +61,6 @@ export default function FotoPerfil({ userId }: { userId: string }) {
     }
   };
 
-  // Delete using the endpoint api/avatar/borrarAvatar
   const handleDelete = async () => {
     setDeleting(true);
     try {

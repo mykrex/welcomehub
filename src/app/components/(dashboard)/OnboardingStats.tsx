@@ -1,21 +1,26 @@
-import '@/app/(authed)/dashboard/dashboard.css'
+import "@/app/(authed)/dashboard/dashboard.css";
 
 import { GraduationCap } from "lucide-react";
-import { CursoInscrito } from '@/app/hooks/useCourses';
+import { CursoInscrito } from "@/app/hooks/useCourses";
 
 interface OnboardingStatsProps {
   cursos: CursoInscrito[];
 }
 
 export default function OnboardingStats({ cursos = [] }: OnboardingStatsProps) {
-  // Filtrar solo cursos obligatorios
-  const cursosObligatorios = cursos.filter(curso => curso.obligatorio === true);
+  const cursosObligatorios = cursos.filter(
+    (curso) => curso.obligatorio === true
+  );
   const totalObligatorios = cursosObligatorios.length;
-  const obligatoriosCompletados = cursosObligatorios.filter(curso => curso.estado === 'completado').length;
-  
-  // Calcular porcentaje
-  const porcentajeCompletado = totalObligatorios > 0 ? Math.round((obligatoriosCompletados / totalObligatorios) * 100) : 0;
-  
+  const obligatoriosCompletados = cursosObligatorios.filter(
+    (curso) => curso.estado === "completado"
+  ).length;
+
+  const porcentajeCompletado =
+    totalObligatorios > 0
+      ? Math.round((obligatoriosCompletados / totalObligatorios) * 100)
+      : 0;
+
   return (
     <div className="average-stats-card">
       <div className="ac-content">

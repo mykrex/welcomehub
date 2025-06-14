@@ -1,12 +1,15 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 interface StarIconProps {
   size?: number;
   color?: string;
 }
 
-const StarIcon: React.FC<StarIconProps> = ({ size = 50, color = '#F4B942' }) => (
+const StarIcon: React.FC<StarIconProps> = ({
+  size = 50,
+  color = "#F4B942",
+}) => (
   <svg
     width={size}
     height={size}

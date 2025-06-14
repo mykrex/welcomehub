@@ -1,4 +1,3 @@
-// hooks/useAvatar.ts
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase.server";
 

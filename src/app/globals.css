@@ -17,8 +17,6 @@ body {
   padding: 0;
 }
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -152,7 +150,6 @@ body {
   }
 }
 
-/* Ocultar el scrollbar */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -162,7 +159,6 @@ body {
   display: none;
 }
 
-/* Limitar las lineas de texto que parecen en el card*/
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -177,7 +173,6 @@ body {
   overflow: hidden;
 }
 
-/* Animacion para el hover */
 .course-card {
   transition: transform 0.3s ease;
 }

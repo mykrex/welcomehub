@@ -1,4 +1,3 @@
-/* Color variables */
 :root {
   --bg-blue-main: #042c45;
   --white-main: #ebfaff;
@@ -27,18 +26,18 @@
   border-radius: 15px;
 }
 
-.dashboard-wrapper{
-    gap: 10px;
-    display: flex;
-    flex-direction: column;
+.dashboard-wrapper {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboard-progress-bar-container{
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    background: var(--bg-blue-main);
-    border-radius: 15px;
+.dashboard-progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--bg-blue-main);
+  border-radius: 15px;
 }
 
 /* Row 1 */
@@ -47,7 +46,7 @@
   height: 100%;
   display: flex;
   gap: 10px;
-  align-items: stretch; /* Ensure equal height */
+  align-items: stretch;
 }
 
 .recent-course-wrapper {
@@ -59,15 +58,13 @@
 .column-one-stats {
   flex: 1;
   display: flex;
-  flex-direction: row; /* or row if you want cards side-by-side */
+  flex-direction: row;
   gap: 10px;
 }
-
 
 /* ====================================================================
    CURSOS VISTA
    ==================================================================== */
-
 
 .cv-container {
   flex: 1;
@@ -106,8 +103,8 @@
   width: 100%;
   height: 100%;
   background-color: var(--blue-1);
-  cursor: pointer; /* Añadimos cursor de mano */
-  transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .cv-curso-card:hover {
@@ -135,7 +132,7 @@
   font-weight: 600;
   font-size: 20px;
   display: flex;
-  justify-content: space-between; /* Centro horizontal */
+  justify-content: space-between;
 }
 
 .estado-contenido {
@@ -143,11 +140,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-direction: row; /* Círculo a la izquierda */
+  flex-direction: row;
 }
 
 .cv-circulo-estado {
-  height: 30px; /* Mismo height que el contenedor */
+  height: 30px;
   aspect-ratio: 1 / 1;
 }
 
@@ -169,7 +166,6 @@
   stroke-linecap: round;
 }
 
-/* Colores del círculo según estado */
 .cv-circulo-en-progreso .cv-circulo-progreso {
   stroke: var(--yellow-1);
 }
@@ -182,28 +178,24 @@
   stroke: var(--red-1);
 }
 
-/* Estado: En Progreso */
 .cv-estado-en-progreso {
   outline: 2px var(--yellow-1) solid;
   outline-offset: -2px;
   color: var(--yellow-1);
 }
 
-/* Estado: Completado */
 .cv-estado-completado {
   outline: 2px var(--green) solid;
   outline-offset: -2px;
   color: var(--green);
 }
 
-/* Estado: Faltante */
 .cv-estado-faltante {
   outline: 2px var(--red-1) solid;
   outline-offset: -2px;
   color: var(--red-1);
 }
 
-/* Contenedor de los filtros */
 .cv-filters {
   display: flex;
   flex-wrap: wrap;
@@ -213,7 +205,6 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Botones de filtro */
 .cv-filter-btn {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -234,13 +225,12 @@
 }
 
 .cv-filter-btn.active {
-  background: #51B6F6;
-  border-color: #51B6F6;
+  background: #51b6f6;
+  border-color: #51b6f6;
   color: white;
   box-shadow: 0 2px 8px rgba(81, 182, 246, 0.3);
 }
 
-/* Mensaje cuando no hay cursos */
 .cv-no-courses {
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
@@ -249,12 +239,11 @@
   font-style: italic;
 }
 
-/* Responsivo para moviles */
 @media (max-width: 768px) {
   .cv-filters {
     justify-content: center;
   }
-  
+
   .cv-filter-btn {
     font-size: 12px;
     padding: 6px 12px;
@@ -295,9 +284,7 @@
   border-color: #007bff;
 }
 
-
-
-   /* ====================================================================
+/* ====================================================================
    PROGRESS BAR
    ==================================================================== */
 
@@ -344,7 +331,7 @@
   padding: 5px 30px 5px 12px;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid var(--blue-light); 
+  border: 1px solid var(--blue-light);
   vertical-align: middle;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg width='10' height='7' viewBox='0 0 10 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238BCFF9' stroke-width='2' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
@@ -352,8 +339,6 @@
   background-position: right 10px center;
   background-size: 12px;
 }
-
-
 
 .db-progress-bar-group {
   align-self: stretch;
@@ -421,7 +406,7 @@
 }
 
 .circle-restante {
- background: var(--grey-light);
+  background: var(--grey-light);
 }
 
 .db-progress-item-label {
@@ -432,12 +417,10 @@
   word-wrap: break-word;
 }
 
-
-     /* ====================================================================
+/* ====================================================================
    ONBOARDING STATS
    ==================================================================== */
 
-   
 .average-stats-card {
   background: var(--bg-blue-main);
   padding-left: 30px;
@@ -482,14 +465,14 @@
 
 .average-stats-number {
   font-size: 80px;
-  color: #51B6F6;
+  color: #51b6f6;
   font-weight: bold;
   line-height: 1;
 }
 
 .average-stats-unit {
   font-size: 40px;
-  color: #51B6F6;
+  color: #51b6f6;
   font-weight: normal;
   margin-left: 0.25rem;
 }
@@ -497,7 +480,7 @@
 .average-stats-icon {
   width: 5rem;
   height: 5rem;
-  color: #51B6F6;
+  color: #51b6f6;
 }
 
 .average-stats-comparison {
@@ -510,27 +493,25 @@
 }
 
 .average-stats-comparison .percent {
-  color: #F57C00;
+  color: #f57c00;
   text-decoration: underline;
   margin-right: 0.25rem;
 }
 
 .average-stats-comparison .gray {
-  color: #8A8A8A;
+  color: #8a8a8a;
   margin-right: 0.25rem;
 }
 
 .average-stats-comparison .highlight {
-  color: #F57C00;
+  color: #f57c00;
   font-weight: bold;
   margin-right: 0.25rem;
 }
-        /* ====================================================================
+/* ====================================================================
    RECENT COURSE
    ==================================================================== */
 
-
-   
 .recent-course-container {
   background: var(--bg-blue-main);
   padding-left: 30px;
@@ -651,7 +632,7 @@
 }
 
 .recent-course-button {
-  display: inline-block;        /* allow pseudo-elements */
+  display: inline-block;
   text-align: center;
   border: none;
   font-weight: 500;
@@ -662,14 +643,14 @@
   background-color: var(--blue-2);
   color: var(--white-main);
   cursor: pointer;
-  position: relative;           /* required for ::before shine */
-  overflow: hidden;             /* clip the shine effect */
+  position: relative;
+  overflow: hidden;
 }
 
 .modern-arrow-button {
-  display: inline-flex;            /* ✅ inline layout with alignment */
-  align-items: center;            /* center vertically */
-  justify-content: center;        /* center horizontally */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -685,7 +666,6 @@
   transition: background-color 0.3s ease;
 }
 
-/* Inline arrow next to text */
 .modern-arrow-button::after {
   content: "→";
   font-size: 20px;
@@ -695,7 +675,6 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* On hover, fade in and shift arrow */
 .modern-arrow-button:hover {
   background-color: var(--blue-2-dark);
 }
@@ -705,14 +684,10 @@
   transform: translateX(0);
 }
 
-/* Active state = even darker */
 .modern-arrow-button:active {
-  background-color: var(--blue-4-dark); /* or define var(--blue-4-darker) */
+  background-color: var(--blue-4-dark);
 }
 
-/* Estilos adicionales para recentCourse.css */
-
-/* Información de última actualización */
 .rc-last-updated {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.7);
@@ -720,7 +695,6 @@
   font-style: italic;
 }
 
-/* Contenedor de información del curso */
 .rc-course-info {
   display: flex;
   align-items: center;
@@ -729,7 +703,6 @@
   flex-wrap: wrap;
 }
 
-/* Badges de estado */
 .rc-estado-badge {
   font-size: 11px;
   font-weight: 600;
@@ -740,12 +713,12 @@
 }
 
 .rc-estado-completado {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
 }
 
 .rc-estado-en_progreso {
-  background: #FF9800;
+  background: #ff9800;
   color: white;
 }
 
@@ -758,10 +731,9 @@
   font-size: 10px;
 }
 
-/* Badge obligatorio */
 .rc-obligatorio {
   font-size: 11px;
-  color: #FF6B35;
+  color: #ff6b35;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -772,11 +744,14 @@
   font-size: 10px;
 }
 
-/* Imagen placeholder */
 .rc-placeholder-image {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(81, 182, 246, 0.3), rgba(81, 182, 246, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(81, 182, 246, 0.3),
+    rgba(81, 182, 246, 0.1)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -788,18 +763,17 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .rc-course-info {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .rc-last-updated {
     font-size: 11px;
   }
-  
+
   .rc-placeholder-image i {
     font-size: 36px;
   }

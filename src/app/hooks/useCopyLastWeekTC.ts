@@ -1,8 +1,7 @@
-// /.hooks/usecopyLastWeek.ts
-import { useCallback } from 'react';
-import { fetchWeekData } from '@/pages/api/timecard/fetchTimeCard';
-import { getWeekFromBaseDate } from './useBeforeTC';
-import type { ModalProps as ModalData } from '../components/(timecard)/Modal';
+import { useCallback } from "react";
+import { fetchWeekData } from "@/pages/api/timecard/fetchTimeCard";
+import { getWeekFromBaseDate } from "./useBeforeTC";
+import type { ModalProps as ModalData } from "../components/(timecard)/Modal";
 
 interface Course {
   id: string;
@@ -19,15 +18,18 @@ interface DayOfWeek {
 
 type CoursesPerDay = { [iso: string]: Course[] };
 
-// Custom hook to encapsulate the "Copy Last Week" logic
 interface UseCopyLastWeekProps {
   editing: { [key: string]: number | null };
   startDate: Date;
   week: DayOfWeek[];
   weekKey: string;
   setModal: React.Dispatch<React.SetStateAction<ModalData | null>>;
-  setTempCourses: React.Dispatch<React.SetStateAction<{ [key: string]: CoursesPerDay }>>;
-  setSavedCourses: React.Dispatch<React.SetStateAction<{ [key: string]: CoursesPerDay }>>;
+  setTempCourses: React.Dispatch<
+    React.SetStateAction<{ [key: string]: CoursesPerDay }>
+  >;
+  setSavedCourses: React.Dispatch<
+    React.SetStateAction<{ [key: string]: CoursesPerDay }>
+  >;
   setTriggerAutoSave: (value: boolean) => void;
 }
 
@@ -42,21 +44,22 @@ export const useCopyLastWeek = ({
   setTriggerAutoSave,
 }: UseCopyLastWeekProps) => {
   const copyLastWeek = useCallback(() => {
-    const isEditingNow = Object.values(editing).some(index => index !== null);
+    const isEditingNow = Object.values(editing).some((index) => index !== null);
     if (isEditingNow) {
       setModal({
-        title: 'Advertencia',
-        message: 'No puedes copiar la semana pasada mientras editas.',
-        onConfirm: () => setModal(null)
+        title: "Advertencia",
+        message: "No puedes copiar la semana pasada mientras editas.",
+        onConfirm: () => setModal(null),
       });
       return;
     }
 
     setModal({
-      title: 'Confirmar',
-      message: '¿Deseas duplicar los proyectos de la semana pasada? Esto borrará lo actual y lo guardará automáticamente.',
-      confirmText: 'Sí',
-      cancelText: 'No',
+      title: "Confirmar",
+      message:
+        "¿Deseas duplicar los proyectos de la semana pasada? Esto borrará lo actual y lo guardará automáticamente.",
+      confirmText: "Sí",
+      cancelText: "No",
       onConfirm: async () => {
         const prevWeekDate = new Date(startDate);
         prevWeekDate.setDate(startDate.getDate() - 7);
@@ -65,44 +68,56 @@ export const useCopyLastWeek = ({
 
         try {
           const prevData = await fetchWeekData(prevWeek[0].iso);
-          const prevCourses = prevData.registros.reduce((acc: CoursesPerDay, r) => {
-            if (!acc[r.fecha_trabajada]) acc[r.fecha_trabajada] = [];
-            acc[r.fecha_trabajada].push({
-              id: r.proyecto.id_proyecto,
-              title: r.proyecto.nombre,
-              hours: r.horas,
-            });
-            return acc;
-          }, {} as CoursesPerDay);
+          const prevCourses = prevData.registros.reduce(
+            (acc: CoursesPerDay, r) => {
+              if (!acc[r.fecha_trabajada]) acc[r.fecha_trabajada] = [];
+              acc[r.fecha_trabajada].push({
+                id: r.proyecto.id_proyecto,
+                title: r.proyecto.nombre,
+                hours: r.horas,
+              });
+              return acc;
+            },
+            {} as CoursesPerDay
+          );
 
           const newWeekCourses: CoursesPerDay = {};
           week.forEach((day, i) => {
             const prevDay = prevWeek[i];
             if (prevDay && prevCourses[prevDay.iso]) {
-              newWeekCourses[day.iso] = prevCourses[prevDay.iso].map(c => ({
+              newWeekCourses[day.iso] = prevCourses[prevDay.iso].map((c) => ({
                 id: c.id,
                 title: c.title,
-                hours: c.hours
+                hours: c.hours,
               }));
             }
           });
 
-          setTempCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
-          setSavedCourses(prev => ({ ...prev, [weekKey]: newWeekCourses }));
+          setTempCourses((prev) => ({ ...prev, [weekKey]: newWeekCourses }));
+          setSavedCourses((prev) => ({ ...prev, [weekKey]: newWeekCourses }));
           setTriggerAutoSave(true);
           setModal(null);
         } catch (error) {
-          console.error("❌ Error al copiar semana pasada:", error);
+          console.error("Error al copiar semana pasada:", error);
           setModal({
             title: "Error",
             message: "No se pudo cargar la semana anterior desde el servidor.",
-            onConfirm: () => setModal(null)
+            onConfirm: () => setModal(null),
           });
         }
       },
-      onCancel: () => setModal(null)
+      onCancel: () => setModal(null),
     });
-  }, [editing, startDate, week, weekKey, setModal, setTempCourses, setSavedCourses, setTriggerAutoSave]);
+  }, [
+    editing,
+    startDate,
+    week,
+    weekKey,
+    setModal,
+    setTempCourses,
+    setSavedCourses,
+    setTriggerAutoSave,
+  ]);
 
   return { copyLastWeek };
 };

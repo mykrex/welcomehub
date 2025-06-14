@@ -1,12 +1,9 @@
-// src/app/components/courseSection.tsx
-
 "use client";
 
 import { useRef, useState } from "react";
 import CourseCard from "./courseCard";
 import { CursoInscrito, CursoOpcional } from "@/app/hooks/useCourses";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-/* Importamos el CSS separado */
 import "@/app/(authed)/cursos/cursos.css";
 
 interface CourseSectionProps {
@@ -40,8 +37,7 @@ export default function CourseSection({
 
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
-    const { scrollLeft, scrollWidth, clientWidth } =
-      scrollContainerRef.current;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
     setCanScrollLeft(scrollLeft > 0);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
   };

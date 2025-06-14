@@ -1,9 +1,7 @@
-// src/app/components/courseCard.tsx
-
 "use client";
 
 import Image from "next/image";
-/* Importamos el CSS separado */
+
 import "@/app/(authed)/cursos/cursos.css";
 
 interface CourseCardProps {
@@ -28,7 +26,6 @@ export default function CourseCard({
   showObligatory = false,
   onClick,
 }: CourseCardProps) {
-  /* La función ahora retorna la clase CSS correspondiente */
   const getEstadoColor = (estado?: string) => {
     switch (estado) {
       case "completado":

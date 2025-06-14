@@ -1,13 +1,16 @@
 // File: components/FlagStatsIcon.tsx
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 interface FlagStatsIconProps {
   size?: number;
   color?: string;
 }
 
-const FlagStatsIcon: React.FC<FlagStatsIconProps> = ({ size = 60, color = '#4DAA57' }) => (
+const FlagStatsIcon: React.FC<FlagStatsIconProps> = ({
+  size = 60,
+  color = "#4DAA57",
+}) => (
   <svg
     width={size}
     height={size}

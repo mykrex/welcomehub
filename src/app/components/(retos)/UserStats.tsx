@@ -1,13 +1,10 @@
 "use client";
 
-//* Assets */
 import StarIcon from "../(icons)/Star";
 import FlagStatsIcon from "../(icons)/Flag";
 
-//* Libraries */
 import { useEffect, useState } from "react";
 
-//* Custom Hook */
 import { useUserRetosCount } from "@/app/hooks/useUserRetosCount";
 import type { User } from "@/app/context/UserContext";
 
@@ -19,7 +16,6 @@ export default function UserStats() {
   const [perfil, setPerfil] = useState<User | null>(null);
   const [cargando, setCargando] = useState(true);
 
-  // Cargar perfil del usuario desde la API
   useEffect(() => {
     async function fetchPerfil() {
       try {
@@ -40,7 +36,6 @@ export default function UserStats() {
     fetchPerfil();
   }, []);
 
-  // Calcular estadísticas una vez cargadas
   useEffect(() => {
     if (perfil && counts && !loading && !error) {
       const total = counts.reduce(
@@ -57,7 +52,9 @@ export default function UserStats() {
     return <p className="text-white">Cargando estadísticas del usuario...</p>;
   }
 
-  const nombreCompleto = `${perfil.nombres ?? ""} ${perfil.apellidos ?? ""}`.trim();
+  const nombreCompleto = `${perfil.nombres ?? ""} ${
+    perfil.apellidos ?? ""
+  }`.trim();
 
   return (
     <div className="user-stats-container">

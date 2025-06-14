@@ -2,7 +2,6 @@
    EMPLOYEE DETAILS
 ============================================================================= */
 
-
 /* =============================================================================
    CONTENEDOR PRINCIPAL DE EMPLEADO
 ============================================================================= */
@@ -42,8 +41,9 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Estados de carga */
-.loading-state, .error-state, .no-weeks-state {
+.loading-state,
+.error-state,
+.no-weeks-state {
   padding: 3rem 2rem;
   text-align: center;
   background: #2d3339;
@@ -64,8 +64,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error-state button {
@@ -91,7 +95,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  background: #263345; /* Fondo del selector*/
+  background: #263345;
   border-bottom: 1px solid #30363d;
 }
 
@@ -151,7 +155,9 @@
   font-size: 0.9rem;
 }
 
-.week-status, .week-submitted, .week-approved {
+.week-status,
+.week-submitted,
+.week-approved {
   color: #8b949e;
 }
 
@@ -191,7 +197,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.55rem 0.70rem;
+  padding: 0.55rem 0.7rem;
   border-radius: 8px;
   font-weight: 400;
   font-size: 0.9rem;
@@ -263,7 +269,6 @@
   font-weight: 500;
 }
 
-/* Acciones de aprobación */
 .approval-actions {
   margin-top: 2rem;
   padding-top: 2rem;
@@ -323,7 +328,9 @@
   font-size: 0.85rem;
 }
 
-.approved-badge, .info-badge, .rejected-badge {
+.approved-badge,
+.info-badge,
+.rejected-badge {
   display: inline-block;
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -351,7 +358,9 @@
   border-color: rgba(218, 54, 51, 0.4);
 }
 
-.approved-note, .draft-note, .rejected-note {
+.approved-note,
+.draft-note,
+.rejected-note {
   margin: 0;
   color: #8b949e;
   font-size: 0.9rem;
@@ -365,7 +374,7 @@
 .hours-chart-container {
   margin-bottom: 2rem;
   padding-top: 2rem;
-  background: #232a39; /* FONDO DE LA GRAFICA*/
+  background: #232a39;
   border-radius: 8px;
   border: 1px solid #30363d;
 }
@@ -426,7 +435,6 @@
   color: #f6f8fa;
 }
 
-/* Tooltip personalizado */
 .custom-tooltip {
   background: #2d3339 !important;
   border: 1px solid #30363d !important;
@@ -484,7 +492,7 @@
   overflow-x: auto;
   margin-top: 0.5rem;
   border: 1px solid #30363d;
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace;
 }
 
 /* =============================================================================
@@ -497,42 +505,43 @@
     text-align: center;
     padding: 1.5rem;
   }
-  
+
   .employee-photo {
     width: 60px;
     height: 60px;
   }
-  
+
   .employee-header h2 {
     font-size: 1.5rem;
   }
-  
-  /* Layout vertical en móviles */
+
   .week-controls-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .week-selector-column {
     border-right: none;
     border-bottom: 1px solid #30363d;
   }
-  
-  .week-selector, .approval-panel, .hours-chart {
+
+  .week-selector,
+  .approval-panel,
+  .hours-chart {
     padding: 1.5rem;
   }
-  
+
   .metadata-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
   }
-  
+
   .week-details {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .approve-button {
     width: 100%;
     justify-content: center;
@@ -547,33 +556,35 @@
   .employee-header {
     padding: 1rem;
   }
-  
+
   .employee-header h2 {
     font-size: 1.3rem;
   }
-  
+
   .employee-photo {
     width: 50px;
     height: 50px;
   }
-  
+
   .week-controls-row {
     grid-template-columns: 1fr;
   }
-  
-  .week-selector, .approval-panel, .hours-chart {
+
+  .week-selector,
+  .approval-panel,
+  .hours-chart {
     padding: 1rem;
   }
-  
+
   .hours-chart h3 {
     font-size: 1.2rem;
   }
-  
+
   .status-badge {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
   }
-  
+
   .approve-button {
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
@@ -711,7 +722,7 @@
 .courses-chart-container {
   margin-bottom: 2rem;
   padding-top: 2rem;
-  background: #18202c; /* FONDO DE LA GRAFICA*/
+  background: #18202c;
   border-radius: 8px;
   border: 1px solid #30363d;
 }
@@ -826,25 +837,24 @@
   font-weight: 600;
 }
 
-/* Responsive para sección de cursos */
 @media (max-width: 768px) {
   .courses-section {
     padding: 1.5rem;
   }
-  
+
   .course-stats {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .courses-header h3 {
     font-size: 1.2rem;
   }
-  
+
   .stat-item {
     padding: 0.5rem;
   }
-  
+
   .stat-number {
     font-size: 1.2rem;
   }
@@ -854,22 +864,22 @@
   .courses-section {
     padding: 1rem;
   }
-  
+
   .course-summary,
   .mandatory-courses-detail {
     padding: 1rem;
   }
-  
+
   .stats-grid {
     gap: 0.5rem;
   }
-  
+
   .stat-item {
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
   }
-  
+
   .mandatory-item {
     flex-direction: column;
     gap: 0.25rem;
@@ -888,7 +898,7 @@
 .admin-panel {
   min-height: 100vh;
   background: #042c45;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #e1e4e8;
 }
 
@@ -972,7 +982,6 @@
   margin: 0 auto;
 }
 
-/* Tarjetas de empleados */
 .employee-card {
   background: #263345;
   border: 2px solid #30363d;
@@ -1175,8 +1184,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-content h2,
@@ -1290,47 +1303,47 @@
   .admin-header {
     padding: 1.5rem 0;
   }
-  
+
   .header-content {
     padding: 0 1rem;
   }
-  
+
   .admin-header h1 {
     font-size: 2rem;
   }
-  
+
   .team-stats {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .selector-content {
     padding: 0 1rem;
   }
-  
+
   .employees-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .employee-card {
     padding: 1rem;
   }
-  
+
   .employee-avatar {
     width: 60px;
     height: 60px;
   }
-  
+
   .compact-header {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .employee-dropdown {
     min-width: auto;
   }
-  
+
   .features-preview {
     grid-template-columns: 1fr;
   }
@@ -1340,19 +1353,19 @@
   .header-content {
     padding: 0 0.5rem;
   }
-  
+
   .selector-content {
     padding: 0 0.5rem;
   }
-  
+
   .admin-header h1 {
     font-size: 1.75rem;
   }
-  
+
   .employee-card {
     padding: 0.75rem;
   }
-  
+
   .no-selection-content {
     padding: 2rem 1rem;
   }

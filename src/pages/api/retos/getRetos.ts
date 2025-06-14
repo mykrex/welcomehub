@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
 export type Reto = {
   id_reto: string;
@@ -10,26 +10,31 @@ export type Reto = {
   es_continuo: boolean;
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') return res.status(405).end('Method not allowed');
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method !== "GET") return res.status(405).end("Method not allowed");
 
   const supabase = createPagesServerClient({ req, res });
   const { data, error } = await supabase
-    .from('reto')
-    .select('id_reto, puntos, titulo_reto, descripcion_reto, tipo_reto, es_continuo');
+    .from("reto")
+    .select(
+      "id_reto, puntos, titulo_reto, descripcion_reto, tipo_reto, es_continuo"
+    );
 
   if (error) {
-    console.error('Error al obtener retos:', error);
+    console.error("Error al obtener retos:", error);
     return res.status(500).json({ error: error.message });
   }
 
-  const retos: Reto[] = (data ?? []).map(r => ({
+  const retos: Reto[] = (data ?? []).map((r) => ({
     id_reto: r.id_reto,
     puntos: Number(r.puntos),
     titulo_reto: r.titulo_reto,
     descripcion_reto: r.descripcion_reto,
     tipo_reto: r.tipo_reto,
-    es_continuo: r.es_continuo
+    es_continuo: r.es_continuo,
   }));
 
   return res.status(200).json(retos);
