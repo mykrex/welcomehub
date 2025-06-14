@@ -1,0 +1,88 @@
+-- ===================================================
+-- MIGRACIÓN: Sincronización de IDs entre Auth y tabla usuario
+-- Para que usuario.id_usuario = auth.users.id (auth.uid())
+-- Requiere que todos los correos en ambas tablas coincidan exactamente
+-- ===================================================
+
+-- ================================================
+-- 1. FIX: Drop + recreate constraint en autentitcacion
+-- ================================================
+
+--ALTER TABLE autentitcacion DROP CONSTRAINT IF EXISTS autentitcacion_is_usuario_fkey;
+--
+--ALTER TABLE autentitcacion
+--ADD CONSTRAINT autentitcacion_is_usuario_fkey
+--FOREIGN KEY (is_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+---- ================================================
+---- 2. DROP de todas las Foreign Keys que dependen de usuario.id_usuario
+---- ================================================
+--
+--ALTER TABLE administrador_usuario DROP CONSTRAINT IF EXISTS administrador_usuario_id_administrador_fkey;
+--ALTER TABLE curso_usuario DROP CONSTRAINT IF EXISTS curso_usuario_id_usuario_fkey;
+--ALTER TABLE dashboard DROP CONSTRAINT IF EXISTS dashboard_id_usuario_fkey;
+--ALTER TABLE mensajes DROP CONSTRAINT IF EXISTS mensajes_id_usuario_fkey;
+--ALTER TABLE notificación_usuario DROP CONSTRAINT IF EXISTS notificación_usuario_id_usuario_fkey;
+--ALTER TABLE progreso DROP CONSTRAINT IF EXISTS progreso_id_usuario_fkey;
+--ALTER TABLE registro_tiempo DROP CONSTRAINT IF EXISTS registro_tiempo_id_usuario_fkey;
+--ALTER TABLE equipo_trabajo DROP CONSTRAINT IF EXISTS equipo_trabajo_id_administrador_fkey;
+--
+---- ================================================
+---- 3. RECREAR todas las Foreign Keys con ON UPDATE CASCADE
+---- ================================================
+--
+--ALTER TABLE administrador_usuario
+--ADD CONSTRAINT administrador_usuario_id_administrador_fkey
+--FOREIGN KEY (id_administrador) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE curso_usuario
+--ADD CONSTRAINT curso_usuario_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE dashboard
+--ADD CONSTRAINT dashboard_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE mensajes
+--ADD CONSTRAINT mensajes_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE notificación_usuario
+--ADD CONSTRAINT notificación_usuario_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE progreso
+--ADD CONSTRAINT progreso_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE registro_tiempo
+--ADD CONSTRAINT registro_tiempo_id_usuario_fkey
+--FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+--ON UPDATE CASCADE;
+--
+--ALTER TABLE equipo_trabajo
+--ADD CONSTRAINT equipo_trabajo_id_administrador_fkey
+--FOREIGN KEY (id_administrador) REFERENCES administrador_usuario(id_administrador)
+--ON UPDATE CASCADE;
+--
+---- ================================================
+---- 4. ACTUALIZAR los id_usuario para que coincidan con los auth.users.id (auth.uid())
+---- ================================================
+--
+--UPDATE usuario
+--SET id_usuario = auth.users.id
+--FROM auth.users
+--WHERE usuario.email = auth.users.email;
+--
+---- ===============================================
+---- Resultado:
+---- - Todos los id_usuario están sincronizados con auth.users.id
+---- - Todas las Foreign Keys reaccionan correctamente si se actualiza un id
+---- ===============================================

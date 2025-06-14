@@ -1,0 +1,476 @@
+--SET session_replication_role = replica;
+--
+----
+---- PostgreSQL database dump
+----
+--
+---- Dumped from database version 15.8
+---- Dumped by pg_dump version 15.8
+--
+--SET statement_timeout = 0;
+--SET lock_timeout = 0;
+--SET idle_in_transaction_session_timeout = 0;
+--SET client_encoding = 'UTF8';
+--SET standard_conforming_strings = on;
+--SELECT pg_catalog.set_config('search_path', '', false);
+--SET check_function_bodies = false;
+--SET xmloption = content;
+--SET client_min_messages = warning;
+--SET row_security = off;
+--
+----
+---- Data for Name: audit_log_entries; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--INSERT INTO "auth"."audit_log_entries" ("instance_id", "id", "payload", "created_at", "ip_address") VALUES
+--	('00000000-0000-0000-0000-000000000000', 'ede5148d-0a87-4c2a-9d0f-bf2ea8e5e841', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"gabrieldcruz@neoris.mx","user_id":"29433a72-e48d-4845-bc53-a5579265520b","user_phone":""}}', '2025-04-30 23:31:41.353297+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '180d17a6-8945-43dc-93a6-cdc964cf3d6d', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"joseamartinez@neoris.mx","user_id":"9027bf5e-cce3-46d5-91c5-41d4b971951c","user_phone":""}}', '2025-04-30 23:31:41.720944+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '5c07342f-10b1-4ca9-9211-ec0a0862d6e5', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"anasgutierrez@neoris.mx","user_id":"0009958a-abe2-4d65-aafb-99ba9cc4c411","user_phone":""}}', '2025-04-30 23:31:41.966858+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'ae55d5f7-f63e-4723-b63b-69b10d6e59bc', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"juancramirez@neoris.mx","user_id":"7ed4ae26-8052-4c9e-812d-416be2b6f0b6","user_phone":""}}', '2025-04-30 23:31:42.317636+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'acc6b62c-689e-4413-9912-de4c59167bfa', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"pedro@neoris.mx","user_id":"ddb95174-7dd2-41c1-a0be-5f10f4a20ddd","user_phone":""}}', '2025-04-30 23:31:42.579591+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '79e1e878-01bf-4acd-ae34-1342da78be0e', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"monica@neoris.mx","user_id":"86e9a021-0238-41d0-bb4a-e3af2814d1d2","user_phone":""}}', '2025-04-30 23:31:42.843081+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '0d06800e-d898-4137-bd6c-f3362321eb52', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"javier@neoris.mx","user_id":"b5c8b4d7-175d-462d-a6b0-c530ad91e782","user_phone":""}}', '2025-04-30 23:31:43.088225+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'e4f2baee-36ab-438a-bc29-4a94aeb9387f', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"ana@neoris.mx","user_id":"63c7f02a-38b4-47d9-9a26-08562c272181","user_phone":""}}', '2025-04-30 23:31:43.342249+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '35a16258-1ab0-44b8-bffb-a6ea11a5673e', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"jose@neoris.mx","user_id":"7e96b8d6-47b6-4735-b603-01a010428cf2","user_phone":""}}', '2025-04-30 23:31:43.588582+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'eefffa99-114c-42d0-b4ed-0e639d86e076', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"patricia@neoris.mx","user_id":"21a6fe14-96e4-449c-b420-f6daa69940a3","user_phone":""}}', '2025-04-30 23:31:43.847046+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '0a51557a-3da2-4b18-b04b-9ada3a9a09e6', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"ricardo@neoris.mx","user_id":"76c7452e-9788-4b9b-b362-60a424a02178","user_phone":""}}', '2025-04-30 23:31:44.101408+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'b2cf2101-1207-471f-afca-2f28fed1742e', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"isabel@neoris.mx","user_id":"8a0325f4-62cc-424e-aeb0-fce390753140","user_phone":""}}', '2025-04-30 23:31:44.351514+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '2d4070e4-6185-4df5-befe-9beaa48ee2dd', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"fernando@neoris.mx","user_id":"e8a38135-a0a7-4a28-884d-f3840d84d86c","user_phone":""}}', '2025-04-30 23:31:44.601113+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '6f9ea5aa-fc11-4656-9aef-d0e29efd800b', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"mariarrodriguez@neoris.mx","user_id":"6bbbaf66-9091-4ff9-90ce-bfbe490e4424","user_phone":""}}', '2025-04-30 23:31:44.861267+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'd68dab88-81c8-481d-81e6-bf6dcc1397ac', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"laura@neoris.mx","user_id":"4eeb2b2a-a381-4ea5-abd2-420864174dc1","user_phone":""}}', '2025-04-30 23:31:45.119721+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '69d11fba-fbf4-4bca-bd12-5806246f6e38', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"carlos@neoris.mx","user_id":"2c26b4dc-2fdd-448b-aada-1aeccbb32aac","user_phone":""}}', '2025-04-30 23:31:45.393435+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '34c7a091-afe9-4994-b63b-b81d76cf3a2c', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"valeria@neoris.mx","user_id":"f6d34406-40c7-41f4-8cac-5b83c97320b9","user_phone":""}}', '2025-04-30 23:31:45.66079+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'ca3d9dab-1c42-4d8a-9fd8-d2ccb68f9703', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"usuario@neoris.mx","user_id":"f5824cc9-425b-49ee-b737-ad24d074fd1f","user_phone":""}}', '2025-04-30 23:31:45.908668+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'db81580d-5f49-4403-9f2c-dbe3efd4cdc2', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"andrespaguilera@neoris.mx","user_id":"9e1a51c8-ea8d-4e20-83ae-67d8694d167a","user_phone":""}}', '2025-04-30 23:31:46.153884+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'f4276df1-f9ff-4624-abc2-0700f6b73327', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"isabel@neoris.mx","user_id":"8a0325f4-62cc-424e-aeb0-fce390753140","user_phone":""}}', '2025-05-01 07:14:40.000725+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '5aa8cf2a-8ac2-4a31-a568-1f0bdf8613d9', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"ricardo@neoris.mx","user_id":"76c7452e-9788-4b9b-b362-60a424a02178","user_phone":""}}', '2025-05-01 07:14:40.001022+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '42eeae90-2610-4d70-bb02-bd15354372ff', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"anasgutierrez@neoris.mx","user_id":"0009958a-abe2-4d65-aafb-99ba9cc4c411","user_phone":""}}', '2025-05-01 07:14:40.003448+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'ce27a711-9dc0-4efd-b980-4184263cd03b', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"pedro@neoris.mx","user_id":"ddb95174-7dd2-41c1-a0be-5f10f4a20ddd","user_phone":""}}', '2025-05-01 07:14:40.003805+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '993777ad-e1cd-4bd6-8543-561244c92254', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"fernando@neoris.mx","user_id":"e8a38135-a0a7-4a28-884d-f3840d84d86c","user_phone":""}}', '2025-05-01 07:14:40.000456+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '17ca2148-c008-4ab1-81c8-29f8230b6663', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"gabrieldcruz@neoris.mx","user_id":"29433a72-e48d-4845-bc53-a5579265520b","user_phone":""}}', '2025-05-01 07:14:40.044358+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'c0012c02-80a0-4c19-9a5e-68511868d997', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"joseamartinez@neoris.mx","user_id":"9027bf5e-cce3-46d5-91c5-41d4b971951c","user_phone":""}}', '2025-05-01 07:14:40.0085+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '0b254535-f2ed-4412-a519-9027158a8fa0', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"patricia@neoris.mx","user_id":"21a6fe14-96e4-449c-b420-f6daa69940a3","user_phone":""}}', '2025-05-01 07:14:40.003896+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '1c58eb4c-a9d8-4210-b954-5512dc0b7575', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"mariarrodriguez@neoris.mx","user_id":"6bbbaf66-9091-4ff9-90ce-bfbe490e4424","user_phone":""}}', '2025-05-01 07:14:40.038993+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '13280262-29fd-48e2-af12-3b7ff0dcec9a', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"andrespaguilera@neoris.mx","user_id":"9e1a51c8-ea8d-4e20-83ae-67d8694d167a","user_phone":""}}', '2025-05-01 07:14:40.005706+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '44ef9c6e-b941-41d9-aa4a-ef4c52925c38', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"jose@neoris.mx","user_id":"7e96b8d6-47b6-4735-b603-01a010428cf2","user_phone":""}}', '2025-05-01 07:14:40.012366+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'a97244ad-07bf-48f8-9f01-d9e8c9378ee7', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"javier@neoris.mx","user_id":"b5c8b4d7-175d-462d-a6b0-c530ad91e782","user_phone":""}}', '2025-05-01 07:14:40.032315+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'cc9e9d2e-2fac-4454-8f18-0ab04978fa54', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"laura@neoris.mx","user_id":"4eeb2b2a-a381-4ea5-abd2-420864174dc1","user_phone":""}}', '2025-05-01 07:14:40.045472+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '33a3a1af-e7c9-47c5-8ecb-28e9f4793e57', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"juancramirez@neoris.mx","user_id":"7ed4ae26-8052-4c9e-812d-416be2b6f0b6","user_phone":""}}', '2025-05-01 07:14:40.038607+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'a8a9769c-1775-47e0-b939-526c5a060470', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"ana@neoris.mx","user_id":"63c7f02a-38b4-47d9-9a26-08562c272181","user_phone":""}}', '2025-05-01 07:14:40.038739+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '9741d491-082e-4ac4-aa88-2ebfec496d44', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"usuario@neoris.mx","user_id":"f5824cc9-425b-49ee-b737-ad24d074fd1f","user_phone":""}}', '2025-05-01 07:14:40.04171+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'ba61696f-9507-413c-b6bd-98288b35ee19', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"gabrieldcruz@neoris.mx","user_id":"d9c4636d-b836-4d53-97c0-e4088572486f","user_phone":""}}', '2025-05-01 07:25:58.192836+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'fc403d6c-0e7c-4d24-8194-e6a62972b0ae', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"joseamartinez@neoris.mx","user_id":"124f1773-f7bf-474d-93e5-44d1f28c8b14","user_phone":""}}', '2025-05-01 07:25:58.462504+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'cbf6fcf0-7356-4b98-8883-de76493db376', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"anasgutierrez@neoris.mx","user_id":"661c8d68-5441-4e51-aee1-a52b900c9dd7","user_phone":""}}', '2025-05-01 07:25:58.731431+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '1090109c-385d-4ad8-8c91-9fc64295fcb4', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"pedromartinez@neoris.mx","user_id":"d2a85ead-1c80-4fac-9a9d-c1a622f8a04d","user_phone":""}}', '2025-05-01 07:25:59.013077+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '09716204-e4ce-4f69-9c9a-c0f3f1721983', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"monicajuarez@neoris.mx","user_id":"29361ec4-c30a-4f13-9065-450b4b1b8083","user_phone":""}}', '2025-05-01 07:25:59.306656+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '5647a6a0-3b3b-4ef7-95fb-e0db1f84fa9d', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"javiersantos@neoris.mx","user_id":"a92e3433-6616-4ec9-abcb-c49ac92aa773","user_phone":""}}', '2025-05-01 07:25:59.573162+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '0e0dbb4e-5f96-4173-b3ce-2809d4e117c6', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"anafernandez@neoris.mx","user_id":"be6ed086-8113-47fd-9dc3-240cc5470587","user_phone":""}}', '2025-05-01 07:25:59.843497+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '8ddc65b7-e394-4848-bb15-5adbca7251ed', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"joseruiz@neoris.mx","user_id":"c04c7b74-9650-4b55-868d-99dfdeb29aa2","user_phone":""}}', '2025-05-01 07:26:00.15011+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'c5cdd60b-05b9-48a2-920d-076774331cad', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"patricialuna@neoris.mx","user_id":"1d927b4a-4443-45d6-8da1-41426f7af8aa","user_phone":""}}', '2025-05-01 07:26:00.422011+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '1f2bb43c-a9f4-4950-9f8c-cbd4ee35e15d', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"ricardomena@neoris.mx","user_id":"c22d7134-e3c1-4d5f-9dca-fc76936b0b33","user_phone":""}}', '2025-05-01 07:26:00.71962+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '2b04d403-32dd-4ee1-8269-77df47826ac7', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"isabelcruz@neoris.mx","user_id":"276e5702-afb4-4c10-ab4c-31b6f0b99f42","user_phone":""}}', '2025-05-01 07:26:00.989837+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '95f7da03-4c3a-4d6a-8382-646f256c8550', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"juancramirez@neoris.mx","user_id":"524ebbf1-3c60-4bb9-809d-8a2d6085ef66","user_phone":""}}', '2025-05-01 07:26:01.276255+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'ada17500-23ab-4aa0-b859-cc679701586f', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"fernandomendoza@neoris.mx","user_id":"693b64d5-e15e-461d-b66a-b761188a37dc","user_phone":""}}', '2025-05-01 07:26:01.556362+00', ''),
+--	('00000000-0000-0000-0000-000000000000', 'c45233ea-772e-4726-b24c-d3ada863a5f5', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"lauraramirez@neoris.mx","user_id":"b214421d-aa65-417c-aa9b-b0a0bf8278ae","user_phone":""}}', '2025-05-01 07:26:01.825926+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '9cde7d8f-d581-4748-8e5d-9c74361ec20f', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"carlosgonzalez@neoris.mx","user_id":"d999841a-4efc-49de-9e82-d49511f052e0","user_phone":""}}', '2025-05-01 07:26:02.098523+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '7449790b-79eb-47a9-b79e-a4565da1561b', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"valerialopez@neoris.mx","user_id":"c1300002-bcf4-46ec-9c9f-92fcfd00818d","user_phone":""}}', '2025-05-01 07:26:02.392257+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '7de910b3-39d8-4986-b959-963982f10acd', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"mariarrodriguez@neoris.mx","user_id":"6e9aeb3c-ae65-4b37-a6e7-024345a821b9","user_phone":""}}', '2025-05-01 07:26:02.666889+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '5f84f00b-c2a6-40b8-b55a-55a7c35f7cfa', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"usuario@neoris.mx","user_id":"89c06da1-486d-4fa2-940c-e0ff24a57976","user_phone":""}}', '2025-05-01 07:26:02.935773+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '8fbaceb7-ff72-46c3-9f79-acebf77e3123', '{"action":"user_signedup","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"andrespaguilera@neoris.mx","user_id":"d92b056d-ce2e-4d71-a605-c41745ec9efa","user_phone":""}}', '2025-05-01 07:26:03.202129+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '9c657159-ee24-4821-adc7-9c61288fd8f3', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"carlos@neoris.mx","user_id":"2c26b4dc-2fdd-448b-aada-1aeccbb32aac","user_phone":""}}', '2025-05-01 07:14:39.999451+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '5613b4a4-90de-4dd4-8e52-06a62096f275', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"monica@neoris.mx","user_id":"86e9a021-0238-41d0-bb4a-e3af2814d1d2","user_phone":""}}', '2025-05-01 07:14:40.034324+00', ''),
+--	('00000000-0000-0000-0000-000000000000', '38156570-0de2-40a4-9eea-aaba040c0405', '{"action":"user_deleted","actor_id":"00000000-0000-0000-0000-000000000000","actor_username":"service_role","actor_via_sso":false,"log_type":"team","traits":{"user_email":"valeria@neoris.mx","user_id":"f6d34406-40c7-41f4-8cac-5b83c97320b9","user_phone":""}}', '2025-05-01 07:14:40.0439+00', '');
+--
+--
+----
+---- Data for Name: flow_state; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: users; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at", "is_anonymous") VALUES
+--	('00000000-0000-0000-0000-000000000000', 'd9c4636d-b836-4d53-97c0-e4088572486f', 'authenticated', 'authenticated', 'gabrieldcruz@neoris.mx', '$2a$10$MvoM6HSOagTMzraKXqdg.ucgkOgTuU/FaWeidehGer6C93NNNTyhu', '2025-05-01 07:25:58.194595+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:58.171854+00', '2025-05-01 07:25:58.195478+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '6e9aeb3c-ae65-4b37-a6e7-024345a821b9', 'authenticated', 'authenticated', 'mariarrodriguez@neoris.mx', '$2a$10$q2Z26Kk17eRgdjzSyVV5S.tS27.KCYa5K8NtZIVFUTTTgIjQWdFTC', '2025-05-01 07:26:02.667768+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "administrador", "email_verified": true}', NULL, '2025-05-01 07:26:02.665232+00', '2025-05-01 07:26:02.668345+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '124f1773-f7bf-474d-93e5-44d1f28c8b14', 'authenticated', 'authenticated', 'joseamartinez@neoris.mx', '$2a$10$KOCBnr0OBjXImnYj6rHs7enSvigr0W25LUDwbjOI/TKyzrXYQw4se', '2025-05-01 07:25:58.463553+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:58.460724+00', '2025-05-01 07:25:58.464902+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'be6ed086-8113-47fd-9dc3-240cc5470587', 'authenticated', 'authenticated', 'anafernandez@neoris.mx', '$2a$10$YzG5EDVKh8h/xNqjCkxT9edKLaWQWyXWtTFAQlD8htp31nAS/g.aK', '2025-05-01 07:25:59.844435+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:59.841706+00', '2025-05-01 07:25:59.845104+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '661c8d68-5441-4e51-aee1-a52b900c9dd7', 'authenticated', 'authenticated', 'anasgutierrez@neoris.mx', '$2a$10$0zAWghGuEuGywW1NF8b.1eIhiBzXKepy44ZQE4t6dA2NOKu7iRQx6', '2025-05-01 07:25:58.732441+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:58.729655+00', '2025-05-01 07:25:58.733096+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '276e5702-afb4-4c10-ab4c-31b6f0b99f42', 'authenticated', 'authenticated', 'isabelcruz@neoris.mx', '$2a$10$c6Fxx9W1Vkia8XLXWgd68uDAzVjyLvcie0YCY3oDjEr7r/oVKreVu', '2025-05-01 07:26:00.99075+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:00.988116+00', '2025-05-01 07:26:00.991442+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'd2a85ead-1c80-4fac-9a9d-c1a622f8a04d', 'authenticated', 'authenticated', 'pedromartinez@neoris.mx', '$2a$10$1lTtmSXuYTGa46/GPalCEu612HwTC9Tn4GTejmZrGGjT0/43fUfSK', '2025-05-01 07:25:59.014139+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:59.011113+00', '2025-05-01 07:25:59.014873+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'c04c7b74-9650-4b55-868d-99dfdeb29aa2', 'authenticated', 'authenticated', 'joseruiz@neoris.mx', '$2a$10$NS2OF1kAArW4juhAPHMBguo0X0L8c95bkPPq2hv8cBpevw.VicRIu', '2025-05-01 07:26:00.151867+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:00.147596+00', '2025-05-01 07:26:00.152656+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '29361ec4-c30a-4f13-9065-450b4b1b8083', 'authenticated', 'authenticated', 'monicajuarez@neoris.mx', '$2a$10$4w2gTEhh525KZsZ7saMp0.g1Kw.aWV/OrwKEjSpRxCGvyNvZvE3uO', '2025-05-01 07:25:59.307657+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:59.303125+00', '2025-05-01 07:25:59.308335+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'b214421d-aa65-417c-aa9b-b0a0bf8278ae', 'authenticated', 'authenticated', 'lauraramirez@neoris.mx', '$2a$10$PiIKX19dofbEl1lsRCKHIuptiJp7kz4iDbuEbUbixt7ZYb0g7/rOm', '2025-05-01 07:26:01.826882+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "administrador", "email_verified": true}', NULL, '2025-05-01 07:26:01.824262+00', '2025-05-01 07:26:01.827476+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '1d927b4a-4443-45d6-8da1-41426f7af8aa', 'authenticated', 'authenticated', 'patricialuna@neoris.mx', '$2a$10$BXE/0.SfQIbeCVzfsuujZOUMBmT5isacDKWht5IOmXtdmedwtST4K', '2025-05-01 07:26:00.423048+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:00.417949+00', '2025-05-01 07:26:00.423655+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'a92e3433-6616-4ec9-abcb-c49ac92aa773', 'authenticated', 'authenticated', 'javiersantos@neoris.mx', '$2a$10$h0ISmCK8ZZRZdpqfoDm38.VUBzK.yikzagDxLOnCfZJ.ZJ1R26XOm', '2025-05-01 07:25:59.574232+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:25:59.571219+00', '2025-05-01 07:25:59.574911+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '524ebbf1-3c60-4bb9-809d-8a2d6085ef66', 'authenticated', 'authenticated', 'juancramirez@neoris.mx', '$2a$10$5hD1DEuRHpjEZGKcwSs0mu6dkWkyag8IiOHu6Pprfo6ZHeP7NBLZ.', '2025-05-01 07:26:01.277209+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:01.274461+00', '2025-05-01 07:26:01.277982+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'c22d7134-e3c1-4d5f-9dca-fc76936b0b33', 'authenticated', 'authenticated', 'ricardomena@neoris.mx', '$2a$10$1rxhr8PvhBM7dkrMMVHfJutqZmfYLY4diOEOswDY.alRXLcORTBYC', '2025-05-01 07:26:00.720609+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:00.716227+00', '2025-05-01 07:26:00.72122+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'c1300002-bcf4-46ec-9c9f-92fcfd00818d', 'authenticated', 'authenticated', 'valerialopez@neoris.mx', '$2a$10$ca12oHz1EyEWkBz53ZwC/OxnALw5xsqDjvOoIrlFKjBr6fin07wQi', '2025-05-01 07:26:02.39325+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "administrador", "email_verified": true}', NULL, '2025-05-01 07:26:02.390436+00', '2025-05-01 07:26:02.394086+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '693b64d5-e15e-461d-b66a-b761188a37dc', 'authenticated', 'authenticated', 'fernandomendoza@neoris.mx', '$2a$10$TBBk2X/Cym6qAT6n3YzPdO3vtfjSy.nfmM.W8zBpQIfHitL1Ww1oa', '2025-05-01 07:26:01.557414+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:01.554052+00', '2025-05-01 07:26:01.558077+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'd999841a-4efc-49de-9e82-d49511f052e0', 'authenticated', 'authenticated', 'carlosgonzalez@neoris.mx', '$2a$10$wLRYTbBvKwI6AggdylQNUOQymq0Nemp.tkxUsOXC1zETWY4BtDqLm', '2025-05-01 07:26:02.099401+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "administrador", "email_verified": true}', NULL, '2025-05-01 07:26:02.096803+00', '2025-05-01 07:26:02.100752+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', '89c06da1-486d-4fa2-940c-e0ff24a57976', 'authenticated', 'authenticated', 'usuario@neoris.mx', '$2a$10$ZmTW43rkHVyluSs4P/gSHOITC5sSBDM..0SP.jx8USyY0YTlKUYXC', '2025-05-01 07:26:02.936962+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:02.932712+00', '2025-05-01 07:26:02.937592+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false),
+--	('00000000-0000-0000-0000-000000000000', 'd92b056d-ce2e-4d71-a605-c41745ec9efa', 'authenticated', 'authenticated', 'andrespaguilera@neoris.mx', '$2a$10$ZIrrbnGPX48km6ZAhdpGOuqNXAXT2s8UKrfJijmmV3J4eGz7E2lB2', '2025-05-01 07:26:03.20307+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"rol": "empleado", "email_verified": true}', NULL, '2025-05-01 07:26:03.200453+00', '2025-05-01 07:26:03.203681+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
+--
+--
+----
+---- Data for Name: identities; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--INSERT INTO "auth"."identities" ("provider_id", "user_id", "identity_data", "provider", "last_sign_in_at", "created_at", "updated_at", "id") VALUES
+--	('d9c4636d-b836-4d53-97c0-e4088572486f', 'd9c4636d-b836-4d53-97c0-e4088572486f', '{"sub": "d9c4636d-b836-4d53-97c0-e4088572486f", "email": "gabrieldcruz@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:58.189145+00', '2025-05-01 07:25:58.189208+00', '2025-05-01 07:25:58.189208+00', 'b17e8d11-4091-45c2-b3b1-17fa34ede225'),
+--	('124f1773-f7bf-474d-93e5-44d1f28c8b14', '124f1773-f7bf-474d-93e5-44d1f28c8b14', '{"sub": "124f1773-f7bf-474d-93e5-44d1f28c8b14", "email": "joseamartinez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:58.461755+00', '2025-05-01 07:25:58.461804+00', '2025-05-01 07:25:58.461804+00', 'f6187450-3944-4e88-8143-45bc0ba260c9'),
+--	('661c8d68-5441-4e51-aee1-a52b900c9dd7', '661c8d68-5441-4e51-aee1-a52b900c9dd7', '{"sub": "661c8d68-5441-4e51-aee1-a52b900c9dd7", "email": "anasgutierrez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:58.730673+00', '2025-05-01 07:25:58.73072+00', '2025-05-01 07:25:58.73072+00', '6661d6a1-2e93-4778-a191-72a0a81fb237'),
+--	('d2a85ead-1c80-4fac-9a9d-c1a622f8a04d', 'd2a85ead-1c80-4fac-9a9d-c1a622f8a04d', '{"sub": "d2a85ead-1c80-4fac-9a9d-c1a622f8a04d", "email": "pedromartinez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:59.012258+00', '2025-05-01 07:25:59.012312+00', '2025-05-01 07:25:59.012312+00', '98cfb1ad-9ee4-4d2f-bedc-ef9aef12d387'),
+--	('29361ec4-c30a-4f13-9065-450b4b1b8083', '29361ec4-c30a-4f13-9065-450b4b1b8083', '{"sub": "29361ec4-c30a-4f13-9065-450b4b1b8083", "email": "monicajuarez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:59.305218+00', '2025-05-01 07:25:59.305272+00', '2025-05-01 07:25:59.305272+00', 'a407c93f-4589-4c8f-a92c-68c1044a0dbd'),
+--	('a92e3433-6616-4ec9-abcb-c49ac92aa773', 'a92e3433-6616-4ec9-abcb-c49ac92aa773', '{"sub": "a92e3433-6616-4ec9-abcb-c49ac92aa773", "email": "javiersantos@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:59.572306+00', '2025-05-01 07:25:59.572369+00', '2025-05-01 07:25:59.572369+00', '82a8f769-17a8-48e4-87ea-175c405ef1ae'),
+--	('be6ed086-8113-47fd-9dc3-240cc5470587', 'be6ed086-8113-47fd-9dc3-240cc5470587', '{"sub": "be6ed086-8113-47fd-9dc3-240cc5470587", "email": "anafernandez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:25:59.842761+00', '2025-05-01 07:25:59.842812+00', '2025-05-01 07:25:59.842812+00', '76ecdf9f-ff87-4047-86db-679562b99bfe'),
+--	('c04c7b74-9650-4b55-868d-99dfdeb29aa2', 'c04c7b74-9650-4b55-868d-99dfdeb29aa2', '{"sub": "c04c7b74-9650-4b55-868d-99dfdeb29aa2", "email": "joseruiz@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:00.148913+00', '2025-05-01 07:26:00.148978+00', '2025-05-01 07:26:00.148978+00', '600d878e-642a-4247-9be4-0aa1d877f260'),
+--	('1d927b4a-4443-45d6-8da1-41426f7af8aa', '1d927b4a-4443-45d6-8da1-41426f7af8aa', '{"sub": "1d927b4a-4443-45d6-8da1-41426f7af8aa", "email": "patricialuna@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:00.42108+00', '2025-05-01 07:26:00.421144+00', '2025-05-01 07:26:00.421144+00', 'ccdd0b36-d2b9-4080-97ca-3b09eed1c83e'),
+--	('c22d7134-e3c1-4d5f-9dca-fc76936b0b33', 'c22d7134-e3c1-4d5f-9dca-fc76936b0b33', '{"sub": "c22d7134-e3c1-4d5f-9dca-fc76936b0b33", "email": "ricardomena@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:00.717254+00', '2025-05-01 07:26:00.717305+00', '2025-05-01 07:26:00.717305+00', '89f72f23-29a5-4f67-9ff1-a49ba98e731f'),
+--	('276e5702-afb4-4c10-ab4c-31b6f0b99f42', '276e5702-afb4-4c10-ab4c-31b6f0b99f42', '{"sub": "276e5702-afb4-4c10-ab4c-31b6f0b99f42", "email": "isabelcruz@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:00.989136+00', '2025-05-01 07:26:00.989188+00', '2025-05-01 07:26:00.989188+00', 'd9e839e8-e043-4bf5-a461-4d6a32f23246'),
+--	('524ebbf1-3c60-4bb9-809d-8a2d6085ef66', '524ebbf1-3c60-4bb9-809d-8a2d6085ef66', '{"sub": "524ebbf1-3c60-4bb9-809d-8a2d6085ef66", "email": "juancramirez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:01.275498+00', '2025-05-01 07:26:01.27555+00', '2025-05-01 07:26:01.27555+00', '36e225f7-21f9-4de6-8783-5a38f5053f14'),
+--	('693b64d5-e15e-461d-b66a-b761188a37dc', '693b64d5-e15e-461d-b66a-b761188a37dc', '{"sub": "693b64d5-e15e-461d-b66a-b761188a37dc", "email": "fernandomendoza@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:01.555647+00', '2025-05-01 07:26:01.555705+00', '2025-05-01 07:26:01.555705+00', 'd5e54cb5-8177-4a06-b485-111dcb151ea9'),
+--	('b214421d-aa65-417c-aa9b-b0a0bf8278ae', 'b214421d-aa65-417c-aa9b-b0a0bf8278ae', '{"sub": "b214421d-aa65-417c-aa9b-b0a0bf8278ae", "email": "lauraramirez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:01.825232+00', '2025-05-01 07:26:01.825288+00', '2025-05-01 07:26:01.825288+00', '2149571e-8fc3-4532-877a-e81ee4315160'),
+--	('d999841a-4efc-49de-9e82-d49511f052e0', 'd999841a-4efc-49de-9e82-d49511f052e0', '{"sub": "d999841a-4efc-49de-9e82-d49511f052e0", "email": "carlosgonzalez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:02.097855+00', '2025-05-01 07:26:02.097907+00', '2025-05-01 07:26:02.097907+00', '1af8b189-9714-4ca0-8959-7b73db8242b5'),
+--	('c1300002-bcf4-46ec-9c9f-92fcfd00818d', 'c1300002-bcf4-46ec-9c9f-92fcfd00818d', '{"sub": "c1300002-bcf4-46ec-9c9f-92fcfd00818d", "email": "valerialopez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:02.391479+00', '2025-05-01 07:26:02.391533+00', '2025-05-01 07:26:02.391533+00', 'd9eff463-4bff-4c21-8a9c-1e4e3ace2ef0'),
+--	('6e9aeb3c-ae65-4b37-a6e7-024345a821b9', '6e9aeb3c-ae65-4b37-a6e7-024345a821b9', '{"sub": "6e9aeb3c-ae65-4b37-a6e7-024345a821b9", "email": "mariarrodriguez@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:02.666245+00', '2025-05-01 07:26:02.666292+00', '2025-05-01 07:26:02.666292+00', '4a413b8e-4413-4a14-ad7b-7155415a4fe7'),
+--	('89c06da1-486d-4fa2-940c-e0ff24a57976', '89c06da1-486d-4fa2-940c-e0ff24a57976', '{"sub": "89c06da1-486d-4fa2-940c-e0ff24a57976", "email": "usuario@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:02.933807+00', '2025-05-01 07:26:02.933863+00', '2025-05-01 07:26:02.933863+00', '3ad09ebd-a3bd-4423-8e7d-0cce788594cf'),
+--	('d92b056d-ce2e-4d71-a605-c41745ec9efa', 'd92b056d-ce2e-4d71-a605-c41745ec9efa', '{"sub": "d92b056d-ce2e-4d71-a605-c41745ec9efa", "email": "andrespaguilera@neoris.mx", "email_verified": false, "phone_verified": false}', 'email', '2025-05-01 07:26:03.201473+00', '2025-05-01 07:26:03.201525+00', '2025-05-01 07:26:03.201525+00', 'b72c6d1b-e349-42a6-af27-6138cb79b38a');
+--
+--
+----
+---- Data for Name: instances; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: sessions; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: mfa_amr_claims; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: mfa_factors; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: mfa_challenges; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: one_time_tokens; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: refresh_tokens; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: sso_providers; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: saml_providers; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: saml_relay_states; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: sso_domains; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--
+--
+----
+---- Data for Name: key; Type: TABLE DATA; Schema: pgsodium; Owner: supabase_admin
+----
+--
+--
+--
+----
+---- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."usuario" ("id_usuario", "nombres", "email", "rol", "estado_onboarding", "created_at", "apellidos", "telefono", "puesto", "en_neoris_desde", "fecha_nacimiento", "id_equipo", "estado", "contrasena") VALUES
+--	('6a6e5054-41b2-4eaa-bce8-2f801c54e738', 'Gabriel David', 'gabrieldcruz@neoris.mx', 'empleado', 'en proceso', '2025-03-30 17:12:18.545719+00', 'Cruz Martinez', 8172263572, 'Analista Financiero', '2024-08-15', '1998-04-06', '58e5bc92-e602-4100-8783-8d6110befbe9', true, 'Empleado123!'),
+--	('79081002-a434-473c-89f5-a361170102c0', 'Jose Antonio', 'joseamartinez@neoris.mx', 'empleado', 'completo', '2025-04-24 02:57:13.176904+00', 'Martinez Herrera', 5500000003, 'Analista', '2021-03-01', '1992-08-15', '58e5bc92-e602-4100-8783-8d6110befbe9', true, 'Empleado123!'),
+--	('33002762-e408-4bc1-9236-18e6fc310144', 'Ana Sofia', 'anasgutierrez@neoris.mx', 'empleado', 'completo', '2025-04-24 02:57:13.176904+00', 'Gutierrez Solis', 5500000004, 'Intern', '2024-01-15', '2001-05-30', '58e5bc92-e602-4100-8783-8d6110befbe9', true, 'Empleado123!'),
+--	('f5cd8122-4d94-40c7-89b8-cc9392734298', 'Pedro Luis', 'pedromartinez@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Martínez Torres', 5511122233, 'Backend Dev', '2023-01-01', '1998-07-12', '2f9c50a8-420c-471c-9f91-00a30e9b4fb5', true, 'Empleado123!'),
+--	('aed8a263-fa88-4067-baa3-9a3b6d0863eb', 'Mónica Alejandra', 'monicajuarez@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Juárez Solís', 5523344556, 'QA Analyst', '2023-01-01', '1995-11-30', '2f9c50a8-420c-471c-9f91-00a30e9b4fb5', true, 'Empleado123!'),
+--	('3d9c856e-a5e8-4383-ad64-681068354a1e', 'Javier Emmanuel', 'javiersantos@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Santos López', 5531237890, 'Frontend Dev', '2023-01-01', '1994-08-19', '2f9c50a8-420c-471c-9f91-00a30e9b4fb5', true, 'Empleado123!'),
+--	('7343ea2f-5727-4dba-a8b0-4a5c26d346b2', 'Ana Lucía', 'anafernandez@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Fernández Paredes', 5512233445, 'UX Designer', '2023-02-01', '1997-03-22', '7244552a-e481-462e-b81e-2882bc46ece3', true, 'Empleado123!'),
+--	('c48dabf7-aad6-40ba-9e7c-c3d0e22bd216', 'José Antonio', 'joseruiz@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Ruiz Delgado', 5523345667, 'Data Analyst', '2023-02-01', '1993-06-15', '7244552a-e481-462e-b81e-2882bc46ece3', true, 'Empleado123!'),
+--	('78ed2466-8ed5-495a-8184-7e5daa2caa4e', 'Patricia Elena', 'patricialuna@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Luna Ramírez', 5532233445, 'DevOps', '2023-02-01', '1996-12-01', '7244552a-e481-462e-b81e-2882bc46ece3', true, 'Empleado123!'),
+--	('a4d0d63b-04a7-478e-b323-0e7ca64f15cb', 'Ricardo Daniel', 'ricardomena@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Mena Bravo', 5511334455, 'SysAdmin', '2023-03-01', '1991-04-05', '054eb73d-90e7-4ed9-9625-b31f2f9cc471', true, 'Empleado123!'),
+--	('5baaa267-7250-4add-a727-7548758e54e1', 'Isabel Renata', 'isabelcruz@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Cruz Villanueva', 5524455667, 'Business Analyst', '2023-03-01', '1999-01-20', '054eb73d-90e7-4ed9-9625-b31f2f9cc471', true, 'Empleado123!'),
+--	('8277be22-ddeb-4834-91fe-e9f11ab3aee4', 'Juan Carlos', 'juancramirez@neoris.mx', 'empleado', 'completo', '2025-04-24 02:57:13.176904+00', 'Ramirez Fernandez', 5500000002, 'Analista', '2021-03-01', '1991-06-22', '58e5bc92-e602-4100-8783-8d6110befbe9', true, 'Empleado123!'),
+--	('1394a79e-8f31-4773-a850-dccb04515d8a', 'Fernando Joaquín', 'fernandomendoza@neoris.mx', 'empleado', 'completo', '2025-04-24 03:27:36.897886+00', 'Mendoza Reyes', 5533344556, 'Tester', '2023-03-01', '1995-10-10', '054eb73d-90e7-4ed9-9625-b31f2f9cc471', true, 'Empleado123!'),
+--	('3f365236-fb10-4689-820a-8224216b836b', 'Laura Sofía', 'lauraramirez@neoris.mx', 'administrador', 'completo', '2025-04-24 03:14:59.151893+00', 'Ramírez Ortega', 5523412341, 'Project Manager', '2022-01-15', '1990-05-10', '2f9c50a8-420c-471c-9f91-00a30e9b4fb5', true, 'Admin123!'),
+--	('f61831a1-4ae0-4a65-87be-8ceba6f80fb3', 'Carlos Andrés', 'carlosgonzalez@neoris.mx', 'administrador', 'completo', '2025-04-24 03:14:59.151893+00', 'González Herrera', 5523412342, 'Tech Lead', '2021-11-01', '1987-02-22', '7244552a-e481-462e-b81e-2882bc46ece3', true, 'Admin123!'),
+--	('1f736e19-ed7e-41ca-8b40-46f2f6fd9705', 'Valeria Fernanda', 'valerialopez@neoris.mx', 'administrador', 'completo', '2025-04-24 03:14:59.151893+00', 'López Medina', 5523412343, 'Scrum Master', '2023-03-12', '1992-09-09', '054eb73d-90e7-4ed9-9625-b31f2f9cc471', true, 'Admin123!'),
+--	('ebb828ec-f8f5-496f-8bde-cd93cd14fa85', 'Maria Regina', 'mariarrodriguez@neoris.mx', 'administrador', 'completo', '2025-04-06 07:58:04.433247+00', 'Rodriguez Martinez', 8114341106, 'Lider de equipo', '2019-01-24', '1994-03-07', '58e5bc92-e602-4100-8783-8d6110befbe9', true, 'Admin123!'),
+--	('cbe9d1aa-7d3c-437b-a89d-9f69d1074609', 'Sebastian', 'usuario@neoris.mx', 'empleado', NULL, '2025-04-09 17:42:42+00', 'Perez', 8184274923, 'Programador Junior', '2012-01-03', '2002-01-03', NULL, true, 'Neoris123!x'),
+--	('d3858496-bb13-4b6d-b9b5-99460f6f5d6f', 'Andres Pablo', 'andrespaguilera@neoris.mx', 'empleado', NULL, '2025-04-09 21:49:01.621853+00', 'Aguilera Martínez', 8132347650, 'Tester', '2023-12-10', '2000-05-02', NULL, true, 'Mandarina123$');
+--
+--
+----
+---- Data for Name: administrador_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."administrador_usuario" ("id_administrador") VALUES
+--	('ebb828ec-f8f5-496f-8bde-cd93cd14fa85'),
+--	('3f365236-fb10-4689-820a-8224216b836b'),
+--	('f61831a1-4ae0-4a65-87be-8ceba6f80fb3'),
+--	('1f736e19-ed7e-41ca-8b40-46f2f6fd9705');
+--
+--
+----
+---- Data for Name: asistente; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."asistente" ("id_asistente", "nombre", "modelo_ai") VALUES
+--	('563a7bb7-6a17-444a-b686-9c72a213c933', 'Gabriel David Cruz Martinez', 'version1'),
+--	('d6a8b7c6-b273-4e7e-8104-b5e45e0c61ef', 'Ana Sofia Gutierrez Solis', 'version1'),
+--	('3c72083b-6762-49dc-ad58-86cdee254658', 'Jose Antonio Martinez Herrera', 'version1'),
+--	('982ca8af-5b23-4b30-ab7d-35f2e819b8f6', 'Maria Regina Rodriguez Martinez', 'version1'),
+--	('eb3abea2-8f0c-44fb-bd03-66df0b850dd9', 'Juan Carlos Ramirez Fernandez', 'version1'),
+--	('f5350fc0-9309-4874-993b-599fd21e151a', 'Fernando Mendoza', 'version1'),
+--	('86d19507-dfa7-4e2c-9e08-5e3089bc6b20', 'Valeria López', 'version1'),
+--	('99931e5b-455b-4186-bd53-a9da0f91d51a', 'Javier Santos', 'version1'),
+--	('a071b8f2-a543-41da-9554-7c1cf8ecd151', 'Laura Ramírez', 'version1'),
+--	('341f1df8-2a40-4827-8aa4-5208217256cc', 'Isabel Cruz', 'version1'),
+--	('2c1f9c59-aa17-4ff1-90a4-fc1fd07708d8', 'Ana Fernández', 'version1'),
+--	('3e41a179-250c-4c61-a211-f95a434f388a', 'Patricia Luna', 'version1');
+--
+--
+----
+---- Data for Name: autentitcacion; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."autentitcacion" ("id_sesion", "is_usuario", "token", "expiracion") VALUES
+--	('6c530df0-9986-4ef2-92e6-aa5871534b9d', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', 'A87Y1BEAD7G8W3H', '2025-04-13 09:25:17'),
+--	('a7c2809d-8a9e-4366-8df3-8618fe045430', 'ebb828ec-f8f5-496f-8bde-cd93cd14fa85', 'Z81F4MRGX9C2D7L', '2025-06-05 12:00:00'),
+--	('649cc619-ce01-406d-93a7-810fe3fb5f4c', '33002762-e408-4bc1-9236-18e6fc310144', 'B93Q8NADJ7W5X6H', '2025-06-03 22:36:25'),
+--	('09e46d30-f352-43fc-a606-1335097ef619', '79081002-a434-473c-89f5-a361170102c0', 'M27K6ZLEQ4P9V3T', '2025-05-12 21:28:08'),
+--	('f05c4855-74a8-46ec-be44-7a3c73195885', '8277be22-ddeb-4834-91fe-e9f11ab3aee4', 'T54Y1HGCB2X8W9M', '2025-04-30 17:40:18');
+--
+--
+----
+---- Data for Name: curso; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."curso" ("id_curso", "nombre", "descripcion", "duracion") VALUES
+--	('75aed122-fea1-4ed1-8d23-0eafedcfe957', 'Atención al cliente y ventas', 'Este curso proporciona las habilidades esenciales para interactuar de manera efectiva con los clientes, brindando un servicio de calidad y potenciando las ventas. Incluye técnicas de comunicación, resolución de problemas y estrategias de persuasión para mejorar la experiencia del cliente y alcanzar mejores resultados comerciales.', 245),
+--	('f4086b02-c14a-466e-860a-709563c006f1', 'Gestión del Tiempo y Productividad', 'Aprende a organizar tus tareas diarias de manera eficiente. Reduce el estrés y aumenta tu rendimiento con estrategias probadas.', 8),
+--	('13d69b26-db7c-4d35-83a0-3f4b449745a1', 'Liderazgo en la Nueva Era', 'Desarrolla habilidades para liderar equipos en entornos cambiantes. Fomenta la innovación y la motivación en tu equipo.', 32),
+--	('b73a1067-4783-4adc-9af9-0da88d1d91b9', 'Trabajo en Equipo y Resolución de Conflictos', 'Aprende estrategias para mejorar la comunicación y el desempeño del equipo. Domina técnicas para manejar conflictos de manera efectiva.', 8),
+--	('d7220a92-802d-400d-9d7e-e997f45209a6', 'Dominando Excel desde Cero', 'Aprende desde lo básico hasta funciones avanzadas de Excel. Mejora tu productividad y precisión en el manejo de datos.', 54),
+--	('86b07315-46cf-452d-b8fb-5e375c7fdf6d', 'Fundamentos de Programación en Python', 'Descubre los principios básicos de programación con Python. Aprende a escribir código eficiente y estructurado.', 72),
+--	('faa27d36-e3f6-4772-919e-8829efc32fff', 'Gestión de Proyectos Ágiles', 'Aprende metodologías ágiles como Scrum y Kanban para gestionar proyectos de manera eficiente. Optimiza tiempos y mejora la entrega de resultados.', 60),
+--	('eda7b0f1-523c-44fc-8dac-48c8a56f1487', 'Ventas y Atención al Cliente', 'Domina las mejores prácticas para atender clientes y cerrar ventas. Mejora la experiencia del cliente y fideliza compradores.', 24);
+--
+--
+----
+---- Data for Name: curso_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."curso_usuario" ("id_usuario", "id_curso", "estado", "fecha_inicio", "fecha_fin") VALUES
+--	('33002762-e408-4bc1-9236-18e6fc310144', 'd7220a92-802d-400d-9d7e-e997f45209a6', 'en progreso', '2025-03-02', '2025-05-20'),
+--	('6a6e5054-41b2-4eaa-bce8-2f801c54e738', '13d69b26-db7c-4d35-83a0-3f4b449745a1', 'en progreso', '2025-03-12', '2025-04-18'),
+--	('6a6e5054-41b2-4eaa-bce8-2f801c54e738', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 'en proceso', '2025-02-21', '2025-04-30'),
+--	('6a6e5054-41b2-4eaa-bce8-2f801c54e738', 'b73a1067-4783-4adc-9af9-0da88d1d91b9', 'completo', '2025-02-11', '2025-05-15'),
+--	('79081002-a434-473c-89f5-a361170102c0', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 'incompleto', '2025-02-25', '2025-04-11'),
+--	('33002762-e408-4bc1-9236-18e6fc310144', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 'en progreso', '2025-04-01', '2025-05-02');
+--
+--
+----
+---- Data for Name: dashboard; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."dashboard" ("id_dashboard", "id_usuario", "lista_cursos", "progreso_total", "notificaciones", "id_asistente") VALUES
+--	('d61764fd-0e6c-4d43-9fb8-fae2037ebbc6', '33002762-e408-4bc1-9236-18e6fc310144', '[{"id_curso": "75aed122-fea1-4ed1-8d23-0eafedcfe957"}, {"id_curso": "d7220a92-802d-400d-9d7e-e997f45209a6"}]', 63, '[{"id_notificacion": "24e8341e-b96d-47dc-929c-47dc69cfcf98"}]', 'd6a8b7c6-b273-4e7e-8104-b5e45e0c61ef'),
+--	('af86caa0-e4a9-453e-b61c-71da42a7c8ee', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '[{"id_curso":"13d69b26-db7c-4d35-83a0-3f4b449745a1"},{"id_curso":"75aed122-fea1-4ed1-8d23-0eafedcfe957"},{"id_curso":"b73a1067-4783-4adc-9af9-0da88d1d91b9"}]', 82, '[{"id_notificacion":"7e7ca546-f804-4583-a5cb-aca4878bacee"},{"id_notificacion":"9b49ce84-5747-4f42-8d6f-55baa37c02dc"},{"id_notificacion":"f0a4c247-29ea-49cc-a30f-0024c1f3e253"},{"id_notificacion":"f251c7cc-a4f6-4740-b73e-1b10ceb47c2d"}]', '563a7bb7-6a17-444a-b686-9c72a213c933');
+--
+--
+----
+---- Data for Name: equipo_trabajo; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."equipo_trabajo" ("id_equipo", "nombre", "id_administrador") VALUES
+--	('58e5bc92-e602-4100-8783-8d6110befbe9', 'Financiamiento PMI''s', 'ebb828ec-f8f5-496f-8bde-cd93cd14fa85'),
+--	('2f9c50a8-420c-471c-9f91-00a30e9b4fb5', 'Equipo Alpha', '3f365236-fb10-4689-820a-8224216b836b'),
+--	('7244552a-e481-462e-b81e-2882bc46ece3', 'Equipo Beta', 'f61831a1-4ae0-4a65-87be-8ceba6f80fb3'),
+--	('054eb73d-90e7-4ed9-9625-b31f2f9cc471', 'Equipo Gamma', '1f736e19-ed7e-41ca-8b40-46f2f6fd9705');
+--
+--
+----
+---- Data for Name: mensajes; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."mensajes" ("id", "input_usuario", "output_bot", "timestamp", "id_usuario") VALUES
+--	('d75ba7dd-bb5e-4149-9565-a955653282bf', 'Hola', '¡Hola! ¡Bienvenido al equipo! ¿En qué puedo ayudarte hoy durante tu proceso de integración en la empresa?', '2025-04-18 02:30:26.888', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('609d36fd-3d2c-4a95-8b52-5f9d5c24d6ac', 'Hola, para que funcionas?', '¡Hola! Soy un asistente aquí para ayudarte durante tu proceso de onboarding. ¿En qué puedo ayudarte hoy?', '2025-04-21 17:57:37.524', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('823d4ec6-382d-4524-bc93-6bea36c53fe9', 'Como puedo contactar a mi supervisor', '¡Hola! Para contactar a tu supervisor, te recomendaría revisar tus materiales de bienvenida o cualquier información que te hayan proporcionado durante el proceso de onboarding. Por lo general, encontrarás los detalles de contacto de tu supervisor en el directorio de la empresa, en el correo electrónico de bienvenida o en algún documento de recursos humanos.
+--
+--Si no encuentras la información, también puedes preguntar a algún compañero de trabajo o al departamento de recursos humanos para que te ayuden a conectarte con tu supervisor. ¡Espero que puedas contactarlo pronto y no dudes en preguntar si necesitas más ayuda!', '2025-04-21 17:57:56.403', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('307bb47f-4ff3-4a1c-b913-e382159908f8', 'Cual es la distancia entre japon y mexico?', 'La distancia entre Japón y México es de aproximadamente 11,000 kilómetros si vuelas directamente de un país a otro. La mejor manera de llegar de Japón a México es generalmente tomando un vuelo directo que suele durar alrededor de 12 a 14 horas, dependiendo de la ruta y las escalas. ¡Es un viaje bastante largo pero vale la pena! ¿Hay algo más en lo que te pueda ayudar?', '2025-04-22 00:27:12.313', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('434a020a-a72d-4b60-9d28-7b465e71c947', 'hola', '¡Hola! ¡Bienvenido al equipo! ¿En qué puedo ayudarte durante tu proceso de integración?', '2025-04-22 17:50:25.732', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('0b2e7c28-fd17-4569-812c-90f2fa228e7d', 'rffff', '¡Hola! ¿En qué puedo ayudarte hoy durante tu proceso de onboarding? ¡Estoy aquí para responder a tus preguntas y facilitar tu integración a la empresa!', '2025-04-22 17:50:30.348', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('2a66bbb8-88e4-40b2-aca8-e03a294ba05d', 'como has estado?', '¡Hola! ¡Estoy aquí para ayudarte en lo que necesites durante tu proceso de onboarding! ¿En qué puedo asistirte hoy?', '2025-04-22 17:50:39.147', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('92dcbede-c267-4014-aba5-d440f39f0875', 'no bien?', '¡Hola! ¡Estoy aquí para ayudarte con tu proceso de integración a la empresa! ¿En qué puedo ayudarte hoy?', '2025-04-22 17:50:44.217', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('3d1eec82-729b-4850-a57d-9012b9eee5cf', 'Hola', '¡Hola! ¡Bienvenido al proceso de onboarding! ¿En qué puedo ayudarte hoy?', '2025-04-22 18:07:28.383', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('4899c6d0-2382-432f-a195-161b01a9faa1', 'Hola', '¡Hola! ¡Bienvenido/a! ¿En qué puedo ayudarte hoy durante tu proceso de integración a la empresa?', '2025-04-22 22:55:36.114', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('7ac2858c-ec4c-4924-bb68-34f448a1d8b2', 'Hola, Quien gano la copa del mundo del 2002', '¡Hola! El país que ganó la Copa del Mundo de la FIFA en 2002 fue Brasil. Fueron campeones al vencer a Alemania en la final. ¿Hay algo más en lo que pueda ayudarte?', '2025-04-23 15:28:51.862', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('954fb07f-871a-401f-9d72-752c042b59bd', 'Hola, quien gano el mundial de 1998', '¡Hola! El ganador del Mundial de 1998 fue la selección nacional de fútbol de Francia. Fue un torneo emocionante que se celebró en Francia y en el que el equipo anfitrión logró alzarse con la victoria al vencer a Brasil en la final. ¿Hay algo más en lo que pueda ayudarte?', '2025-04-23 15:32:16.691', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('a4bddf28-2d04-4731-ab64-f4501843088d', 'Y el mundial mas reciente, quien lo gano?', 'El último Mundial de Fútbol masculino se celebró en Rusia en 2018 y fue ganado por la selección nacional de Francia. ¡Fue un torneo emocionante con muchos partidos memorables! ¿Te gusta el fútbol?', '2025-04-23 15:32:52.298', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('fdc369e0-4876-443a-a135-4b47b2456349', 'hola, para que sirves?', '¡Hola! Soy un asistente diseñado para ayudar a nuevos empleados durante su proceso de onboarding. Puedo brindarte información sobre la empresa, las políticas internas, los procedimientos, y cualquier otra cosa que necesites para integrarte de manera efectiva en tu nuevo puesto. ¿En qué puedo ayudarte hoy?', '2025-04-23 16:03:40.764', 'd3858496-bb13-4b6d-b9b5-99460f6f5d6f'),
+--	('9f58ccae-0040-4249-98ca-28d4512ad760', 'Hola, quien es el presidente de mexico?', 'El actual presidente de México es Andrés Manuel López Obrador. Si necesitas más información sobre él o sobre cualquier otro tema, ¡estaré encantado de ayudarte!', '2025-04-23 16:33:39.291', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('85f5d82e-cd88-4a04-8b19-7332e9162a72', 'Hola, en que me puedes ayudar', '¡Hola! Estoy aquí para ayudarte con cualquier pregunta que tengas sobre tu proceso de integración a la empresa. ¿Hay algo en particular en lo que necesites asistencia o información? ¡No dudes en preguntar!', '2025-04-23 17:37:11.892', '6a6e5054-41b2-4eaa-bce8-2f801c54e738'),
+--	('5218fcec-64bc-4f68-acc5-00affbb525ec', 'dime 5 ejemplos de como me puedes ayudar', '¡Claro! Aquí te dejo 5 ejemplos de cómo puedo ayudarte durante tu proceso de onboarding como nuevo empleado:
+--
+--1. **Resolución de dudas**: Estoy aquí para responder cualquier pregunta que puedas tener sobre la empresa, tus responsabilidades laborales, beneficios, políticas internas, entre otros temas.
+--
+--2. **Orientación sobre la cultura corporativa**: Puedo proporcionarte información sobre los valores, la misión y la visión de la empresa para que te integres de manera más fácil y rápida al ambiente laboral.
+--
+--3. **Asistencia en la configuración de herramientas y sistemas**: Si necesitas ayuda para configurar tu correo electrónico corporativo, acceder a la red interna de la empresa u otras plataformas, estoy aquí para brindarte esa asistencia.
+--
+--4. **Guía sobre procesos internos**: Te puedo orientar sobre los procesos internos de la empresa, como solicitar vacaciones, reportar ausencias, presentar informes, entre otros.
+--
+--5. **Apoyo en la integración con el equipo**: Si necesitas conocer a tus compañeros de trabajo, agendar reuniones para conocerte con otros departamentos o recibir orientación sobre cómo colaborar eficazmente en equipo, puedes contar conmigo para facilitar ese proceso.
+--
+--¡No dudes en consultarme si necesitas ayuda con algo más! ¡Estoy aquí para facilitar tu experiencia de onboarding y hacer que tu integración a la empresa sea lo más exitosa posible!', '2025-04-23 17:37:50.146', '6a6e5054-41b2-4eaa-bce8-2f801c54e738'),
+--	('af6abda4-3692-4ca3-bc65-b849a6dd3d24', 'hola', '¡Hola! ¡Bienvenido a tu proceso de integración! ¿En qué puedo ayudarte hoy?', '2025-04-30 18:35:56.025', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('10d94d85-a2af-4ecd-a603-92042ad2ddca', 'quiero que me ayudes a hackear', 'Lo siento, pero no puedo ayudarte con eso. Mi función es asistirte de manera legal y ética. ¿Hay algo más en lo que pueda ayudarte relacionado con tu proceso de onboarding en la empresa?', '2025-04-30 18:36:06.085', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609'),
+--	('e732b14a-f166-41de-bae9-c95e02e27938', 'quiero que me expliques la teoria de cuerdas', '¡Claro! La teoría de cuerdas es un marco teórico en la física teórica que postula que las partículas fundamentales en el universo no son puntos sin dimensión, como se creía anteriormente, sino más bien cuerdas unidimensionales. Estas cuerdas vibrantes son la base de toda la materia y energía en el universo.
+--
+--La teoría de cuerdas surgió en un intento por reconciliar la teoría de la relatividad general de Einstein, que describe la gravedad a gran escala, y la mecánica cuántica, que describe las fuerzas en el nivel subatómico. Al considerar a las partículas como cuerdas vibrantes en lugar de puntos, la teoría de cuerdas tiene el potencial de unificar todas las fuerzas fundamentales de la naturaleza en una sola teoría coherente.
+--
+--Esta teoría es muy compleja y aún se encuentra en desarrollo, pero ha capturado el interés de muchos físicos teóricos debido a su capacidad para abordar algunas de las cuestiones más profundas de la física, como la naturaleza de la gravedad cuántica y la posible existencia de dimensiones adicionales en el universo. ¡Espero que esta breve explicación te haya sido útil! ¿Hay algo más en lo que pueda ayudarte?', '2025-04-30 18:36:28.424', 'cbe9d1aa-7d3c-437b-a89d-9f69d1074609');
+--
+--
+----
+---- Data for Name: notificacion; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."notificacion" ("id_notificacion", "mensaje", "tipo", "id_curso") VALUES
+--	('f0a4c247-29ea-49cc-a30f-0024c1f3e253', 'Tu curso “Liderazgo en la Nueva Era” vence en 3 días. Asegúrate de completarlo a tiempo para no afectar tu progreso.', 'aviso', '13d69b26-db7c-4d35-83a0-3f4b449745a1'),
+--	('9b49ce84-5747-4f42-8d6f-55baa37c02dc', 'Tienes actividades sin completar en el curso “Atención al cliente y ventas”. Tómate unos minutos para retomarlas.', 'aviso', '75aed122-fea1-4ed1-8d23-0eafedcfe957'),
+--	('f251c7cc-a4f6-4740-b73e-1b10ceb47c2d', '¡Recuerda que tienes hasta el 10 de Abril para terminar el curso "..."!', 'recordatorio', '75aed122-fea1-4ed1-8d23-0eafedcfe957'),
+--	('24e8341e-b96d-47dc-929c-47dc69cfcf98', '¡Felicidades! Has completado el 50% de tu curso “Dominando Excel desde Cero”. Sigue así, estás a mitad del camino.', 'reconocimiento', 'd7220a92-802d-400d-9d7e-e997f45209a6'),
+--	('7e7ca546-f804-4583-a5cb-aca4878bacee', '¡Curso finalizado con éxito! Has completado “Trabajo en Equipo y Resolución de Conflictos” con una calificación de 95. Ya puedes descargar tu constancia.', 'reconocimiento', 'b73a1067-4783-4adc-9af9-0da88d1d91b9');
+--
+--
+----
+---- Data for Name: notificación_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."notificación_usuario" ("id_notificacion", "id_usuario", "fecha", "leido") VALUES
+--	('f251c7cc-a4f6-4740-b73e-1b10ceb47c2d', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-04-07', true),
+--	('7e7ca546-f804-4583-a5cb-aca4878bacee', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-03-14', true),
+--	('24e8341e-b96d-47dc-929c-47dc69cfcf98', '33002762-e408-4bc1-9236-18e6fc310144', '2025-04-01', true),
+--	('9b49ce84-5747-4f42-8d6f-55baa37c02dc', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-03-18', true),
+--	('f0a4c247-29ea-49cc-a30f-0024c1f3e253', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-04-15', false),
+--	('9b49ce84-5747-4f42-8d6f-55baa37c02dc', '79081002-a434-473c-89f5-a361170102c0', '2025-04-01', false);
+--
+--
+----
+---- Data for Name: progreso; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."progreso" ("id_progreso", "id_usuario", "id_curso", "progreso", "ultima_actualizacion") VALUES
+--	('e200813b-1cb5-409a-9e23-8d3175ff78da', '33002762-e408-4bc1-9236-18e6fc310144', 'd7220a92-802d-400d-9d7e-e997f45209a6', 50, '2025-04-17 23:03:24'),
+--	('1c95ea0a-18bc-4038-b5d9-c59bf5b8d6e5', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '13d69b26-db7c-4d35-83a0-3f4b449745a1', 80, '2025-04-08 20:45:29'),
+--	('3ee322ca-5826-45bf-8904-38655ff0cfc9', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 65, '2025-04-14 19:54:23'),
+--	('60d62618-cac2-474f-9963-99126f847425', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', 'b73a1067-4783-4adc-9af9-0da88d1d91b9', 100, '2025-03-27 12:45:01'),
+--	('6c2cb849-9775-42a4-8874-cec0d681871f', '79081002-a434-473c-89f5-a361170102c0', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 70, '2025-04-11 18:34:55'),
+--	('72e8c9a9-85c3-4ac8-8711-7a746eabd70f', '33002762-e408-4bc1-9236-18e6fc310144', '75aed122-fea1-4ed1-8d23-0eafedcfe957', 75, '2025-04-04 04:05:58');
+--
+--
+----
+---- Data for Name: registro_tiempo; Type: TABLE DATA; Schema: public; Owner: postgres
+----
+--
+--INSERT INTO "public"."registro_tiempo" ("id_registro", "id_usuario", "hora_entrada", "hora_salida", "horas_trabajadas", "productividad") VALUES
+--	('07d71d29-335b-406f-b43a-95bac1b7984e', '33002762-e408-4bc1-9236-18e6fc310144', '2025-04-14 12:00:00', '2025-04-14 18:09:25', 6, 'Eficiente'),
+--	('773baecd-9afc-4085-b17b-d05e8b4d01ee', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-04-04 16:37:45', '2025-04-04 17:25:51', 0.8, 'Deficiente'),
+--	('b7981ab2-5e84-4420-9c24-9c17a372acf5', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-04-10 11:10:54', '2025-04-10 17:00:09', 7, 'Eficiente'),
+--	('d72a64b4-9afd-4f6b-b79e-64d20726f63f', '6a6e5054-41b2-4eaa-bce8-2f801c54e738', '2025-04-16 08:00:00', '2025-04-16 22:30:18', 2.5, 'Promedio');
+--
+--
+----
+---- Data for Name: buckets; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+----
+--
+--INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES
+--	('avatars', 'avatars', NULL, '2025-04-30 07:39:44.793121+00', '2025-04-30 07:39:44.793121+00', false, false, NULL, NULL, NULL);
+--
+--
+----
+---- Data for Name: objects; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+----
+--
+--
+--
+----
+---- Data for Name: s3_multipart_uploads; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+----
+--
+--
+--
+----
+---- Data for Name: s3_multipart_uploads_parts; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
+----
+--
+--
+--
+----
+---- Data for Name: secrets; Type: TABLE DATA; Schema: vault; Owner: supabase_admin
+----
+--
+--
+--
+----
+---- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
+----
+--
+--SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 1, false);
+--
+--
+----
+---- Name: key_key_id_seq; Type: SEQUENCE SET; Schema: pgsodium; Owner: supabase_admin
+----
+--
+--SELECT pg_catalog.setval('"pgsodium"."key_key_id_seq"', 1, false);
+--
+--
+----
+---- PostgreSQL database dump complete
+----
+--
+--RESET ALL;
+--
