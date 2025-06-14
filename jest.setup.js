@@ -1,8 +1,7 @@
-require('openai/shims/node');
-require('@testing-library/jest-dom');
+require("openai/shims/node");
+require("@testing-library/jest-dom");
 
-// More robust fetch mock
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const { Request, Response, Headers } = fetch;
 
 global.fetch = jest.fn(() =>
@@ -15,7 +14,6 @@ global.Request = Request;
 global.Response = Response;
 global.Headers = Headers;
 
-// localStorage mock
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -24,7 +22,6 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
-// sessionStorage mock
 const sessionStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
@@ -33,36 +30,32 @@ const sessionStorageMock = {
 };
 global.sessionStorage = sessionStorageMock;
 
-// matchMedia mock for components that use media queries
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
 });
 
-// ResizeObserver mock
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// IntersectionObserver mock
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// Clean up mocks after each test
 afterEach(() => {
   jest.clearAllMocks();
   localStorage.clear();

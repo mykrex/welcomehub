@@ -3,9 +3,8 @@
 import { useEffect } from "react";
 import { useRetos } from "@/app/hooks/useRetos";
 import { useUserRetos } from "@/app/hooks/useUserRetos";
-import {useUserRetosCount} from '@/app/hooks/useUserRetosCount';
+import { useUserRetosCount } from "@/app/hooks/useUserRetosCount";
 import CheckmarkIcon from "../(icons)/Checkmark";
-
 
 export default function RetosTable() {
   const { retos, loading: loadingRetos, error: errorRetos } = useRetos();
@@ -20,23 +19,27 @@ export default function RetosTable() {
     error: errorCounts,
   } = useUserRetosCount();
 
-  // Verificar reto cambio de foto
   useEffect(() => {
-    fetch("/api/retos/verificarCambioFoto", { method: "POST", credentials: "include" })
+    fetch("/api/retos/verificarCambioFoto", {
+      method: "POST",
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => console.log("Verificación cambio foto:", data))
       .catch((err) => console.error("Error verificando cambio foto:", err));
   }, []);
 
-  // Verificar reto chat compi
   useEffect(() => {
     const verificarChatCompi = async () => {
       try {
-        const res = await fetch('/api/retos/verificarChatCompi', { method: 'POST', credentials: 'include' });
+        const res = await fetch("/api/retos/verificarChatCompi", {
+          method: "POST",
+          credentials: "include",
+        });
         const data = await res.json();
-        console.log('Verificación chat compi:', data);
+        console.log("Verificación chat compi:", data);
       } catch (err) {
-        console.error('Error verificando chat compi:', err);
+        console.error("Error verificando chat compi:", err);
       }
     };
 
@@ -121,7 +124,8 @@ export default function RetosTable() {
         </div>
         {retosContinuosOrdenados.map((reto, index) => {
           const vecesCompletado =
-            counts?.find((c) => c.id_reto === reto.id_reto)?.veces_completado ?? 0;
+            counts?.find((c) => c.id_reto === reto.id_reto)?.veces_completado ??
+            0;
           const completado = vecesCompletado > 0;
           const rowClass =
             index % 2 === 0

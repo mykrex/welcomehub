@@ -1,4 +1,3 @@
-// SidebarMenu.tsx
 "use client";
 
 import Link from "next/link";
@@ -77,19 +76,13 @@ const ALL_MENU: MenuItem[] = [
 ];
 
 export default function SidebarMenu() {
-  // ───────────────────────────────────────────────
-  // 1) Siempre invocar TODOS los Hooks al inicio, SIN CONDICIONALES
-  // ───────────────────────────────────────────────
   const router = useRouter();
   const pathname = usePathname();
 
-  // Hook de sesión (puede estar en “loading” o ya traer el `user` o traer `null`).
   const { user, loadingUser } = useUser();
 
-  // Obtenemos perfil (nombres, apellidos, email, etc). Puede estar “loadingProfile” aun.
   const { profile, loading: loadingProfile } = useUserProfile();
 
-  // Hooks para cargar avatar (siempre van antes de cualquier return)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const fetchAvatar = useCallback(async () => {
     try {
@@ -107,31 +100,15 @@ export default function SidebarMenu() {
   }, []);
 
   useEffect(() => {
-    // Sólo cuando YA tenemos “user” (no importa si loadingProfile) y “profile” definido,
-    // pedimos el avatar.
     if (user && profile) {
       fetchAvatar();
     }
   }, [fetchAvatar, user, profile]);
 
-  // ───────────────────────────────────────────────
-  // 2) Control de “SESIÓN NO EXISTE” sólo cuando sabemos que YA no se está cargando y user===null
-  // ───────────────────────────────────────────────
-  // OJO: NO quitamos el sidebar cuando modelUser está en true (loading).
-  // Sólo cuando loadingUser===false y user===null, podemos inferir que NO hay sesión.
   if (!loadingUser && !user) {
-    // Aquí podrías redirigir a /login si lo deseas, o mostrar nulo:
     return null;
   }
 
-  // ───────────────────────────────────────────────
-  // 3) A partir de aquí “loadingUser===true” (todavía verificando)
-  //    ó “user” existe (sesión válida).
-  //    Dejamos que el SidebarSIEMPRE se renderice, para que no desaparezca.
-  // ───────────────────────────────────────────────
-
-  // Si “user” ya está definido, filtramos el menú según su rol.
-  // Si “user” todavía no llegó (loadingUser===true), menuItems será [].
   const menuItems: MenuItem[] = user
     ? ALL_MENU.filter((item) => item.roles?.includes(user.rol as Roles))
     : [];
@@ -139,9 +116,6 @@ export default function SidebarMenu() {
   const getIsActive = (path: string) => pathname?.startsWith(path);
   const isProfileActive = pathname === "/mi_perfil";
 
-  // Preparamos los valores para el perfil:
-  // – Si loadingProfile===true (perfil aún no llegó), mostramos “…” como placeholder.
-  // – En cuanto loadingProfile===false y profile existe, concatenamos nombres/ apellidos reales.
   const firstName = loadingProfile
     ? "…"
     : profile?.nombres?.split(" ")[0] || "Usuario";
@@ -150,17 +124,12 @@ export default function SidebarMenu() {
     : profile?.apellidos?.split(" ")[0] || "";
   const displayName = `${firstName} ${firstLastName}`.trim();
 
-  // Para el email, igual:
   const emailParts = loadingProfile
     ? ["cargando", ""]
     : profile?.email?.split("@") || ["", ""];
   const emailUsername = emailParts[0];
   const emailDomain = emailParts[1] ? `@${emailParts[1]}` : "";
 
-  // ───────────────────────────────────────────────
-  // 4) Render FINAL: El DIV “sidebar-container” SIEMPRE se muestra (no importa loadingUser),
-  //    de modo que no desaparezca al cambiar de pantalla.
-  // ───────────────────────────────────────────────
   return (
     <div className="sidebar-container group">
       {/* ─── Logo en la parte superior ─── */}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ButtonsBarProps {
   isEditable: boolean;
@@ -14,7 +14,7 @@ const ButtonsBar: React.FC<ButtonsBarProps> = ({
   saveWeek,
 }) => {
   return (
-    <div className={`buttons-bar ${isEditable ? '' : 'invisible-preserved'}`}>
+    <div className={`buttons-bar ${isEditable ? "" : "invisible-preserved"}`}>
       <button className="link-button" onClick={copyLastWeek}>
         Copiar la Semana Pasada
       </button>
@@ -24,14 +24,14 @@ const ButtonsBar: React.FC<ButtonsBarProps> = ({
         <button></button>
         <button
           className="red"
-          style={{ visibility: isEditable ? 'visible' : 'hidden' }}
+          style={{ visibility: isEditable ? "visible" : "hidden" }}
           onClick={deleteAll}
         >
           Eliminar Todo
         </button>
         <button
           className="gray"
-          style={{ visibility: isEditable ? 'visible' : 'hidden' }}
+          style={{ visibility: isEditable ? "visible" : "hidden" }}
           onClick={saveWeek}
         >
           Guardar

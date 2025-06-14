@@ -20,7 +20,6 @@ export default function ChatPage() {
     messagesEndRef
   } = useChat();
 
-  // Auto‐scroll al final cuando llegan nuevos mensajes
   useEffect(() => {
     messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, messagesEndRef]);
@@ -68,7 +67,6 @@ export default function ChatPage() {
                   </p>
                 </div>
 
-                {/* Aquí renderizamos los botones si el mensaje tiene acciones */}
                 {message.actions && (
                   <div className="mt-2 flex flex-wrap gap-2">
                     {message.actions.map((action, i) => (

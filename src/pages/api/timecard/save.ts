@@ -1,13 +1,10 @@
-// src/pages/api/timecard/save.ts
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseServer } from "@/lib/supabaseServer";
 import { v4 as uuidv4 } from "uuid";
 
-// Interfaces for request data
 interface Course {
-  title: string; // id_proyecto
+  title: string;
   hours: number;
 }
 
@@ -27,28 +24,26 @@ interface RegistroHora {
   horas: number;
 }
 
-// API handler to save a user's weekly timecard
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Only allow POST method
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // Retrieve session information
   const supabase = createPagesServerClient({ req, res });
   const {
     data: { session },
     error: sessionError,
   } = await supabase.auth.getSession();
 
-  // Check for valid session
   if (sessionError || !session) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   const userId = session.user.id;
 
-  // Destructure and validate request body
   const {
     week,
     coursesPerDay,
@@ -63,28 +58,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     approvedBy?: string | null;
   } = req.body;
 
-  console.log("🟡 Incoming save data:", {
+  console.log("Incoming save data:", {
     week,
     deliveryDate,
     approvedDate,
     coursesPerDay,
   });
 
-  // Validate required week data
   if (!week || !Array.isArray(week) || week.length !== 7 || !coursesPerDay) {
-    return res.status(400).json({ error: "Incomplete or incorrectly formatted data" });
+    return res
+      .status(400)
+      .json({ error: "Incomplete or incorrectly formatted data" });
   }
 
   const inicio_semana = week[0].iso;
   const fin_semana = week[6].iso;
   const estado = deliveryDate ? "enviado" : "abierto";
 
-  // Calculate total hours for the week
   const horas_totales = Object.values(coursesPerDay)
     .flat()
     .reduce((acc: number, item: Course) => acc + item.hours, 0);
 
-  // Get user's team info to determine approval rights
   const { data: usuario } = await supabaseServer
     .from("usuario")
     .select("id_equipo")
@@ -105,7 +99,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  // Check if week already exists
   const { data: existingWeek } = await supabaseServer
     .from("semana")
     .select("id_semana")
@@ -116,49 +109,53 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const id_semana = existingWeek?.id_semana || uuidv4();
 
-  // Insert or update week entry
   if (deliveryDate || approvedDate) {
-    const { error: insertWeekError } = await supabaseServer.from("semana").upsert({
-      id_semana,
-      id_usuario: userId,
-      inicio_semana,
-      fin_semana,
-      estado,
-      enviado_el: deliveryDate || null,
-      aprobado_el: approvedDate || null,
-      aprobado_por,
-      horas_totales,
-    });
+    const { error: insertWeekError } = await supabaseServer
+      .from("semana")
+      .upsert({
+        id_semana,
+        id_usuario: userId,
+        inicio_semana,
+        fin_semana,
+        estado,
+        enviado_el: deliveryDate || null,
+        aprobado_el: approvedDate || null,
+        aprobado_por,
+        horas_totales,
+      });
 
     if (insertWeekError) {
-      console.error("❌ Error saving week:", insertWeekError);
+      console.error("Error saving week:", insertWeekError);
       return res.status(500).json({ error: "Error saving week" });
     }
   } else if (!existingWeek) {
-    const { error: insertEmptyWeekError } = await supabaseServer.from("semana").insert({
-      id_semana,
-      id_usuario: userId,
-      inicio_semana,
-      fin_semana,
-      estado: "No entregado",
-      horas_totales,
-    });
+    const { error: insertEmptyWeekError } = await supabaseServer
+      .from("semana")
+      .insert({
+        id_semana,
+        id_usuario: userId,
+        inicio_semana,
+        fin_semana,
+        estado: "No entregado",
+        horas_totales,
+      });
 
     if (insertEmptyWeekError) {
-      console.error("❌ Error saving non-submitted week:", insertEmptyWeekError);
+      console.error(
+        "Error saving non-submitted week:",
+        insertEmptyWeekError
+      );
       return res.status(500).json({ error: "Error saving unsubmitted week" });
     }
   }
 
-  // Delete any existing hour records for this week before inserting new ones
   await supabaseServer.from("horas").delete().eq("id_semana", id_semana);
 
-  // Build array of hour records
   const horas: RegistroHora[] = [];
 
   for (const [fecha_trabajada, cursos] of Object.entries(coursesPerDay)) {
     const fecha = new Date(fecha_trabajada);
-    fecha.setHours(0, 0, 0, 0); // SUPERIMPORTANT: Normalize date to match timezone
+    fecha.setHours(0, 0, 0, 0);
     (cursos as Course[]).forEach((curso: Course) => {
       horas.push({
         id_horas: uuidv4(),
@@ -170,16 +167,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  // Insert hour records
   const { error: insertHorasError } = await supabaseServer
     .from("horas")
     .insert(horas);
 
   if (insertHorasError) {
-    console.error("❌ Error saving hour records:", insertHorasError);
+    console.error("Error saving hour records:", insertHorasError);
     return res.status(500).json({ error: "Error saving hour records" });
   }
 
-  // Return success response
-  return res.status(200).json({ message: "Week saved successfully", id_semana });
+  return res
+    .status(200)
+    .json({ message: "Week saved successfully", id_semana });
 }

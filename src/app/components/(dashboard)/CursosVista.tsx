@@ -1,51 +1,57 @@
-import React, { useState, useMemo } from 'react';
-import '@/app/(authed)/dashboard/dashboard.css'
-import { useRouter } from 'next/navigation';
-import { CursoInscrito } from '@/app/hooks/useCourses';
+import React, { useState, useMemo } from "react";
+import "@/app/(authed)/dashboard/dashboard.css";
+import { useRouter } from "next/navigation";
+import { CursoInscrito } from "@/app/hooks/useCourses";
 
 interface CursosVistaProps {
   cursos: CursoInscrito[];
 }
 
-type FiltroTipo = 'todos' | 'obligatorios' | 'opcionales' | 'completado' | 'en_progreso' | 'sin_comenzar';
+type FiltroTipo =
+  | "todos"
+  | "obligatorios"
+  | "opcionales"
+  | "completado"
+  | "en_progreso"
+  | "sin_comenzar";
 
 const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
   const router = useRouter();
-  const [filtroActivo, setFiltroActivo] = useState<FiltroTipo>('todos');
+  const [filtroActivo, setFiltroActivo] = useState<FiltroTipo>("todos");
 
   const getEstadoDisplay = (estado: string) => {
     switch (estado) {
-      case 'completado':
-        return 'Completado';
-      case 'en_progreso':
-        return 'En Progreso';
-      case 'sin_comenzar':
-        return 'Faltante';
+      case "completado":
+        return "Completado";
+      case "en_progreso":
+        return "En Progreso";
+      case "sin_comenzar":
+        return "Faltante";
       default:
-        return 'Faltante';
+        return "Faltante";
     }
   };
 
   const getEstadoClass = (estado: string) => {
     switch (estado) {
-      case 'completado':
-        return 'completado';
-      case 'en_progreso':
-        return 'en-progreso';
-      case 'sin_comenzar':
-        return 'faltante';
+      case "completado":
+        return "completado";
+      case "en_progreso":
+        return "en-progreso";
+      case "sin_comenzar":
+        return "faltante";
       default:
-        return 'faltante';
+        return "faltante";
     }
   };
 
   const getPorcentaje = (estado: string) => {
     switch (estado) {
-      case 'completado':
+      case "completado":
         return 100;
-      case 'en_progreso':
+      case "en_progreso":
         return 50;
-      case 'sin_comenzar':
+      case "sin_comenzar":
         return 0;
       default:
         return 0;
@@ -61,22 +67,22 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
     let filtrados = [...cursos];
 
     switch (filtroActivo) {
-      case 'obligatorios':
-        filtrados = cursos.filter(curso => curso.obligatorio === true);
+      case "obligatorios":
+        filtrados = cursos.filter((curso) => curso.obligatorio === true);
         break;
-      case 'opcionales':
-        filtrados = cursos.filter(curso => curso.obligatorio === false);
+      case "opcionales":
+        filtrados = cursos.filter((curso) => curso.obligatorio === false);
         break;
-      case 'completado':
-        filtrados = cursos.filter(curso => curso.estado === 'completado');
+      case "completado":
+        filtrados = cursos.filter((curso) => curso.estado === "completado");
         break;
-      case 'en_progreso':
-        filtrados = cursos.filter(curso => curso.estado === 'en_progreso');
+      case "en_progreso":
+        filtrados = cursos.filter((curso) => curso.estado === "en_progreso");
         break;
-      case 'sin_comenzar':
-        filtrados = cursos.filter(curso => curso.estado === 'sin_comenzar');
+      case "sin_comenzar":
+        filtrados = cursos.filter((curso) => curso.estado === "sin_comenzar");
         break;
-      case 'todos':
+      case "todos":
       default:
         filtrados = cursos;
         break;
@@ -85,9 +91,9 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
     // Ordenarlos despues de filtrarlos
     return filtrados.sort((a, b) => {
       const estadoOrden = {
-        "en_progreso": 0,
-        "sin_comenzar": 1,
-        "completado": 2,
+        en_progreso: 0,
+        sin_comenzar: 1,
+        completado: 2,
       };
 
       const estadoA = a.estado as keyof typeof estadoOrden;
@@ -102,24 +108,27 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
   }, [cursos, filtroActivo]);
 
   const opcionesFiltro = [
-    { value: 'todos' as FiltroTipo, label: 'Todos' },
-    { value: 'obligatorios' as FiltroTipo, label: 'Obligatorios' },
-    { value: 'opcionales' as FiltroTipo, label: 'Opcionales' },
-    { value: 'completado' as FiltroTipo, label: 'Completados' },
-    { value: 'en_progreso' as FiltroTipo, label: 'En Progreso' },
-    { value: 'sin_comenzar' as FiltroTipo, label: 'Sin Comenzar' },
+    { value: "todos" as FiltroTipo, label: "Todos" },
+    { value: "obligatorios" as FiltroTipo, label: "Obligatorios" },
+    { value: "opcionales" as FiltroTipo, label: "Opcionales" },
+    { value: "completado" as FiltroTipo, label: "Completados" },
+    { value: "en_progreso" as FiltroTipo, label: "En Progreso" },
+    { value: "sin_comenzar" as FiltroTipo, label: "Sin Comenzar" },
   ];
 
   return (
     <div className="cv-container">
-      <div className='flex justify-between items-center'>
+      <div className="flex justify-between items-center">
         <div className="cv-progress-header">
           <div className="cv-progress-title">Todos mis Cursos</div>
         </div>
 
         {/* Filtro Desplegable */}
         <div className="cv-filter-dropdown">
-          <label htmlFor="filtro-cursos" className="cv-filter-label text-gray-300 font-bold mr-2">
+          <label
+            htmlFor="filtro-cursos"
+            className="cv-filter-label text-gray-300 font-bold mr-2"
+          >
             Filtrar por:
           </label>
           <select
@@ -154,7 +163,9 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
                 onClick={() => handleClick(curso.id_curso)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && handleClick(curso.id_curso)}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && handleClick(curso.id_curso)
+                }
               >
                 <div>
                   <div className="cv-curso-nombre">
@@ -165,7 +176,9 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
                 </div>
                 <div className={`cv-estado-div cv-estado-${estadoClass}`}>
                   <div className="estado-contenido">
-                    <div className={`cv-circulo-estado cv-circulo-${estadoClass}`}>
+                    <div
+                      className={`cv-circulo-estado cv-circulo-${estadoClass}`}
+                    >
                       <svg viewBox="0 0 36 36">
                         <path
                           className="cv-circulo-base"
@@ -182,9 +195,7 @@ const CursosVista: React.FC<CursosVistaProps> = ({ cursos }) => {
                         />
                       </svg>
                     </div>
-                    <span>
-                      {getEstadoDisplay(curso.estado)}
-                    </span>
+                    <span>{getEstadoDisplay(curso.estado)}</span>
                   </div>
                 </div>
               </div>

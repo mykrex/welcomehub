@@ -1,5 +1,3 @@
-// src/pages/api/retos/getRankingEquipo.ts
-
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { supabaseServer } from "@/lib/supabaseServer";
@@ -22,7 +20,6 @@ export default async function handler(
   const userId = session.user.id;
 
   try {
-    // Obtener id_equipo del usuario autenticado
     const { data: user, error: userError } = await supabase
       .from("usuario")
       .select("id_equipo")
@@ -37,7 +34,6 @@ export default async function handler(
 
     const id_equipo = user.id_equipo;
 
-    // Obtener nombre del equipo
     const { data: equipo, error: errorEquipo } = await supabase
       .from("equipo_trabajo")
       .select("nombre")
@@ -48,7 +44,6 @@ export default async function handler(
 
     const nombre_equipo = equipo?.nombre ?? "Equipo";
 
-    // Obtener usuarios del equipo
     const { data: usuarios, error: errorUsuarios } = await supabase
       .from("usuario")
       .select("id_usuario, nombres, apellidos")
@@ -58,7 +53,6 @@ export default async function handler(
 
     const usuarioIds = usuarios.map((u) => u.id_usuario);
 
-    // Obtener retos completados por usuario
     const { data: retosUsuario, error: errorRetosUsuario } = await supabase
       .from("reto_usuario")
       .select("id_usuario, id_reto")
@@ -67,7 +61,6 @@ export default async function handler(
 
     if (errorRetosUsuario) throw errorRetosUsuario;
 
-    // Obtener puntos por reto
     const { data: retos, error: errorRetos } = await supabase
       .from("reto")
       .select("id_reto, puntos");
@@ -88,14 +81,12 @@ export default async function handler(
       puntosPorUsuario[r.id_usuario] += puntosPorReto[r.id_reto] ?? 0;
     });
 
-    // Generar ranking base (sin imagen aún)
     const rankingBase = usuarios.map((u) => ({
       id: u.id_usuario,
       nombre_completo: `${u.nombres ?? ""} ${u.apellidos ?? ""}`.trim(),
       puntos_total: puntosPorUsuario[u.id_usuario] ?? 0,
     }));
 
-    // Añadir imagen con URL firmada
     const ranking = await Promise.all(
       rankingBase.map(async (user) => {
         try {
@@ -112,7 +103,6 @@ export default async function handler(
       })
     );
 
-    // Ordenar por puntos descendente
     ranking.sort((a, b) => b.puntos_total - a.puntos_total);
 
     return res.status(200).json({ equipo: nombre_equipo, ranking });

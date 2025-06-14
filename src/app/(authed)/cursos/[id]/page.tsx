@@ -17,7 +17,6 @@ export default function CourseDetailPage() {
   useEffect(() => {
     async function fetchCourse() {
       try {
-        // Traemos los cursos inscritos del usuario
         const response = await fetch('/api/courses/inscritos', {
           credentials: 'include'
         });
@@ -33,7 +32,6 @@ export default function CourseDetailPage() {
           throw new Error('Curso no encontrado o no tienes acceso');
         }
 
-        // Checamos que si tenga contenido
         if (!foundCourse.ruta_archivo) {
           throw new Error('Este curso no tiene contenido disponible');
         }

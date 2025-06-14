@@ -1,10 +1,8 @@
-// src/app/components/courseCatalog.tsx
-
 "use client";
 
 import { useCourses } from "@/app/hooks/useCourses";
 import CourseSection from "./courseSection";
-/* Importamos el CSS que creamos arriba */
+
 import "@/app/(authed)/cursos/cursos.css";
 
 export default function CourseCatalog() {
@@ -38,7 +36,6 @@ export default function CourseCatalog() {
     );
   }
 
-  // Separamos los cursos inscritos en obligatorios y los 'opcionales'
   const inscritosObligatorios =
     cursosInscritos?.filter((c) => c.obligatorio) ?? [];
   const inscritosOpcionales =
@@ -89,9 +86,7 @@ export default function CourseCatalog() {
         (!cursosOpcionales || cursosOpcionales.length === 0) &&
         (!cursosRecomendados || cursosRecomendados.length === 0) && (
           <div className="empty-container">
-            <p className="empty-text">
-              No se encontraron cursos disponibles
-            </p>
+            <p className="empty-text">No se encontraron cursos disponibles</p>
           </div>
         )}
     </div>

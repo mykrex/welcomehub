@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const idRetoOpcional = getRetoId('curso_opcional_completo');
     const idRetoTodos = getRetoId('todos_cursos_obligatorios_completos');
 
-    // Obtener retos ya registrados por este usuario
+    
     const { data: userRetos, error: errorUserRetos } = await supabase
       .from('reto_usuario')
       .select('id_reto')

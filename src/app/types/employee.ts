@@ -17,7 +17,7 @@ export interface ProjectInfo {
 }
 
 export interface DayHours {
-  fecha_trabajada: string; // ISO date
+  fecha_trabajada: string;
   proyectos: ProjectHours[];
   total_horas: number;
 }
@@ -28,7 +28,7 @@ export interface WeekData {
   inicio_semana: string;
   fin_semana: string;
   enviado_el: string | null;
-  estado: 'borrador' | 'enviado' | 'aprobado' | 'rechazado';
+  estado: "borrador" | "enviado" | "aprobado" | "rechazado";
   aprobado_por: string | null;
   aprobado_el: string | null;
   horas_totales: number;
@@ -36,7 +36,7 @@ export interface WeekData {
 }
 
 export interface Employee {
-  id: string; // String para manejar UUIDs
+  id: string;
   name: string;
   photo: string;
   courses: {

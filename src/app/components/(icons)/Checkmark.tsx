@@ -1,12 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
 interface CheckmarkIconProps {
   completed?: boolean;
 }
 
-export default function CheckmarkIcon({ completed = false }: CheckmarkIconProps) {
+export default function CheckmarkIcon({
+  completed = false,
+}: CheckmarkIconProps) {
   return (
     <svg
       width="30"
@@ -15,19 +17,17 @@ export default function CheckmarkIcon({ completed = false }: CheckmarkIconProps)
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Outer square */}
       <rect
         x="0"
         y="0"
         width="30"
         height="30"
         rx="5"
-        fill={completed ? '#4DAA57' : 'none'}
-        stroke={completed ? 'none' : '#9DAAA6'}
+        fill={completed ? "#4DAA57" : "none"}
+        stroke={completed ? "none" : "#9DAAA6"}
         strokeWidth="2"
       />
 
-      {/* Checkmark path – only render if completed */}
       {completed && (
         <path
           fillRule="evenodd"

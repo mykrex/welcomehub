@@ -1,5 +1,5 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 
 interface Project {
   id_proyecto: string;
@@ -58,7 +58,7 @@ const TimeTable: React.FC<Props> = ({
   confirmEdit,
   deleteCourse,
   addCourse,
-  setDraftCourse
+  setDraftCourse,
 }) => {
   return (
     <table className="hours-table">
@@ -102,23 +102,27 @@ const TimeTable: React.FC<Props> = ({
                             <div key={i} className="edit-row">
                               <select
                                 className="course-input title-input"
-                                value={draftCourse[iso]?.id || ''}
+                                value={draftCourse[iso]?.id || ""}
                                 onChange={(e) => {
                                   const selectedId = e.target.value;
-                                  const selectedProject = projectOptions.find(p => p.id_proyecto === selectedId);
+                                  const selectedProject = projectOptions.find(
+                                    (p) => p.id_proyecto === selectedId
+                                  );
                                   if (selectedProject) {
-                                    setDraftCourse(prev => ({
+                                    setDraftCourse((prev) => ({
                                       ...prev,
                                       [iso]: {
                                         ...prev[iso],
                                         id: selectedId,
-                                        title: selectedProject.nombre
-                                      }
+                                        title: selectedProject.nombre,
+                                      },
                                     }));
                                   }
                                 }}
                               >
-                                <option value="" disabled>Selecciona un proyecto</option>
+                                <option value="" disabled>
+                                  Selecciona un proyecto
+                                </option>
                                 {projectOptions.map((project, idx) => (
                                   <option key={idx} value={project.id_proyecto}>
                                     {project.nombre}
@@ -130,28 +134,57 @@ const TimeTable: React.FC<Props> = ({
                                 min="0"
                                 step="0.1"
                                 className="course-input number-input"
-                                value={draftCourse[iso]?.hours ?? ''}
-                                onChange={e => {
+                                value={draftCourse[iso]?.hours ?? ""}
+                                onChange={(e) => {
                                   let value = parseFloat(e.target.value);
                                   if (isNaN(value) || value < 0) value = 0;
                                   const rounded = Math.floor(value * 10) / 10;
-                                  setDraftCourse(prev => ({
+                                  setDraftCourse((prev) => ({
                                     ...prev,
-                                    [iso]: { ...prev[iso], hours: rounded }
+                                    [iso]: { ...prev[iso], hours: rounded },
                                   }));
                                 }}
                               />
-                              <button className={`action-button ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => confirmEdit(iso, i)}>Aceptar</button>
-                              <button className={`action-button ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => cancelEdit(iso)}>Cancelar</button>
+                              <button
+                                className={`action-button ${
+                                  isEditable ? "" : "invisible-preserved"
+                                }`}
+                                onClick={() => confirmEdit(iso, i)}
+                              >
+                                Aceptar
+                              </button>
+                              <button
+                                className={`action-button ${
+                                  isEditable ? "" : "invisible-preserved"
+                                }`}
+                                onClick={() => cancelEdit(iso)}
+                              >
+                                Cancelar
+                              </button>
                             </div>
                           ) : (
                             <div key={i} className="course-entry">
                               <div className="course-info">
-                                <strong>{curso.title}</strong> — {curso.hours} horas
+                                <strong>{curso.title}</strong> — {curso.hours}{" "}
+                                horas
                               </div>
                               <div>
-                                <button className={`action-button-blue ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => startEdit(iso, i, curso)}>Editar</button>
-                                <button className={`action-button-red ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => deleteCourse(iso, i)}>Borrar</button>
+                                <button
+                                  className={`action-button-blue ${
+                                    isEditable ? "" : "invisible-preserved"
+                                  }`}
+                                  onClick={() => startEdit(iso, i, curso)}
+                                >
+                                  Editar
+                                </button>
+                                <button
+                                  className={`action-button-red ${
+                                    isEditable ? "" : "invisible-preserved"
+                                  }`}
+                                  onClick={() => deleteCourse(iso, i)}
+                                >
+                                  Borrar
+                                </button>
                               </div>
                             </div>
                           )
@@ -159,8 +192,14 @@ const TimeTable: React.FC<Props> = ({
                       ) : (
                         <div>No hay proyectos hechos este día.</div>
                       )}
-                      {(editing[iso] === null || editing[iso] === undefined) && (
-                        <button className={`btn-anadir ${isEditable ? '' : 'invisible-preserved'}`} onClick={() => addCourse(iso)}>
+                      {(editing[iso] === null ||
+                        editing[iso] === undefined) && (
+                        <button
+                          className={`btn-anadir ${
+                            isEditable ? "" : "invisible-preserved"
+                          }`}
+                          onClick={() => addCourse(iso)}
+                        >
                           + Añadir Proyecto
                         </button>
                       )}

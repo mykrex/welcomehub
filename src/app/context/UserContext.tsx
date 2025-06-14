@@ -109,7 +109,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, [loadUserProfile, refreshSession]);
 
   return (
-    <UserContext.Provider value={{ user, setUser: setUserState, logout, loadingUser }}>
+    <UserContext.Provider
+      value={{ user, setUser: setUserState, logout, loadingUser }}
+    >
       {children}
     </UserContext.Provider>
   );

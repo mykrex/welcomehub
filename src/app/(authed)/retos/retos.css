@@ -7,7 +7,6 @@
   border-radius: 15px;
 }
 
-/* ============= container ============= */
 .retos-container {
   width: 100%;
   padding: 20px 30px;
@@ -21,25 +20,15 @@
 .retos-page {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* spacing between retos and ranking */
+  gap: 10px;
 }
 
-
-/* =============================================================================
-   USER STATS
-============================================================================= */
-
-
-/* userStats.css */
-
-/* Contenedor principal de estadísticas de usuario */
 .user-stats-container {
-  display: flex; /* Cambiado de inline-flex a flex */
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
-  /* height: 100%; */ /* Eliminado para no forzar altura */
   padding: 20px 30px;
   background: #042c45;
   overflow: hidden;
@@ -47,9 +36,8 @@
   gap: 10px;
 }
 
-/* Wrapper del encabezado (nombre y título) */
 .stats-header-wrapper {
-  display: flex; /* Cambiado de inline-flex a flex */
+  display: flex;
   align-items: center;
   gap: 10px;
 }
@@ -70,16 +58,14 @@
   word-wrap: break-word;
 }
 
-/* Wrapper de las tarjetas de estadísticas */
 .stats-cards-wrapper {
-  display: flex; /* Cambiado de inline-flex a flex */
+  display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 30px;
   align-self: stretch;
 }
 
-/* Tarjeta individual de estadística */
 .stats-card {
   flex: 1 1 0;
   height: 84px;
@@ -104,15 +90,12 @@
   color: #4daa57;
 }
 
-
-/* Contenedor del icono dentro de cada tarjeta */
 .icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Contenido (texto) dentro de cada tarjeta */
 .stats-card-content {
   display: flex;
   flex-direction: column;
@@ -134,12 +117,6 @@
   font-weight: 600;
 }
 
-
-/* =============================================================================
-   RETOS TABLE
-============================================================================= */
-
-/* ============= header ============= */
 .retos-header {
   display: flex;
   align-items: flex-end;
@@ -158,7 +135,6 @@
   font: 500 24px/1 "Manrope", sans-serif;
 }
 
-/* ============= table layout ============= */
 .retos-table {
   width: 100%;
   display: flex;
@@ -188,27 +164,23 @@
   background: #053c5e;
 }
 
-/* header fonts */
 .retos-row--header .retos-cell {
   color: #064a74;
   font: 700 18px/1 "Manrope", sans-serif;
 }
 
-/* ============= column widths ============= */
 .retos-cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   font-size: 16px;
   font-weight: 500;
   color: var(--white-main);
   font-family: Manrope;
-
 }
 .retos-cell--status {
   flex: 1;
-  
 }
 .retos-cell--cont {
   flex: 1;
@@ -227,10 +199,6 @@
   flex: 4;
 }
 
-/* =============================================================================
-   RANKING PODIUM
-============================================================================= */
-
 .ranking-container {
   width: 100%;
   padding: 20px 30px;
@@ -247,14 +215,19 @@
   align-items: center;
 }
 
-.ranking-title, .ranking-subtitle {
+.ranking-title,
+.ranking-subtitle {
   font-family: "Manrope";
   font-size: 28px;
   font-weight: 600;
 }
 
-.ranking-title { color: #ebfaff; }
-.ranking-subtitle { color: #8bcff9; }
+.ranking-title {
+  color: #ebfaff;
+}
+.ranking-subtitle {
+  color: #8bcff9;
+}
 
 .ranking-table {
   background: #c2f0ff;
@@ -275,7 +248,7 @@
   font-family: "Manrope";
   font-size: 20px;
   font-weight: 700;
-  color: #064A74;
+  color: #064a74;
 }
 
 .ranking-divider {
@@ -291,17 +264,16 @@
 
 .ranking-row {
   display: flex;
-  justify-content: space-between; /* Distribuye rank+foto+nombre a la izquierda y puntos a la derecha */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #51B6F6;
+  border-bottom: 1px solid #51b6f6;
 }
 
 .ranking-left {
   display: flex;
   align-items: center;
   gap: 15px;
-
 }
 
 .ranking-rank {

@@ -36,7 +36,6 @@ export default function CourseContent({
   const { updateCourseStatus, loading, error } = useCourseStatus();
   const supabase = createClientComponentClient();
 
-  // Convertimos obligatorio a booleano explícito
   const isObligatorio = obligatorio === true;
 
   const handleStatusUpdate = useCallback(

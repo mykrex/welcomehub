@@ -13,11 +13,11 @@ import React, {
 
 import politicas from "../docs/politicas.json";
 
-type Action = { label: string; href: string};
+type Action = { label: string; href: string };
 
-type Message = { 
-  sender: "user" | "bot"; 
-  text: string 
+type Message = {
+  sender: "user" | "bot";
+  text: string;
   actions?: Action[];
 };
 
@@ -40,14 +40,12 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { user } = useUser();
 
-  // Mantener scroll al final
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
-  // Función para enviar prompt a la API
   const sendPrompt = useCallback(
     async (customPrompt?: string) => {
       const finalPrompt = customPrompt ?? "";
@@ -58,26 +56,32 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       setPrompt("");
       setLoading(true);
       if (finalPrompt.trim()) {
-        setMessages(prev => [...prev, { sender: "user", text: finalPrompt }]);
+        setMessages((prev) => [...prev, { sender: "user", text: finalPrompt }]);
       }
       try {
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: finalPrompt, id_usuario: user.id_usuario }),
+          body: JSON.stringify({
+            prompt: finalPrompt,
+            id_usuario: user.id_usuario,
+          }),
         });
         const data = await res.json();
-        setMessages(prev => [
-          ...prev, 
-          { 
-            sender: "bot", 
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "bot",
             text: data.response,
-            actions: data.actions 
-          }
+            actions: data.actions,
+          },
         ]);
       } catch (error) {
         console.error("Error al enviar el mensaje:", error);
-        setMessages(prev => [...prev, { sender: "bot", text: "Error al obtener la respuesta" }]);
+        setMessages((prev) => [
+          ...prev,
+          { sender: "bot", text: "Error al obtener la respuesta" },
+        ]);
       } finally {
         setLoading(false);
       }
@@ -85,13 +89,11 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
     [user?.id_usuario]
   );
 
-  // resetear mensajes y estado
   const resetMessages = () => {
     setMessages([]);
     setPrompt("");
   };
 
-  // Inicializar chat con saludo personalizado y cargar historial
   useEffect(() => {
     const initChat = async () => {
       if (!user?.id_usuario) {
@@ -99,21 +101,17 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      // Obtener nombre real del usuario desde tabla 'usuario'
       const { data: usuarioData, error: usuarioError } = await supabase
         .from("usuario")
         .select("nombres, rol")
         .eq("id_usuario", user.id_usuario)
         .single();
 
-      const userName = !usuarioError && usuarioData?.nombres
-        ? usuarioData.nombres
-        : "usuario";
-      const userRole = !usuarioError && usuarioData?.rol
-        ? usuarioData.rol.toLowerCase()
-        : "";
+      const userName =
+        !usuarioError && usuarioData?.nombres ? usuarioData.nombres : "usuario";
+      const userRole =
+        !usuarioError && usuarioData?.rol ? usuarioData.rol.toLowerCase() : "";
 
-      // Obtener historial de mensajes
       const { data: messagesData, error: historyError } = await supabase
         .from("mensajes")
         .select("input_usuario, output_bot")
@@ -124,58 +122,63 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
 
-      // Mapear a Message[]
-      // construir arreglo de historial
       const historialDB: Message[] = [];
-      messagesData?.forEach(item => {
-        if (item.input_usuario) historialDB.push({ sender: "user", text: item.input_usuario });
-        if (item.output_bot)   historialDB.push({ sender: "bot",  text: item.output_bot });
+      messagesData?.forEach((item) => {
+        if (item.input_usuario)
+          historialDB.push({ sender: "user", text: item.input_usuario });
+        if (item.output_bot)
+          historialDB.push({ sender: "bot", text: item.output_bot });
       });
 
-      // Primer saludo o bienvenida de vuelta
-      const greeting = historialDB.length === 0
-        ? `¡Hola ${userName}! Soy Compi, tu asistente virtual. Te estare acompañando en tu experiencia dentro de Welcomehub.`
-        : `¡Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
-      
+      const greeting =
+        historialDB.length === 0
+          ? `¡Hola ${userName}! Soy Compi, tu asistente virtual. Te estare acompañando en tu experiencia dentro de Welcomehub.`
+          : `¡Hola de vuelta ${userName}! Estoy aquí para cualquier tema que tengas.`;
+
       const shortcuts: Action[] = [
-        { label: "Dashboard", href: "/dashboard"},
+        { label: "Dashboard", href: "/dashboard" },
         { label: "Mis Cursos", href: "/cursos" },
-        { label: "Mi Perfil", href: "/mi_perfil"},
-        { label: "Retos", href: "/retos"},
-        { label: "Neoris", href: "/neoris"},
-        { label: "Time Card", href: "/timecard"}
+        { label: "Mi Perfil", href: "/mi_perfil" },
+        { label: "Retos", href: "/retos" },
+        { label: "Neoris", href: "/neoris" },
+        { label: "Time Card", href: "/timecard" },
       ];
 
       if (historialDB.length === 0) {
         let tour;
 
-        if (userRole === "administrador"){
-          tour = politicas.filter(p => p.id.startsWith("admin-"));
+        if (userRole === "administrador") {
+          tour = politicas.filter((p) => p.id.startsWith("admin-"));
         } else {
-          tour = politicas.filter(p => p.id.startsWith("tour-"));
+          tour = politicas.filter((p) => p.id.startsWith("tour-"));
         }
 
         if (!tour.length) {
           tour = politicas.slice(0, 2);
         }
 
-        // Construir texto del tour: titulo + content
-        const tourText = tour.map((pol) => `${pol.title}\n${pol.content}`).join("\n\n");
-        
-        // Montar mensaje
+        const tourText = tour
+          .map((pol) => `${pol.title}\n${pol.content}`)
+          .join("\n\n");
+
         setMessages([
           { sender: "bot", text: greeting, actions: shortcuts },
           {
             sender: "bot",
-            text: 
+            text:
               userRole === "administrador"
-                ? "¡Hola admin! Aqui tienes un recorrido rápido por las funcionalidades de Welcomehub:\n\n" + tourText
-                : "Para empezar, te daré un recorrido por Welcomehub:\n\n" + tourText,
-            actions: shortcuts
+                ? "¡Hola admin! Aqui tienes un recorrido rápido por las funcionalidades de Welcomehub:\n\n" +
+                  tourText
+                : "Para empezar, te daré un recorrido por Welcomehub:\n\n" +
+                  tourText,
+            actions: shortcuts,
           },
         ]);
       } else {
-        setMessages([...historialDB, { sender: "bot", text: greeting, actions: shortcuts }]);
+        setMessages([
+          ...historialDB,
+          { sender: "bot", text: greeting, actions: shortcuts },
+        ]);
       }
     };
     initChat();
@@ -183,7 +186,15 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ChatContext.Provider
-      value={{ messages, prompt, setPrompt, sendPrompt, loading, messagesEndRef, resetMessages }}
+      value={{
+        messages,
+        prompt,
+        setPrompt,
+        sendPrompt,
+        loading,
+        messagesEndRef,
+        resetMessages,
+      }}
     >
       {children}
     </ChatContext.Provider>

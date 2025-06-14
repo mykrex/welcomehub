@@ -1,12 +1,10 @@
-// src/pages/api/timecard/fetchTimeCard.ts
-
 export interface WeekData {
   semana: {
     id_semana: string;
     id_usuario: string;
     inicio_semana: string;
     fin_semana: string;
-    estado: 'Enviado' | 'Abierto' | 'Aprobado';
+    estado: "Enviado" | "Abierto" | "Aprobado";
     enviado_el?: string;
     aprobado_el?: string;
     aprobado_por?: string;
@@ -27,15 +25,13 @@ export interface WeekData {
   }[];
 }
 
-// Fetches week data based on a given week's start date
-// Aside from also checking if were getting the correct info to get the info.
 export async function fetchWeekData(inicioSemana: string): Promise<WeekData> {
   const res = await fetch(`/api/timecard/obtain?inicioSemana=${inicioSemana}`);
   if (!res.ok) {
     const errorText = await res.text();
-    console.error('Fallo al obtener datos. Código:', res.status);
-    console.error('Respuesta:', errorText);
-    throw new Error('Error al obtener los datos de la semana');
+    console.error("Fallo al obtener datos. Código:", res.status);
+    console.error("Respuesta:", errorText);
+    throw new Error("Error al obtener los datos de la semana");
   }
 
   return res.json();

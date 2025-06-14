@@ -18,7 +18,7 @@
   align-items: center;
   height: 100vh;
   color: white;
-  background-image: url('/bg_login.png');
+  background-image: url("/bg_login.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

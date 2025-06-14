@@ -1,9 +1,7 @@
-// src/app/page.tsx
-
 "use client";
 
 import CourseCatalog from "@/app/components/(courses)/courseCatalog";
-// Importamos el CSS que acabamos de crear
+
 import "./cursos.css";
 
 export default function CursosPage() {
@@ -12,9 +10,7 @@ export default function CursosPage() {
       {/* Header */}
       <div className="header">
         <div className="header-container">
-          <div className="header-title">
-            Mis Cursos: 
-          </div>
+          <div className="header-title">Mis Cursos:</div>
           <div className="header-subtitle">
             Descubre, aprende y haz crecer tus habilidades
           </div>

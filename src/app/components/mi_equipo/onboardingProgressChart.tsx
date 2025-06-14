@@ -1,11 +1,22 @@
-import React, { useMemo } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Employee } from '@/app/types/employee';
+import React, { useMemo } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from "recharts";
+import { Employee } from "@/app/types/employee";
 
 interface OnboardingProgressChartProps {
   employees: Employee[];
   teamName: string;
-  onSegmentClick?: (employees: Employee[], title: string, subtitle: string) => void;
+  onSegmentClick?: (
+    employees: Employee[],
+    title: string,
+    subtitle: string
+  ) => void;
 }
 
 interface EmployeeStatus {
@@ -31,49 +42,45 @@ interface CustomTooltipProps {
   }>;
 }
 
-export const OnboardingProgressChart: React.FC<OnboardingProgressChartProps> = ({
-  employees,
-  teamName,
-  onSegmentClick
-}) => {
-  // Calcular el estado de onboarding para cada empleado
+export const OnboardingProgressChart: React.FC<
+  OnboardingProgressChartProps
+> = ({ employees, teamName, onSegmentClick }) => {
   const employeeStatuses = useMemo((): EmployeeStatus[] => {
-    return employees.map(employee => {
+    return employees.map((employee) => {
       const completedCourses = employee.obligatoryCourses.completed;
-      const totalRequired = 6; // 6 cursos obligatorios 
+      const totalRequired = 6;
       const isComplete = completedCourses >= totalRequired;
 
       return {
         employee,
         isComplete,
         completedCourses,
-        totalRequired
+        totalRequired,
       };
     });
   }, [employees]);
 
-  // Preparar datos para la grafica
   const chartData = useMemo((): ChartData[] => {
-    const completed = employeeStatuses.filter(status => status.isComplete);
-    const inProgress = employeeStatuses.filter(status => !status.isComplete);
+    const completed = employeeStatuses.filter((status) => status.isComplete);
+    const inProgress = employeeStatuses.filter((status) => !status.isComplete);
     const total = employees.length;
 
     return [
       {
-        name: 'Onboarding Completado',
+        name: "Onboarding Completado",
         value: total > 0 ? Math.round((completed.length / total) * 100) : 0,
         count: completed.length,
-        employees: completed.map(status => status.employee),
-        color: '#4CAF50'
+        employees: completed.map((status) => status.employee),
+        color: "#4CAF50",
       },
       {
-        name: 'En Progreso',
+        name: "En Progreso",
         value: total > 0 ? Math.round((inProgress.length / total) * 100) : 0,
         count: inProgress.length,
-        employees: inProgress.map(status => status.employee),
-        color: '#FF9800'
-      }
-    ].filter(item => item.count > 0); // Filtrar los segmentos vacios
+        employees: inProgress.map((status) => status.employee),
+        color: "#FF9800",
+      },
+    ].filter((item) => item.count > 0);
   }, [employeeStatuses, employees.length]);
 
   const handleSegmentClick = (data: ChartData) => {
@@ -96,7 +103,9 @@ export const OnboardingProgressChart: React.FC<OnboardingProgressChartProps> = (
       return (
         <div className="bg-gray-900 border border-gray-700 rounded-lg p-3 shadow-lg">
           <p className="text-white font-semibold mb-1">{data.name}</p>
-          <p className="text-gray-300">{data.count} empleados ({data.value}%)</p>
+          <p className="text-gray-300">
+            {data.count} empleados ({data.value}%)
+          </p>
         </div>
       );
     }
@@ -136,7 +145,7 @@ export const OnboardingProgressChart: React.FC<OnboardingProgressChartProps> = (
                 ))}
               </Pie>
               <Tooltip content={<CustomTooltip />} />
-              <Legend 
+              <Legend
                 formatter={(value, entry) => {
                   const data = entry.payload as unknown as ChartData;
                   return `${value}: ${data.count} empleados (${data.value}%)`;
@@ -154,21 +163,25 @@ export const OnboardingProgressChart: React.FC<OnboardingProgressChartProps> = (
       {/* Segmentos de la grafica de pastel */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {chartData.map((data, index) => (
-          <div 
+          <div
             key={index}
             className={`bg-gray-700 rounded-lg p-6 border-l-4 transition-all duration-300 cursor-pointer hover:bg-gray-600 hover:transform hover:-translate-y-1 hover:shadow-lg ${
-              data.name.toLowerCase().includes('completado') 
-                ? 'border-green-500' 
-                : 'border-orange-500'
+              data.name.toLowerCase().includes("completado")
+                ? "border-green-500"
+                : "border-orange-500"
             }`}
             onClick={() => handleCardClick(data)}
           >
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-white font-semibold">{data.name}</h4>
-              <span className="text-3xl font-bold text-blue-400">{data.value}%</span>
+              <span className="text-3xl font-bold text-blue-400">
+                {data.value}%
+              </span>
             </div>
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-bold text-white">{data.count}</span>
+              <span className="text-4xl font-bold text-white">
+                {data.count}
+              </span>
               <span className="text-gray-400">empleados</span>
             </div>
             <p className="text-gray-400 text-sm">

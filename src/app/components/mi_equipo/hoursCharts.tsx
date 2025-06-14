@@ -42,17 +42,17 @@ export const HoursChart: React.FC<HoursChartProps> = ({
     );
   }
 
-  // FUNCION HELPER: Formatear fecha  de ISO a DD/MM/YYYY
+  
   const formatISODate = (isoDateString: string): string => {
     if (!isoDateString) return 'Fecha inválida';
     
     try {
-      // Si es solo fecha (YYYY-MM-DD) agregamos el tiempo para evitar timezone issues
+      
       const dateToFormat = isoDateString.includes('T') ? isoDateString : `${isoDateString}T12:00:00`;
       const date = new Date(dateToFormat);
       
       if (isNaN(date.getTime())) {
-        // Fallback parsing manual
+        
         const [year, month, day] = isoDateString.split('-');
         return `${day}/${month}/${year}`;
       }
@@ -64,22 +64,22 @@ export const HoursChart: React.FC<HoursChartProps> = ({
       });
     } catch (error) {
       console.error('Error formateando fecha:', isoDateString, error);
-      // Fallback manual
+      
       const [year, month, day] = isoDateString.split('-');
       return `${day}/${month}/${year}`;
     }
   };
 
-  // Generar la semana correcta basada en las fechas reales de la API
+  
   const generateWeekDays = () => {
     const inicioDateStr = weekData.inicio_semana;
     const days = ['Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo', 'Lunes', 'Martes'];
     
-    // Parsear la fecha de inicio
+    
     const [year, month, day] = inicioDateStr.split('-').map(Number);
     
     return Array.from({ length: 7 }, (_, index) => {
-      // Crear fecha y agregar días
+      
       const currentDate = new Date(year, month - 1, day + index);
       const currentDateISO = currentDate.toISOString().split('T')[0];
       
@@ -91,20 +91,20 @@ export const HoursChart: React.FC<HoursChartProps> = ({
     });
   };
 
-  // Crear datos para la grafica
+  
   const weekDays = generateWeekDays();
   
   const chartData: ChartDataItem[] = weekDays.map(({ dayName, dateISO }) => {
-    // Buscar datos para este dia especifico en los datos de la API
+    
     const dayData = weekData.dias.find(d => d.fecha_trabajada === dateISO);
     
     const chartDay: ChartDataItem = {
       day: dayName,
-      date: dateISO, // Guardar el ISO string
+      date: dateISO, 
       total: dayData?.total_horas || 0
     };
 
-    // Agregar las horas por proyecto
+    
     if (dayData) {
       dayData.proyectos.forEach(proyecto => {
         chartDay[proyecto.id_proyecto] = proyecto.horas;
@@ -114,14 +114,14 @@ export const HoursChart: React.FC<HoursChartProps> = ({
     return chartDay;
   });
 
-  // Obtener todos los proyectos de esta semana
+  
   const allProjects = Array.from(
     new Set(weekData.dias.flatMap(day => 
       day.proyectos.map(p => p.id_proyecto)
     ))
   );
 
-  // Colores para los proyectos
+  
   const projectColors = [
     '#4CAF50', '#2196F3', '#FFC107', '#E91E63', 
     '#9C27B0', '#009688', '#FF5722', '#795548'
