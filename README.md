@@ -44,17 +44,6 @@ A continuación se presenta el diagrama de arquitectura de la aplicación y las 
 
 [![Alto Nivel](https://drive.google.com/uc?export=view&id=1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz)](https://drive.google.com/file/d/1JzCAfy1Y-JkdX8kp3JJ-qIZ9zna8RBTz/view?usp=sharing)
 
-## Preview
-
-![](/repository_assets/Login2.png)
-
-![](/repository_assets/Dashboard.png)
-
-![](/repository_assets/Courses.png)
-
-![](/repository_assets/CourseProgress.png)
-
-![](/repository_assets/NeoBot.png)
 
 ## Presentación de la aplicación
 
